@@ -1,0 +1,250 @@
+@import '@/quasar-variables.scss';
+@import '@/assets/styles/myvariables.scss';
+@import '@/assets/styles/animation.scss';
+
+body {
+	font-size: $font-size;
+	color: $text-color;
+	// background-color: #0000001a;
+	background-color: $bgMain;
+}
+
+.container {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	max-width: 1200px;
+	margin: 0 auto;
+	// @media screen and (max-width: 1850px) {
+	// 	max-width: 1200px;
+	// 	margin: 0 auto;
+	// }
+	.zag {
+		font-size: 1.2rem;
+	}
+}
+.rel {
+	position: relative;
+}
+.my-ripple-class {
+	background: white;
+	opacity: 0.2;
+}
+
+.q-drawer {
+	background: $bgMain;
+	.noti {
+		background: #f8f8f6;
+	}
+	.rd {
+		padding: 1rem;
+		box-shadow: -1px 0 3px rgba(0, 0, 0, 0.3);
+		&.speech {
+			// background: $blue-grey-9;
+		}
+	}
+}
+.date {
+	margin-top: 35px;
+	background: transparent;
+	.q-date__header {
+		display: none;
+	}
+}
+
+.q-card {
+	border-radius: $radius-md;
+	box-shadow: $card-shadow;
+	cursor: pointer;
+}
+.q-card--flat {
+	border: 1px solid $bgHead;
+}
+.notifications {
+	transition: all 0.3s ease;
+}
+.q-chip {
+	// background: $accent2;
+	background: $bgHead;
+	.inf {
+		display: none;
+	}
+}
+.q-chip--selected {
+	background: $primary;
+	color: white;
+	.q-chip__icon {
+		color: inherit;
+	}
+	.inf {
+		display: block;
+	}
+}
+
+.keys input {
+	padding-left: 1rem;
+}
+.keys .q-chip__icon--remove {
+	display: none;
+}
+.q-item--active {
+	background: $bgSelection;
+}
+
+.table {
+	box-shadow: $card-shadow;
+	border-radius: $radius-md;
+	tr.selected td::after {
+		background: transparent;
+	}
+	tr.selected {
+		background: $bgSelection;
+	}
+	td {
+		white-space: normal;
+	}
+}
+.talk {
+	.q-message-name {
+		font-size: 11px;
+		color: #fff;
+	}
+}
+
+.q-message-text:last-child {
+	min-height: 24px;
+}
+
+.q-expansion-item--collapsed:not(:last-child) {
+	border-bottom: 1px dotted #999;
+}
+
+.car.q-expansion-item.q-expansion-item--expanded .q-expansion-item__container {
+	// background: $bgLight;
+	// background: white;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+	// box-shadow: $big-shadow;
+	// border-radius: $radius-md;
+	transition: 0.5s ease all;
+	.q-item {
+		background: $bgHead;
+		border-radius: $radius-md $radius-md 0 0;
+		border: 1px solid white;
+		border-bottom: none;
+	}
+}
+.car .q-expansion-item__content {
+	// border: 1px solid white;
+	// border-radius: 0 0 $radius-md $radius-md;
+	// border-top: none;
+}
+.car.white .q-expansion-item__content {
+	// background: white !important;
+}
+
+span.found {
+	background: yellow;
+}
+
+.q-splitter--vertical > .q-splitter__separator {
+	width: 2px;
+	background: transparent;
+}
+.spli .q-splitter__separator {
+	width: 2px;
+	background: #ccc;
+}
+
+.q-splitter--vertical > .q-splitter__separator:hover,
+.q-splitter--vertical > .q-splitter__separator:active {
+	border-left: 2px dotted black;
+}
+.query .q-placeholder::placeholder {
+	opacity: 0.3;
+}
+
+.wordform .q-checkbox__label {
+	font-size: 0.8rem;
+}
+
+.thinhd .q-table th {
+	font-weight: 300;
+	font-size: 0.7rem;
+}
+
+.q-table tr.unread {
+	font-weight: bold;
+	> td:first-child {
+		border-left: 3px solid $primary;
+	}
+}
+
+.notific {
+	max-width: 800px;
+	height: 100%;
+	margin: 0 auto;
+}
+.fab {
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	z-index: 6005;
+	transition: 0.3s ease all;
+}
+.rot {
+	transform: rotate(45deg);
+}
+
+.border-primary {
+	border: 1px solid $primary;
+}
+
+.q-item__section--avatar.line {
+	margin-left: -7px;
+}
+
+.q-dialog .q-card {
+	overflow: visible;
+	position: relative;
+	.close {
+		z-index: 100;
+		position: absolute;
+		top: -1.2rem;
+		right: -1.2rem;
+	}
+}
+
+.cat .q-tree__node--selected {
+	background: $accent1;
+	color: $blue-9;
+	.text-primary {
+		div {
+			color: $blue-9;
+		}
+	}
+}
+
+.del .q-tree__icon,
+.q-tree__node-header-content .q-icon {
+	font-size: 13px;
+}
+
+body.desktop .nohov .q-focus-helper {
+	transition: none;
+}
+
+.stikytable {
+	height: 365px;
+	thead tr th {
+		position: sticky;
+		z-index: 1;
+		background: #fff;
+	}
+	thead tr:first-child th {
+		top: 0;
+	}
+}
+.pink {
+	background: pink;
+	color: darkred;
+}
