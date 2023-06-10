@@ -7,11 +7,6 @@ q-drawer(v-model="props.show" side="left" :mini="mystore.mini" :width="200")
 			q-item-section
 				q-item-label {{ page.title }}
 
-	<VOnboardingWrapper ref="wrapper" :steps="steps" />
-	<div>
-		<button id="foo" @click="start">Welcome</button>
-	</div>
-
 	q-btn(round flat dense  @click="mystore.toggleMini").mini.gt-sm
 		q-icon(name="mdi-backburger" v-if="!mystore.mini")
 		q-icon(name="mdi-forwardburger" v-else)
@@ -19,10 +14,7 @@ q-drawer(v-model="props.show" side="left" :mini="mystore.mini" :width="200")
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useStore } from '@/stores/store'
-import { VOnboardingWrapper, useVOnboarding } from 'v-onboarding'
-import 'v-onboarding/dist/style.css'
 
 const props = defineProps({
 	show: {
@@ -30,12 +22,6 @@ const props = defineProps({
 		default: true,
 	},
 })
-
-const steps = [
-	{ attachTo: { element: '#foo' }, content: { title: "Welcome!" } }
-]
-const wrapper = ref()
-const { start, goToStep, finish } = useVOnboarding(wrapper)
 
 const mystore = useStore()
 
@@ -71,7 +57,6 @@ const pages = [
 		url: '/categories',
 	},
 ]
-// export default {
 </script>
 
 <style scoped lang="scss">

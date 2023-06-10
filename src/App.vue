@@ -11,6 +11,9 @@ import Login from '@/components/Login.vue'
 import SiriWave from 'siriwave'
 import { router } from './router/router'
 
+import { VOnboardingWrapper, useVOnboarding } from 'v-onboarding'
+import 'v-onboarding/dist/style.css'
+
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
 
@@ -38,6 +41,18 @@ const refresh = () => {
 		isLoading.value = false
 	}, 3000)
 }
+
+const steps = [
+	{ attachTo: { element: '#foo' }, content: { title: "Welcome!" } },
+	// { attachTo: { element: '#foo1' }, content: { title: "Next" } },
+	// { attachTo: { element: '#foo2' }, content: { title: "Next" } },
+]
+const wrapper = ref()
+const { start, goToStep, finish } = useVOnboarding(wrapper)
+const startBoarding = (() => {
+	console.log(111)
+	start()
+})
 </script>
 
 <template lang="pug">
@@ -82,9 +97,10 @@ template(v-if="isLogged")
 
 		Drawer(:show="mystore.leftDrawer")
 		DateDrawer
-		KeyDrawer
+		KeyDrawer(@start="startBoarding")
 		NotificationDrawer
 		SpeechDrawer
+		<VOnboardingWrapper ref="wrapper" :steps="steps" />
 
 		q-page-container
 			router-view
