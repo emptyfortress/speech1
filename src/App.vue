@@ -45,9 +45,8 @@ template(v-if="isLogged")
 	q-layout(view="hHh LpR fFf")
 		q-header().head
 			q-toolbar(shrink)
-				SvgIcon(name="sound")
 				q-btn(dense flat round  @click="toggleLeftDrawer")
-					// img(src="@/public/assets/img/logo.svg")
+					SvgIcon(name="sound" color="#1565c0")
 
 				q-toolbar-title(@click="toggleLeftDrawer").gt-sm.cursor-pointer
 					span.hd Речевая платформа Speech Drive

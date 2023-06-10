@@ -40,9 +40,9 @@ svg.icon {
 	height: 1.5em;
 	vertical-align: middle;
 	margin-bottom: 0.125em;
-	// margin-right: 0.5em;
 	fill: #666;
 }
+
 body.body--dark svg.icon {
 	fill: #ab9073;
 }
@@ -55,6 +55,7 @@ svg.icon-spin {
 	from {
 		transform: rotate(0deg);
 	}
+
 	to {
 		transform: rotate(359deg);
 	}
