@@ -10,7 +10,7 @@
 				template(v-slot:prepend)
 					q-icon(name="mdi-magnify")
 	q-card-section
-		q-chip(v-for="(item,index) in filteredChips"
+		q-chip(v-for="(item, index) in filteredChips"
 			v-model:selected="item.selected"
 			:key="item.id"
 			:removable="editMode"
@@ -21,11 +21,12 @@
 			.inf(@click.stop) ?
 				q-menu(transition-show="jump-down" transition-hide="jump-up" anchor="bottom middle" self="top middle")
 					.infmenu
-						.zg {{item.label}}
+						.zg {{ item.label }}
 						.desc(v-html="item.comment")
 						.desc.q-mt-md Создано: 23.10.2022 Автор: Иванов П.С.
-			WordHighlighter(:query="filter").ellipsis {{ item.label }}
-			q-tooltip(v-if="props.tooltip" anchor="top middle" self="bottom middle" :delay="800") {{ item.label}}
+			.ellipsis
+				WordHighlighter(:query="filter") {{ item.label }}
+			q-tooltip(v-if="props.tooltip" anchor="top middle" self="bottom middle" :delay="800") {{ item.label }}
 </template>
 
 <script setup lang="ts">
@@ -108,35 +109,44 @@ const click = (e: Chip) => {
 //@import '@/assets/css/colors.scss';
 .starred {
 	padding: 0;
+
 	.q-card__section {
 		padding: 1rem 0 0 0;
 	}
 }
+
 .q-field--dense {
 	height: 32px;
 }
+
 .q-chip {
 	max-width: 200px;
 }
+
 .subtitle-1 {
 	cursor: pointer;
+
 	.editicon {
 		display: none;
 		margin-left: 0.5rem;
 	}
+
 	&:hover {
 		.editicon {
 			display: inline-block;
 		}
 	}
 }
+
 .q-icon {
 	margin-bottom: 3px;
 }
+
 .q-input {
 	transform: translateY(-7px);
 	width: 230px;
 }
+
 .inf {
 	color: $primary;
 	position: absolute;
@@ -151,12 +161,15 @@ const click = (e: Chip) => {
 	font-weight: bold;
 	line-height: 20px;
 }
+
 .infmenu {
 	padding: 1rem;
+
 	.zg {
 		font-size: 0.9rem;
 		font-weight: bold;
 	}
+
 	.desc {
 		font-size: 0.8rem;
 	}
