@@ -18,6 +18,9 @@ export default defineConfig({
 				// 	isCustomElement: (tag) => tag.includes('apex'),
 				// },
 			},
+			script: {
+				defineModel: true
+			}
 		}),
 		quasar({
 			sassVariables: 'src/quasar-variables.scss',

@@ -19,14 +19,14 @@
 					q-item-section(side v-if="scope.opt.voc")
 						component(:is="SvgIcon" name="vocabulary").lib
 					q-item-section
-						q-item-label {{scope.opt.label}}
+						q-item-label {{ scope.opt.label }}
 			template(v-slot:no-option)
 				q-item.text-grey
 					q-item-section No results
 
-	MySelect(label="Тип искомых слов" :model="typmodel" :options="typ")
-	MySelect(label="Положение слова в записи" :model="placemodel" :options="place")
-	MySelect(label="Канал" :model="channelmodel" :options="channel")
+	MySelect(label="Тип искомых слов" v-model="typmodel" :options="typ")
+	MySelect(label="Положение слова в записи" v-model="placemodel" :options="place")
+	MySelect(label="Канал" v-model="channelmodel" :options="channel")
 
 </template>
 
@@ -72,10 +72,12 @@ const clear = () => {
 	grid-template-columns: 1fr 210px 230px 130px;
 	gap: 1rem;
 }
+
 .label {
 	font-size: 0.8rem;
 	font-weight: 600;
 }
+
 .lib {
 	font-size: 0.8rem;
 }

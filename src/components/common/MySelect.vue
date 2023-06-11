@@ -4,7 +4,7 @@ div
 	q-select(dense
 		outlined
 		bg-color="white"
-		:model-value="props.model"
+		v-model="modelValue"
 		:options="props.options"
 		)
 </template>
@@ -12,10 +12,11 @@ div
 <script setup lang="ts">
 const props = defineProps({
 	label: String,
-	model: String,
 	clearable: { type: Boolean, default: false },
 	options: Array,
 })
+const modelValue = defineModel()
+
 </script>
 
 <style scoped lang="scss">

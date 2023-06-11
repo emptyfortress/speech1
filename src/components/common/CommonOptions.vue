@@ -1,9 +1,9 @@
 <template lang="pug">
 .grid
-	component(:is="MySelect" label="Регион" :model="regModel" :options="region")
-	component(:is="MySelect" label="Группа" :model="groupModel" :options="group")
-	component(:is="MySelect" label="Оператор" :model="operModel" :options="operator")
-	component(:is="MySelect" label="Период" :model="perModel" :options="period")
+	component(:is="MySelect" label="Регион" v-model="regModel" :options="region")
+	component(:is="MySelect" label="Группа" v-model="groupModel" :options="group")
+	component(:is="MySelect" label="Оператор" v-model="operModel" :options="operator")
+	component(:is="MySelect" label="Период" v-model="perModel" :options="period")
 	div
 		q-btn(flat round icon="mdi-calendar")
 			q-popup-proxy( cover transition-show="scale" transition-hide="scale")
