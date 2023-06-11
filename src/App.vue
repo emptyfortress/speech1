@@ -11,7 +11,6 @@ import Login from '@/components/Login.vue'
 import Help from '@/components/Help.vue'
 import { router } from './router/router'
 import { VOnboardingWrapper, VOnboardingStep, useVOnboarding } from 'v-onboarding'
-// import SiriWave from 'siriwave'
 
 import 'v-onboarding/dist/style.css'
 const mystore = useStore()
@@ -31,11 +30,11 @@ const refresh = () => {
 	}, 3000)
 }
 
-const steps = [
-	{ attachTo: { element: '#start' }, content: { title: "Как добавить слово в библиотеку?", description: "" } },
+const lib0_Steps = [
+	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" } },
 	// { attachTo: { element: '#step0' }, content: { title: "Счетчик", description: "Это количество слов в библиотеке." } },
 	{ attachTo: { element: '#step1' }, content: { title: "Фильтр", description: "Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра. Если такого слова нет, то появится кнопка для добавления." } },
-	{ attachTo: { element: '#step2' }, content: { title: "Добавление", description: "Получилось!" } },
+	{ attachTo: { element: '#step2' }, content: { title: "Добавление", description: "Получилось!" }, on: { afterStep: () => backToHelp() } },
 	// { attachTo: { element: '#foo2' }, content: { title: "Next" } },
 ]
 const wrapper = ref()
@@ -51,6 +50,10 @@ const options = {
 		finishButton: 'Завершить'
 	}
 }
+
+const backToHelp = (() => {
+	help.value = true
+})
 
 const help = ref(false)
 </script>
@@ -68,7 +71,7 @@ template(v-if="isLogged")
 				q-space
 				q-btn.q-mr-sm(dense flat round @click="refresh")
 					SvgIcon(name="refresh" :spin="isLoading" )
-				q-btn.q-mr-sm(dense flat round icon="mdi-book-open-page-variant-outline" @click="mystore.toggleKeyDrawer")
+				q-btn#library.q-mr-sm(dense flat round icon="mdi-book-open-page-variant-outline" @click="mystore.toggleKeyDrawer")
 				q-btn(dense flat round icon="mdi-bell-outline" @click="mystore.toggleNotificationDrawer")
 					q-badge(floating rounded color="red") 3
 				q-btn.q-mx-md(dense round unelevated)
@@ -101,7 +104,7 @@ template(v-if="isLogged")
 		KeyDrawer(@start="startBoarding")
 		NotificationDrawer
 		SpeechDrawer
-		Help(v-model="help")
+		Help(v-model="help" @start="startBoarding")
 
 		q-page-container
 			router-view
@@ -110,7 +113,7 @@ template(v-if="isLogged")
 template(v-else)
 	Login(@login="login")
 
-VOnboardingWrapper(ref="wrapper" :steps="steps" :options="options")
+VOnboardingWrapper(ref="wrapper" :steps="lib0_Steps" :options="options")
 
 </template>
 
@@ -122,15 +125,6 @@ VOnboardingWrapper(ref="wrapper" :steps="steps" :options="options")
 	background: rgba(0, 0, 0, 0.07);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
-}
-
-#siri {
-	width: 800px;
-	height: 400px;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 }
 
 .q-linear-progress {

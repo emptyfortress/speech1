@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watchEffect } from 'vue'
+import { useStore } from '@/stores/store'
 import WordHighlighter from 'vue-word-highlighter'
+
+const store = useStore()
 
 const help = defineModel<boolean>({ required: true, default: false })
 const filter = ref('')
@@ -8,8 +11,8 @@ const filter = ref('')
 const sections = reactive([
 	{
 		id: 0, icon: "mdi-book-open-page-variant-outline", expand: false, label: 'Ключевые слова', children: [
-			{ id: 0, label: 'Как создать свою библиотеку?', action: '' },
-			{ id: 1, label: 'Как добавить слово в библиотеку?', action: '' },
+			{ id: 0, label: 'Как создать свою библиотеку?', action: () => lib0() },
+			{ id: 1, label: 'Как добавить слово в библиотеку?' },
 		]
 	},
 	{ id: 1, icon: "mdi-finance", expand: false, label: 'Отчеты' },
@@ -17,6 +20,12 @@ const sections = reactive([
 	{ id: 3, icon: "mdi-check-all", expand: false, label: 'Чек-листы' },
 	{ id: 4, icon: "mdi-lan", expand: false, label: 'Темы' },
 ])
+const emit = defineEmits(['start'])
+
+const lib0 = (() => {
+	help.value = false
+	emit('start')
+})
 
 const filterByLabel = (array: any, searchTerm: string) => {
 	return array.reduce((prev: any, curr: any) => {
@@ -67,7 +76,7 @@ q-dialog(v-model="help" persistent)
 						q-card
 							q-card-section(v-if="sec.children")
 								q-list
-									q-item(clickable v-for="item in sec.children" :key="sec.id")
+									q-item(clickable v-for="item in sec.children" :key="sec.id" @click="item.action")
 										q-item-section
 											q-item-label
 												WordHighlighter(:query="filter")  {{ item.label }}

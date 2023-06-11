@@ -3,7 +3,8 @@
 @import '@/assets/styles/animation.scss';
 
 :root {
-	 // --v-onboarding-overlay-z: 30;
+	 --v-onboarding-overlay-z: 2050;
+	--v-onboarding-step-z: 2100;
 }
 
 body {

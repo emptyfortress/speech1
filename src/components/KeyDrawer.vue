@@ -1,7 +1,6 @@
 <template lang="pug">
 q-drawer.rd(v-model="mystore.keyDrawer" overlay side="right" :width="300" )
 	.bt
-		q-btn#start(unelevated flat round icon="mdi-help-circle-outline" color="primary" @click="start") 
 		q-btn(unelevated flat round icon="mdi-close" color="primary" @click="mystore.keyDrawer = false" ) 
 	component(:is="KeywordList")
 </template>
