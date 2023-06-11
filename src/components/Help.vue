@@ -39,6 +39,10 @@ q-dialog(v-model="help" persistent)
 								q-list
 									q-item(clickable v-for="item in sec.children" :key="sec.id")
 										q-item-section {{ item.label }}
+							q-card-section(v-else)
+								.wip
+									img(src="@/assets/img/vlc.svg")
+									div Раздел в разработке
 </template>
 
 <style scoped lang="scss">
@@ -61,5 +65,16 @@ q-dialog(v-model="help" persistent)
 
 .q-input {
 	width: 200px;
+}
+
+.wip {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+
+	img {
+		height: 36px;
+	}
 }
 </style>
