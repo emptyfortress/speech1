@@ -22,10 +22,20 @@ export const useStore = defineStore({
 		wide: false,
 		recordPanel: false,
 		loading: false,
+		help: false,
 	}),
 	getters: {},
 
 	actions: {
+		toggleHelp() {
+			this.help = !this.help
+		},
+		closeHelp() {
+			this.help = false
+		},
+		openHelp() {
+			this.help = true
+		},
 		setLoading() {
 			this.loading = true
 			setTimeout(() => {

@@ -5,7 +5,7 @@ import WordHighlighter from 'vue-word-highlighter'
 
 const store = useStore()
 
-const help = defineModel<boolean>({ required: true, default: false })
+// const help = defineModel<boolean>({ required: true, default: false })
 const filter = ref('')
 
 const sections = reactive([
@@ -23,7 +23,7 @@ const sections = reactive([
 const emit = defineEmits(['start'])
 
 const lib0 = (() => {
-	help.value = false
+	// help.value = false
 	emit('start')
 })
 
@@ -58,9 +58,9 @@ watchEffect(() => {
 </script>
 
 <template lang="pug">
-q-dialog(v-model="help" persistent)
+q-dialog(v-model="store.help" persistent)
 	q-card.main(style="width: 800px; max-width: 80vw;")
-		q-btn.close(round color="negative" icon="mdi-close" @click="help = false")
+		q-btn.close(round color="negative" icon="mdi-close" @click="store.closeHelp")
 		q-card-section
 			.row.justify-between
 				.zg

@@ -9,13 +9,7 @@ q-drawer.rd(v-model="mystore.keyDrawer" overlay side="right" :width="300" )
 import { useStore } from '@/stores/store'
 import KeywordList from '@/components/KeywordList.vue'
 
-const emit = defineEmits(['start'])
-
 const mystore = useStore()
-
-const start = (() => {
-	emit('start')
-})
 </script>
 
 <style scoped lang="scss">

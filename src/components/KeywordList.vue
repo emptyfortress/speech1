@@ -1,7 +1,7 @@
 <template lang="pug">
 .zg
 	div Библиотека
-	q-badge#step0 {{ items.length }}
+	q-badge {{ items.length }}
 #step1
 	q-input(ref="input" dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
 		template(v-slot:prepend)

@@ -8,11 +8,9 @@ import KeyDrawer from '@/components/KeyDrawer.vue'
 import NotificationDrawer from '@/components/NotificationDrawer.vue'
 import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
-import Help from '@/components/Help.vue'
 import { router } from './router/router'
-import { VOnboardingWrapper, VOnboardingStep, useVOnboarding } from 'v-onboarding'
+import OnboardLib from '@/components/OnboardLib.vue'
 
-import 'v-onboarding/dist/style.css'
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
 
@@ -30,32 +28,6 @@ const refresh = () => {
 	}, 3000)
 }
 
-const lib0_Steps = [
-	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" } },
-	// { attachTo: { element: '#step0' }, content: { title: "Счетчик", description: "Это количество слов в библиотеке." } },
-	{ attachTo: { element: '#step1' }, content: { title: "Фильтр", description: "Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра. Если такого слова нет, то появится кнопка для добавления." } },
-	{ attachTo: { element: '#step2' }, content: { title: "Добавление", description: "Получилось!" }, on: { afterStep: () => backToHelp() } },
-	// { attachTo: { element: '#foo2' }, content: { title: "Next" } },
-]
-const wrapper = ref()
-const { start, goToStep, finish } = useVOnboarding(wrapper)
-const startBoarding = (() => {
-	start()
-})
-
-const options = {
-	labels: {
-		previousButton: 'Назад',
-		nextButton: 'Дальше',
-		finishButton: 'Завершить'
-	}
-}
-
-const backToHelp = (() => {
-	help.value = true
-})
-
-const help = ref(false)
 </script>
 
 <template lang="pug">
@@ -95,25 +67,22 @@ template(v-if="isLogged")
 								q-item-section(avatar)
 									q-icon(name="mdi-location-exit")
 								q-item-section Выйти
-				q-btn(dense flat round icon="mdi-help-circle-outline" @click="help = !help")
+				q-btn(dense flat round icon="mdi-help-circle-outline" @click="mystore.openHelp")
 
 			q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
 
 		Drawer(:show="mystore.leftDrawer")
 		DateDrawer
-		KeyDrawer(@start="startBoarding")
+		KeyDrawer
 		NotificationDrawer
 		SpeechDrawer
-		Help(v-model="help" @start="startBoarding")
 
 		q-page-container
 			router-view
-		// transition(name="fade")
-		// 	#siri(v-show="isLoading")
 template(v-else)
 	Login(@login="login")
 
-VOnboardingWrapper(ref="wrapper" :steps="lib0_Steps" :options="options")
+OnboardLib
 
 </template>
 
