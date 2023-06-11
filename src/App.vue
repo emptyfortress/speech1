@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, } from 'vue'
 import { useStore } from '@/stores/store'
 import SvgIcon from '@/components/SvgIcon.vue'
 import Drawer from '@/components/Drawer.vue'
@@ -8,25 +8,25 @@ import KeyDrawer from '@/components/KeyDrawer.vue'
 import NotificationDrawer from '@/components/NotificationDrawer.vue'
 import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
-import SiriWave from 'siriwave'
+import Help from '@/components/Help.vue'
 import { router } from './router/router'
+import { VOnboardingWrapper, VOnboardingStep, useVOnboarding } from 'v-onboarding'
+// import SiriWave from 'siriwave'
 
-import { VOnboardingWrapper, useVOnboarding } from 'v-onboarding'
 import 'v-onboarding/dist/style.css'
-
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
 
-onMounted(() => {
-	var siriWave1 = new SiriWave({
-		container: document.getElementById('siri')!,
-		// width: 200,
-		// height: 50,
-		style: 'ios',
-		cover: true,
-		color: '#E45BCE',
-	})
-})
+// onMounted(() => {
+// 	var siriWave1 = new SiriWave({
+// 		container: document.getElementById('siri')!,
+// 		// width: 200,
+// 		// height: 50,
+// 		style: 'ios',
+// 		cover: true,
+// 		color: '#E45BCE',
+// 	})
+// })
 
 const isLogged = ref(true)
 const login = () => {
@@ -43,16 +43,27 @@ const refresh = () => {
 }
 
 const steps = [
-	{ attachTo: { element: '#foo' }, content: { title: "Welcome!" } },
-	// { attachTo: { element: '#foo1' }, content: { title: "Next" } },
+	{ attachTo: { element: '#start' }, content: { title: "Как добавить слово в библиотеку?", description: "" } },
+	// { attachTo: { element: '#step0' }, content: { title: "Счетчик", description: "Это количество слов в библиотеке." } },
+	{ attachTo: { element: '#step1' }, content: { title: "Фильтр", description: "Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра. Если такого слова нет, то появится кнопка для добавления." } },
+	{ attachTo: { element: '#step2' }, content: { title: "Добавление", description: "Получилось!" } },
 	// { attachTo: { element: '#foo2' }, content: { title: "Next" } },
 ]
 const wrapper = ref()
 const { start, goToStep, finish } = useVOnboarding(wrapper)
 const startBoarding = (() => {
-	console.log(111)
 	start()
 })
+
+const options = {
+	labels: {
+		previousButton: 'Назад',
+		nextButton: 'Дальше',
+		finishButton: 'Завершить'
+	}
+}
+
+const help = ref(true)
 </script>
 
 <template lang="pug">
@@ -92,6 +103,7 @@ template(v-if="isLogged")
 								q-item-section(avatar)
 									q-icon(name="mdi-location-exit")
 								q-item-section Выйти
+				q-btn(dense flat round icon="mdi-help-circle-outline" @click="help = !help")
 
 			q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
 
@@ -100,14 +112,16 @@ template(v-if="isLogged")
 		KeyDrawer(@start="startBoarding")
 		NotificationDrawer
 		SpeechDrawer
-		<VOnboardingWrapper ref="wrapper" :steps="steps" />
+		Help(v-model="help")
 
 		q-page-container
 			router-view
-		transition(name="fade")
-			#siri(v-show="isLoading")
+		// transition(name="fade")
+		// 	#siri(v-show="isLoading")
 template(v-else)
 	Login(@login="login")
+
+VOnboardingWrapper(ref="wrapper" :steps="steps" :options="options")
 
 </template>
 
@@ -116,7 +130,6 @@ template(v-else)
 
 .head {
 	color: $text-bright;
-	// background: $bgMain;
 	background: rgba(0, 0, 0, 0.07);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
@@ -139,7 +152,16 @@ template(v-else)
 
 .hd {
 	color: #777;
-	// text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
-	// font-weight: 600;
+}
+
+:deep(.v-onboarding-item__actions button.v-onboarding-btn-primary) {
+	background: $primary;
+}
+
+:deep(.v-onboarding-item__header-close) {
+	svg {
+		width: 10px;
+		height: 10px;
+	}
 }
 </style>

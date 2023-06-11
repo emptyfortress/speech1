@@ -1,21 +1,22 @@
 <template lang="pug">
 .zg
 	div Библиотека
-	q-badge {{ items.length }}
-q-input(ref="input" dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
-	template(v-slot:prepend)
-		q-icon(name="mdi-magnify")
+	q-badge#step0 {{ items.length }}
+#step1
+	q-input(ref="input" dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
+		template(v-slot:prepend)
+			q-icon(name="mdi-magnify")
 q-list(dense)
 	template(v-if="editMode && currentVoc")
 		q-card.full-background
 			q-item(clickable dense)
 				q-item-section(side)
 					component(:is="SvgIcon" name="vocabulary").voc
-				q-item-section {{currentVoc.label}}
+				q-item-section {{ currentVoc.label }}
 				q-item-section(side)
 					q-icon(name="mdi-arrow-up-right" size="xs" dense @click="save")
 			q-item(v-for="item in selection" clickable :key="item" dense)
-				q-item-section {{item}}
+				q-item-section {{ item }}
 				q-item-section(side)
 					q-icon(name="mdi-close" size="xs" @click="removeFromVoc(item)").hov
 
@@ -39,7 +40,7 @@ q-list(dense)
 										q-item-section Удалить
 
 	template(v-if="filteredItems.length === 0")
-		.notfound
+		.notfound#step2
 			q-icon(name="mdi-emoticon-tongue-outline" size="sm" color="primary")
 			span.q-mx-sm Ничего нет.
 			q-btn(color="primary" label="Добавить" size="sm" unelevated @click="add")
@@ -194,40 +195,50 @@ const save = () => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
+
 .rel {
 	position: relative;
+
 	.plus {
 		position: absolute;
 		top: -3px;
 		right: 23px;
 	}
 }
+
 .q-list--dense {
 	font-size: 0.9rem;
+
 	.q-item {
 		padding-left: 6px;
 		padding-right: 6px;
 	}
 }
+
 .q-input {
 	transform: translateY(-7px);
 }
+
 .q-field--dense {
 	height: 32px;
 }
+
 .q-item {
 	.hov {
 		display: none;
 	}
+
 	&:hover {
 		.hov {
 			display: block;
 		}
 	}
 }
+
 .q-notification-message {
 	background: red;
 }
+
 .zg {
 	margin-bottom: 1rem;
 	font-size: 0.9rem;
@@ -235,14 +246,17 @@ const save = () => {
 	justify-content: flex-start;
 	gap: 1rem;
 }
+
 .notfound {
 	margin-top: 1rem;
 	font-size: 0.9rem;
 }
+
 .voc {
 	font-size: 0.8rem;
 	margin-right: 0.5rem;
 }
+
 .addvoc {
 	position: fixed;
 	bottom: 0;
@@ -252,16 +266,20 @@ const save = () => {
 	padding: 0.5rem;
 	color: white;
 }
+
 .total {
 	margin-bottom: 0.5rem;
+
 	span {
 		margin: 0 1rem;
 		font-size: 1.2rem;
 	}
+
 	.q-btn {
 		transform: translateY(-2px);
 	}
 }
+
 .full-background {
 	--c: #d9ecfa;
 	background: var(--c);
@@ -271,6 +289,7 @@ const save = () => {
 	margin-bottom: 1rem;
 	margin-top: 0.5rem;
 }
+
 .q-item__section--avatar {
 	padding-right: 0;
 }
@@ -279,6 +298,7 @@ const save = () => {
 .sortable-drag {
 	background: $bgMain;
 	border: 1px solid $primary;
+
 	.q-checkbox,
 	.q-icon {
 		visibility: hidden;
