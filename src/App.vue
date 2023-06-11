@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, } from 'vue'
+import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import SvgIcon from '@/components/SvgIcon.vue'
 import Drawer from '@/components/Drawer.vue'
@@ -16,17 +16,6 @@ import { VOnboardingWrapper, VOnboardingStep, useVOnboarding } from 'v-onboardin
 import 'v-onboarding/dist/style.css'
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
-
-// onMounted(() => {
-// 	var siriWave1 = new SiriWave({
-// 		container: document.getElementById('siri')!,
-// 		// width: 200,
-// 		// height: 50,
-// 		style: 'ios',
-// 		cover: true,
-// 		color: '#E45BCE',
-// 	})
-// })
 
 const isLogged = ref(true)
 const login = () => {
@@ -63,7 +52,7 @@ const options = {
 	}
 }
 
-const help = ref(true)
+const help = ref(false)
 </script>
 
 <template lang="pug">
