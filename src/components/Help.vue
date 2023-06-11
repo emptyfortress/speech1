@@ -1,14 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const help = defineModel<Boolean>({ default: false })
+const help = defineModel<boolean>({ required: true, default: false })
 const filter = ref()
 
+const sections = [
+	{
+		id: 0, icon: "mdi-book-open-page-variant-outline", label: 'Ключевые слова', children: [
+			{ id: 0, label: 'Как создать свою библиотеку?', action: '' },
+			{ id: 1, label: 'Как добавить слово в библиотеку?', action: '' },
+		]
+	},
+	{ id: 1, icon: "mdi-finance", label: 'Отчеты' },
+	{ id: 2, icon: "mdi-toy-brick-search-outline", label: 'Запросы' },
+	{ id: 3, icon: "mdi-check-all", label: 'Чек-листы' },
+	{ id: 4, icon: "mdi-lan", label: 'Темы' },
+]
 </script>
 
 <template lang="pug">
 q-dialog(v-model="help" persistent)
-	q-card(style="width: 800px; max-width: 80vw;")
+	q-card.main(style="width: 800px; max-width: 80vw;")
 		q-btn.close(round color="negative" icon="mdi-close" @click="help = false")
 		q-card-section
 			.row.justify-between
@@ -19,19 +31,26 @@ q-dialog(v-model="help" persistent)
 					template(v-slot:prepend)
 						q-icon(name="mdi-magnify")
 		q-card-section
-			q-list
-				q-item(clickable)
-					q-item-section Как создать свою библиотеку?
-				q-item(clickable)
-					q-item-section Как добавить слово в библиотеку?
-				q-item(clickable)
-					q-item-section Lorem ipsum dolor sit amet consectetur adipisicing elit
-				q-item(clickable)
-					q-item-section Iure vel nihil error distinctio nobis
+			q-scroll-area.scroll
+				q-list.q-mx-md
+					q-expansion-item(v-for="sec in sections" :key="sec.id" expand-separator :label="sec.label" :icon="sec.icon")
+						q-card
+							q-card-section(v-if="sec.children")
+								q-list
+									q-item(clickable v-for="item in sec.children" :key="sec.id")
+										q-item-section {{ item.label }}
 </template>
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
+
+.main {
+	height: 80vh;
+}
+
+.scroll {
+	height: calc(80vh - 100px);
+}
 
 .zg {
 	font-size: 1.3rem;
