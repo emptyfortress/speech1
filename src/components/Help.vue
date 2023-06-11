@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import WordHighlighter from 'vue-word-highlighter'
 
 const help = defineModel<boolean>({ required: true, default: false })
 const filter = ref()
@@ -38,7 +39,10 @@ q-dialog(v-model="help" persistent)
 							q-card-section(v-if="sec.children")
 								q-list
 									q-item(clickable v-for="item in sec.children" :key="sec.id")
-										q-item-section {{ item.label }}
+										q-item-section
+											q-item-label
+												WordHighlighter(:query="filter")  {{ item.label }}
+
 							q-card-section(v-else)
 								.wip
 									img(src="@/assets/img/vlc.svg")
