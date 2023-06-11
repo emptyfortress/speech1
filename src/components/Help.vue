@@ -31,7 +31,7 @@ const filterByLabel = (array: any, searchTerm: string) => {
 }
 
 const filtered = computed(() => {
-	if (filter.value.length > 1) {
+	if (filter.value.length > 0) {
 		return filterByLabel(sections, filter.value)
 	}
 	return sections
@@ -42,7 +42,7 @@ const expandAll = (() => {
 })
 
 watchEffect(() => {
-	if (filter.value.length > 1) {
+	if (filter.value.length > 0) {
 		expandAll()
 	}
 })
