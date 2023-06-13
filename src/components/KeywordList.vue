@@ -3,7 +3,7 @@
 	div Библиотека
 	q-badge {{ items.length }}
 #step1
-	q-input#step1(ref="input" dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
+	q-input#step1(ref="input" dense v-model="store.keywordFilter" clearable hide-bottom-space @clear="store.clearKeywordFilter")
 		template(v-slot:prepend)
 			q-icon(name="mdi-magnify")
 q-list(dense)
@@ -28,7 +28,7 @@ q-list(dense)
 					label
 						q-checkbox.q-mr-sm(v-model="selection" size="xs" dense :val="element.label")
 						component(:is="SvgIcon" name="vocabulary" v-if="element.voc" class="voc")
-						WordHighlighter(:query="filter") {{ element.label }}
+						WordHighlighter(:query="store.keywordFilter") {{ element.label }}
 
 				q-item-section(side v-if="!editMode")
 					.row
@@ -81,14 +81,12 @@ interface Keyword {
 const store = useStore()
 const selection: Ref<string[]> = ref([])
 const input = ref(null)
-// const filter = ref('')
-const filter = ref(store.keywordFilter)
 
 const items: Ref<Keyword[]> = ref(words)
 const filteredItems = computed(() => {
-	if (filter.value) {
+	if (store.keywordFilter.length > 0) {
 		return items.value.filter((item) =>
-			item.label.toLowerCase().includes(filter.value.toLowerCase())
+			item.label.toLowerCase().includes(store.keywordFilter.toLowerCase())
 		)
 	}
 	return items.value
@@ -107,18 +105,18 @@ const compare = (a: Keyword, b: Keyword) => {
 }
 
 const add = () => {
-	if (filter.value) {
+	if (store.keywordFilter) {
 		let temp = {
-			key: filter.value,
-			label: filter.value,
+			key: store.keywordFilter,
+			label: store.keywordFilter,
 			selected: false,
 			score: 4500,
 			part: '',
 		}
 		items.value.push(temp)
 		items.value.sort(compare)
-		added(filter.value)
-		filter.value = ''
+		added(store.keywordFilter)
+		store.keywordFilter = ''
 	}
 }
 

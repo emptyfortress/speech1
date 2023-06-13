@@ -36,7 +36,7 @@ const backToHelp = (() => {
 // const noWord = ref()
 
 const setFilter = (() => {
-	store.keywordFilter = 'новое слово'
+	store.setKeywordFilter('новое слово')
 })
 
 </script>

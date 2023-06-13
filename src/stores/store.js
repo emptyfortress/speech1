@@ -28,6 +28,9 @@ export const useStore = defineStore({
 	getters: {},
 
 	actions: {
+		setKeywordFilter(e) {
+			this.keywordFilter = e
+		},
 		clearKeywordFilter() {
 			this.keywordFilter = ''
 		},
