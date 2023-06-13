@@ -29,7 +29,6 @@ const options = {
 }
 
 const backToHelp = (() => {
-	store.keyDrawer = false
 	store.openHelp()
 })
 
