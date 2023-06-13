@@ -11,8 +11,8 @@ const filter = ref('')
 const sections = reactive([
 	{
 		id: 0, icon: "mdi-book-open-page-variant-outline", expand: false, label: 'Ключевые слова', children: [
-			{ id: 0, label: 'Как создать свою библиотеку?', action: () => lib0() },
-			{ id: 1, label: 'Как добавить слово в библиотеку?' },
+			{ id: 0, label: 'Как добавить слово в библиотеку?', action: () => lib0() },
+			{ id: 1, label: 'Как создать свою библиотеку?', action: () => lib0() },
 		]
 	},
 	{ id: 1, icon: "mdi-finance", expand: false, label: 'Отчеты' },

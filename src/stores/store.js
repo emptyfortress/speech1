@@ -23,10 +23,14 @@ export const useStore = defineStore({
 		recordPanel: false,
 		loading: false,
 		help: false,
+		keywordFilter: '',
 	}),
 	getters: {},
 
 	actions: {
+		clearKeywordFilter() {
+			this.keywordFilter = ''
+		},
 		toggleHelp() {
 			this.help = !this.help
 		},
@@ -63,6 +67,9 @@ export const useStore = defineStore({
 		toggleKeyDrawer() {
 			this.mini = true
 			this.keyDrawer = !this.keyDrawer
+		},
+		openKeyDrawer() {
+			this.keyDrawer = true
 		},
 		openSpeechDrawer() {
 			this.mini = true

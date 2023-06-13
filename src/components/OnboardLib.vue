@@ -8,15 +8,14 @@ import 'v-onboarding/dist/style.css'
 
 const store = useStore()
 const lib0_Steps = [
-	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" } },
-	{ attachTo: { element: '#step0' }, content: { title: "Счетчик", description: "Это количество слов в библиотеке." } },
-	{ attachTo: { element: '#step1' }, content: { title: "Фильтр", description: "Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра. Если такого слова нет, то появится кнопка для добавления." } },
-	{ attachTo: { element: '#step2' }, content: { title: "Добавление", description: "Получилось!" }, on: { afterStep: () => backToHelp() } },
-	// { attachTo: { element: '#foo2' }, content: { title: "Next" } },
+	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" }, on: { beforeStep: () => store.openKeyDrawer(), afterStep: () => setFilter() }, },
+	{ attachTo: { element: '#step1' }, content: { title: "Фильтр", description: "Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра. Если такого слова нет, то появится кнопка для добавления.", on: { beforeStep: () => setFilter() } } },
+	{ attachTo: { element: '#step2' }, content: { title: "Добавление", description: "Добавьте слово и оно появится вверху списка." }, on: { afterStep: () => backToHelp() } },
 ]
 const wrapper = ref()
 const { start, goToStep, finish } = useVOnboarding(wrapper)
 const startBoarding = (() => {
+	store.closeHelp()
 	start()
 })
 
@@ -32,6 +31,12 @@ const options = {
 const backToHelp = (() => {
 	store.keyDrawer = false
 	store.openHelp()
+})
+
+// const noWord = ref()
+
+const setFilter = (() => {
+	store.keywordFilter = 'новое слово'
 })
 
 </script>

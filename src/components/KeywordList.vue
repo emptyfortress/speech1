@@ -3,7 +3,7 @@
 	div Библиотека
 	q-badge {{ items.length }}
 #step1
-	q-input(ref="input" dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
+	q-input#step1(ref="input" dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
 		template(v-slot:prepend)
 			q-icon(name="mdi-magnify")
 q-list(dense)
@@ -11,14 +11,14 @@ q-list(dense)
 		q-card.full-background
 			q-item(clickable dense)
 				q-item-section(side)
-					component(:is="SvgIcon" name="vocabulary").voc
+					component(:is="SvgIcon" name="vocabulary" class="voc")
 				q-item-section {{ currentVoc.label }}
 				q-item-section(side)
 					q-icon(name="mdi-arrow-up-right" size="xs" dense @click="save")
 			q-item(v-for="item in selection" clickable :key="item" dense)
 				q-item-section {{ item }}
 				q-item-section(side)
-					q-icon(name="mdi-close" size="xs" @click="removeFromVoc(item)").hov
+					q-icon.hov(name="mdi-close" size="xs" @click="removeFromVoc(item)")
 
 
 	component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" )
@@ -26,17 +26,17 @@ q-list(dense)
 			q-item(clickable dense)
 				q-item-section
 					label
-						q-checkbox(v-model="selection" size="xs" dense :val="element.label").q-mr-sm
-						component(:is="SvgIcon" name="vocabulary" v-if="element.voc").voc
+						q-checkbox.q-mr-sm(v-model="selection" size="xs" dense :val="element.label")
+						component(:is="SvgIcon" name="vocabulary" v-if="element.voc" class="voc")
 						WordHighlighter(:query="filter") {{ element.label }}
 
 				q-item-section(side v-if="!editMode")
 					.row
-						q-icon(name="mdi-pencil" size="xs" @click="edit(element)" v-if="element.voc").q-mr-sm.hov
-						q-icon(name="mdi-trash-can-outline" size="xs" @click="").hov
+						q-icon.q-mr-sm.hov(name="mdi-pencil" size="xs" @click="edit(element)" v-if="element.voc")
+						q-icon.hov(name="mdi-trash-can-outline" size="xs" @click="")
 							q-menu
 								q-list
-									q-item(clickable @click="remove(element)" v-close-popup).pink
+									q-item.pink(clickable @click="remove(element)" v-close-popup)
 										q-item-section Удалить
 
 	template(v-if="filteredItems.length === 0")
@@ -66,6 +66,7 @@ import { useQuasar } from 'quasar'
 import { words } from '@/stores/list'
 import SvgIcon from '@/components/SvgIcon.vue'
 import WordHighlighter from 'vue-word-highlighter'
+import { useStore } from '@/stores/store'
 
 interface Keyword {
 	key?: string
@@ -77,9 +78,11 @@ interface Keyword {
 	voc?: boolean
 }
 
+const store = useStore()
 const selection: Ref<string[]> = ref([])
 const input = ref(null)
-const filter = ref('')
+// const filter = ref('')
+const filter = ref(store.keywordFilter)
 
 const items: Ref<Keyword[]> = ref(words)
 const filteredItems = computed(() => {
