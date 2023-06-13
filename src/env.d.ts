@@ -7,4 +7,6 @@ declare module '*.vue' {
 	export default component
 }
 
-declare module '@globalhive/vuejs-tour'
+// declare module '@globalhive/vuejs-tour'
+declare module 'v-onboarding'
+declare module 'vue-create-ripple'
