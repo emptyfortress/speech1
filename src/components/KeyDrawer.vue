@@ -1,7 +1,7 @@
 <template lang="pug">
 q-drawer.rd(v-model="mystore.keyDrawer" overlay side="right" :width="300" )
 	.bt
-		q-btn(unelevated flat round icon="mdi-close" color="primary" @click="mystore.keyDrawer = false" ) 
+		q-btn(unelevated round icon="mdi-close" color="primary" @click="mystore.keyDrawer = false" size="sm") 
 	component(:is="KeywordList")
 </template>
 
@@ -23,7 +23,7 @@ const mystore = useStore()
 
 .bt {
 	position: absolute;
-	right: 1.1rem;
-	top: 0.3rem;
+	right: 1.3rem;
+	top: 0.6rem;
 }
 </style>
