@@ -2,6 +2,7 @@
 import { computed, reactive, ref, watchEffect } from 'vue'
 import { useStore } from '@/stores/store'
 import WordHighlighter from 'vue-word-highlighter'
+import SvgIcon from './SvgIcon.vue';
 
 const store = useStore()
 
@@ -85,6 +86,12 @@ q-dialog(v-model="store.help" persistent)
 								.wip
 									img(src="@/assets/img/vlc.svg")
 									div Раздел в разработке
+
+				br
+				q-card-section
+					p 
+						SvgIcon.q-mr-md(name="sound")
+						a(href="") Полное руководство Speech-drive
 </template>
 
 <style scoped lang="scss">
