@@ -54,11 +54,9 @@ export const useStore = defineStore({
 		},
 		toggleSetup() {
 			this.sett = !this.sett
-			console.log(444)
 		},
 		toggleIntegral() {
 			this.iintegral = !this.integral
-			console.log(444)
 		},
 		toggleDateDrawer() {
 			this.mini = true
@@ -90,7 +88,6 @@ export const useStore = defineStore({
 		},
 		closeLeftDrawer() {
 			this.leftDrawer = false
-			console.log('fuck')
 		},
 		toggleMini() {
 			this.mini = !this.mini

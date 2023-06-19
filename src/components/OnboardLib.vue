@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useStore } from '@/stores/store'
+import { useOnboard } from '@/stores/onboard'
 import { VOnboardingWrapper, VOnboardingStep, useVOnboarding } from 'v-onboarding'
 import Help from '@/components/Help.vue'
 
 import 'v-onboarding/dist/style.css'
 
 const store = useStore()
+const onboard = useOnboard()
+
 const lib0_Steps = [
 	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" }, on: { beforeStep: () => store.openKeyDrawer(), afterStep: () => setFilter() }, },
 	{ attachTo: { element: '#step1' }, content: { title: "Фильтр", description: "Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра. Если такого слова нет, то появится кнопка для добавления.", on: { beforeStep: () => setFilter() } } },
@@ -15,7 +18,7 @@ const lib0_Steps = [
 const wrapper = ref()
 const { start, goToStep, finish } = useVOnboarding(wrapper)
 const startBoarding = (() => {
-	store.closeHelp()
+	store.toggleHelp()
 	start()
 })
 
@@ -29,10 +32,10 @@ const options = {
 }
 
 const backToHelp = (() => {
+	onboard.toggle()
 	store.openHelp()
 })
 
-// const noWord = ref()
 
 const setFilter = (() => {
 	store.setKeywordFilter('новое слово')
@@ -60,5 +63,10 @@ Help(@start="startBoarding")
 		content: '\D7';
 		font-size: 1.3rem;
 	}
+}
+
+:deep([data-popper-arrow]:before) {
+	border-top: 1px solid black;
+	border-left: 1px solid black;
 }
 </style>

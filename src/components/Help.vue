@@ -11,15 +11,15 @@ const filter = ref('')
 
 const sections = reactive([
 	{
-		id: 0, icon: "mdi-book-open-page-variant-outline", expand: false, label: 'Ключевые слова', children: [
+		id: 0, icon: "mdi-book-open-page-variant-outline", expand: false, label: 'Ключевые слова', disable: false, children: [
 			{ id: 0, label: 'Как добавить слово в библиотеку?', action: () => lib0() },
 			{ id: 1, label: 'Как создать свою библиотеку?', action: () => lib0() },
 		]
 	},
-	{ id: 1, icon: "mdi-finance", expand: false, label: 'Отчеты' },
-	{ id: 2, icon: "mdi-toy-brick-search-outline", expand: false, label: 'Запросы' },
-	{ id: 3, icon: "mdi-check-all", expand: false, label: 'Чек-листы' },
-	{ id: 4, icon: "mdi-lan", expand: false, label: 'Темы' },
+	{ id: 1, icon: "mdi-finance", expand: false, label: 'Отчеты (в разработке)', disable: true },
+	{ id: 2, icon: "mdi-toy-brick-search-outline", expand: false, label: 'Запросы (в разработке)', disable: true },
+	{ id: 3, icon: "mdi-check-all", expand: false, label: 'Чек-листы (в разработке)', disable: true },
+	{ id: 4, icon: "mdi-lan", expand: false, label: 'Темы (в разработке)', disable: true },
 ])
 const emit = defineEmits(['start'])
 
@@ -73,7 +73,7 @@ q-dialog(v-model="store.help" persistent)
 		q-card-section
 			q-scroll-area.scroll
 				q-list.q-mx-md
-					q-expansion-item(v-model="sec.expand" v-for="sec in filtered" :key="sec.id" :label="sec.label" :icon="sec.icon")
+					q-expansion-item(v-model="sec.expand" v-for="sec in filtered" :key="sec.id" :label="sec.label" :icon="sec.icon" :disable="sec.disable")
 						q-card
 							q-card-section(v-if="sec.children")
 								q-list

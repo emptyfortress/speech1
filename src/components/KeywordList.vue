@@ -59,7 +59,7 @@ transition(name="slide-bottom")
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import draggable from 'vuedraggable'
 import type { Ref } from 'vue'
 import { useQuasar } from 'quasar'
@@ -67,6 +67,7 @@ import { words } from '@/stores/list'
 import SvgIcon from '@/components/SvgIcon.vue'
 import WordHighlighter from 'vue-word-highlighter'
 import { useStore } from '@/stores/store'
+import { useOnboard } from '@/stores/onboard'
 
 interface Keyword {
 	key?: string
@@ -78,6 +79,7 @@ interface Keyword {
 	voc?: boolean
 }
 
+const onboard = useOnboard()
 const store = useStore()
 const selection: Ref<string[]> = ref([])
 const input = ref(null)
@@ -119,6 +121,12 @@ const add = () => {
 		store.keywordFilter = ''
 	}
 }
+
+watchEffect(() => {
+	if (onboard.addNewWord === true) {
+		add()
+	}
+})
 
 const undo = (e: Keyword) => {
 	items.value.push(e)
