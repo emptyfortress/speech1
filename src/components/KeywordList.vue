@@ -129,6 +129,9 @@ watchEffect(() => {
 	else if (onboard.addVoc === true) {
 		selection.value.push('здравствуйте')
 	}
+	else if (onboard.addVoc === false) {
+		selection.value = []
+	}
 })
 
 const undo = (e: Keyword) => {

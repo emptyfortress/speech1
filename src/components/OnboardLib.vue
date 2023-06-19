@@ -16,8 +16,8 @@ const keyword_Steps = [
 ]
 
 const voc_Steps = [
-	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" }, on: { beforeStep: () => store.openKeyDrawer() }, },
-	{ attachTo: { element: '#voc' }, content: { title: "Cловарь", description: "Словарь имеет иконку в виде книжки. Для создания словаря - выберите слова (или словари) при помощи чекбоксов", }, on: { afterStep: () => setVoc() } },
+	{ attachTo: { element: '#library' }, content: { title: "Откройте библиотеку", description: "" }, on: { beforeStep: () => setVoc() }, },
+	{ attachTo: { element: '#voc' }, content: { title: "Cловарь", description: "Словарь имеет иконку в виде книжки. Для создания словаря - выберите слова (или словари) при помощи чекбоксов", }, },
 	{ attachTo: { element: '#dialog' }, content: { title: "Добавление", description: "Введите название словаря и добавьте его. Он появится в списке доступных.", }, on: { afterStep: () => backToHelp() } },
 ]
 const wrapper = ref()
@@ -47,6 +47,7 @@ const backToHelp = (() => {
 })
 
 const setVoc = (() => {
+	store.openKeyDrawer()
 	onboard.toggleVoc()
 })
 
@@ -86,6 +87,6 @@ Help(@start="startBoarding")
 }
 
 :deep([data-popper-arrow]:before) {
-	border: 1px solid black;
+	background: red;
 }
 </style>
