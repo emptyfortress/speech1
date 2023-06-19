@@ -23,7 +23,7 @@ q-list(dense)
 
 	component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" )
 		template(#item="{ element }")
-			q-item(clickable dense)
+			q-item#voc(clickable dense)
 				q-item-section
 					label
 						q-checkbox.q-mr-sm(v-model="selection" size="xs" dense :val="element.label")
@@ -46,7 +46,7 @@ q-list(dense)
 			q-btn(color="primary" label="Добавить" size="sm" unelevated @click="add")
 
 transition(name="slide-bottom")
-	.addvoc(v-show="selection.length > 0 && !editMode")
+	.addvoc#dialog(v-show="selection.length > 0 && !editMode")
 		.total
 			|Выбрано:
 			span {{ calcKeys }}
@@ -125,6 +125,9 @@ const add = () => {
 watchEffect(() => {
 	if (onboard.addNewWord === true) {
 		add()
+	}
+	else if (onboard.addVoc === true) {
+		selection.value.push('здравствуйте')
 	}
 })
 

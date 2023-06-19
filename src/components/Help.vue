@@ -3,8 +3,10 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { useStore } from '@/stores/store'
 import WordHighlighter from 'vue-word-highlighter'
 import SvgIcon from './SvgIcon.vue';
+import { useOnboard } from '@/stores/onboard'
 
 const store = useStore()
+const onboard = useOnboard()
 
 // const help = defineModel<boolean>({ required: true, default: false })
 const filter = ref('')
@@ -12,8 +14,8 @@ const filter = ref('')
 const sections = reactive([
 	{
 		id: 0, icon: "mdi-book-open-page-variant-outline", expand: false, label: 'Ключевые слова', disable: false, children: [
-			{ id: 0, label: 'Как добавить слово в библиотеку?', action: () => lib0() },
-			{ id: 1, label: 'Как создать свою библиотеку?', action: () => lib0() },
+			{ id: 0, label: 'Как добавить слово в библиотеку?', action: () => start(0) },
+			{ id: 1, label: 'Как создать свой словарь?', action: () => start(1) },
 		]
 	},
 	{ id: 1, icon: "mdi-finance", expand: false, label: 'Отчеты (в разработке)', disable: true },
@@ -23,8 +25,8 @@ const sections = reactive([
 ])
 const emit = defineEmits(['start'])
 
-const lib0 = (() => {
-	// help.value = false
+const start = ((e: number) => {
+	onboard.setScene(e)
 	emit('start')
 })
 
