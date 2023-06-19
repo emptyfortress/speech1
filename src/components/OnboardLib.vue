@@ -46,4 +46,19 @@ VOnboardingWrapper(ref="wrapper" :steps="lib0_Steps" :options="options")
 Help(@start="startBoarding")
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(button.v-onboarding-item__header-close) {
+	background: #ccc;
+	border: none;
+	cursor: pointer;
+
+	svg {
+		display: none;
+	}
+
+	&::after {
+		content: '\D7';
+		font-size: 1.3rem;
+	}
+}
+</style>
