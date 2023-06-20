@@ -10,8 +10,8 @@ q-page(padding)
 			q-card-section
 				Chiplist(:chips="starredReports" :multiple="true" :tooltip="true")
 					template(v-slot:header)
-						q-icon(name="mdi-star-outline").q-mr-sm
-						|Избранное
+						q-icon(name="mdi-pin-outline").q-mr-sm
+						|Мои отчеты
 
 				Options
 				Options1

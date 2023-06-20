@@ -1,6 +1,6 @@
 <template lang="pug">
-q-page(padding).rel
-	q-btn(round color="primary" icon="mdi-plus" size="lg" @click="openDialog" :class="{rot : dialog}").fab
+q-page.rel(padding)
+	q-btn.fab(round color="primary" icon="mdi-plus" size="lg" @click="openDialog" :class="{ rot: dialog }")
 	.container
 		q-expansion-item(v-model="mystore.req")
 			template(v-slot:header)
@@ -11,7 +11,7 @@ q-page(padding).rel
 			q-card-section
 				component(:is="Chiplist" :chips="chips" :multiple="false" :tooltip="false")
 					template(v-slot:header)
-						q-icon(name="mdi-star-outline").q-mr-sm
+						q-icon(name="mdi-pin-outline").q-mr-sm
 						|Мои запросы
 			q-card-section.q-py-none
 				component(:is="CommonOptions")

@@ -56,6 +56,12 @@ const pages = [
 		icon: 'mdi-lan',
 		url: '/categories',
 	},
+	{
+		id: 7,
+		title: 'Избранное',
+		icon: 'mdi-star-outline',
+		url: '/star',
+	},
 ]
 </script>
 
