@@ -1,21 +1,23 @@
 <template lang="pug">
 q-expansion-item(v-model="mystore.recordPanel")
 	template(v-slot:header)
-		q-item-section(avatar).line
+		q-item-section.line(avatar)
 			q-avatar(icon="mdi-record-circle-outline" flat)
 		q-item-section
 			.zag Записи сеансов обслуживания
 	q-card-section.q-px-md
-		q-table(ref="table"
+		q-table.table(ref="table"
 			:rows="records"
 			:columns="columns"
 			:selected-rows-label="getSelectedString"
 			rows-per-page-label="Записей на странице"
 			:filter="filter"
 			:loading="mystore.loading"
-			:rows-per-page-options='shownRows').table
+			:rows-per-page-options='shownRows')
+
 			template(v-slot:loading)
 				q-inner-loading(showing color="primary" size="100px")
+
 			template(v-slot:top="props")
 				q-btn(unelevated color="grey" size="sm" label="Скачать одним архивом")
 				q-chip(v-for="chip in cat.getTags") {{ chip }}
@@ -23,21 +25,23 @@ q-expansion-item(v-model="mystore.recordPanel")
 				q-input(dense debounce="300" color="primary" v-model="filter" clearable)
 					template(v-slot:prepend)
 						q-icon(name="mdi-magnify")
-				q-btn(flat round dense :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="togg").q-ml-md
+				q-btn.q-ml-md(flat round dense :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="togg")
+
 			template(v-slot:body-selection)
+
 			template(v-slot:body="props")
-				q-tr(:props="props" @click="select(props.row)").rel
+				q-tr.rel(:props="props" @click="select(props.row)")
 					q-td(key="date" :props="props") {{ props.row.date }}
-					q-td(key="operator") {{props.row.operator}}
-					q-td(key="client") {{props.row.client}}
-					q-td(key="group") {{props.row.group}}
-					q-td(key="categ") {{props.row.categ}}
+					q-td(key="operator") {{ props.row.operator }}
+					q-td(key="client") {{ props.row.client }}
+					q-td(key="group") {{ props.row.group }}
+					q-td(key="categ") {{ props.row.categ }}
 					q-td(key="record" v-html="props.row.record")
-					q-btn(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({message: 'Запись скачана', icon: 'mdi-check'} )").dd
+					q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
 					.myplayer(v-if="selected === props.row.id")
 						q-linear-progress(:value=".6" color="positive")
-						div(v-if="!mystore.wide") {{props.row.date}}
-						div(v-if="!mystore.wide") {{props.row.operator}}
+						div(v-if="!mystore.wide") {{ props.row.date }}
+						div(v-if="!mystore.wide") {{ props.row.operator }}
 						.player
 							q-btn(round flat icon="mdi-rewind" @click.stop)
 							q-btn(round flat icon="mdi-pause" @click.stop)
@@ -45,11 +49,11 @@ q-expansion-item(v-model="mystore.recordPanel")
 						.time 02:31
 						.row.items-center
 							q-icon(name="mdi-volume-medium" size="sm")
-							q-slider(color="primary" v-model="sound").slide
+							q-slider.slide(color="primary" v-model="sound")
 							q-icon(name="mdi-volume-high" size="sm")
 
 Teleport(to="#speech")
-	.recdate(v-if="selected !== null") {{ records[selected].date}}
+	.recdate(v-if="selected !== null") {{ records[selected].date }}
 </template>
 
 <script setup lang="ts">
@@ -128,25 +132,30 @@ const columns: QTableProps['columns'] = [
 .recdate {
 	font-weight: 600;
 }
-.rel {
+
+.q-tr.rel {
 	position: relative;
 	cursor: pointer;
+
 	.dd {
 		position: absolute;
 		top: 50%;
 		right: 1rem;
-		transform: translateY();
+		transform: translateY(-50%);
 		visibility: hidden;
 	}
+
 	&:hover {
 		.dd {
 			visibility: visible;
 		}
 	}
 }
+
 td.ellipsis {
 	max-width: 400px;
 }
+
 .myplayer {
 	position: absolute;
 	top: 0;
@@ -161,11 +170,13 @@ td.ellipsis {
 	padding-left: 1rem;
 	gap: 2rem;
 	font-size: 0.9rem;
+
 	.q-linear-progress {
 		position: absolute;
 		top: 0;
 		left: 0;
 	}
+
 	.player {
 		color: white;
 		display: flex;
@@ -173,12 +184,14 @@ td.ellipsis {
 		align-items: center;
 		height: 100%;
 	}
+
 	.time {
 		font-size: 2rem;
 		font-weight: lighter;
 		letter-spacing: 1px;
 		color: white;
 	}
+
 	.slide {
 		width: 150px;
 	}

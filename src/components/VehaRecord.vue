@@ -1,20 +1,20 @@
 <template lang="pug">
 q-expansion-item(v-model="mystore.recordPanel")
 	template(v-slot:header)
-		q-item-section(avatar).line
+		q-item-section.line(avatar)
 			q-avatar(icon="mdi-record-circle-outline" flat)
 		q-item-section
 			.zag Записи сеансов обслуживания
 	q-card-section.q-px-md
-		q-table(ref="table"
+		q-table.table(ref="table"
 			:rows="records"
 			:columns="columns"
 			:selected-rows-label="getSelectedString"
 			rows-per-page-label="Записей на странице"
 			:filter="filter"
 			:pagination="pagination"
-			row-key="id"
-			).table
+			row-key="id")
+
 			template(v-slot:top="props")
 				.text-h6 Записи по вехам
 				.grid
@@ -25,19 +25,21 @@ q-expansion-item(v-model="mystore.recordPanel")
 							template(v-slot:prepend)
 								q-icon(name="mdi-magnify")
 						q-btn(flat round dense :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="togg").q-ml-md
+
 			template(v-slot:body-selection)
+
 			template(v-slot:body="props")
-				q-tr(:props="props" @click="select(props.row)").rel
+				q-tr.rel(:props="props" @click="select(props.row)")
 					q-td(key="date" :props="props") {{ props.row.date }}
-					q-td(key="operator") {{props.row.operator}}
-					q-td(key="client") {{props.row.client}}
-					q-td(key="group") {{props.row.group}}
+					q-td(key="operator") {{ props.row.operator }}
+					q-td(key="client") {{ props.row.client }}
+					q-td(key="group") {{ props.row.group }}
 					q-td(key="record" v-html="props.row.record")
-					q-btn(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({message: 'Запись скачана', icon: 'mdi-check'} )").dd
+					q-btn(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })").dd
 					.myplayer(v-if="selected === props.row.id")
 						q-linear-progress(:value=".6" color="positive")
-						div(v-if="!mystore.wide") {{props.row.date}}
-						div(v-if="!mystore.wide") {{props.row.operator}}
+						div(v-if="!mystore.wide") {{ props.row.date }}
+						div(v-if="!mystore.wide") {{ props.row.operator }}
 						.player
 							q-btn(round flat icon="mdi-rewind" @click.stop)
 							q-btn(round flat icon="mdi-pause" @click.stop)
@@ -45,7 +47,7 @@ q-expansion-item(v-model="mystore.recordPanel")
 						.time 02:31
 						.row.items-center
 							q-icon(name="mdi-volume-medium" size="sm")
-							q-slider(color="primary" v-model="sound").slide
+							q-slider.slide(color="primary" v-model="sound")
 							q-icon(name="mdi-volume-high" size="sm")
 br
 br
@@ -145,9 +147,11 @@ watchEffect(() => {
 	gap: 5rem;
 	align-items: end;
 }
+
 .q-tr.rel {
 	position: relative;
 	cursor: pointer;
+
 	.dd {
 		position: absolute;
 		top: 50%;
@@ -155,12 +159,14 @@ watchEffect(() => {
 		transform: translateY(-50%);
 		visibility: hidden;
 	}
+
 	&:hover {
 		.dd {
 			visibility: visible;
 		}
 	}
 }
+
 .myplayer {
 	position: absolute;
 	top: 0;
@@ -175,11 +181,13 @@ watchEffect(() => {
 	padding-left: 1rem;
 	gap: 2rem;
 	font-size: 0.9rem;
+
 	.q-linear-progress {
 		position: absolute;
 		top: 0;
 		left: 0;
 	}
+
 	.player {
 		color: white;
 		display: flex;
@@ -187,12 +195,14 @@ watchEffect(() => {
 		align-items: center;
 		height: 100%;
 	}
+
 	.time {
 		font-size: 2rem;
 		font-weight: lighter;
 		letter-spacing: 1px;
 		color: white;
 	}
+
 	.slide {
 		width: 150px;
 	}
