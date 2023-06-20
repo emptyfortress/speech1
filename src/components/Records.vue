@@ -31,6 +31,10 @@ q-expansion-item(v-model="mystore.recordPanel")
 
 			template(v-slot:body="props")
 				q-tr.rel(:props="props" @click="select(props.row)")
+					q-td(auto-width key="star" :props="props")
+						q-btn(flat round size="sm" @click.stop="setStar(props.row)")
+							q-icon(v-if="props.row.star === true" name="mdi-star" color="orange")
+							q-icon(v-else name="mdi-star-outline" color="grey" )
 					q-td(key="date" :props="props") {{ props.row.date }}
 					q-td(key="operator") {{ props.row.operator }}
 					q-td(key="client") {{ props.row.client }}
@@ -40,6 +44,8 @@ q-expansion-item(v-model="mystore.recordPanel")
 					q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
 					.myplayer(v-if="selected === props.row.id")
 						q-linear-progress(:value=".6" color="positive")
+						q-icon(v-if="props.row.star" name="mdi-star" size="sm")
+						q-icon(v-else name="mdi-star-outline" size="sm")
 						div(v-if="!mystore.wide") {{ props.row.date }}
 						div(v-if="!mystore.wide") {{ props.row.operator }}
 						.player
@@ -57,9 +63,9 @@ Teleport(to="#speech")
 </template>
 
 <script setup lang="ts">
-import { ref, watch, watchEffect } from 'vue'
+import { ref, reactive, watchEffect } from 'vue'
 import type { Ref } from 'vue'
-import { records } from '@/stores/operators'
+import { records as myrecords } from '@/stores/operators'
 import { useStore } from '@/stores/store'
 import { useCat } from '@/stores/category1'
 import type { QTableProps } from 'quasar'
@@ -75,6 +81,7 @@ interface Row {
 	expand: boolean
 }
 
+const records = reactive(myrecords)
 const cat = useCat()
 const table: any = ref(null)
 const shownRows = ref([10, 20, 50])
@@ -119,6 +126,7 @@ const getSelectedString = (e: number) => {
 const sound = ref(50)
 
 const columns: QTableProps['columns'] = [
+	{ name: 'star', label: '', align: 'center', field: 'star', sortable: true },
 	{ name: 'date', label: 'Дата, время', align: 'left', field: 'date', sortable: true },
 	{ name: 'operator', label: 'Оператор', align: 'left', field: 'operator', sortable: true },
 	{ name: 'client', label: 'Клиент', align: 'left', field: 'client', sortable: true },
@@ -126,6 +134,10 @@ const columns: QTableProps['columns'] = [
 	{ name: 'categ', label: 'Категория', align: 'left', field: 'categ', sortable: true },
 	{ name: 'record', label: 'Контекст', align: 'left', field: 'record', sortable: false },
 ]
+
+const setStar = ((e: any) => {
+	e.star = !e.star
+})
 </script>
 
 <style scoped lang="scss">

@@ -46,6 +46,7 @@ const records = [
 		operator: 'Екатерина',
 		client: 'Григорий',
 		expand: false,
+		star: true,
 	},
 	{
 		id: 1,
@@ -57,6 +58,7 @@ const records = [
 		operator: 'Елена',
 		client: 'Лев',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 2,
@@ -68,6 +70,7 @@ const records = [
 		operator: 'Ксения',
 		client: 'Андрей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 3,
@@ -79,6 +82,7 @@ const records = [
 		operator: 'Ирина',
 		client: 'Роман',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 4,
@@ -90,6 +94,7 @@ const records = [
 		operator: 'Ева',
 		client: 'Арсений',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 5,
@@ -101,6 +106,7 @@ const records = [
 		operator: 'Дарья',
 		client: 'Степан',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 6,
@@ -112,6 +118,7 @@ const records = [
 		operator: 'Кира',
 		client: 'Владислав',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 7,
@@ -123,6 +130,7 @@ const records = [
 		operator: 'Елизавета',
 		client: 'Никита',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 8,
@@ -134,6 +142,7 @@ const records = [
 		operator: 'Ульяна',
 		client: 'Глеб',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 9,
@@ -145,6 +154,7 @@ const records = [
 		operator: 'Татьяна',
 		client: 'Марк',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 10,
@@ -156,6 +166,7 @@ const records = [
 		operator: 'Юлия',
 		client: 'Давид',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 11,
@@ -167,6 +178,7 @@ const records = [
 		operator: 'Софья',
 		client: 'Ярослав',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 12,
@@ -178,6 +190,7 @@ const records = [
 		operator: 'Алина',
 		client: 'Евгений',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 13,
@@ -188,6 +201,7 @@ const records = [
 		operator: 'Злата',
 		client: 'Матвей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 14,
@@ -199,6 +213,7 @@ const records = [
 		operator: 'Милана',
 		client: 'Фёдор',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 15,
@@ -210,6 +225,7 @@ const records = [
 		operator: 'Ольга',
 		client: 'Николай',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 16,
@@ -220,6 +236,7 @@ const records = [
 		operator: 'Светлана',
 		client: 'Алексей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 17,
@@ -231,6 +248,7 @@ const records = [
 		operator: 'Ярослава',
 		client: 'Андрей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 18,
@@ -241,6 +259,7 @@ const records = [
 		operator: 'Яна',
 		client: 'Артемий',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 19,
@@ -251,6 +270,7 @@ const records = [
 		operator: 'Кристина',
 		client: 'Виктор',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 20,
@@ -262,6 +282,7 @@ const records = [
 		operator: 'Алиса',
 		client: 'Никита',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 21,
@@ -273,6 +294,7 @@ const records = [
 		operator: 'Маргарита',
 		client: 'Даниил',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 22,
@@ -284,6 +306,7 @@ const records = [
 		operator: 'Таисия',
 		client: 'Денис',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 23,
@@ -294,6 +317,7 @@ const records = [
 		operator: 'Тамара',
 		client: 'Егор',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 24,
@@ -305,6 +329,7 @@ const records = [
 		operator: 'Эмилия',
 		client: 'Игорь',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 25,
@@ -316,6 +341,7 @@ const records = [
 		operator: 'Диана',
 		client: 'Лев',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 26,
@@ -327,6 +353,7 @@ const records = [
 		operator: 'Анфиса',
 		client: 'Леонид',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 27,
@@ -338,6 +365,7 @@ const records = [
 		operator: 'Аделина',
 		client: 'Павел',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 28,
@@ -349,6 +377,7 @@ const records = [
 		operator: 'Евдокия',
 		client: 'Петр',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 29,
@@ -360,6 +389,7 @@ const records = [
 		operator: 'Зоя',
 		client: 'Роман',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 30,
@@ -371,6 +401,7 @@ const records = [
 		operator: 'Ираида',
 		client: 'Руслан',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 31,
@@ -382,6 +413,7 @@ const records = [
 		operator: 'Наталья',
 		client: 'Сергей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 32,
@@ -393,6 +425,7 @@ const records = [
 		operator: 'Пелагея',
 		client: 'Семён',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 33,
@@ -404,6 +437,7 @@ const records = [
 		operator: 'Сабина',
 		client: 'Тимофей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 34,
@@ -414,6 +448,7 @@ const records = [
 		operator: 'Антонина',
 		client: 'Степан',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 35,
@@ -425,6 +460,7 @@ const records = [
 		operator: 'Екатерина',
 		client: 'Владимир',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 36,
@@ -435,6 +471,7 @@ const records = [
 		operator: 'Елена',
 		client: 'Тимофей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 37,
@@ -446,6 +483,7 @@ const records = [
 		operator: 'Ксения',
 		client: 'Ярослав',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 38,
@@ -457,6 +495,7 @@ const records = [
 		operator: 'Ирина',
 		client: 'Павел',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 39,
@@ -467,6 +506,7 @@ const records = [
 		operator: 'Ева',
 		client: 'Егор',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 40,
@@ -477,6 +517,7 @@ const records = [
 		operator: 'Дарья',
 		client: 'Сергей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 41,
@@ -488,6 +529,7 @@ const records = [
 		operator: 'Кира',
 		client: 'Владислав',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 42,
@@ -499,6 +541,7 @@ const records = [
 		operator: 'Елизавета',
 		client: 'Федор',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 43,
@@ -510,6 +553,7 @@ const records = [
 		operator: 'Ульяна',
 		client: 'Константин',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 44,
@@ -521,6 +565,7 @@ const records = [
 		operator: 'Татьяна',
 		client: 'Максим',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 45,
@@ -531,6 +576,7 @@ const records = [
 		operator: 'Юлия',
 		client: 'Артём',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 46,
@@ -542,6 +588,7 @@ const records = [
 		operator: 'Софья',
 		client: 'Никита',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 47,
@@ -553,6 +600,7 @@ const records = [
 		operator: 'Алина',
 		client: 'Григорий',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 48,
@@ -564,6 +612,7 @@ const records = [
 		operator: 'Злата',
 		client: 'Лев',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 49,
@@ -575,6 +624,7 @@ const records = [
 		operator: 'Милана',
 		client: 'Андрей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 50,
@@ -586,6 +636,7 @@ const records = [
 		operator: 'Ольга',
 		client: 'Роман',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 51,
@@ -597,6 +648,7 @@ const records = [
 		operator: 'Светлана',
 		client: 'Арсений',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 52,
@@ -608,6 +660,7 @@ const records = [
 		operator: 'Ярослава',
 		client: 'Степан',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 53,
@@ -618,6 +671,7 @@ const records = [
 		operator: 'Яна',
 		client: 'Владислав',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 54,
@@ -628,6 +682,7 @@ const records = [
 		operator: 'Кристина',
 		client: 'Никита',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 55,
@@ -639,6 +694,7 @@ const records = [
 		operator: 'Алиса',
 		client: 'Глеб',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 56,
@@ -650,6 +706,7 @@ const records = [
 		operator: 'Маргарита',
 		client: 'Марк',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 57,
@@ -661,6 +718,7 @@ const records = [
 		operator: 'Таисия',
 		client: 'Давид',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 58,
@@ -672,6 +730,7 @@ const records = [
 		operator: 'Тамара',
 		client: 'Ярослав',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 59,
@@ -683,6 +742,7 @@ const records = [
 		operator: 'Эмилия',
 		client: 'Евгений',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 60,
@@ -694,6 +754,7 @@ const records = [
 		operator: 'Диана',
 		client: 'Матвей',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 61,
@@ -705,6 +766,7 @@ const records = [
 		operator: 'Анфиса',
 		client: 'Фёдор',
 		expand: false,
+		star: false,
 	},
 	{
 		id: 62,
@@ -716,6 +778,7 @@ const records = [
 		operator: 'Аделина',
 		client: 'Николай',
 		expand: false,
+		star: false,
 	},
 ]
 
