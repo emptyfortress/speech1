@@ -44,8 +44,9 @@ q-expansion-item(v-model="mystore.recordPanel")
 					q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
 					.myplayer(v-if="selected === props.row.id")
 						q-linear-progress(:value=".6" color="positive")
-						q-icon(v-if="props.row.star" name="mdi-star" size="sm")
-						q-icon(v-else name="mdi-star-outline" size="sm")
+						q-btn(flat round size="sm" @click.stop="setStar(props.row)")
+							q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
+							q-icon(v-else name="mdi-star-outline" color="grey" )
 						div(v-if="!mystore.wide") {{ props.row.date }}
 						div(v-if="!mystore.wide") {{ props.row.operator }}
 						.player
@@ -83,7 +84,7 @@ interface Row {
 
 const records = reactive(myrecords)
 const cat = useCat()
-const table: any = ref(null)
+const table = ref()
 const shownRows = ref([10, 20, 50])
 const togg = () => {
 	table.value.toggleFullscreen()

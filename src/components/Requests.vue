@@ -4,7 +4,7 @@ q-page.rel(padding)
 	.container
 		q-expansion-item(v-model="mystore.req")
 			template(v-slot:header)
-				q-item-section(avatar).line
+				q-item-section.line(avatar)
 					q-avatar(icon="mdi-toy-brick-search-outline" flat)
 				q-item-section
 					.zag Логические запросы

@@ -82,6 +82,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Логические запросы', requiresAuth: false },
 		},
 		{
+			path: '/star',
+			component: () => import('@/components/Star.vue'),
+			meta: { transition: 'slide-left', title: 'Избранное', requiresAuth: false },
+		},
+		{
 			path: '/:pathMatch(.*)*',
 			redirect: '/404',
 		},

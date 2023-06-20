@@ -1,5 +1,5 @@
 <template lang="pug">
-q-drawer(v-model="mystore.speechDrawer" overlay side="right" :width="width" ).rd.speech
+q-drawer.rd.speech(v-model="mystore.speechDrawer" overlay side="right" :width="width" )
 	Speech
 </template>
 
