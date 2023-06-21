@@ -47,6 +47,7 @@ const records = [
 		client: 'Григорий',
 		expand: false,
 		star: true,
+		comment: 'Нормально, Григорий? Отлично, Константин! Это комментарий.'
 	},
 	{
 		id: 1,
@@ -58,7 +59,7 @@ const records = [
 		operator: 'Елена',
 		client: 'Лев',
 		expand: false,
-		star: false,
+		star: true,
 	},
 	{
 		id: 2,
@@ -70,7 +71,7 @@ const records = [
 		operator: 'Ксения',
 		client: 'Андрей',
 		expand: false,
-		star: false,
+		star: true,
 	},
 	{
 		id: 3,
@@ -82,7 +83,7 @@ const records = [
 		operator: 'Ирина',
 		client: 'Роман',
 		expand: false,
-		star: false,
+		star: true,
 	},
 	{
 		id: 4,
