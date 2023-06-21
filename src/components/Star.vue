@@ -15,7 +15,7 @@ interface Row {
 	client: string
 	expand: boolean
 	star?: boolean
-	comment?: string
+	comment: string
 }
 
 const mystore = useStore()
@@ -69,10 +69,26 @@ const select = (e: Row) => {
 const setStar = ((e: Row) => {
 	e.star = !e.star
 })
-const comment = ((e: Row) => {
-	if (e.comment) {
-		console.log('comment')
-	} else console.log('no')
+
+const item: Ref<null | Row> = ref(null)
+const commentValue: Ref<string> = ref('')
+
+const commentDialog = ref(false)
+const showComment = ((e: Row) => {
+	item.value = e
+	commentValue.value = e.comment
+	commentDialog.value = true
+})
+const addComment = (() => {
+	if (commentValue.value.length > 0) {
+		item.value!.comment = commentValue.value
+	}
+	item.value = null
+	commentDialog.value = false
+})
+const closeDialog = (() => {
+	item.value = null
+	commentDialog.value = false
 })
 </script>
 
@@ -122,7 +138,7 @@ q-page.rel(padding)
 													q-icon(name="mdi-star")
 
 							q-td.small(key="comment" :props="props")
-								q-btn.comment(flat round size="sm" @click.stop="comment(props.row)")
+								q-btn.comment(flat round size="sm" @click.stop="showComment(props.row)")
 									q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
 									q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
 									q-tooltip.bg-primary(v-if="props.row.comment" anchor="top middle" self="bottom middle" max-width="150px" :offset="[7, 7]") {{ props.row.comment }}
@@ -144,7 +160,7 @@ q-page.rel(padding)
 												q-item-section Удалить
 												q-item-section(side)
 													q-icon(name="mdi-star")
-								q-btn(flat round size="sm" @click.stop="comment(props.row)")
+								q-btn(flat round size="sm" @click.stop="showComment(props.row)")
 									q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
 									q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
 									q-tooltip.bg-primary(v-if="props.row.comment" anchor="top middle" self="bottom middle" max-width="150px" :offset="[7, 7]") {{ props.row.comment }}
@@ -159,6 +175,17 @@ q-page.rel(padding)
 									q-icon(name="mdi-volume-medium" size="sm")
 									q-slider.slide(color="primary" v-model="sound")
 									q-icon(name="mdi-volume-high" size="sm")
+
+q-dialog(v-model="commentDialog")
+	q-card(style="width: 500px;")
+		q-btn.close(round color="negative" icon="mdi-close" @click="closeDialog")
+		q-card-section
+			div Комментарий:
+			q-input(v-model="commentValue" filled type="textarea" autofocus hide-bottom-space)
+
+		q-card-actions.q-pa-md(align="right")
+			q-btn(flat color="primary" label="Отмена" @click="closeDialog") 
+			q-btn(unelevated color="primary" label="Добавить" @click="addComment") 
 
 </template>
 

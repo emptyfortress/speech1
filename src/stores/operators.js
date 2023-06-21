@@ -47,7 +47,7 @@ const records = [
 		client: 'Григорий',
 		expand: false,
 		star: true,
-		comment: 'Нормально, Григорий? Отлично, Константин! Это комментарий.'
+		comment: 'Нормально, Григорий? Отлично, Константин. Это комментарий.',
 	},
 	{
 		id: 1,
@@ -60,6 +60,7 @@ const records = [
 		client: 'Лев',
 		expand: false,
 		star: true,
+		comment: '',
 	},
 	{
 		id: 2,
@@ -72,6 +73,7 @@ const records = [
 		client: 'Андрей',
 		expand: false,
 		star: true,
+		comment: '',
 	},
 	{
 		id: 3,
@@ -84,6 +86,7 @@ const records = [
 		client: 'Роман',
 		expand: false,
 		star: true,
+		comment: '',
 	},
 	{
 		id: 4,
@@ -96,6 +99,7 @@ const records = [
 		client: 'Арсений',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 5,
@@ -108,6 +112,7 @@ const records = [
 		client: 'Степан',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 6,
@@ -120,6 +125,7 @@ const records = [
 		client: 'Владислав',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 7,
@@ -132,6 +138,7 @@ const records = [
 		client: 'Никита',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 8,
@@ -144,6 +151,7 @@ const records = [
 		client: 'Глеб',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 9,
@@ -156,6 +164,7 @@ const records = [
 		client: 'Марк',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 10,
@@ -168,6 +177,7 @@ const records = [
 		client: 'Давид',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 11,
@@ -180,6 +190,7 @@ const records = [
 		client: 'Ярослав',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 12,
@@ -192,6 +203,7 @@ const records = [
 		client: 'Евгений',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 13,
@@ -203,6 +215,7 @@ const records = [
 		client: 'Матвей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 14,
@@ -215,6 +228,7 @@ const records = [
 		client: 'Фёдор',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 15,
@@ -227,6 +241,7 @@ const records = [
 		client: 'Николай',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 16,
@@ -238,6 +253,7 @@ const records = [
 		client: 'Алексей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 17,
@@ -250,6 +266,7 @@ const records = [
 		client: 'Андрей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 18,
@@ -261,6 +278,7 @@ const records = [
 		client: 'Артемий',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 19,
@@ -272,6 +290,7 @@ const records = [
 		client: 'Виктор',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 20,
@@ -284,6 +303,7 @@ const records = [
 		client: 'Никита',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 21,
@@ -296,6 +316,7 @@ const records = [
 		client: 'Даниил',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 22,
@@ -308,6 +329,7 @@ const records = [
 		client: 'Денис',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 23,
@@ -319,6 +341,7 @@ const records = [
 		client: 'Егор',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 24,
@@ -331,6 +354,7 @@ const records = [
 		client: 'Игорь',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 25,
@@ -343,6 +367,7 @@ const records = [
 		client: 'Лев',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 26,
@@ -355,6 +380,7 @@ const records = [
 		client: 'Леонид',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 27,
@@ -367,6 +393,7 @@ const records = [
 		client: 'Павел',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 28,
@@ -379,6 +406,7 @@ const records = [
 		client: 'Петр',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 29,
@@ -391,6 +419,7 @@ const records = [
 		client: 'Роман',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 30,
@@ -403,6 +432,7 @@ const records = [
 		client: 'Руслан',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 31,
@@ -415,6 +445,7 @@ const records = [
 		client: 'Сергей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 32,
@@ -427,6 +458,7 @@ const records = [
 		client: 'Семён',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 33,
@@ -439,6 +471,7 @@ const records = [
 		client: 'Тимофей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 34,
@@ -450,6 +483,7 @@ const records = [
 		client: 'Степан',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 35,
@@ -462,6 +496,7 @@ const records = [
 		client: 'Владимир',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 36,
@@ -473,6 +508,7 @@ const records = [
 		client: 'Тимофей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 37,
@@ -485,6 +521,7 @@ const records = [
 		client: 'Ярослав',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 38,
@@ -497,6 +534,7 @@ const records = [
 		client: 'Павел',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 39,
@@ -508,6 +546,7 @@ const records = [
 		client: 'Егор',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 40,
@@ -519,6 +558,7 @@ const records = [
 		client: 'Сергей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 41,
@@ -531,6 +571,7 @@ const records = [
 		client: 'Владислав',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 42,
@@ -543,6 +584,7 @@ const records = [
 		client: 'Федор',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 43,
@@ -555,6 +597,7 @@ const records = [
 		client: 'Константин',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 44,
@@ -567,6 +610,7 @@ const records = [
 		client: 'Максим',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 45,
@@ -578,6 +622,7 @@ const records = [
 		client: 'Артём',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 46,
@@ -590,6 +635,7 @@ const records = [
 		client: 'Никита',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 47,
@@ -602,6 +648,7 @@ const records = [
 		client: 'Григорий',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 48,
@@ -614,6 +661,7 @@ const records = [
 		client: 'Лев',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 49,
@@ -626,6 +674,7 @@ const records = [
 		client: 'Андрей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 50,
@@ -638,6 +687,7 @@ const records = [
 		client: 'Роман',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 51,
@@ -650,6 +700,7 @@ const records = [
 		client: 'Арсений',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 52,
@@ -662,6 +713,7 @@ const records = [
 		client: 'Степан',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 53,
@@ -673,6 +725,7 @@ const records = [
 		client: 'Владислав',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 54,
@@ -684,6 +737,7 @@ const records = [
 		client: 'Никита',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 55,
@@ -696,6 +750,7 @@ const records = [
 		client: 'Глеб',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 56,
@@ -708,6 +763,7 @@ const records = [
 		client: 'Марк',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 57,
@@ -720,6 +776,7 @@ const records = [
 		client: 'Давид',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 58,
@@ -732,6 +789,7 @@ const records = [
 		client: 'Ярослав',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 59,
@@ -744,6 +802,7 @@ const records = [
 		client: 'Евгений',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 60,
@@ -756,6 +815,7 @@ const records = [
 		client: 'Матвей',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 61,
@@ -768,6 +828,7 @@ const records = [
 		client: 'Фёдор',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 	{
 		id: 62,
@@ -780,6 +841,7 @@ const records = [
 		client: 'Николай',
 		expand: false,
 		star: false,
+		comment: '',
 	},
 ]
 
