@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 
 const props = defineProps({
-	text: String,
 	options: {
 		type: Array,
 		required: true,
