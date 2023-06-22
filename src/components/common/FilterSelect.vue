@@ -12,9 +12,8 @@ const modelValue = defineModel()
 </script>
 
 <template lang="pug">
-div model: {{ modelValue }}
 q-select(v-model="modelValue"
-	:options="options"
+	:options="props.options"
 	multiple
 	label="Filter"
 	map-options
@@ -27,7 +26,7 @@ q-select(v-model="modelValue"
 			q-item-section(side)
 				q-checkbox(:modelValue="selected" dense @update:model-value="toggleOption(opt)")
 			q-item-section
-				q-item-label {{ opt.label }}
+				q-item-label {{ opt }}
 </template>
 
 <style scoped lang="scss">

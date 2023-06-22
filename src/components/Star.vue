@@ -97,11 +97,22 @@ const toggleFilter = (() => {
 	showFilter.value = !showFilter.value
 })
 const oper = ref([])
+const client = ref([])
+const group = ref([])
+const category = ref([])
+
 const operOptions = computed(() => {
-	return starRecords.value.map(item => ({
-		label: item.operator,
-		value: item.operator
-	}))
+	return starRecords.value.map(item => item.operator)
+})
+const clientOptions = computed(() => {
+	return starRecords.value.map(item => item.client)
+})
+const groupOptions = computed(() => {
+	return starRecords.value.map(item => item.group)
+})
+const categoryOptions = computed(() => {
+	const temp = starRecords.value.map(item => item.categ)
+	return [...new Set(temp)]
 })
 </script>
 
@@ -147,8 +158,11 @@ q-page.rel(padding)
 							q-td
 								FilterSelect(v-model="oper" :options="operOptions")
 							q-td
+								FilterSelect(v-model="client" :options="clientOptions")
 							q-td
+								FilterSelect(v-model="group" :options="groupOptions")
 							q-td
+								FilterSelect(v-model="category" :options="categoryOptions")
 							q-td
 
 					template(v-slot:body-selection)
