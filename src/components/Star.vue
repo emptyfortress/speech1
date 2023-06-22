@@ -4,6 +4,7 @@ import { useStore } from '@/stores/store'
 import { records as myrecords } from '@/stores/operators'
 import type { QTableProps } from 'quasar'
 import type { Ref } from 'vue'
+import FilterSelect from '@/components/common/FilterSelect.vue'
 
 interface Row {
 	id: number
@@ -90,6 +91,18 @@ const closeDialog = (() => {
 	item.value = null
 	commentDialog.value = false
 })
+const duration = ref({ min: 20, max: 290 })
+const showFilter = ref(true)
+const toggleFilter = (() => {
+	showFilter.value = !showFilter.value
+})
+const oper = ref([])
+const operOptions = computed(() => {
+	return starRecords.value.map(item => ({
+		label: item.operator,
+		value: item.operator
+	}))
+})
 </script>
 
 <template lang="pug">
@@ -115,12 +128,28 @@ q-page.rel(padding)
 						q-inner-loading(showing color="primary" size="100px")
 
 					template(v-slot:top="props")
-						q-btn(unelevated color="grey" size="sm" label="Скачать одним архивом")
+						q-btn(v-if="showFilter" unelevated round icon="mdi-filter-outline" color="primary" @click="toggleFilter") 
+						q-btn(v-else flat round icon="mdi-filter-outline" color="primary" @click="toggleFilter") 
 						q-space
-						q-input(dense debounce="300" color="primary" v-model="filter" clearable)
+						.label(v-if="showFilter") Длительность, сек:
+						q-range.range(v-if="showFilter" v-model="duration" :min="10" :max="300" :step="2" label color="primary" )
+						q-space
+						q-input.filter(v-if="showFilter" dense debounce="300" color="primary" v-model="filter" clearable)
 							template(v-slot:prepend)
 								q-icon(name="mdi-magnify")
 						q-btn.q-ml-md(flat round dense :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="togg")
+
+					template(v-slot:top-row v-if="showFilter")
+						q-tr.filt
+							q-td
+							q-td
+							q-td
+							q-td
+								FilterSelect(v-model="oper" :options="operOptions")
+							q-td
+							q-td
+							q-td
+							q-td
 
 					template(v-slot:body-selection)
 
@@ -190,6 +219,9 @@ q-dialog(v-model="commentDialog")
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/myvariables.scss';
+
+
 .q-tr.rel {
 	position: relative;
 	cursor: pointer;
@@ -259,12 +291,30 @@ td.ellipsis {
 	background-color: inherit;
 }
 
-:deep(.scroll) {
-	overflow: visible;
-}
-
 .q-tooltip.tooltip {
 	background: $primary;
 	color: white;
+}
+
+.range {
+	width: clamp(150px, 50%, 600px);
+}
+
+.filter {
+	width: 200px;
+}
+
+.label {
+	font-size: .8rem;
+	margin-right: 1rem;
+}
+
+
+.filt {
+	background: $bgHead;
+
+	td {
+		padding: 0 5px;
+	}
 }
 </style>
