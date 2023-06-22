@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
 
 const props = defineProps({
@@ -9,24 +9,29 @@ const props = defineProps({
 		default: []
 	}
 })
-const modelValue = defineModel()
-const selected = ref([false, false, false, false])
 
-const selection: Ref<String[]> = ref([])
+const modelValue = defineModel<string[]>()
+
+// const selected = computed(() => {
+// 	return props.options
+// })
+const selected = ref([])
+
+// const selection: Ref<String[]> = ref([])
+
 const toggle = ((opt: string, ind: number) => {
-	selection.value.push(opt)
-	selected.value[ind] = !selected.value[ind]
+	modelValue.value?.push(opt)
 })
 </script>
 
 <template lang="pug">
-p {{ selection }}
+p {{ modelValue }}
 q-btn(flat round icon="mdi-filter"  @click="action" dense size="sm") 
 	q-menu
 		q-list
 			q-item(v-for="(opt, index) in options" clickable @click="toggle(opt, index)")
 				q-item-section(side)
-					q-checkbox(:model-value="selected[index]" dense @update:model-value="toggle(opt, index)")
+					q-checkbox(v-model="selected" dense :val="opt")
 				q-item-section
 					q-item-label {{ opt }}
 q-item-se
