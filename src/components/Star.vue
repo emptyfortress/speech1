@@ -99,7 +99,7 @@ const toggleFilter = (() => {
 const oper = ref([])
 const client = ref([])
 const group = ref([])
-const category = ref([])
+const categ = ref([])
 
 const operOptions = computed(() => {
 	return starRecords.value.map(item => item.operator)
@@ -113,6 +113,14 @@ const groupOptions = computed(() => {
 const categoryOptions = computed(() => {
 	const temp = starRecords.value.map(item => item.categ)
 	return [...new Set(temp)]
+})
+const filtrActive = computed(() => {
+	let temp = oper.value.length + client.value.length + group.value.length + categ.value.length
+	if (temp > 0) return true
+	return false
+})
+const resetFilter = (() => {
+	oper.value = []
 })
 </script>
 
@@ -162,8 +170,9 @@ q-page.rel(padding)
 							q-td
 								FilterSelect(v-model="group" :options="groupOptions")
 							q-td
-								FilterSelect(v-model="category" :options="categoryOptions")
-							q-td
+								FilterSelect(v-model="categ" :options="categoryOptions")
+							q-td.text-center
+								q-btn(v-if="filtrActive" unelevated color="primary" label="Сбросить" icon="mdi-filter-off" @click="resetFilter" size="sm") 
 
 					template(v-slot:body-selection)
 
