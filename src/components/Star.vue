@@ -121,6 +121,9 @@ const filtrActive = computed(() => {
 })
 const resetFilter = (() => {
 	oper.value = []
+	client.value = []
+	group.value = []
+	categ.value = []
 })
 </script>
 

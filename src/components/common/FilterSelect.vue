@@ -14,8 +14,8 @@ const modelValue = defineModel()
 <template lang="pug">
 q-select(v-model="modelValue"
 	:options="props.options"
+	standout
 	multiple
-	label="Filter"
 	map-options
 	emit-value
 	dense
