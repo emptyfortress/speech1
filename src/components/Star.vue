@@ -94,7 +94,10 @@ const closeDialog = (() => {
 const duration = ref({ min: 20, max: 290 })
 const showFilter = ref(true)
 const toggleFilter = (() => {
-	showFilter.value = !showFilter.value
+	if (showFilter.value === true) {
+		resetFilter()
+		showFilter.value = false
+	} else showFilter.value = true
 })
 const oper = ref([])
 const client = ref([])
