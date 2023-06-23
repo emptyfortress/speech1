@@ -82,8 +82,8 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Логические запросы', requiresAuth: false },
 		},
 		{
-			path: '/star',
-			component: () => import('@/components/Star.vue'),
+			path: '/starred',
+			component: () => import('@/components/Starred.vue'),
 			meta: { transition: 'slide-left', title: 'Избранное', requiresAuth: false },
 		},
 		{

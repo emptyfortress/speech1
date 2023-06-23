@@ -60,7 +60,7 @@ const pages = [
 		id: 7,
 		title: 'Избранное',
 		icon: 'mdi-star-outline',
-		url: '/star',
+		url: '/starred',
 	},
 ]
 </script>

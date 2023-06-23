@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, reactive, watchEffect } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useStore } from '@/stores/store'
 import { records as myrecords } from '@/stores/operators'
 import type { QTableProps } from 'quasar'
@@ -18,6 +18,13 @@ interface Row {
 	star?: boolean
 	comment: string
 }
+
+const props = defineProps({
+	starred: {
+		type: Boolean,
+		default: false
+	}
+})
 
 const mystore = useStore()
 const table = ref()
@@ -134,7 +141,7 @@ const resetFilter = (() => {
 </script>
 
 <template lang="pug">
-q-page.rel(padding)
+q-page(padding)
 	.container
 		q-expansion-item(v-model="mystore.req")
 			template(v-slot:header)
