@@ -4,7 +4,6 @@ import { useStore } from '@/stores/store'
 import type { QTableProps } from 'quasar'
 import type { Ref } from 'vue'
 import FilterSelect from '@/components/common/FilterSelect.vue'
-import CommentDialog from '@/components/CommentDialog.vue'
 
 interface Props {
 	rows: Row[],
