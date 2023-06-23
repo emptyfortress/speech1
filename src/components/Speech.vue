@@ -43,23 +43,28 @@ const filterTalks = computed(() => {
 	color: white;
 	margin-bottom: 0.5rem;
 }
+
 .talk {
 	padding: 0;
 	font-size: 0.9rem;
 	line-height: 140%;
 }
+
 .grid {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	justify-items: start;
 	gap: 1rem;
+
 	.receive {
 		margin-right: 2rem;
 	}
+
 	.sent {
 		margin-left: 2rem;
 		justify-self: flex-end;
 	}
+
 	.q-btn {
 		align-self: start;
 		margin-top: 1rem;

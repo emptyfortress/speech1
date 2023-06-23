@@ -7,12 +7,12 @@ import FilterSelect from '@/components/common/FilterSelect.vue'
 
 interface Props {
 	rows: Row[],
-	starred: Boolean
+	// starred: Boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	rows: () => [],
-	starred: () => false
+	// starred: () => false
 })
 
 const mystore = useStore()
@@ -175,15 +175,15 @@ q-table.table(ref="table"
 	template(v-slot:body="props")
 		q-tr.rel(:props="props" @click="select(props.row)")
 			q-td.small(key="star" :props="props")
-				q-btn(flat round size="sm" @click.stop="")
+				q-btn(flat round size="sm" @click.stop="setStar(props.row)")
 					q-icon(v-if="props.row.star === true" name="mdi-star" color="orange")
 					q-icon(v-else name="mdi-star-outline" color="grey" )
-					q-menu
-						q-list
-							q-item.pink(clickable @click="setStar(props.row)" v-close-popup)
-								q-item-section Удалить
-								q-item-section(side)
-									q-icon(name="mdi-star")
+					// q-menu
+					// 	q-list
+					// 		q-item.pink(clickable @click="setStar(props.row)" v-close-popup)
+					// 			q-item-section Удалить
+					// 			q-item-section(side)
+					// 				q-icon(name="mdi-star")
 
 			q-td.small(key="comment" :props="props")
 				q-btn.comment(flat round size="sm" @click.stop="showComment(props.row)")
@@ -199,15 +199,15 @@ q-table.table(ref="table"
 			q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
 			.myplayer(v-if="selected === props.row.id")
 				q-linear-progress(:value=".6" color="positive")
-				q-btn(flat round size="sm" @click.stop="")
+				q-btn(flat round size="sm" @click.stop="setStar(props.row)")
 					q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
 					q-icon(v-else name="mdi-star-outline" color="grey" )
-					q-menu
-						q-list
-							q-item.pink(clickable @click="setStar(props.row)" v-close-popup)
-								q-item-section Удалить
-								q-item-section(side)
-									q-icon(name="mdi-star")
+					// q-menu
+					// 	q-list
+					// 		q-item.pink(clickable @click="setStar(props.row)" v-close-popup)
+					// 			q-item-section Удалить
+					// 			q-item-section(side)
+					// 				q-icon(name="mdi-star")
 				q-btn(flat round size="sm" @click.stop="showComment(props.row)")
 					q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
 					q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
@@ -236,6 +236,8 @@ q-dialog(v-model="dialog")
 			q-btn(flat color="primary" label="Отмена" @click="closeDialog") 
 			q-btn(unelevated color="primary" label="Добавить" @click="addComment(currentComment)" :disable="currentComment.length === 0")
 
+Teleport(to="#speech")
+	.recdate(v-if="selected !== null") {{ records[selected].date }}
 </template>
 
 <style scoped lang="scss">
@@ -338,5 +340,9 @@ td.ellipsis {
 		border-right: 1px solid white;
 		border-collapse: collapse;
 	}
+}
+
+.recdate {
+	font-weight: 600;
 }
 </style>
