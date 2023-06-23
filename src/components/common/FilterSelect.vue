@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Props {
 	options: string[]
@@ -20,6 +20,11 @@ const selClass = ((e: string) => {
 	}
 })
 const filter = ref()
+const filteredOptions = computed(() => {
+	if (filter.value?.length > 0) {
+		return props.options.filter(item => item.toLowerCase().includes(filter.value.toLowerCase()))
+	} else return props.options
+})
 </script>
 
 <template lang="pug">
@@ -31,7 +36,7 @@ q-btn(flat round dense size="md" )
 					q-input.filter(dense debounce="300" color="primary" v-model="filter" clearable)
 						template(v-slot:prepend)
 							q-icon(name="mdi-magnify")
-			q-item(v-for="opt in props.options" key="opt" clickable @click="toggle(opt)" :class="selClass(opt)")
+			q-item(v-for="opt in filteredOptions" key="opt" clickable @click="toggle(opt)" :class="selClass(opt)")
 				q-item-section(side)
 					q-checkbox(:model-value="modelValue" dense :val="opt" @click="toggle(opt)")
 				q-item-section
