@@ -102,13 +102,16 @@ const group = ref([])
 const categ = ref([])
 
 const operOptions = computed(() => {
-	return starRecords.value.map(item => item.operator)
+	const temp = starRecords.value.map(item => item.operator)
+	return [...new Set(temp)]
 })
 const clientOptions = computed(() => {
-	return starRecords.value.map(item => item.client)
+	const temp = starRecords.value.map(item => item.client)
+	return [...new Set(temp)]
 })
 const groupOptions = computed(() => {
-	return starRecords.value.map(item => item.group)
+	const temp = starRecords.value.map(item => item.group)
+	return [...new Set(temp)]
 })
 const categoryOptions = computed(() => {
 	const temp = starRecords.value.map(item => item.categ)
@@ -150,8 +153,8 @@ q-page.rel(padding)
 						q-inner-loading(showing color="primary" size="100px")
 
 					template(v-slot:top="props")
-						q-btn(v-if="showFilter" unelevated round icon="mdi-filter-outline" color="primary" @click="toggleFilter") 
-						q-btn(v-else flat round icon="mdi-filter-outline" color="primary" @click="toggleFilter") 
+						q-btn(v-if="showFilter" unelevated color="primary" label="Фильтры" @click="toggleFilter" size="sm") 
+						q-btn(v-else flat color="primary" label="Фильтры" @click="toggleFilter" size="sm") 
 						q-space
 						.label(v-if="showFilter") Длительность, сек:
 						q-range.range(v-if="showFilter" v-model="duration" :min="10" :max="300" :step="2" label color="primary" )
@@ -166,13 +169,13 @@ q-page.rel(padding)
 							q-td
 							q-td
 							q-td
-							q-td
+							q-td.text-center
 								FilterSelect(v-model="oper" :options="operOptions")
-							q-td
+							q-td.text-center
 								FilterSelect(v-model="client" :options="clientOptions")
-							q-td
+							q-td.text-center
 								FilterSelect(v-model="group" :options="groupOptions")
-							q-td
+							q-td.text-center
 								FilterSelect(v-model="categ" :options="categoryOptions")
 							q-td.text-center
 								q-btn(v-if="filtrActive" unelevated color="primary" label="Сбросить" icon="mdi-filter-off" @click="resetFilter" size="sm") 
@@ -341,6 +344,9 @@ td.ellipsis {
 
 	td {
 		padding: 0 5px;
+		border-left: 1px solid white;
+		border-right: 1px solid white;
+		border-collapse: collapse;
 	}
 }
 </style>
