@@ -61,21 +61,30 @@ const setStar = ((e: Row) => {
 	e.star = !e.star
 })
 
-const item = ref()
+const item = ref(props.rows[0])
+
+const currentComment = ref('')
 
 const dialog = ref(false)
 
 const showComment = ((e: Row) => {
 	item.value = e
+	currentComment.value = e.comment
 	dialog.value = true
 })
 
+const closeDialog = (() => {
+	dialog.value = false
+})
+
 const addComment = ((e: string) => {
-	// console.log(e)
 	if (e.length > 0) {
-		item.value!.comment = e
+		item.value.comment = e
 	}
-	// item.value = null
+	dialog.value = false
+})
+const deleteComment = (() => {
+	item.value.comment = ''
 	dialog.value = false
 })
 
@@ -122,6 +131,7 @@ const resetFilter = (() => {
 </script>
 
 <template lang="pug">
+
 q-table.table(ref="table"
 	:rows="records"
 	:columns="columns"
@@ -215,13 +225,22 @@ q-table.table(ref="table"
 					q-slider.slide(color="primary" v-model="sound")
 					q-icon(name="mdi-volume-high" size="sm")
 
-component(:is="CommentDialog" v-model="dialog" @add="addComment" :item="item")
+q-dialog(v-model="dialog")
+	q-card(style="width: 500px;")
+		q-btn.close(round color="negative" icon="mdi-close" @click="closeDialog")
+		q-card-section
+			div Комментарий:
+			q-input(v-model="currentComment" filled type="textarea" autofocus hide-bottom-space)
+		q-card-actions.q-pa-md(align="right")
+			q-btn(flat round icon="mdi-trash-can-outline" color="primary" @click="deleteComment") 
+			q-space
+			q-btn(flat color="primary" label="Отмена" @click="closeDialog") 
+			q-btn(unelevated color="primary" label="Добавить" @click="addComment(currentComment)" :disable="currentComment.length === 0")
 
 </template>
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
-
 
 .q-tr.rel {
 	position: relative;
