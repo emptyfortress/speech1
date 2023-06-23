@@ -41,6 +41,11 @@ q-btn(flat round dense size="md" )
 					q-checkbox(:model-value="modelValue" dense :val="opt" @click="toggle(opt)")
 				q-item-section
 					q-item-label {{ opt }}
+			q-item(v-if="filteredOptions.length === 0")
+				q-item-section(side)
+					q-icon(name="mdi-emoticon-sad-outline")
+				q-item-section
+					q-item-label Ничего нет
 	q-icon(v-if="!modelValue.length" name="mdi-filter-menu-outline" color="primary")
 	q-icon(v-else name="mdi-filter-menu" color="primary")
 		q-badge(:label="modelValue.length" color="red" floating rounded)
