@@ -29,6 +29,21 @@ const togg = () => {
 
 const records = reactive(props.rows)
 
+const filteredRecords = computed(() => {
+	if (oper.value.length === 0) {
+		return records
+	} else {
+		let results: Row[] = []
+		let sub: Row[] = []
+		oper.value.forEach(item => {
+			sub = records.filter(e => e.operator === item)
+			results.push(...sub)
+		})
+
+		return results
+	}
+})
+
 const columns: QTableProps['columns'] = [
 	{ name: 'star', label: '', align: 'center', field: 'star', sortable: true },
 	{ name: 'comment', label: '', align: 'center', field: 'coment', sortable: true },
@@ -132,7 +147,7 @@ const resetFilter = (() => {
 <template lang="pug">
 
 q-table.table(ref="table"
-	:rows="records"
+	:rows="filteredRecords"
 	:columns="columns"
 	rows-per-page-label="Записей на странице"
 	:filter="filter"
@@ -223,6 +238,8 @@ q-table.table(ref="table"
 					q-icon(name="mdi-volume-medium" size="sm")
 					q-slider.slide(color="primary" v-model="sound")
 					q-icon(name="mdi-volume-high" size="sm")
+
+p {{ oper }}
 
 q-dialog(v-model="dialog")
 	q-card(style="width: 500px;")
