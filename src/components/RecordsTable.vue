@@ -1,23 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
 import { useStore } from '@/stores/store'
-import { records as myrecords } from '@/stores/operators'
 import type { QTableProps } from 'quasar'
 import type { Ref } from 'vue'
 import FilterSelect from '@/components/common/FilterSelect.vue'
-
-interface Row {
-	id: number
-	date: string
-	group: string
-	record: string
-	categ?: string
-	operator: string
-	client: string
-	expand: boolean
-	star?: boolean
-	comment: string
-}
+import CommentDialog from '@/components/CommentDialog.vue'
 
 interface Props {
 	rows: Row[],
@@ -43,10 +30,6 @@ const togg = () => {
 
 const records = reactive(props.rows)
 
-// const starRecords = computed(() => {
-// 	return records.filter(item => item.star === true)
-// })
-
 const columns: QTableProps['columns'] = [
 	{ name: 'star', label: '', align: 'center', field: 'star', sortable: true },
 	{ name: 'comment', label: '', align: 'center', field: 'coment', sortable: true },
@@ -57,10 +40,6 @@ const columns: QTableProps['columns'] = [
 	{ name: 'categ', label: 'Категория', align: 'left', field: 'categ', sortable: true },
 	{ name: 'record', label: 'Контекст', align: 'left', field: 'record', sortable: false },
 ]
-
-const getSelectedString = (e: number) => {
-	return `Выбрана ${e} запись`
-}
 
 const selected: Ref<number | null> = ref(null)
 
@@ -82,26 +61,24 @@ const setStar = ((e: Row) => {
 	e.star = !e.star
 })
 
-const item: Ref<null | Row> = ref(null)
-const commentValue: Ref<string> = ref('')
+const item = ref()
 
-const commentDialog = ref(false)
+const dialog = ref(false)
+
 const showComment = ((e: Row) => {
 	item.value = e
-	commentValue.value = e.comment
-	commentDialog.value = true
+	dialog.value = true
 })
-const addComment = (() => {
-	if (commentValue.value.length > 0) {
-		item.value!.comment = commentValue.value
+
+const addComment = ((e: string) => {
+	// console.log(e)
+	if (e.length > 0) {
+		item.value!.comment = e
 	}
-	item.value = null
-	commentDialog.value = false
+	// item.value = null
+	dialog.value = false
 })
-const closeDialog = (() => {
-	item.value = null
-	commentDialog.value = false
-})
+
 const duration = ref({ min: 20, max: 290 })
 const showFilter = ref(true)
 const toggleFilter = (() => {
@@ -148,7 +125,6 @@ const resetFilter = (() => {
 q-table.table(ref="table"
 	:rows="records"
 	:columns="columns"
-	:selected-rows-label="getSelectedString"
 	rows-per-page-label="Записей на странице"
 	:filter="filter"
 	:loading="mystore.loading"
@@ -175,13 +151,13 @@ q-table.table(ref="table"
 			q-td
 			q-td
 			q-td.text-center
-				FilterSelect(v-model="oper" :options="operOptions")
+				component(:is="FilterSelect" v-model="oper" :options="operOptions")
 			q-td.text-center
-				FilterSelect(v-model="client" :options="clientOptions")
+				component(:is="FilterSelect" v-model="client" :options="clientOptions")
 			q-td.text-center
-				FilterSelect(v-model="group" :options="groupOptions")
+				component(:is="FilterSelect" v-model="group" :options="groupOptions")
 			q-td.text-center
-				FilterSelect(v-model="categ" :options="categoryOptions")
+				component(:is="FilterSelect" v-model="categ" :options="categoryOptions")
 			q-td.text-center
 				q-btn(v-if="filtrActive" unelevated color="primary" label="Сбросить" icon="mdi-filter-off" @click="resetFilter" size="sm") 
 
@@ -239,16 +215,7 @@ q-table.table(ref="table"
 					q-slider.slide(color="primary" v-model="sound")
 					q-icon(name="mdi-volume-high" size="sm")
 
-q-dialog(v-model="commentDialog")
-	q-card(style="width: 500px;")
-		q-btn.close(round color="negative" icon="mdi-close" @click="closeDialog")
-		q-card-section
-			div Комментарий:
-			q-input(v-model="commentValue" filled type="textarea" autofocus hide-bottom-space)
-
-		q-card-actions.q-pa-md(align="right")
-			q-btn(flat color="primary" label="Отмена" @click="closeDialog") 
-			q-btn(unelevated color="primary" label="Добавить" @click="addComment") 
+component(:is="CommentDialog" v-model="dialog" @add="addComment" :item="item")
 
 </template>
 

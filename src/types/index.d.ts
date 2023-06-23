@@ -100,3 +100,15 @@ interface RowNotific {
 	classname?: string
 	context?: string
 }
+interface Row {
+	id: number
+	date: string
+	group: string
+	record: string
+	categ: string
+	operator: string
+	client: string
+	expand: boolean
+	star?: boolean
+	comment: string
+}
