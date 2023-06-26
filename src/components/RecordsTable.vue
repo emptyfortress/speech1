@@ -101,7 +101,7 @@ const deleteComment = (() => {
 })
 
 const duration = ref({ min: 20, max: 290 })
-const showFilter = ref(true)
+const showFilter = ref(false)
 const toggleFilter = (() => {
 	if (showFilter.value === true) {
 		resetFilter()
@@ -113,11 +113,11 @@ const client = ref([])
 const group = ref([])
 const categ = ref([])
 
-const myFilter = computed(() => {
-	let tempOper = oper.value.map(e => ({ type: 'operator', name: e }))
-	let tempClient = client.value.map(e => ({ type: 'client', name: e }))
-	return [...tempOper, ...tempClient]
-})
+// const myFilter = computed(() => {
+// 	let tempOper = oper.value.map(e => ({ type: 'operator', name: e }))
+// 	let tempClient = client.value.map(e => ({ type: 'client', name: e }))
+// 	return [...tempOper, ...tempClient]
+// })
 
 const operOptions = computed(() => {
 	const temp = records.map(item => item.operator)

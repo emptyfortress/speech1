@@ -24,7 +24,7 @@ q-page(padding)
 				q-item-section
 					.zag Избранные записи
 			q-card-section.q-px-md
-				component(:is="RecordsTable" :rows="starRecords" starred)
+				component(:is="RecordsTable" :rows="starRecords")
 </template>
 
 <style scoped lang="scss"></style>
