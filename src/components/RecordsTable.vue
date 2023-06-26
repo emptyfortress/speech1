@@ -7,12 +7,10 @@ import FilterSelect from '@/components/common/FilterSelect.vue'
 
 interface Props {
 	rows: Row[],
-	// starred: Boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	rows: () => [],
-	// starred: () => false
 })
 
 const mystore = useStore()
@@ -115,6 +113,12 @@ const client = ref([])
 const group = ref([])
 const categ = ref([])
 
+const myFilter = computed(() => {
+	let tempOper = oper.value.map(e => ({ type: 'operator', name: e }))
+	let tempClient = client.value.map(e => ({ type: 'client', name: e }))
+	return [...tempOper, ...tempClient]
+})
+
 const operOptions = computed(() => {
 	const temp = records.map(item => item.operator)
 	return [...new Set(temp)]
@@ -145,7 +149,7 @@ const resetFilter = (() => {
 </script>
 
 <template lang="pug">
-
+// p {{ myFilter }}
 q-table.table(ref="table"
 	:rows="filteredRecords"
 	:columns="columns"
@@ -239,7 +243,6 @@ q-table.table(ref="table"
 					q-slider.slide(color="primary" v-model="sound")
 					q-icon(name="mdi-volume-high" size="sm")
 
-p {{ oper }}
 
 q-dialog(v-model="dialog")
 	q-card(style="width: 500px;")
