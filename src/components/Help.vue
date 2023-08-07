@@ -4,6 +4,8 @@ import { useStore } from '@/stores/store'
 import WordHighlighter from 'vue-word-highlighter'
 import SvgIcon from './SvgIcon.vue';
 import { useOnboard } from '@/stores/onboard'
+import { driver } from "driver.js"
+import "driver.js/dist/driver.css"
 
 const store = useStore()
 const onboard = useOnboard()
@@ -58,6 +60,15 @@ watchEffect(() => {
 		expandAll()
 	}
 })
+const driverObj = driver({
+	overlayOpacity: .45,
+	steps: onboard.steps1,
+	popoverClass: 'pop',
+})
+const driv = () => {
+	store.closeHelp()
+	driverObj.drive()
+}
 </script>
 
 <template lang="pug">
@@ -91,9 +102,10 @@ q-dialog(v-model="store.help" persistent)
 
 				br
 				q-card-section
-					p 
+					p
 						SvgIcon.q-mr-md(name="sound")
 						a(href="") Полное руководство Speech-drive
+					q-btn(unelevated color="primary" label="test" @click="driv")
 </template>
 
 <style scoped lang="scss">

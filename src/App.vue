@@ -67,7 +67,7 @@ template(v-if="isLogged")
 								q-item-section(avatar)
 									q-icon(name="mdi-location-exit")
 								q-item-section Выйти
-				q-btn(dense flat round icon="mdi-help-circle-outline" @click="mystore.openHelp")
+				q-btn#help(dense flat round icon="mdi-help-circle-outline" @click="mystore.openHelp")
 
 			q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
 
