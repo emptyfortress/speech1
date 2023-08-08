@@ -137,7 +137,7 @@ q-dialog(v-model="store.help" persistent)
 						q-card
 							q-card-section(v-if="sec.children")
 								q-list
-									q-item(clickable v-for="item in sec.children" :key="sec.id" @click="driv")
+									q-item.link(clickable v-for="item in sec.children" :key="sec.id" @click="driv")
 										q-item-section
 											q-item-label
 												WordHighlighter(:query="filter") {{ item.label }}
@@ -185,5 +185,9 @@ q-dialog(v-model="store.help" persistent)
 	img {
 		height: 36px;
 	}
+}
+
+.link {
+	color: $primary;
 }
 </style>
