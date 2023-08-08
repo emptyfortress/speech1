@@ -97,15 +97,22 @@ const driv = () => {
 				onNextClick: () => {
 					onboard.toggle()
 					driverObj.moveNext()
+				}
+			}
+		},
+		{
+			popover: {
+				title: 'Завершить', description: 'Вот и все! Просто, не правда ли?', side: "left", align: 'start',
+				onNextClick: () => {
+					driverObj.moveNext()
 					store.openHelp()
 					setTimeout(() => {
 						onboard.addNewWord = false
 						onboard.addVoc = false
 					}, 300)
 				}
-			}
-		},
-
+			},
+		}
 	])
 	driverObj.drive()
 }
