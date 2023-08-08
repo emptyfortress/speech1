@@ -8,8 +8,8 @@ import KeyDrawer from '@/components/KeyDrawer.vue'
 import NotificationDrawer from '@/components/NotificationDrawer.vue'
 import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
+import Help from '@/components/Help.vue'
 import { router } from './router/router'
-import OnboardLib from '@/components/OnboardLib.vue'
 
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
@@ -71,18 +71,17 @@ template(v-if="isLogged")
 
 			q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
 
-		Drawer(:show="mystore.leftDrawer")
+		Drawer( :show="mystore.leftDrawer")
 		DateDrawer
 		KeyDrawer
 		NotificationDrawer
 		SpeechDrawer
+		Help
 
 		q-page-container
 			router-view
 template(v-else)
 	Login(@login="login")
-
-OnboardLib
 
 </template>
 

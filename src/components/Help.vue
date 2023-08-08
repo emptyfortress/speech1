@@ -10,14 +10,13 @@ import "driver.js/dist/driver.css"
 const store = useStore()
 const onboard = useOnboard()
 
-// const help = defineModel<boolean>({ required: true, default: false })
 const filter = ref('')
 
 const sections = reactive([
 	{
-		id: 0, icon: "mdi-book-open-page-variant-outline", expand: false, label: 'Ключевые слова', disable: false, children: [
-			{ id: 0, label: 'Как добавить слово в библиотеку?', action: () => start(0) },
-			{ id: 1, label: 'Как создать свой словарь?', action: () => start(1) },
+		id: 0, icon: "mdi-book-open-page-variant-outline", expand: true, label: 'Ключевые слова', disable: false, children: [
+			{ id: 0, label: 'Как добавить слово в библиотеку?' },
+			{ id: 1, label: 'Как создать свой словарь?' },
 		]
 	},
 	{ id: 1, icon: "mdi-finance", expand: false, label: 'Отчеты (в разработке)', disable: true },
@@ -25,12 +24,6 @@ const sections = reactive([
 	{ id: 3, icon: "mdi-check-all", expand: false, label: 'Чек-листы (в разработке)', disable: true },
 	{ id: 4, icon: "mdi-lan", expand: false, label: 'Темы (в разработке)', disable: true },
 ])
-const emit = defineEmits(['start'])
-
-const start = ((e: number) => {
-	onboard.setScene(e)
-	emit('start')
-})
 
 const filterByLabel = (array: any, searchTerm: string) => {
 	return array.reduce((prev: any, curr: any) => {
@@ -60,13 +53,60 @@ watchEffect(() => {
 		expandAll()
 	}
 })
+
 const driverObj = driver({
 	overlayOpacity: .45,
-	steps: onboard.steps1,
 	popoverClass: 'pop',
 })
+
 const driv = () => {
 	store.closeHelp()
+	driverObj.setSteps([
+		{
+			element: '#library',
+			popover: {
+				title: 'Откройте библиотеку',
+				description: 'Она находится в правой панели.',
+				side: "left", align: 'start',
+				onNextClick: () => {
+					store.openKeyDrawer()
+					driverObj.moveNext()
+				}
+			},
+		},
+		{
+			element: '#step1', popover: {
+				title: 'Фильтр', description: 'Сначала проверьте, есть ли уже такое слово? Для этого введите его в поле фильтра.', side: "left", align: 'start',
+				onNextClick: () => {
+					store.setKeywordFilter('новое слово')
+					driverObj.moveNext()
+				}
+			}
+		},
+		{
+			element: '#step1', popover: {
+				title: 'Фильтр', description: 'Если такого слова нет, то появится кнопка', side: "left", align: 'start',
+				onNextClick: () => {
+					driverObj.moveNext()
+				}
+			}
+		},
+		{
+			element: '#step2', popover: {
+				title: 'Добавить', description: 'Нажмите "Добавить" и слово появится в словаре вверху списка.', side: "left", align: 'start',
+				onNextClick: () => {
+					onboard.toggle()
+					driverObj.moveNext()
+					store.openHelp()
+					setTimeout(() => {
+						onboard.addNewWord = false
+						onboard.addVoc = false
+					}, 300)
+				}
+			}
+		},
+
+	])
 	driverObj.drive()
 }
 </script>
@@ -90,10 +130,10 @@ q-dialog(v-model="store.help" persistent)
 						q-card
 							q-card-section(v-if="sec.children")
 								q-list
-									q-item(clickable v-for="item in sec.children" :key="sec.id" @click="item.action")
+									q-item(clickable v-for="item in sec.children" :key="sec.id" @click="driv")
 										q-item-section
 											q-item-label
-												WordHighlighter(:query="filter")  {{ item.label }}
+												WordHighlighter(:query="filter") {{ item.label }}
 
 							q-card-section(v-else)
 								.wip
@@ -105,7 +145,6 @@ q-dialog(v-model="store.help" persistent)
 					p
 						SvgIcon.q-mr-md(name="sound")
 						a(href="") Полное руководство Speech-drive
-					q-btn(unelevated color="primary" label="test" @click="driv")
 </template>
 
 <style scoped lang="scss">

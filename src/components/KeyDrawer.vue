@@ -2,6 +2,7 @@
 q-drawer.rd(v-model="mystore.keyDrawer" overlay side="right" :width="300" )
 	.bt
 		q-btn(unelevated round icon="mdi-close" color="primary" @click="mystore.keyDrawer = false" size="sm") 
+
 	component(:is="KeywordList")
 </template>
 
