@@ -9,7 +9,15 @@
 			q-input(dense v-model="filter" clearable hide-bottom-space @clear="filter = ''").q-ml-lg
 				template(v-slot:prepend)
 					q-icon(name="mdi-magnify")
+	q-card-section(v-if="props.repeat")
+		.rowline
+			q-checkbox(v-model="rep") Звонки от:
+			q-input.small(dense v-model="repNum" outlined bg-color="white" type="number" min="1")
+			div раз
+			q-select(dense v-model="timeFrame" outlined bg-color="white" :options="options")
 	q-card-section
+		div
+			q-checkbox(v-model="contain") Содержат ключевые фразы:
 		q-chip(v-for="(item, index) in filteredChips"
 			v-model:selected="item.selected"
 			:key="item.id"
@@ -39,10 +47,16 @@ const props = defineProps<{
 	chips: Chip[]
 	multiple: boolean
 	tooltip: boolean
+	repeat?: boolean
 }>()
 
 const mystore = useStore()
 const filter = ref('')
+const rep = ref(true)
+const contain = ref(true)
+const repNum = ref(1)
+const timeFrame = ref('в день')
+const options = ['в час', 'в день', 'в неделю']
 
 const chips = reactive(props.chips)
 const filteredChips = computed(() => {
@@ -145,6 +159,9 @@ const click = (e: Chip) => {
 .q-input {
 	transform: translateY(-7px);
 	width: 230px;
+	&.small {
+		width: 70px;
+	}
 }
 
 .inf {
@@ -172,6 +189,15 @@ const click = (e: Chip) => {
 
 	.desc {
 		font-size: 0.8rem;
+	}
+}
+.rowline {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 1rem;
+	.q-select {
+		transform: translateY(-5px);
 	}
 }
 </style>

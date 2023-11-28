@@ -57,6 +57,12 @@ const pages = [
 		url: '/categories',
 	},
 	{
+		id: 8,
+		title: 'FCR',
+		icon: 'mdi-phone-ring',
+		url: '/fcr',
+	},
+	{
 		id: 7,
 		title: 'Избранное',
 		icon: 'mdi-star-outline',

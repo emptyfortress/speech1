@@ -61,6 +61,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'О программе', requiresAuth: false },
 		},
 		{
+			path: '/fcr',
+			component: () => import('@/components/Fcr.vue'),
+			meta: { transition: 'slide-left', title: 'First call resolution', requiresAuth: false },
+		},
+		{
 			path: '/profile',
 			component: () => import('@/components/Profile.vue'),
 			meta: { transition: 'slide-left', title: 'О программе', requiresAuth: false },

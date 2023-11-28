@@ -42,4 +42,17 @@ const logicRec = [
 	{ id: 6, value: 'выбрано - 16', selected: false, label: 'Агрессия' },
 	{ id: 7, value: 'выбрано - 18', selected: false, label: 'Проверка статуса' },
 ]
-export { starredReports, logicRec }
+
+const frc = [
+	{ id: 0, value: '', selected: false, label: 'Уже звонил' },
+	{ id: 1, value: '', selected: false, label: 'Перезваниваю' },
+	{ id: 2, value: '', selected: false, label: 'Три раза общались' },
+	{ id: 3, value: '', selected: false, label: 'Пятый раз' },
+	{ id: 4, value: '', selected: false, label: 'Вчера разговаривали' },
+	{ id: 5, value: '', selected: false, label: 'Уже звонил' },
+	{ id: 6, value: '', selected: false, label: 'Перезваниваю' },
+	{ id: 7, value: '', selected: false, label: 'Три раза общались' },
+	{ id: 8, value: '', selected: false, label: 'Пятый раз' },
+	{ id: 9, value: '', selected: false, label: 'Вчера разговаривали' },
+]
+export { starredReports, logicRec, frc }
