@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Chiplist from '@/components/common/Chiplist.vue'
+import CommonOptions from '@/components/common/CommonOptions.vue'
+
 import { frc } from '@/stores/data'
 </script>
 
@@ -13,10 +15,11 @@ q-page(padding)
 				q-item-section
 					.zag First call resolution
 			q-card-section
-				Chiplist(:chips="frc" :multiple="true" :tooltip="true" repeat)
+				Chiplist(:chips="frc" :multiple="true" :tooltip="true" repeat )
 					template(v-slot:header)
 						q-icon(name="mdi-pin-outline").q-mr-sm
 						|Настройка повторных звонков
+				CommonOptions
 
 </template>
 
