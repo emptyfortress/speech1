@@ -10,6 +10,8 @@ q-page.rel(padding)
 					.zag Логические запросы
 			q-card-section
 				component(:is="Chiplist" :chips="chips" :multiple="false" :tooltip="false")
+					// template(v-slot:addbutton)
+					// 	q-btn(flat color="primary" icon="mdi-folder-outline" label="FCR" @click="mystore.folderModal = true")
 					template(v-slot:header)
 						q-icon(name="mdi-pin-outline").q-mr-sm
 						|Мои запросы
@@ -26,6 +28,8 @@ q-page.rel(padding)
 		component(:is="Records")
 
 		component(:is="Constructor" :dialog="dialog" :maximized="maximizedToggle")
+
+	FolderModal(v-model="mystore.folderModal")
 </template>
 
 <script setup lang="ts">
@@ -38,6 +42,7 @@ import Records from '@/components/Records.vue'
 import Constructor from '@/components/Constructor.vue'
 import { useStore } from '@/stores/store'
 import { useLogic } from '@/stores/logic'
+import FolderModal from '@/components/common/FolderModal.vue'
 
 const mylogic = useLogic()
 const mystore = useStore()

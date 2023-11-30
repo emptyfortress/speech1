@@ -14,6 +14,7 @@ export const useStore = defineStore({
 		keys: [],
 		chips: [],
 		sett: true,
+		fcr: true,
 		req: true,
 		chec: true,
 		cat: true,
@@ -24,6 +25,7 @@ export const useStore = defineStore({
 		loading: false,
 		help: false,
 		keywordFilter: '',
+		folderModal: false,
 	}),
 	getters: {},
 

@@ -9,6 +9,8 @@ q-page(padding)
 					.zag Отчеты
 			q-card-section
 				Chiplist(:chips="starredReports" :multiple="true" :tooltip="true")
+					// template(v-slot:addbutton)
+					// 	q-btn(flat color="primary" icon="mdi-folder-outline" label="FCR" @click="mystore.folderModal = true")
 					template(v-slot:header)
 						q-icon(name="mdi-pin-outline").q-mr-sm
 						|Мои отчеты
@@ -21,6 +23,7 @@ q-page(padding)
 		Operatorstat
 		Records
 
+	FolderModal(v-model="mystore.folderModal")
 </template>
 
 <script setup lang="ts">
@@ -33,6 +36,7 @@ import Operatorstat from '@/components/Operatorstat.vue'
 import Records from '@/components/Records.vue'
 import Chiplist from '@/components/common/Chiplist.vue'
 import { starredReports } from '@/stores/data'
+import FolderModal from '@/components/common/FolderModal.vue'
 
 const mystore = useStore()
 </script>
