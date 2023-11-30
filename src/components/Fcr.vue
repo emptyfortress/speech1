@@ -20,7 +20,7 @@ q-page(padding)
 					q-avatar(icon="mdi-phone-ring" flat)
 				q-item-section
 					.zag First call resolution
-			q-card-section
+			q-card-section.leftmove
 				Chiplist(:chips="frc" :multiple="true" :tooltip="true" repeat)
 					template(v-slot:header)
 						q-icon(name="mdi-pin-outline").q-mr-sm
@@ -31,7 +31,8 @@ q-page(padding)
 			// 		q-input.small(dense v-model="repNum" outlined bg-color="white" type="number" min="1")
 			// 		div раз
 			// 		q-select(dense v-model="timeFrame" outlined bg-color="white" :options="options")
-			Options1
+			.q-pl-md
+				Options1
 		Graph
 		Operatorstat
 		Records
@@ -40,6 +41,9 @@ q-page(padding)
 </template>
 
 <style scoped lang="scss">
+.leftmove {
+	// margin-left: -1rem;
+}
 .rowline {
 	display: flex;
 	justify-content: flex-start;
