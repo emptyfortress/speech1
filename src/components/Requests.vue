@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page.rel(padding)
-	q-btn.fab(round color="primary" icon="mdi-plus" size="lg" @click="openDialog" :class="{ rot: dialog }")
+	FabButton.fab(:dialog="dialog" @jam="openDialog")
 	.container
 		q-expansion-item(v-model="mystore.req")
 			template(v-slot:header)
@@ -43,6 +43,7 @@ import Constructor from '@/components/Constructor.vue'
 import { useStore } from '@/stores/store'
 import { useLogic } from '@/stores/logic'
 import FolderModal from '@/components/common/FolderModal.vue'
+import FabButton from '@/components/common/FabButton.vue'
 
 const mylogic = useLogic()
 const mystore = useStore()

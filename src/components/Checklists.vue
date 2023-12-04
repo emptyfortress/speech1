@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page.rel(padding)
-	q-btn.fab(round color="primary" icon="mdi-plus" size="lg" @click="openDialog" :class="{ rot: dialog1 }")
+	FabButton.fab(:dialog="dialog1" @jam="openDialog")
 	.container
 		q-expansion-item(v-model="mystore.chec")
 			template(v-slot:header)
@@ -42,6 +42,7 @@ import OperStat from '@/components/OperStat.vue'
 import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
 import WindowConstructor from '@/components/WindowConstructor.vue'
+import FabButton from '@/components/common/FabButton.vue'
 
 const mystore = useStore()
 const mycheck = useCheck()

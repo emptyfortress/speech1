@@ -1,6 +1,6 @@
 <template lang="pug">
-q-page(padding).rel
-	q-btn(round color="primary" icon="mdi-plus" size="lg" @click="openDialog" :class="{rot : dialog}").fab
+q-page.rel(padding)
+	FabButton.fab(:dialog="dialog" @jam="openDialog")
 	.container
 		q-expansion-item(v-model="mystore.cat")
 			template(v-slot:header)
@@ -28,6 +28,7 @@ import { useStore } from '@/stores/store'
 import CommonOptions from '@/components/common/CommonOptions.vue'
 import CategNew from '@/components/CategNew.vue'
 import Records from '@/components/Records.vue'
+import FabButton from '@/components/common/FabButton.vue'
 
 import Constructor3 from '@/components/Constructor3.vue'
 
