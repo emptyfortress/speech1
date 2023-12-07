@@ -1,56 +1,74 @@
 <script setup lang="ts">
-import Chiplist from '@/components/common/Chiplist.vue'
+import { ref } from 'vue'
 import Options1 from '@/components/Options1.vue'
-import { frc } from '@/stores/data'
+import { fcr } from '@/stores/data'
 import { useStore } from '@/stores/store'
 import Graph from '@/components/Graph.vue'
 import Operatorstat from '@/components/Operatorstat.vue'
 import Records from '@/components/Records.vue'
-import FolderModal from '@/components/common/FolderModal.vue'
+import FabButton from '@/components/common/FabButton.vue'
+import ConstructorFcr from '@/components/ConstructorFcr.vue'
 
 const mystore = useStore()
+const dialog = ref(false)
+const openDialog = () => {
+	dialog.value = !dialog.value
+}
+
+const rep = ref(true)
+const repNum = ref(1)
+const timeFrame = ref('в день')
+const options = ['в час', 'в день', 'в неделю']
 </script>
 
 <template lang="pug">
 q-page(padding)
+	FabButton.fab(:dialog="dialog" @clicked="openDialog")
 	.container
-		q-expansion-item(v-model="mystore.fcr" )
+		q-expansion-item(v-model="mystore.fcr")
 			template(v-slot:header)
 				q-item-section(avatar).line
 					q-avatar(icon="mdi-phone-ring" flat)
 				q-item-section
 					.zag First call resolution
-			q-card-section.leftmove
-				Chiplist(:chips="frc" :multiple="true" :tooltip="true" repeat)
-					template(v-slot:header)
-						q-icon(name="mdi-pin-outline").q-mr-sm
-						|Настройка повторных звонков
-			// q-card-section
-			// 	.rowline
-			// 		q-checkbox(v-model="rep") Звонки от:
-			// 		q-input.small(dense v-model="repNum" outlined bg-color="white" type="number" min="1")
-			// 		div раз
-			// 		q-select(dense v-model="timeFrame" outlined bg-color="white" :options="options")
+			q-card-section.sec
+				.ro Звонки от <span>2</span> раз в день или содержат фразы:&nbsp;
+					q-chip(v-for="chip in fcr" color="primary" text-color="white") {{chip.label}}
+				q-btn(flat round icon="mdi-menu" @click="openDialog") 
 			.q-pl-md
 				Options1
 		Graph
 		Operatorstat
 		Records
 
-	FolderModal(v-model="mystore.folderModal")
+	component(:is="ConstructorFcr" :dialog="dialog" :maximized="true")
 </template>
 
 <style scoped lang="scss">
-.leftmove {
-	// margin-left: -1rem;
-}
-.rowline {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 1rem;
-	.q-select {
-		transform: translateY(-5px);
+.sec {
+	border: 2px solid #ccc;
+	margin: 1rem;
+	margin-top: 0;
+	padding-right: 5rem;
+	position: relative;
+	background: #d8d8d8;
+	.q-btn {
+		position: absolute;
+		right: 0.5rem;
+		top: 0.8rem;
 	}
+}
+.q-input {
+	transform: translateY(-7px);
+	width: 230px;
+	&.small {
+		width: 70px;
+	}
+}
+.ro span {
+	font-size: 1.3rem;
+	margin-left: 0.3rem;
+	margin-right: 0.3rem;
+	font-weight: 600;
 }
 </style>

@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page.rel(padding)
-	FabButton.fab(:dialog="dialog1" @jam="openDialog")
+	FabButton.fab(:dialog="dialog1" @clicked="openDialog")
 	.container
 		q-expansion-item(v-model="mystore.chec")
 			template(v-slot:header)

@@ -17,7 +17,6 @@
 			q-select(dense v-model="timeFrame" outlined bg-color="white" :options="options")
 		.row(v-if="props.repeat")
 			q-checkbox(v-model="contain") Содержат одну из ключевых фраз из папки:
-			q-btn(flat color="primary" icon="mdi-folder-outline" label="FCR" @click="mystore.folderModal = true")
 		q-chip(v-for="(item, index) in filteredChips"
 			v-model:selected="item.selected"
 			:key="item.id"
@@ -156,14 +155,6 @@ const click = (e: Chip) => {
 
 .q-icon {
 	margin-bottom: 3px;
-}
-
-.q-input {
-	transform: translateY(-7px);
-	width: 230px;
-	&.small {
-		width: 70px;
-	}
 }
 
 .inf {

@@ -25,7 +25,6 @@ export const useStore = defineStore({
 		loading: false,
 		help: false,
 		keywordFilter: '',
-		folderModal: false,
 	}),
 	getters: {},
 

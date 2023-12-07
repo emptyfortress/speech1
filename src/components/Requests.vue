@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page.rel(padding)
-	FabButton.fab(:dialog="dialog" @jam="openDialog")
+	FabButton.fab(:dialog="dialog" @clicked="openDialog")
 	.container
 		q-expansion-item(v-model="mystore.req")
 			template(v-slot:header)
@@ -11,7 +11,6 @@ q-page.rel(padding)
 			q-card-section
 				component(:is="Chiplist" :chips="chips" :multiple="false" :tooltip="false")
 					// template(v-slot:addbutton)
-					// 	q-btn(flat color="primary" icon="mdi-folder-outline" label="FCR" @click="mystore.folderModal = true")
 					template(v-slot:header)
 						q-icon(name="mdi-pin-outline").q-mr-sm
 						|Мои запросы
@@ -29,7 +28,6 @@ q-page.rel(padding)
 
 		component(:is="Constructor" :dialog="dialog" :maximized="maximizedToggle")
 
-	FolderModal(v-model="mystore.folderModal")
 </template>
 
 <script setup lang="ts">
@@ -42,7 +40,6 @@ import Records from '@/components/Records.vue'
 import Constructor from '@/components/Constructor.vue'
 import { useStore } from '@/stores/store'
 import { useLogic } from '@/stores/logic'
-import FolderModal from '@/components/common/FolderModal.vue'
 import FabButton from '@/components/common/FabButton.vue'
 
 const mylogic = useLogic()

@@ -5,11 +5,11 @@ const props = defineProps({
 		default: false,
 	},
 })
-const emit = defineEmits(['jam'])
+const emit = defineEmits(['clicked'])
 </script>
 
 <template lang="pug">
-q-btn.fab(round color="primary" @click="$emit('jam')" size="lg" )
+q-btn.fab(round color="primary" @click="$emit('clicked')" size="lg" )
 	.menu-btn(:class="{active : props.dialog}")
 </template>
 
