@@ -16,19 +16,21 @@
 				:options="options"
 				@filter="filterFn"
 				bg-color="white"
+				new-value-mode="add-unique"
+				@add="addWord"
 				).keys
 				template(v-slot:option="scope")
-					q-item(clickable v-bind="scope.itemProps")
+					q-item(clickable v-bind="scope.itemProps" :class="{'q-item--active' : scope.opt.selected}")
 						q-item-section(side v-if="scope.opt.voc")
-							component(:is="SvgIcon" name="vocabulary").lib
+							component.lib(:is="SvgIcon" name="vocabulary")
 						q-item-section
 							q-item-label {{scope.opt.label}}
 				template(v-slot:no-option)
 					q-item.text-grey
-						q-item-section No results
-			q-checkbox(v-model="wordforms" label="Искать производные формы" dense size="xs").wordform
+						q-item-section Слово не найдено. Чтобы добавить, нажмите "Ввод".
+			q-checkbox.wordform(v-model="wordforms" label="Искать производные формы" dense size="xs")
 		q-select(label="Канал" dense v-model="channel" :options="channelOptions")
-		q-btn(round flat dense @click="clear").reload
+		q-btn.reload(round flat dense @click="clear")
 			q-icon(name="mdi-reload" size="sm")
 
 		.start(v-if="rule1 === 'Начало'")
@@ -54,18 +56,20 @@
 					outlined
 					input-debounce="0"
 					:options="options"
+					new-value-mode="add-unique"
+					@add="addWord"
 					@filter="filterFn"
 					bg-color="white"
 					).keys
 					template(v-slot:option="scope")
-						q-item(clickable v-bind="scope.itemProps")
+						q-item(clickable v-bind="scope.itemProps" :class="{'q-item--active' : scope.opt.selected}")
 							q-item-section(side v-if="scope.opt.voc")
 								component(:is="SvgIcon" name="vocabulary").lib
 							q-item-section
 								q-item-label {{scope.opt.label}}
 					template(v-slot:no-option)
 						q-item.text-grey
-							q-item-section No results
+							q-item-section Слово не найдено. Чтобы добавить, нажмите "Ввод".
 				q-checkbox(v-model="wordforms" label="Искать формы" dense size="xs").wordform
 			q-select(label="Канал" dense v-model="channel" :options="channelOptions")
 
@@ -82,6 +86,17 @@
 import { ref } from 'vue'
 import { words } from '@/stores/list'
 import SvgIcon from '@/components/SvgIcon.vue'
+import { useQuasar } from 'quasar'
+
+interface Keyword {
+	key?: string
+	keys?: string[]
+	label: string
+	selected: boolean
+	score: number
+	part?: string
+	voc?: boolean
+}
 
 const keys1 = ref([])
 const keys2 = ref([])
@@ -115,6 +130,33 @@ const filterFn = (val: string, update: Function) => {
 
 const ruleOptions = ['Присутствует', 'Отсутствует', 'Около', 'Начало', 'Завершение']
 const channelOptions = ['Все', 'Оператор', 'Клиент']
+
+const compare = (a: Keyword, b: Keyword) => {
+	if (a.score > b.score) return -1
+	if (a.score < b.score) return 1
+	return 0
+}
+const $q = useQuasar()
+const addWord = (e: any) => {
+	let test = options.value.filter((el) => el == e.value)
+	if (test.length == 0) {
+		let message = 'Добавлено ' + e.value
+		$q.notify({
+			message: message,
+			icon: 'mdi-check',
+			position: 'bottom-right',
+		})
+		let temp = {
+			id: 2000,
+			label: e.value,
+			part: 'v',
+			score: 4500,
+			selected: true,
+		}
+		options.value.push(temp)
+		options.value.sort(compare)
+	}
+}
 </script>
 
 <style scoped lang="scss">
