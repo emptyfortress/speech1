@@ -46,12 +46,12 @@ q-page(padding)
 
 <style scoped lang="scss">
 .sec {
-	border: 2px solid #ccc;
+	// border: 2px solid #ccc;
 	margin: 1rem;
 	margin-top: 0;
 	padding-right: 5rem;
 	position: relative;
-	background: #d8d8d8;
+	background: #e3e5dc;
 	.q-btn {
 		position: absolute;
 		right: 0.5rem;
