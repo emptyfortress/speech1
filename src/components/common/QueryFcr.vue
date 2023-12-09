@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { words } from '@/stores/list'
 import SvgIcon from '@/components/SvgIcon.vue'
 import { useQuasar } from 'quasar'
@@ -94,14 +94,17 @@ interface Keyword {
 	part?: string
 	voc?: boolean
 }
+const props = defineProps<{
+	keys: Keyword[]
+}>()
 
-const keys1 = ref([])
+const keys1 = ref<Keyword[] | []>([])
 const keys2 = ref([])
 const not = ref(false)
-const rule1 = ref('')
+const rule1 = ref('Присутствует')
 const stringOptions = words
 const options = ref(stringOptions)
-const channel = ref('')
+const channel = ref('Клиент')
 const fromStart = ref(10)
 const clear = () => {
 	rule1.value = ''
@@ -111,6 +114,9 @@ const clear = () => {
 	channel.value = ''
 	fromStart.value = 10
 }
+onMounted(() => {
+	keys1.value = props.keys
+})
 
 const filterFn = (val: string, update: Function) => {
 	update(() => {

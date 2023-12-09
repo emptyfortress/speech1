@@ -47,7 +47,6 @@ const fcr = [
 	{ id: 0, value: '', selected: true, label: 'Уже звонил' },
 	{ id: 1, value: '', selected: true, label: 'Перезваниваю' },
 	{ id: 2, value: '', selected: true, label: 'Три раза общались' },
-	{ id: 3, value: '', selected: true, label: 'Пятый раз' },
-	{ id: 4, value: '', selected: true, label: 'Вчера разговаривали' },
+	{ id: 3, value: '', selected: true, label: 'Вчера разговаривали' },
 ]
 export { starredReports, logicRec, fcr }

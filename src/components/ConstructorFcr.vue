@@ -4,39 +4,14 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 		.top Настраивайте параметры FCR
 
 		.content
-			.rowline
-				q-checkbox(v-model="rep") Звонки от:
-				q-input.small(dense v-model="repNum" outlined bg-color="white" type="number" min="1")
-				div раз
-				q-select(dense v-model="timeFrame" outlined bg-color="white" :options="options")
-			.row
-				q-checkbox(v-model="contain") Содержат один из запросов:
-			q-chip(v-for="( item, index ) in chips"
-				v-model:selected="item.selected"
-				:key="item.id"
-				:removable="editMode"
-				:class="chipClass"
-				clickable
-				@remove="removeChip(index)"
-				).rel
-				.inf(@click.stop v-if="!editMode") ?
-					q-menu(transition-show="jump-down" transition-hide="jump-up" anchor="bottom middle" self="top middle")
-						.infmenu
-							.zg {{ item.label }}
-							.desc.q-mt-md Создано: 23.10.2022 Автор: Иванов П.С.
-				.ellipsis {{ item.label }}
-			q-btn(flat round icon="mdi-pencil-outline" color="primary" @click="toggleEdit") 
-			.zg
-				q-icon(name="mdi-android-studio" size="26px")
-				span Конструктор запросов
-		.content
-			LogicCard()
+			FcrCard()
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import { fcr } from '@/stores/data'
-import LogicCard from '@/components/LogicCard.vue'
+// import LogicCard from '@/components/LogicCard.vue'
+import FcrCard from '@/components/FcrCard.vue'
 
 const props = defineProps({
 	dialog: Boolean,

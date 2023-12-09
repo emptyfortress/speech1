@@ -176,6 +176,10 @@ const words = [
 	{ id: 114, label: 'бог', score: 425.4, selected: false, part: 's' },
 	{ id: 115, label: 'голос', score: 424.5, selected: false, part: 's' },
 	{ id: 116, label: 'найти', score: 424.1, selected: false, part: 'v' },
+	{ id: 117, label: 'перезваниваю', score: 824.1, selected: false, part: 'v' },
+	{ id: 118, label: 'уже звонил', score: 825.1, selected: false, part: 'v' },
+	{ id: 119, label: 'три раза общались', score: 825.1, selected: false, part: 'v' },
+	{ id: 120, label: 'вчера разговаривали', score: 825.1, selected: false, part: 'v' },
 ]
 
 export { words }
