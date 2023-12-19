@@ -19,9 +19,8 @@
 			.q-mt-md
 				q-checkbox(v-model="alien" color="negative" label="Чужой компьютер" dense size="sm")
 		q-card-section
-			q-btn(:loading="loading" color="primary" label="Вход" @click="login").full-width
-		//- .forget
-		//- 	a(href="#") Напомнить пароль
+			q-btn.full-width.q-mb-sm(:loading="loading" color="primary" label="Вход" @click="login")
+			q-btn.full-width(:loading="loading1" color="primary" label="Вход оператора" @click="login1")
 	.dv
 		.row.justify-start.items-center
 			SvgIcon(name="sound" color="#fff").q-mr-md
@@ -32,10 +31,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-const emit = defineEmits(['login'])
+const emit = defineEmits(['login', 'login1'])
 
 const alien = ref(false)
 const loading = ref(false)
+const loading1 = ref(false)
 
 const mail = ref('')
 const pass = ref('')
@@ -44,6 +44,13 @@ const login = () => {
 	setTimeout(() => {
 		loading.value = false
 		emit('login')
+	}, 400)
+}
+const login1 = () => {
+	loading1.value = true
+	setTimeout(() => {
+		loading1.value = false
+		emit('login1')
 	}, 400)
 }
 </script>

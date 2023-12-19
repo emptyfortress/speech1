@@ -15,9 +15,16 @@ const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
 
 const isLogged = ref(true)
+const isOper = ref(false)
+
 const login = () => {
 	isLogged.value = true
 	router.push('/')
+}
+const login1 = () => {
+	isOper.value = true
+	isLogged.value = true
+	router.push('/operator')
 }
 
 const isLoading = ref(false)
@@ -27,7 +34,6 @@ const refresh = () => {
 		isLoading.value = false
 	}, 3000)
 }
-
 </script>
 
 <template lang="pug">
@@ -41,47 +47,48 @@ template(v-if="isLogged")
 				q-toolbar-title.gt-sm.cursor-pointer(@click="toggleLeftDrawer")
 					span.hd Речевая платформа Speech Drive
 				q-space
-				q-btn.q-mr-sm(dense flat round @click="refresh")
-					SvgIcon(name="refresh" :spin="isLoading" )
-				q-btn#library.q-mr-sm(dense flat round icon="mdi-book-open-page-variant-outline" @click="mystore.toggleKeyDrawer")
-				q-btn(dense flat round icon="mdi-bell-outline" @click="mystore.toggleNotificationDrawer")
-					q-badge(floating rounded color="red") 3
-				q-btn.q-mx-md(dense round unelevated)
-					q-avatar(size="30px")
-						img(src="@/assets/img/user1.svg")
-					q-menu(transition-show="jump-down" transition-hide="jump-up")
-						q-list
-							q-item(clickable v-close-popup @click="$router.push('/profile')")
-								q-item-section(avatar)
-									q-icon(name="mdi-card-account-details-outline")
-								q-item-section Профиль
-							q-item(clickable v-close-popup @click="$router.push('/users')")
-								q-item-section(avatar)
-									q-icon(name="mdi-account-search")
-								q-item-section Пользователи
-							q-item(clickable v-close-popup @click="$router.push('/about')")
-								q-item-section(avatar)
-									q-icon(name="mdi-information-outline")
-								q-item-section О программе
-							q-item(clickable v-close-popup @click="isLogged = false")
-								q-item-section(avatar)
-									q-icon(name="mdi-location-exit")
-								q-item-section Выйти
-				q-btn#help(dense flat round icon="mdi-help-circle-outline" @click="mystore.openHelp")
+				template(v-if="!isOper")
+					q-btn.q-mr-sm(dense flat round @click="refresh")
+						SvgIcon(name="refresh" :spin="isLoading" )
+					q-btn#library.q-mr-sm(dense flat round icon="mdi-book-open-page-variant-outline" @click="mystore.toggleKeyDrawer")
+					q-btn(dense flat round icon="mdi-bell-outline" @click="mystore.toggleNotificationDrawer")
+						q-badge(floating rounded color="red") 3
+					q-btn.q-mx-md(dense round unelevated)
+						q-avatar(size="30px")
+							img(src="@/assets/img/user1.svg")
+						q-menu(transition-show="jump-down" transition-hide="jump-up")
+							q-list
+								q-item(clickable v-close-popup @click="$router.push('/profile')")
+									q-item-section(avatar)
+										q-icon(name="mdi-card-account-details-outline")
+									q-item-section Профиль
+								q-item(clickable v-close-popup @click="$router.push('/users')")
+									q-item-section(avatar)
+										q-icon(name="mdi-account-search")
+									q-item-section Пользователи
+								q-item(clickable v-close-popup @click="$router.push('/about')")
+									q-item-section(avatar)
+										q-icon(name="mdi-information-outline")
+									q-item-section О программе
+								q-item(clickable v-close-popup @click="isLogged = false")
+									q-item-section(avatar)
+										q-icon(name="mdi-location-exit")
+									q-item-section Выйти
+					q-btn#help(dense flat round icon="mdi-help-circle-outline" @click="mystore.openHelp")
 
 			q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
 
-		Drawer( :show="mystore.leftDrawer")
-		DateDrawer
-		KeyDrawer
-		NotificationDrawer
-		SpeechDrawer
-		Help
+		Drawer(:show="mystore.leftDrawer" v-if="!isOper")
+		DateDrawer(v-if="!isOper")
+		KeyDrawer(v-if="!isOper")
+		NotificationDrawer(v-if="!isOper")
+		SpeechDrawer(v-if="!isOper")
+		Help(v-if="!isOper")
 
 		q-page-container
 			router-view
 template(v-else)
-	Login(@login="login")
+	Login(@login="login" @login1="login1")
 
 </template>
 
