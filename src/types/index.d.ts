@@ -1,3 +1,9 @@
+type Mark = {
+	id: number
+	text: string
+	mark: number
+	read: boolean
+}
 interface Chip {
 	id: number
 	label: string

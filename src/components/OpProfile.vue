@@ -25,7 +25,7 @@ q-page(padding)
 				.mygrid
 					.q-pt-lg
 						q-list
-							q-item(v-for="item in pagemarks" clickable :key="item.id" :class="{ 'text-weight-bold' : item.read == false }")
+							q-item(v-for="item in pagemarks" clickable  @click="toggleDialog(item)" :key="item.id" :class="{ 'text-weight-bold' : item.read == false }")
 								q-item-section(avatar)
 									q-icon(name="mdi-trophy-outline" v-if="item.read")
 									q-icon(name="mdi-trophy" v-else)
@@ -40,20 +40,28 @@ q-page(padding)
 			q-tab-panel(name="records" )
 				div records
 
+	DialogOperatorMarks(v-model="dialog" :mark="currMark")
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { marks } from '@/stores/marks'
 import VueApexCharts from 'vue3-apexcharts'
+import DialogOperatorMarks from '@/components/common/DialogOperatorMarks.vue'
 
 const tab = ref('marks')
 const current = ref(1)
+const dialog = ref(false)
 const pagemarks = computed(() => {
 	return current.value == 1
 		? marks.filter((el: any) => el.id < 7)
 		: marks.filter((el: any) => el.id >= 7)
 })
+const currMark = ref()
+const toggleDialog = (item: Mark) => {
+	currMark.value = item
+	dialog.value = !dialog.value
+}
 
 const calcCat = computed(() => {
 	return marks.map((el) => el.text)

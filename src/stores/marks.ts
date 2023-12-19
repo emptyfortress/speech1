@@ -1,5 +1,5 @@
 const marks = [
-	{ id: 0, text: '2023-12-20', mark: 35, read: false },
+	{ id: 0, text: '2023-12-20', mark: 53, read: false },
 	{ id: 1, text: '2023-11-20', mark: 57, read: false },
 	{ id: 2, text: '2023-10-20', mark: 41, read: false },
 	{ id: 3, text: '2023-09-20', mark: 49, read: true },
