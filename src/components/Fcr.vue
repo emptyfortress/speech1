@@ -32,8 +32,19 @@ q-page(padding)
 				q-item-section
 					.zag First call resolution
 			q-card-section.sec
-				.ro Звонки клиента от <span>2</span> раз в день, содержат фразы:&nbsp;
-					q-chip(v-for="chip in fcr" color="primary" text-color="white") {{chip.label}}
+				.ro Звонки клиента от <span>2</span> раз в день, содержат запрос:&nbsp;
+					q-chip.rel(clickable color="primary" text-color="white") FCR
+						q-menu(transition-show="jump-down" transition-hide="jump-up" anchor="bottom middle" self="top middle")
+							.infmenu
+								.zg FCR
+								.desc Содержит фразы:
+								ul.desc
+									li перезваниваю
+									li уже звонил
+									li три раза общались
+									li вчера разговаривали
+								.desc.q-mt-md Создано: 23.10.2022 Автор: Иванов П.С.
+					// q-chip(v-for="chip in fcr" color="primary" text-color="white") {{chip.label}}
 				q-btn(flat round icon="mdi-menu" @click="openDialog") 
 			.q-pl-md
 				Options1
@@ -70,5 +81,17 @@ q-page(padding)
 	margin-left: 0.3rem;
 	margin-right: 0.3rem;
 	font-weight: 600;
+}
+.infmenu {
+	padding: 1rem;
+
+	.zg {
+		font-size: 0.9rem;
+		font-weight: bold;
+	}
+
+	.desc {
+		font-size: 0.8rem;
+	}
 }
 </style>
