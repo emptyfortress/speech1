@@ -12,6 +12,8 @@ q-dialog(v-model="modelValue")
 				q-btn(flat color="negative" label="Я не согласен!" v-close-popup) 
 				q-space
 				q-btn(unelevated color="primary" label="Хорошо" v-close-popup) 
+
+
 </template>
 
 <script setup lang="ts">

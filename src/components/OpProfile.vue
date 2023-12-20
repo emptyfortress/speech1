@@ -27,8 +27,8 @@ q-page(padding)
 						q-list
 							q-item(v-for="item in pagemarks" clickable  @click="toggleDialog(item)" :key="item.id" :class="{ 'text-weight-bold' : item.read == false }")
 								q-item-section(avatar)
-									q-icon(name="mdi-trophy-outline" v-if="item.read")
-									q-icon(name="mdi-trophy" v-else)
+									q-icon(name="mdi-tooltip-check-outline" v-if="item.read")
+									q-icon(name="mdi-tooltip-check" v-else)
 								q-item-section
 									q-item-label {{ item.text }}
 								q-item-section(side) {{ item.mark }}
