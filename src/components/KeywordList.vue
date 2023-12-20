@@ -44,18 +44,20 @@ q-list(dense)
 			q-icon(name="mdi-emoticon-tongue-outline" size="sm" color="primary")
 			span.q-mx-sm Ничего нет.
 			q-btn(color="primary" label="Добавить" size="sm" unelevated @click="add")
+			// span Enter - добавить.
 
 transition(name="slide-bottom")
 	.addvoc#dialog(v-show="selection.length > 0 && !editMode")
 		.total
 			|Выбрано:
 			span {{ calcKeys }}
-			q-btn(round dense flat icon="mdi-close" size="sm" @click="cancel")
+			q-btn.right(dense flat size="md" label="Удалить" @click="remMulti")
+			// q-btn(round dense flat icon="mdi-close" size="sm" @click="cancel")
 		q-input(v-model="vocName" outlined dense label="Название словаря" bg-color="white")
 		q-card-actions
 			q-btn(label="Отмена" flat color="white" @click="cancel")
 			q-space
-			q-btn(label="Создать" flat color="white" :disable="vocName.length < 3" @click="addVoc")
+			q-btn(label="Создать словарь" flat color="white" :disable="vocName.length < 3" @click="addVoc")
 </template>
 
 <script setup lang="ts">
@@ -99,6 +101,12 @@ const remove = (e: Keyword) => {
 	items.value.splice(index, 1)
 	show(e)
 }
+const remMulti = () => {
+	selection.value.forEach((el) => {
+		items.value = items.value.filter((item) => item.label !== el)
+	})
+	selection.value = []
+}
 
 const compare = (a: Keyword, b: Keyword) => {
 	if (a.score > b.score) return -1
@@ -125,11 +133,9 @@ const add = () => {
 watchEffect(() => {
 	if (onboard.addNewWord === true) {
 		add()
-	}
-	else if (onboard.addVoc === true) {
+	} else if (onboard.addVoc === true) {
 		selection.value.push('здравствуйте')
-	}
-	else if (onboard.addVoc === false) {
+	} else if (onboard.addVoc === false) {
 		selection.value = []
 	}
 })
@@ -293,6 +299,9 @@ const save = () => {
 	.q-btn {
 		transform: translateY(-2px);
 	}
+}
+.right {
+	float: right;
 }
 
 .full-background {
