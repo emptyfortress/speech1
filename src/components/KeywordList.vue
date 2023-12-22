@@ -1,50 +1,50 @@
 <template lang="pug">
-.zg
-	div Библиотека
-	q-badge {{ items.length }}
-#step1
-	q-input#step1(ref="input" dense v-model="store.keywordFilter" clearable hide-bottom-space @clear="store.clearKeywordFilter")
-		template(v-slot:prepend)
-			q-icon(name="mdi-magnify")
-q-list(dense)
-	template(v-if="editMode && currentVoc")
-		q-card.full-background
-			q-item(clickable dense)
-				q-item-section(side)
-					component(:is="SvgIcon" name="vocabulary" class="voc")
-				q-item-section {{ currentVoc.label }}
-				q-item-section(side)
-					q-icon(name="mdi-arrow-up-right" size="xs" dense @click="save")
-			q-item(v-for="item in selection" clickable :key="item" dense)
-				q-item-section {{ item }}
-				q-item-section(side)
-					q-icon.hov(name="mdi-close" size="xs" @click="removeFromVoc(item)")
+q-form(@submit="add")
+	.zg
+		div Библиотека
+		q-badge {{ items.length }}
+	#step1
+		q-input#step1(ref="input" dense v-model="store.keywordFilter" clearable hide-bottom-space @clear="store.clearKeywordFilter")
+			template(v-slot:prepend)
+				q-icon(name="mdi-magnify")
+	q-list(dense)
+		template(v-if="editMode && currentVoc")
+			q-card.full-background
+				q-item(clickable dense)
+					q-item-section(side)
+						component(:is="SvgIcon" name="vocabulary" class="voc")
+					q-item-section {{ currentVoc.label }}
+					q-item-section(side)
+						q-icon(name="mdi-arrow-up-right" size="xs" dense @click="save")
+				q-item(v-for="item in selection" clickable :key="item" dense)
+					q-item-section {{ item }}
+					q-item-section(side)
+						q-icon.hov(name="mdi-close" size="xs" @click="removeFromVoc(item)")
 
 
-	component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" )
-		template(#item="{ element }")
-			q-item#voc(clickable dense)
-				q-item-section
-					label
-						q-checkbox.q-mr-sm(v-model="selection" size="xs" dense :val="element.label")
-						component(:is="SvgIcon" name="vocabulary" v-if="element.voc" class="voc")
-						WordHighlighter(:query="store.keywordFilter") {{ element.label }}
+		component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" )
+			template(#item="{ element }")
+				q-item#voc(clickable dense)
+					q-item-section
+						label
+							q-checkbox.q-mr-sm(v-model="selection" size="xs" dense :val="element.label")
+							component(:is="SvgIcon" name="vocabulary" v-if="element.voc" class="voc")
+							WordHighlighter(:query="store.keywordFilter") {{ element.label }}
 
-				q-item-section(side v-if="!editMode")
-					.row
-						q-icon.q-mr-sm.hov(name="mdi-pencil" size="xs" @click="edit(element)" v-if="element.voc")
-						q-icon.hov(name="mdi-trash-can-outline" size="xs" @click="")
-							q-menu
-								q-list
-									q-item.pink(clickable @click="remove(element)" v-close-popup)
-										q-item-section Удалить
+					q-item-section(side v-if="!editMode")
+						.row
+							q-icon.q-mr-sm.hov(name="mdi-pencil" size="xs" @click="edit(element)" v-if="element.voc")
+							q-icon.hov(name="mdi-trash-can-outline" size="xs" @click="")
+								q-menu
+									q-list
+										q-item.pink(clickable @click="remove(element)" v-close-popup)
+											q-item-section Удалить
 
-	template(v-if="filteredItems.length === 0")
-		.notfound#step2
-			q-icon(name="mdi-emoticon-tongue-outline" size="sm" color="primary")
-			span.q-mx-sm Ничего нет.
-			q-btn(color="primary" label="Добавить" size="sm" unelevated @click="add")
-			// span Enter - добавить.
+		template(v-if="filteredItems.length === 0")
+			.notfound#step2
+				q-icon(name="mdi-emoticon-tongue-outline" size="sm" color="primary")
+				span.q-mx-sm Ничего нет.
+				q-btn(color="primary" label="Добавить" size="sm" unelevated @click="add")
 
 transition(name="slide-bottom")
 	.addvoc#dialog(v-show="selection.length > 0 && !editMode")

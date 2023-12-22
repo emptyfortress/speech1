@@ -8,7 +8,6 @@ q-tree(:nodes="treeData" node-key="id" v-model:expanded="expanded" default-expan
 				.text-weight-bold.q-ml-sm {{prop.node.typ === 1 ? 'ИЛИ' : 'И'}}
 		template(v-else)
 			component(:is="QueryI")
-			component(:is="QueryI")
 		component(:is="TreeMenu" :node="prop.node" @addOp="addOperator(prop.node)" @addCond="addCondition(prop.node)" @kill="del(prop.node)" @cut="cut(prop.node)" @paste="paste(prop.node)")
 </template>
 
