@@ -51,13 +51,15 @@ transition(name="slide-bottom")
 		.total
 			|Выбрано:
 			span {{ calcKeys }}
-			q-btn.right(dense flat size="md" label="Удалить" @click="remMulti")
+			q-btn.right(dense flat size="md" label="Удалить" @click="confirm = true")
 			// q-btn(round dense flat icon="mdi-close" size="sm" @click="cancel")
 		q-input(v-model="vocName" outlined dense label="Название словаря" bg-color="white")
 		q-card-actions
 			q-btn(label="Отмена" flat color="white" @click="cancel")
 			q-space
 			q-btn(label="Создать словарь" flat color="white" :disable="vocName.length < 3" @click="addVoc")
+
+ConfirmDialog(v-model="confirm" @remove="remMulti")
 </template>
 
 <script setup lang="ts">
@@ -70,6 +72,7 @@ import SvgIcon from '@/components/SvgIcon.vue'
 import WordHighlighter from 'vue-word-highlighter'
 import { useStore } from '@/stores/store'
 import { useOnboard } from '@/stores/onboard'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 
 interface Keyword {
 	key?: string
@@ -101,6 +104,8 @@ const remove = (e: Keyword) => {
 	items.value.splice(index, 1)
 	show(e)
 }
+const confirm = ref(false)
+
 const remMulti = () => {
 	selection.value.forEach((el) => {
 		items.value = items.value.filter((item) => item.label !== el)
