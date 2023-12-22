@@ -27,4 +27,7 @@ const mystore = useStore()
 	top: 0.6rem;
 	z-index: 5;
 }
+:deep(.q-drawer--right) {
+	z-index: 6007;
+}
 </style>
