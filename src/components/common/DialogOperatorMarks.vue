@@ -15,7 +15,6 @@ q-dialog(v-model="modelValue")
 			.links Петров_2023-10-03
 			.links Петров_2023-10-04
 					
-
 		q-card-section
 			q-card-actions(align="right")
 				q-btn(flat color="negative" label="Я не согласен!" v-close-popup) 
@@ -44,5 +43,8 @@ const modelValue = defineModel()
 .links {
 	cursor: pointer;
 	color: $primary;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 </style>
