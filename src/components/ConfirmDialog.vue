@@ -14,7 +14,7 @@ q-dialog(v-model="modelValue")
 			p Вы уверены, что нужно удалить выбранные слова?
 			q-card-actions(align="right")
 				q-btn(flat color="primary" label="Отмена" v-close-popup) 
-				q-btn(unelevated color="primary" label="Удалить" v-close-popup @click="$emit('remove')") 
+				q-btn(unelevated color="negative" label="Удалить" v-close-popup @click="$emit('remove')") 
 </template>
 
 <style scoped lang="scss"></style>
