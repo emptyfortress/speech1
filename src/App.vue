@@ -10,6 +10,7 @@ import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
 import Help from '@/components/Help.vue'
 import { router } from './router/router'
+import { is } from 'quasar'
 
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
@@ -22,9 +23,9 @@ const login = () => {
 	router.push('/')
 }
 const login1 = () => {
-	isOper.value = true
-	isLogged.value = true
 	router.push('/operator')
+	isLogged.value = true
+	isOper.value = true
 }
 
 const isLoading = ref(false)
@@ -33,6 +34,10 @@ const refresh = () => {
 	setTimeout(() => {
 		isLoading.value = false
 	}, 3000)
+}
+const logout = () => {
+	isLogged.value = false
+	router.push('/')
 }
 </script>
 
@@ -70,7 +75,7 @@ template(v-if="isLogged")
 									q-item-section(avatar)
 										q-icon(name="mdi-information-outline")
 									q-item-section О программе
-								q-item(clickable v-close-popup @click="isLogged = false")
+								q-item(clickable v-close-popup @click="logout" )
 									q-item-section(avatar)
 										q-icon(name="mdi-location-exit")
 									q-item-section Выйти

@@ -21,6 +21,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
 		{
+			path: '/operator',
+			component: () => import('@/components/OpProfile.vue'),
+			meta: { transition: 'slide-left', title: 'О программе', requiresAuth: false },
+		},
+		{
 			path: '/report',
 			component: () => import('@/components/Report.vue'),
 			meta: { transition: 'slide-left', title: 'Отчеты', requiresAuth: false },
@@ -68,11 +73,6 @@ export const router = createRouter({
 		{
 			path: '/profile',
 			component: () => import('@/components/Profile.vue'),
-			meta: { transition: 'slide-left', title: 'О программе', requiresAuth: false },
-		},
-		{
-			path: '/operator',
-			component: () => import('@/components/OpProfile.vue'),
 			meta: { transition: 'slide-left', title: 'О программе', requiresAuth: false },
 		},
 		{
