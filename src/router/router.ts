@@ -23,7 +23,12 @@ export const router = createRouter({
 		{
 			path: '/operator',
 			component: () => import('@/components/OpProfile.vue'),
-			meta: { transition: 'slide-left', title: 'О программе', requiresAuth: false },
+			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
+		},
+		{
+			path: '/operators',
+			component: () => import('@/components/OperatorsAll.vue'),
+			meta: { transition: 'slide-left', title: 'Операторы', requiresAuth: false },
 		},
 		{
 			path: '/report',

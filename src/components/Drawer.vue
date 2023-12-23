@@ -63,6 +63,12 @@ const pages = [
 		url: '/fcr',
 	},
 	{
+		id: 9,
+		title: 'Операторы',
+		icon: 'mdi-headset',
+		url: '/operators',
+	},
+	{
 		id: 7,
 		title: 'Избранное',
 		icon: 'mdi-star-outline',
