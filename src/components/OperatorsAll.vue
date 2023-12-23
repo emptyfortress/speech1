@@ -7,8 +7,8 @@ const opercolumns: QTableColumn[] = [
 	{ name: 'name', label: 'Оператор', field: 'name', align: 'left', sortable: true },
 	{ name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
 	{ name: 'group', label: 'Группа', field: 'group', align: 'left', sortable: true },
-	{ name: 'calls', label: 'Звонки', field: 'calls', align: 'left', sortable: true },
-	{ name: 'marks', label: 'Оценка', field: 'marks', align: 'left', sortable: true },
+	{ name: 'total', label: 'Звонки', field: 'total', align: 'right', sortable: true },
+	{ name: 'good', label: 'Оценка', field: 'good', align: 'right', sortable: true },
 	{ name: 'action', label: '', field: 'action', align: 'right', sortable: false },
 ]
 const pagination = ref({
@@ -17,6 +17,12 @@ const pagination = ref({
 	page: 1,
 	rowsPerPage: 0,
 })
+const goto = (evt, row, index) => {
+	console.log(row.name)
+}
+const markOperator = (id: number) => {
+	console.log('fuck: ', id)
+}
 </script>
 
 <template lang="pug">
@@ -31,7 +37,12 @@ q-page(padding)
       :rows="operators"
 			:pagination="pagination"
       :columns="opercolumns"
-      row-key="name")
+			hide-bottom
+			@row-click="goto"
+      row-key="id")
+				template(v-slot:body-cell-action="props")
+					q-td.action(:props="props")
+						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row.id)")
 </template>
 
 <style scoped lang="scss">
@@ -53,6 +64,17 @@ q-page(padding)
 	div {
 		background: white;
 		width: 100%;
+	}
+}
+:deep(.table tr) {
+	cursor: pointer;
+	.action > button {
+		visibility: hidden;
+	}
+	&:hover {
+		.action > button {
+			visibility: visible;
+		}
 	}
 }
 </style>

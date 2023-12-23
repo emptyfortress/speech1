@@ -13,7 +13,7 @@ import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
 
 interface Operator {
-	id: number
+	id?: number
 	name: string
 	total: number
 	percent: number
