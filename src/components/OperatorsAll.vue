@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { operators } from '@/stores/operators'
 import type { QTableColumn } from 'quasar'
+import Aggregat from '@/components/Aggregat.vue'
 
 const opercolumns: QTableColumn[] = [
 	{ name: 'name', label: 'Оператор', field: 'name', align: 'left', sortable: true },
@@ -18,10 +19,34 @@ const pagination = ref({
 	rowsPerPage: 0,
 })
 const goto = (evt, row, index) => {
-	console.log(row.name)
+	// console.log(row.name)
+	console.log(table.value.filteredSortedRows)
 }
 const markOperator = (id: number) => {
 	console.log('fuck: ', id)
+}
+const filter = ref('')
+const city = ref(false)
+const group = ref(false)
+const table = ref()
+
+const fil = computed(() => {
+	if (!!table.value) {
+		return table.value?.filteredSortedRows
+	} else return operators
+})
+
+const oper = ref(operators)
+
+const checkedItems = ref()
+
+const agg = (el: any) => {
+	if (el.value == true) {
+		oper.value = operators.filter((item) => item[el.col] == el.title)
+	} else oper.value = operators
+}
+const test = () => {
+	console.log(fil.value)
 }
 </script>
 
@@ -30,13 +55,20 @@ q-page(padding)
 	.container
 		.header
 			q-icon(name="mdi-headset")
-			.zag Операторы
+			.zag(@click="test" ) Операторы
 		.grid
-			div lakjsd
+			q-card.aggregat
+				q-input(dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
+					template(v-slot:prepend)
+						q-icon(name="mdi-magnify")
+				Aggregat(:data="fil" @filterBy="agg")
+
 			q-table.table(
-      :rows="operators"
+			ref="table"
+      :rows="oper"
 			:pagination="pagination"
       :columns="opercolumns"
+			:filter="filter"
 			hide-bottom
 			@row-click="goto"
       row-key="id")
@@ -55,7 +87,7 @@ q-page(padding)
 }
 .grid {
 	display: grid;
-	grid-template-columns: 200px 1fr;
+	grid-template-columns: 220px 1fr;
 	justify-items: start;
 	align-items: start;
 	column-gap: 1rem;
@@ -67,7 +99,6 @@ q-page(padding)
 	}
 }
 :deep(.table tr) {
-	cursor: pointer;
 	.action > button {
 		visibility: hidden;
 	}
@@ -76,5 +107,12 @@ q-page(padding)
 			visibility: visible;
 		}
 	}
+}
+.aggregat {
+	font-size: 0.9rem;
+	.q-input {
+		padding: 1rem;
+	}
+	// padding: 0.5rem;
 }
 </style>

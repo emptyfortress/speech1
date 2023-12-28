@@ -1,3 +1,14 @@
+type Operator = {
+	id: number
+	name: string
+	group: string
+	city: string
+	total: number
+	percent: number
+	good: number
+	notgood: number
+	bad: number
+}
 type Mark = {
 	id: number
 	text: string
