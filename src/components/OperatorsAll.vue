@@ -60,7 +60,7 @@ q-page(padding)
 			.zag Операторы
 		.grid
 			q-card.aggregat
-				q-input(dense v-model="query" clearable hide-bottom-space @clear="query = ''")
+				q-input(dense v-model="query" placeholder="оператор" clearable hide-bottom-space @clear="query = ''")
 					template(v-slot:prepend)
 						q-icon(name="mdi-magnify")
 				Aggregat
