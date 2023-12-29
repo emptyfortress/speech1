@@ -5,12 +5,12 @@ import { useOperatorList } from '@/stores/operatorList'
 const opList = useOperatorList()
 const emit = defineEmits(['filterBy'])
 
-const toggle = (el: any, index: number, ind: number) => {
+const toggle = (item: any, el: any, index: number, ind: number) => {
 	opList.aggregateData[index].list[ind].value = !opList.aggregateData[index].list[ind].value
-	// console.log(opList.aggregateData)
-	// if (el.value == true) {
-	// 	opList.addToAggregat(el)
-	// } else opList.removeFromAggregat(el)
+	if (el.value == true && item.col == 'city') opList.addToCityFilters(el.title)
+	if (el.value == false && item.col == 'city') opList.removeFromCityFilters(el.title)
+	if (el.value == true && item.col == 'group') opList.addToGroupFilters(el.title)
+	if (el.value == false && item.col == 'group') opList.removeFromGroupFilters(el.title)
 }
 </script>
 
@@ -20,7 +20,7 @@ const toggle = (el: any, index: number, ind: number) => {
 	q-list(dense).q-mb-sm
 		q-item(v-for="( el, ind ) in item.list" v-ripple tag="label" clickable)
 			q-item-section(side)
-				q-checkbox.reset(dense :model-value="el.value" @update:model-value="toggle(el, index, ind)")
+				q-checkbox.reset(dense :model-value="el.value" @update:model-value="toggle(item, el, index, ind)")
 			q-item-section {{ el.title }}
 			q-item-section.right {{ el.badge }}
 </template>

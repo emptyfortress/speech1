@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { operators } from '@/stores/operators'
 import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
@@ -34,41 +34,22 @@ const table = ref()
 const filteredRows = computed(() => {
 	let filt = {
 		name: (name: string) => name.toLowerCase().includes(query.value.toLowerCase()),
-		// city: (city: string) => ['СПб'].includes(city),
-		// group: (group: string) => ['Юрлица'].includes(group),
+		city: (city: string) => true,
+		group: (group: string) => true,
+	}
+	if (opList.cityFilters.length > 0) {
+		filt.city = (city: string) => opList.cityFilters.includes(city)
+	}
+	if (opList.groupFilters.length > 0) {
+		filt.group = (group: string) => opList.groupFilters.includes(group)
 	}
 	return filterArray(operators, filt)
-	// if (query.value.length > 0) {
-	// 	return operators.filter((item) => item.name.toLowerCase().includes(query.value.toLowerCase()))
-	// }
-	// return operators
 })
 
-onMounted(() => {
-	let temp = buildAggregate(filteredRows.value, ['city', 'group'])
+watchEffect(() => {
+	let temp = buildAggregate(operators, ['city', 'group'])
 	opList.setAggregat(temp)
 })
-
-// const filt = {
-// 	size: (size: any) => size === 50 || size === 70,
-// 	color: (color: any) => ['blue', 'black'].includes(color.toLowerCase()),
-// 	locations: (locations: any) => locations.find((x) => ['JAPAN', 'USA'].includes(x.toUpperCase())),
-// 	details: (details: any) => details.length < 30 && details.width >= 70,
-// }
-const nam = 'тон'
-const cc = ['СПб', 'fuck']
-const gr = ['Юрлица']
-const fill = {
-	group: (group: string) => gr.includes(group),
-	city: (city: string) => cc.includes(city),
-	// name: (name: string) => name.toLowerCase().includes(nam.toLowerCase()),
-}
-
-const test = () => {
-	console.log(operators.length)
-	const newArr = filterArray(operators, fill)
-	console.log(newArr)
-}
 </script>
 
 <template lang="pug">
@@ -76,7 +57,7 @@ q-page(padding)
 	.container
 		.header
 			q-icon(name="mdi-headset")
-			.zag(@click="test") Операторы
+			.zag Операторы
 		.grid
 			q-card.aggregat
 				q-input(dense v-model="query" clearable hide-bottom-space @clear="query = ''")
