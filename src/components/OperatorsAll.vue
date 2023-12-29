@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { operators } from '@/stores/operators'
 import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
@@ -31,20 +31,38 @@ const markOperator = (id: number) => {
 const query = ref('')
 const table = ref()
 
-const oper = ref(operators)
+// const oper = ref(operators)
+// const oper = computed(() => {
+// 	if (opList.checkedList.length > 0) {
+// 		return operators.filter((item) => item.city == opList.checkedList[0].title)
+// 	}
+// 	return operators
+// })
 
 const filteredRows = computed(() => {
 	if (query.value.length > 0) {
-		return oper.value.filter((item) => item.name.toLowerCase().includes(query.value.toLowerCase()))
+		return operators.filter((item) => item.name.toLowerCase().includes(query.value.toLowerCase()))
+	} else if (opList.checkedList.length > 0) {
+		return operators.filter((item) => item.city == opList.checkedList[0].title)
 	}
 	return operators
 })
 //
-
-watchEffect(() => {
+onMounted(() => {
 	let temp = buildAggregate(filteredRows.value, ['city', 'group'])
 	opList.setAggregat(temp)
+	console.log(temp)
 })
+
+// watch(par, (val) => {
+// 	if (par) {
+// 		console.log(val)
+// 	}
+// })
+// watchEffect(() => {
+// 	let temp = buildAggregate(filteredRows.value, ['city', 'group'])
+// 	opList.setAggregat(temp)
+// })
 </script>
 
 <template lang="pug">

@@ -131,7 +131,7 @@ interface Row {
 }
 type AggregatList = {
 	title: string
-	value: boolean
+	value: boolean | null
 	badge: number
 }
 interface AggregatBlock {
