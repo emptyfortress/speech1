@@ -4,7 +4,7 @@ import { operators } from '@/stores/operators'
 import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
-import { buildAggregate } from '@/utils/utils'
+import { buildAggregate, filterArray } from '@/utils/utils'
 
 const opList = useOperatorList()
 
@@ -31,38 +31,44 @@ const markOperator = (id: number) => {
 const query = ref('')
 const table = ref()
 
-// const oper = ref(operators)
-// const oper = computed(() => {
-// 	if (opList.checkedList.length > 0) {
-// 		return operators.filter((item) => item.city == opList.checkedList[0].title)
-// 	}
-// 	return operators
-// })
-
 const filteredRows = computed(() => {
-	if (query.value.length > 0) {
-		return operators.filter((item) => item.name.toLowerCase().includes(query.value.toLowerCase()))
-	} else if (opList.checkedList.length > 0) {
-		return operators.filter((item) => item.city == opList.checkedList[0].title)
+	let filt = {
+		name: (name: string) => name.toLowerCase().includes(query.value.toLowerCase()),
+		// city: (city: string) => ['СПб'].includes(city),
+		// group: (group: string) => ['Юрлица'].includes(group),
 	}
-	return operators
+	return filterArray(operators, filt)
+	// if (query.value.length > 0) {
+	// 	return operators.filter((item) => item.name.toLowerCase().includes(query.value.toLowerCase()))
+	// }
+	// return operators
 })
-//
+
 onMounted(() => {
 	let temp = buildAggregate(filteredRows.value, ['city', 'group'])
 	opList.setAggregat(temp)
-	console.log(temp)
 })
 
-// watch(par, (val) => {
-// 	if (par) {
-// 		console.log(val)
-// 	}
-// })
-// watchEffect(() => {
-// 	let temp = buildAggregate(filteredRows.value, ['city', 'group'])
-// 	opList.setAggregat(temp)
-// })
+// const filt = {
+// 	size: (size: any) => size === 50 || size === 70,
+// 	color: (color: any) => ['blue', 'black'].includes(color.toLowerCase()),
+// 	locations: (locations: any) => locations.find((x) => ['JAPAN', 'USA'].includes(x.toUpperCase())),
+// 	details: (details: any) => details.length < 30 && details.width >= 70,
+// }
+const nam = 'тон'
+const cc = ['СПб', 'fuck']
+const gr = ['Юрлица']
+const fill = {
+	group: (group: string) => gr.includes(group),
+	city: (city: string) => cc.includes(city),
+	// name: (name: string) => name.toLowerCase().includes(nam.toLowerCase()),
+}
+
+const test = () => {
+	console.log(operators.length)
+	const newArr = filterArray(operators, fill)
+	console.log(newArr)
+}
 </script>
 
 <template lang="pug">
@@ -70,7 +76,7 @@ q-page(padding)
 	.container
 		.header
 			q-icon(name="mdi-headset")
-			.zag Операторы
+			.zag(@click="test") Операторы
 		.grid
 			q-card.aggregat
 				q-input(dense v-model="query" clearable hide-bottom-space @clear="query = ''")

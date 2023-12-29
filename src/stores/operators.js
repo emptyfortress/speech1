@@ -384,6 +384,17 @@ const operators = [
 		notgood: 70,
 		bad: 45,
 	},
+	{
+		id: 35,
+		name: 'Антонина ',
+		group: 'Юрлица',
+		city: 'fuck',
+		total: 249,
+		percent: 12,
+		good: 30,
+		notgood: 70,
+		bad: 45,
+	},
 ]
 
 const records = [

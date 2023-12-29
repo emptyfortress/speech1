@@ -7,9 +7,10 @@ const emit = defineEmits(['filterBy'])
 
 const toggle = (el: any, index: number, ind: number) => {
 	opList.aggregateData[index].list[ind].value = !opList.aggregateData[index].list[ind].value
-	if (el.value == true) {
-		opList.addToAggregat(el)
-	} else opList.removeFromAggregat(el)
+	// console.log(opList.aggregateData)
+	// if (el.value == true) {
+	// 	opList.addToAggregat(el)
+	// } else opList.removeFromAggregat(el)
 }
 </script>
 
