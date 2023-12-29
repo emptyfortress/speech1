@@ -1,20 +1,11 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { operators } from '@/stores/operators'
 import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
+import { buildAggregate } from '@/utils/utils'
 
-type List = {
-	title: string
-	value: boolean
-	badge: number
-}
-type Block = {
-	col: string
-	name: string
-	list: List[]
-}
 const opList = useOperatorList()
 
 const opercolumns: QTableColumn[] = [
@@ -31,63 +22,28 @@ const pagination = ref({
 	page: 1,
 	rowsPerPage: 0,
 })
-const goto = (evt, row, index) => {
-	// console.log(row.name)
-	console.log(table.value.filteredSortedRows)
+const goto = (evt: Event, row: any, index: number) => {
+	console.log(row.name)
 }
 const markOperator = (id: number) => {
 	console.log('fuck: ', id)
 }
-const filter = ref('')
-const city = ref(false)
-const group = ref(false)
+const query = ref('')
 const table = ref()
 
-// this is computed prop from quasar table
-const filteredRows = computed(() => {
-	if (!!table.value) {
-		return table.value?.filteredSortedRows
-	} else return operators
-})
-
 const oper = ref(operators)
-const checkedItems = ref()
 
-const aggregateData = computed(() => {
-	let agg: Block[] = []
-	const iteration = ['city', 'group']
-	iteration.forEach((it: string) => {
-		const block = [...new Set(operators.map((item: any) => item[it]))]
-		const blockname = (it: string) => {
-			switch (it) {
-				case 'city':
-					return 'Город'
-				case 'group':
-					return 'Группа'
-				default:
-					return 'Остальное'
-			}
-		}
-		const list = block.map((el: any) => {
-			const length = filteredRows.value.filter((item: any) => item[it] === el).length
-			return {
-				title: el,
-				value: false,
-				badge: length,
-			}
-		})
-		list.sort((a, b) => b.badge - a.badge)
+const filteredRows = computed(() => {
+	if (query.value.length > 0) {
+		return oper.value.filter((item) => item.name.toLowerCase().includes(query.value.toLowerCase()))
+	}
+	return operators
+})
+//
 
-		const blocks: Block = {
-			col: it,
-			name: blockname(it),
-			list: list,
-		}
-
-		agg.push(blocks)
-	})
-
-	return agg
+watchEffect(() => {
+	let temp = buildAggregate(filteredRows.value, ['city', 'group'])
+	opList.setAggregat(temp)
 })
 </script>
 
@@ -96,23 +52,22 @@ q-page(padding)
 	.container
 		.header
 			q-icon(name="mdi-headset")
-			.zag(@click="test" ) Операторы
+			.zag Операторы
 		.grid
 			q-card.aggregat
-				q-input(dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
+				q-input(dense v-model="query" clearable hide-bottom-space @clear="query = ''")
 					template(v-slot:prepend)
 						q-icon(name="mdi-magnify")
-				Aggregat(:data="aggregateData")
+				Aggregat
 
 			q-table.table(
-			ref="table"
-      :rows="oper"
-			:pagination="pagination"
-      :columns="opercolumns"
-			:filter="filter"
-			hide-bottom
-			@row-click="goto"
-      row-key="id")
+				ref="table"
+				:rows="filteredRows"
+				:pagination="pagination"
+				:columns="opercolumns"
+				hide-bottom
+				@row-click="goto"
+				row-key="id")
 				template(v-slot:body-cell-action="props")
 					q-td.action(:props="props")
 						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row.id)")

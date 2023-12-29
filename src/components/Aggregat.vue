@@ -1,45 +1,21 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
-// import { operators } from '@/stores/operators'
-const props = defineProps<{
-	data: Block[]
-}>()
+import { useOperatorList } from '@/stores/operatorList'
 
-type List = {
-	title: string
-	value: boolean
-	badge: number
-}
-type Block = {
-	col: string
-	name: string
-	list: List[]
-}
-
+const opList = useOperatorList()
 const emit = defineEmits(['filterBy'])
 
 const toggle = (el: any, index: number, ind: number) => {
-	// props.data[index].list[ind].value = !props.data[index].list[ind].value
-	let item = {
-		col: props.data[index].col,
-		title: props.data[index].list[ind].title,
-		value: el.value,
-	}
-	emit('filterBy', item)
-	console.log(item)
-}
-const action = () => {
-	// console.log(props.data)
+	opList.aggregateData[index].list[ind].value = !opList.aggregateData[index].list[ind].value
+	if (el.value == true) {
+		opList.addToAggregat(el)
+	} else opList.removeFromAggregat(el)
 }
 </script>
 
 <template lang="pug">
-// q-btn(unelevated color="primary" label="Отмена" @click="action") 
-
-// p {{ props.data }}
-.list(v-for="(item, index) in props.data")
+.list(v-for="(item, index) in opList.aggregateData")
 	.section {{ item.name }}
-	q-btn(flat color="primary" label="Отмена" size="11px") 
 	q-list(dense).q-mb-sm
 		q-item(v-for="( el, ind ) in item.list" v-ripple tag="label" clickable)
 			q-item-section(side)

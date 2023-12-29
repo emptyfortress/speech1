@@ -1,17 +1,22 @@
 import { defineStore } from 'pinia'
-import { operators } from '@/stores/operators'
 
 export const useOperatorList = defineStore({
 	id: 'operatorList',
 	state: () => ({
-		operators: operators,
-		aggregateData: [],
+		aggregateData: [] as AggregatBlock[],
+		checkedList: [] as AggregatList[],
 	}),
 	getters: {},
 
 	actions: {
-		setAggregat(a: any) {
+		setAggregat(a: AggregatBlock[]) {
 			this.aggregateData = a
+		},
+		addToAggregat(el: AggregatList) {
+			this.checkedList.push(el)
+		},
+		removeFromAggregat(el: AggregatList) {
+			this.checkedList = this.checkedList.filter((item) => item !== el)
 		},
 	},
 })
