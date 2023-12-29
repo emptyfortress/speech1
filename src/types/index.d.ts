@@ -129,3 +129,13 @@ interface Row {
 	star?: boolean
 	comment: string
 }
+type AggregatList = {
+	title: string
+	value: boolean
+	badge: number
+}
+interface AggregatBlock {
+	col: string
+	name: string
+	list: AggregatList[]
+}

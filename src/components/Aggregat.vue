@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
-import { operators } from '@/stores/operators'
+// import { operators } from '@/stores/operators'
 const props = defineProps<{
-	data: Operator[]
+	data: Block[]
 }>()
+
 type List = {
 	title: string
 	value: boolean
@@ -15,51 +16,13 @@ type Block = {
 	list: List[]
 }
 
-const aggregateData = computed(() => {
-	let agg: Block[] = []
-	const iteration = ['city', 'group']
-	iteration.forEach((it: string) => {
-		const block = [...new Set(props.data.map((item: any) => item[it]))]
-		const blockname = (it: string) => {
-			switch (it) {
-				case 'city':
-					return 'Город'
-				case 'group':
-					return 'Группа'
-				default:
-					return 'Остальное'
-			}
-		}
-		const list = block.map((el: any) => {
-			const length = props.data.filter((item: any) => item[it] === el).length
-			return {
-				title: el,
-				value: false,
-				badge: length,
-			}
-		})
-		list.sort((a, b) => b.badge - a.badge)
-
-		const blocks: Block = {
-			col: it,
-			name: blockname(it),
-			list: list,
-		}
-
-		agg.push(blocks)
-	})
-	return agg
-})
-
 const emit = defineEmits(['filterBy'])
 
-const reactData = reactive([...aggregateData.value])
-
 const toggle = (el: any, index: number, ind: number) => {
-	reactData[index].list[ind].value = !reactData[index].list[ind].value
+	// props.data[index].list[ind].value = !props.data[index].list[ind].value
 	let item = {
-		col: reactData[index].col,
-		title: reactData[index].list[ind].title,
+		col: props.data[index].col,
+		title: props.data[index].list[ind].title,
 		value: el.value,
 	}
 	emit('filterBy', item)
@@ -74,8 +37,9 @@ const action = () => {
 // q-btn(unelevated color="primary" label="Отмена" @click="action") 
 
 // p {{ props.data }}
-.list(v-for="(item, index) in aggregateData")
+.list(v-for="(item, index) in props.data")
 	.section {{ item.name }}
+	q-btn(flat color="primary" label="Отмена" size="11px") 
 	q-list(dense).q-mb-sm
 		q-item(v-for="( el, ind ) in item.list" v-ripple tag="label" clickable)
 			q-item-section(side)

@@ -83,7 +83,42 @@ function insertNodeIntoTree<T extends { id: string; children: T[] }>(
 	}
 }
 
+function buildAggregate(array: Operator[], iteration: String[]) {
+	let agg: AggregatBlock[] = []
+	iteration.forEach((it: any) => {
+		const block = [...new Set(array.map((item: any) => item[it]))]
+		const blockname = (it: string) => {
+			switch (it) {
+				case 'city':
+					return 'Город'
+				case 'group':
+					return 'Группа'
+				default:
+					return 'Остальное'
+			}
+		}
+		const list = block.map((el: any) => {
+			const length = array.filter((item: any) => item[it] === el).length
+			return {
+				title: el,
+				value: false,
+				badge: length,
+			}
+		})
+		list.sort((a, b) => b.badge - a.badge)
+
+		const blocks: AggregatBlock = {
+			col: it,
+			name: blockname(it),
+			list: list,
+		}
+		agg.push(blocks)
+	})
+	return agg
+}
+
 export {
+	buildAggregate,
 	randomArray,
 	randomNumber,
 	getMembers,

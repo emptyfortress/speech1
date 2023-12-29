@@ -3,6 +3,19 @@ import { ref, computed } from 'vue'
 import { operators } from '@/stores/operators'
 import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
+import { useOperatorList } from '@/stores/operatorList'
+
+type List = {
+	title: string
+	value: boolean
+	badge: number
+}
+type Block = {
+	col: string
+	name: string
+	list: List[]
+}
+const opList = useOperatorList()
 
 const opercolumns: QTableColumn[] = [
 	{ name: 'name', label: 'Оператор', field: 'name', align: 'left', sortable: true },
@@ -30,24 +43,52 @@ const city = ref(false)
 const group = ref(false)
 const table = ref()
 
-const fil = computed(() => {
+// this is computed prop from quasar table
+const filteredRows = computed(() => {
 	if (!!table.value) {
 		return table.value?.filteredSortedRows
 	} else return operators
 })
 
 const oper = ref(operators)
-
 const checkedItems = ref()
 
-const agg = (el: any) => {
-	if (el.value == true) {
-		oper.value = operators.filter((item) => item[el.col] == el.title)
-	} else oper.value = operators
-}
-const test = () => {
-	console.log(fil.value)
-}
+const aggregateData = computed(() => {
+	let agg: Block[] = []
+	const iteration = ['city', 'group']
+	iteration.forEach((it: string) => {
+		const block = [...new Set(operators.map((item: any) => item[it]))]
+		const blockname = (it: string) => {
+			switch (it) {
+				case 'city':
+					return 'Город'
+				case 'group':
+					return 'Группа'
+				default:
+					return 'Остальное'
+			}
+		}
+		const list = block.map((el: any) => {
+			const length = filteredRows.value.filter((item: any) => item[it] === el).length
+			return {
+				title: el,
+				value: false,
+				badge: length,
+			}
+		})
+		list.sort((a, b) => b.badge - a.badge)
+
+		const blocks: Block = {
+			col: it,
+			name: blockname(it),
+			list: list,
+		}
+
+		agg.push(blocks)
+	})
+
+	return agg
+})
 </script>
 
 <template lang="pug">
@@ -61,7 +102,7 @@ q-page(padding)
 				q-input(dense v-model="filter" clearable hide-bottom-space @clear="filter = ''")
 					template(v-slot:prepend)
 						q-icon(name="mdi-magnify")
-				Aggregat(:data="fil" @filterBy="agg")
+				Aggregat(:data="aggregateData")
 
 			q-table.table(
 			ref="table"
