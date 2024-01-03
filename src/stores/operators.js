@@ -9,6 +9,7 @@ const operators = [
 		good: 15,
 		notgood: 47,
 		bad: 53,
+		date: '2022-12-14',
 	},
 	{
 		id: 1,
@@ -20,6 +21,7 @@ const operators = [
 		good: 93,
 		notgood: 87,
 		bad: 29,
+		date: '2022-12-05',
 	},
 	{
 		id: 2,
@@ -31,6 +33,7 @@ const operators = [
 		good: 87,
 		notgood: 83,
 		bad: 67,
+		date: '2022-12-05',
 	},
 	{
 		id: 3,
@@ -42,6 +45,7 @@ const operators = [
 		good: 59,
 		notgood: 20,
 		bad: 19,
+		date: '2022-12-14',
 	},
 	{
 		id: 4,
@@ -53,6 +57,7 @@ const operators = [
 		good: 19,
 		notgood: 87,
 		bad: 17,
+		date: '2022-12-14',
 	},
 	{
 		id: 5,
@@ -64,6 +69,7 @@ const operators = [
 		good: 54,
 		notgood: 67,
 		bad: 3,
+		date: '2022-12-05',
 	},
 	{
 		id: 6,
@@ -75,6 +81,7 @@ const operators = [
 		good: 45,
 		notgood: 37,
 		bad: 53,
+		date: '2022-12-05',
 	},
 	{
 		id: 7,
@@ -86,6 +93,7 @@ const operators = [
 		good: 63,
 		notgood: 53,
 		bad: 86,
+		date: '2022-12-14',
 	},
 	{
 		id: 8,
@@ -97,6 +105,7 @@ const operators = [
 		good: 47,
 		notgood: 4,
 		bad: 17,
+		date: '2022-12-05',
 	},
 	{
 		id: 9,
@@ -108,6 +117,7 @@ const operators = [
 		good: 53,
 		notgood: 59,
 		bad: 63,
+		date: '2022-12-14',
 	},
 	{
 		id: 10,
@@ -119,6 +129,7 @@ const operators = [
 		good: 83,
 		notgood: 77,
 		bad: 60,
+		date: '2022-12-14',
 	},
 	{
 		id: 11,
@@ -130,6 +141,7 @@ const operators = [
 		good: 32,
 		notgood: 97,
 		bad: 37,
+		date: '2022-12-05',
 	},
 	{
 		id: 12,
@@ -141,6 +153,7 @@ const operators = [
 		good: 53,
 		notgood: 17,
 		bad: 73,
+		date: '2022-12-05',
 	},
 	{
 		id: 13,
@@ -152,6 +165,7 @@ const operators = [
 		good: 96,
 		notgood: 19,
 		bad: 20,
+		date: '2022-12-05',
 	},
 	{
 		id: 14,
@@ -163,6 +177,7 @@ const operators = [
 		good: 73,
 		notgood: 48,
 		bad: 46,
+		date: '2022-12-14',
 	},
 	{
 		id: 15,
@@ -174,6 +189,7 @@ const operators = [
 		good: 47,
 		notgood: 3,
 		bad: 32,
+		date: '2022-12-14',
 	},
 	{
 		id: 16,
@@ -185,6 +201,7 @@ const operators = [
 		good: 17,
 		notgood: 54,
 		bad: 83,
+		date: '2022-12-05',
 	},
 	{
 		id: 17,
@@ -196,6 +213,7 @@ const operators = [
 		good: 48,
 		notgood: 15,
 		bad: 4,
+		date: '2022-12-05',
 	},
 	{
 		id: 18,
@@ -207,6 +225,7 @@ const operators = [
 		good: 30,
 		notgood: 60,
 		bad: 77,
+		date: '2022-12-05',
 	},
 	{
 		id: 19,
@@ -218,6 +237,7 @@ const operators = [
 		good: 46,
 		notgood: 86,
 		bad: 48,
+		date: '2022-12-05',
 	},
 	{
 		id: 20,
@@ -229,6 +249,7 @@ const operators = [
 		good: 77,
 		notgood: 17,
 		bad: 86,
+		date: '2022-12-05',
 	},
 	{
 		id: 21,
@@ -240,6 +261,7 @@ const operators = [
 		good: 97,
 		notgood: 96,
 		bad: 70,
+		date: '2022-12-05',
 	},
 	{
 		id: 22,
@@ -251,6 +273,7 @@ const operators = [
 		good: 29,
 		notgood: 29,
 		bad: 46,
+		date: '2022-12-05',
 	},
 	{
 		id: 23,
@@ -262,6 +285,7 @@ const operators = [
 		good: 86,
 		notgood: 45,
 		bad: 3,
+		date: '2022-12-14',
 	},
 	{
 		id: 24,
@@ -273,6 +297,7 @@ const operators = [
 		good: 17,
 		notgood: 73,
 		bad: 87,
+		date: '2022-12-14',
 	},
 	{
 		id: 25,
@@ -284,6 +309,7 @@ const operators = [
 		good: 20,
 		notgood: 47,
 		bad: 15,
+		date: '2022-12-14',
 	},
 	{
 		id: 26,
@@ -295,6 +321,7 @@ const operators = [
 		good: 86,
 		notgood: 46,
 		bad: 45,
+		date: '2022-12-05',
 	},
 	{
 		id: 27,
@@ -306,6 +333,7 @@ const operators = [
 		good: 70,
 		notgood: 46,
 		bad: 59,
+		date: '2022-12-14',
 	},
 	{
 		id: 28,
@@ -317,6 +345,7 @@ const operators = [
 		good: 37,
 		notgood: 86,
 		bad: 54,
+		date: '2022-12-05',
 	},
 	{
 		id: 29,
@@ -328,6 +357,7 @@ const operators = [
 		good: 67,
 		notgood: 45,
 		bad: 87,
+		date: '2022-12-14',
 	},
 	{
 		id: 30,
@@ -339,6 +369,7 @@ const operators = [
 		good: 45,
 		notgood: 53,
 		bad: 47,
+		date: '2022-12-14',
 	},
 	{
 		id: 31,
@@ -350,6 +381,7 @@ const operators = [
 		good: 24,
 		notgood: 32,
 		bad: 97,
+		date: '2022-12-14',
 	},
 	{
 		id: 32,
@@ -361,6 +393,7 @@ const operators = [
 		good: 46,
 		notgood: 3,
 		bad: 47,
+		date: '2022-12-05',
 	},
 	{
 		id: 33,
@@ -372,6 +405,7 @@ const operators = [
 		good: 87,
 		notgood: 63,
 		bad: 9,
+		date: '2022-12-05',
 	},
 	{
 		id: 34,
@@ -383,17 +417,7 @@ const operators = [
 		good: 30,
 		notgood: 70,
 		bad: 45,
-	},
-	{
-		id: 35,
-		name: 'Антонина ',
-		group: 'Юрлица',
-		city: 'fuck',
-		total: 249,
-		percent: 12,
-		good: 30,
-		notgood: 70,
-		bad: 45,
+		date: '2022-12-05',
 	},
 ]
 

@@ -93,6 +93,10 @@ function buildAggregate(array: Operator[], iteration: String[]) {
 					return 'Город'
 				case 'group':
 					return 'Группа'
+				case 'date':
+					return 'Last evalutation'
+				// case 'good':
+				// 	return 'Оценка'
 				default:
 					return 'Остальное'
 			}

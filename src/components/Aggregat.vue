@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+// import { ref, reactive, computed } from 'vue'
 import { useOperatorList } from '@/stores/operatorList'
 
 const opList = useOperatorList()
@@ -21,8 +21,9 @@ const toggle = (item: any, el: any, index: number, ind: number) => {
 		q-item(v-for="( el, ind ) in item.list" v-ripple tag="label" clickable)
 			q-item-section(side)
 				q-checkbox.reset(dense :model-value="el.value" @update:model-value="toggle(item, el, index, ind)")
-			q-item-section {{ el.title }}
-			q-item-section.right {{ el.badge }}
+			q-item-section
+				q-item-label {{ el.title }}
+			.right {{ el.badge }}
 </template>
 
 <style scoped lang="scss">
@@ -38,5 +39,9 @@ const toggle = (item: any, el: any, index: number, ind: number) => {
 	border-bottom: 1px solid #dedede;
 	padding-bottom: 1rem;
 	padding-top: 1rem;
+}
+.q-item {
+	font-size: 0.9rem;
+	align-items: center;
 }
 </style>

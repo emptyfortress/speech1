@@ -5,14 +5,17 @@ import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
 import { buildAggregate, filterArray } from '@/utils/utils'
+// import { router } from '@/router/router'
+import { useRoute, useRouter } from 'vue-router'
 
 const opList = useOperatorList()
+const router = useRouter()
 
 const opercolumns: QTableColumn[] = [
 	{ name: 'name', label: 'Оператор', field: 'name', align: 'left', sortable: true },
 	{ name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
 	{ name: 'group', label: 'Группа', field: 'group', align: 'left', sortable: true },
-	{ name: 'total', label: 'Звонки', field: 'total', align: 'right', sortable: true },
+	{ name: 'date', label: 'Last evaluation', field: 'date', align: 'right', sortable: true },
 	{ name: 'good', label: 'Оценка', field: 'good', align: 'right', sortable: true },
 	{ name: 'action', label: '', field: 'action', align: 'right', sortable: false },
 ]
@@ -20,16 +23,17 @@ const pagination = ref({
 	sortBy: 'name' as keyof Row,
 	descending: false,
 	page: 1,
-	rowsPerPage: 0,
+	rowsPerPage: 10,
 })
 const goto = (evt: Event, row: any, index: number) => {
-	console.log(row.name)
+	router.push(`/oper/${row.id}`)
 }
 const markOperator = (id: number) => {
 	console.log('fuck: ', id)
 }
 const query = ref('')
 const table = ref()
+const selected = ref([])
 
 const filteredRows = computed(() => {
 	let filt = {
@@ -47,7 +51,7 @@ const filteredRows = computed(() => {
 })
 
 watchEffect(() => {
-	let temp = buildAggregate(operators, ['city', 'group'])
+	let temp = buildAggregate(operators, ['city', 'group', 'date'])
 	opList.setAggregat(temp)
 })
 </script>
@@ -70,8 +74,10 @@ q-page(padding)
 				:rows="filteredRows"
 				:pagination="pagination"
 				:columns="opercolumns"
-				hide-bottom
+				selection="multiple"
+				v-model:selected="opList.selectedOperators"
 				@row-click="goto"
+				color="primary"
 				row-key="id")
 				template(v-slot:body-cell-action="props")
 					q-td.action(:props="props")
