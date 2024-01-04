@@ -19,15 +19,19 @@ const idx = computed(() => {
 })
 const prev = () => {
 	if (idx.value == 0) return
-	let prevItem = opList.selectedOperators[idx.value - 1]
-	router.push(`/oper/${prevItem.id}`)
-	oper.value = prevItem
+	if (!!idx.value) {
+		const prevItem: Operator = opList.selectedOperators[idx.value - 1]
+		router.push(`/oper/${prevItem.id}`)
+		oper.value = prevItem
+	}
 }
 const next = () => {
 	if (idx.value == opList.selectedOperators.length - 1) return
-	let nextItem = opList.selectedOperators[idx.value + 1]
-	router.push(`/oper/${nextItem.id}`)
-	oper.value = nextItem
+	if (!!idx.value) {
+		const nextItem: Operator = opList.selectedOperators[idx.value + 1]
+		router.push(`/oper/${nextItem.id}`)
+		oper.value = nextItem
+	}
 }
 </script>
 

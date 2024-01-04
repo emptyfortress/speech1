@@ -82,6 +82,12 @@ q-page(padding)
 				template(v-slot:body-cell-action="props")
 					q-td.action(:props="props")
 						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row.id)")
+
+			div
+			transition(name="slide-top")
+				.mybuttons(v-show="opList.selectedOperators.length")
+					q-btn(color="primary" label="Просмотреть")
+					q-btn(color="primary" label="Оценить")
 </template>
 
 <style scoped lang="scss">
@@ -100,10 +106,13 @@ q-page(padding)
 	column-gap: 1rem;
 	row-gap: 0.5rem;
 	margin-top: 1rem;
-	div {
-		background: white;
-		width: 100%;
-	}
+	// div {
+	// 	background: white;
+	// 	width: 100%;
+	// }
+}
+.table {
+	width: 100%;
 }
 :deep(.table tr) {
 	.action > button {
@@ -120,6 +129,12 @@ q-page(padding)
 	.q-input {
 		padding: 1rem;
 	}
-	// padding: 0.5rem;
+}
+.mybuttons {
+	margin-top: 0.5rem;
+	transition: 0.3s ease all;
+	button {
+		margin-right: 4px;
+	}
 }
 </style>

@@ -8,6 +8,7 @@ type Operator = {
 	good: number
 	notgood: number
 	bad: number
+	date: string
 }
 type Mark = {
 	id: number
