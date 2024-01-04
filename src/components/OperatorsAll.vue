@@ -5,7 +5,6 @@ import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
 import { buildAggregate, filterArray } from '@/utils/utils'
-// import { router } from '@/router/router'
 import { useRoute, useRouter } from 'vue-router'
 
 const opList = useOperatorList()
@@ -54,6 +53,12 @@ watchEffect(() => {
 	let temp = buildAggregate(operators, ['city', 'group', 'date'])
 	opList.setAggregat(temp)
 })
+const goToOp = () => {
+	if (opList.selectedOperators.length > 0) {
+		const firstOp = opList.selectedOperators[0]
+		router.push(`/oper/${firstOp.id}`)
+	}
+}
 </script>
 
 <template lang="pug">
@@ -86,8 +91,8 @@ q-page(padding)
 			div
 			transition(name="slide-top")
 				.mybuttons(v-show="opList.selectedOperators.length")
-					q-btn(color="primary" label="Просмотреть")
-					q-btn(color="primary" label="Оценить")
+					q-btn(color="primary" label="Просмотреть" @click="goToOp")
+					q-btn(color="primary" label="Оценить" @click="goToOp")
 </template>
 
 <style scoped lang="scss">
