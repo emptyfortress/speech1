@@ -55,7 +55,7 @@ watchEffect(() => {
 })
 const goToOp = () => {
 	if (opList.selectedOperators.length > 0) {
-		const firstOp = opList.selectedOperators[0]
+		const firstOp: Operator = opList.selectedOperators[0]
 		router.push(`/oper/${firstOp.id}`)
 	}
 }
