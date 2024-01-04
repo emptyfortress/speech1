@@ -89,10 +89,11 @@ q-page(padding)
 						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row.id)")
 
 			div
-			transition(name="slide-top")
-				.mybuttons(v-show="opList.selectedOperators.length")
-					q-btn(color="primary" label="Просмотреть" @click="goToOp")
-					q-btn(color="primary" label="Оценить" @click="goToOp")
+			div
+				transition(name="slide-top")
+					.mybuttons(v-show="opList.selectedOperators.length")
+						q-btn(color="primary" label="Просмотреть" @click="goToOp")
+						q-btn(color="primary" label="Оценить" @click="goToOp")
 </template>
 
 <style scoped lang="scss">
