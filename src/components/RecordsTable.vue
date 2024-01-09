@@ -6,7 +6,7 @@ import type { Ref } from 'vue'
 import FilterSelect from '@/components/common/FilterSelect.vue'
 
 interface Props {
-	rows: Row[],
+	rows: Row[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -33,8 +33,8 @@ const filteredRecords = computed(() => {
 	} else {
 		let results: Row[] = []
 		let sub: Row[] = []
-		oper.value.forEach(item => {
-			sub = records.filter(e => e.operator === item)
+		oper.value.forEach((item) => {
+			sub = records.filter((e) => e.operator === item)
 			results.push(...sub)
 		})
 
@@ -69,9 +69,9 @@ const select = (e: Row) => {
 		mystore.setRecord(e.group)
 	}
 }
-const setStar = ((e: Row) => {
+const setStar = (e: Row) => {
 	e.star = !e.star
-})
+}
 
 const item = ref(props.rows[0])
 
@@ -79,35 +79,35 @@ const currentComment = ref('')
 
 const dialog = ref(false)
 
-const showComment = ((e: Row) => {
+const showComment = (e: Row) => {
 	item.value = e
 	currentComment.value = e.comment
 	dialog.value = true
-})
+}
 
-const closeDialog = (() => {
+const closeDialog = () => {
 	dialog.value = false
-})
+}
 
-const addComment = ((e: string) => {
+const addComment = (e: string) => {
 	if (e.length > 0) {
 		item.value.comment = e
 	}
 	dialog.value = false
-})
-const deleteComment = (() => {
+}
+const deleteComment = () => {
 	item.value.comment = ''
 	dialog.value = false
-})
+}
 
 const duration = ref({ min: 20, max: 290 })
 const showFilter = ref(false)
-const toggleFilter = (() => {
+const toggleFilter = () => {
 	if (showFilter.value === true) {
 		resetFilter()
 		showFilter.value = false
 	} else showFilter.value = true
-})
+}
 const oper = ref([])
 const client = ref([])
 const group = ref([])
@@ -120,19 +120,19 @@ const categ = ref([])
 // })
 
 const operOptions = computed(() => {
-	const temp = records.map(item => item.operator)
+	const temp = records.map((item) => item.operator)
 	return [...new Set(temp)]
 })
 const clientOptions = computed(() => {
-	const temp = records.map(item => item.client)
+	const temp = records.map((item) => item.client)
 	return [...new Set(temp)]
 })
 const groupOptions = computed(() => {
-	const temp = records.map(item => item.group)
+	const temp = records.map((item) => item.group)
 	return [...new Set(temp)]
 })
 const categoryOptions = computed(() => {
-	const temp = records.map(item => item.categ)
+	const temp = records.map((item) => item.categ)
 	return [...new Set(temp)]
 })
 const filtrActive = computed(() => {
@@ -140,12 +140,12 @@ const filtrActive = computed(() => {
 	if (temp > 0) return true
 	return false
 })
-const resetFilter = (() => {
+const resetFilter = () => {
 	oper.value = []
 	client.value = []
 	group.value = []
 	categ.value = []
-})
+}
 </script>
 
 <template lang="pug">
@@ -346,10 +346,9 @@ td.ellipsis {
 }
 
 .label {
-	font-size: .8rem;
+	font-size: 0.8rem;
 	margin-right: 1rem;
 }
-
 
 .filt {
 	background: $bgHead;

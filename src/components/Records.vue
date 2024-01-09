@@ -40,7 +40,7 @@ q-expansion-item(v-model="mystore.recordPanel")
 					q-td(key="client") {{ props.row.client }}
 					q-td(key="group") {{ props.row.group }}
 					q-td(key="categ") {{ props.row.categ }}
-					q-td(key="record" v-html="props.row.record")
+					q-td(key="record" v-html="props.row.record" :class="{emoactive : emo}")
 					q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
 					.myplayer(v-if="selected === props.row.id")
 						q-linear-progress(:value=".6" color="positive")
@@ -58,6 +58,15 @@ q-expansion-item(v-model="mystore.recordPanel")
 							q-icon(name="mdi-volume-medium" size="sm")
 							q-slider.slide(color="primary" v-model="sound")
 							q-icon(name="mdi-volume-high" size="sm")
+			template(v-slot:bottom-row)
+				q-td
+				q-td
+				q-td
+				q-td
+				q-td
+				q-td
+				q-td 
+					q-toggle(v-model="emo" label="Показать эмоции")
 
 Teleport(to="#speech")
 	.recdate(v-if="selected !== null") {{ records[selected].date }}
@@ -85,6 +94,7 @@ interface Row {
 const records = reactive(myrecords)
 const cat = useCat()
 const table = ref()
+const emo = ref(false)
 const shownRows = ref([10, 20, 50])
 const togg = () => {
 	table.value.toggleFullscreen()
