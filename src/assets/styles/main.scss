@@ -291,3 +291,63 @@ body.desktop .nohov .q-focus-helper {
 .driver-popover.pop .driver-popover-arrow-side-bottom.driver-popover-arrow {
 	border-bottom-color: #fde047;
 }
+.emo {
+	text-decoration-line: underline;
+	text-decoration-style: wavy;
+	position: relative;
+	&::after {
+		position: absolute;
+		left: 0;
+		top: -1.8rem;
+		display: none;
+		padding: 3px 10px;
+		border-radius: 4px;
+	}
+	&:hover {
+		&::after {
+			display: inline-block;
+		}
+	}
+	&.red {
+		text-decoration-color: red;
+		&::after {
+			background: pink;
+		}
+	}
+	&.gnev {
+		&::after {
+			content: '😡 Гнев';
+		}
+	}
+	&.radost {
+		&::after {
+			content: '😊 Радость';
+		}
+	}
+	&.grust {
+		&::after {
+			content: '😢 Грусть';
+		}
+	}
+	&.sarcazm {
+		&::after {
+			content: '😎 Сарказм';
+		}
+	}
+	&.loud {
+		&::after {
+			content: '🔊 Повышенная громкость';
+		}
+	}
+	&.tone {
+		&::after {
+			content: '📢 Повышение тона';
+		}
+	}
+	&.green {
+		text-decoration-color: green;
+		&::after {
+			background: $light-green;
+		}
+	}
+}

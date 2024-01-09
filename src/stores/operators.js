@@ -427,7 +427,8 @@ const records = [
 		date: '2022-04-25 18:11',
 		group: 'группа 1',
 		categ: 'Продажи',
-		record: 'Urna condimentum <span class="found">претензия</span> mattis pellentesque id.',
+		record:
+			'<span class="emo red gnev">Urna condimentum <span class="found">претензия</span> mattis</span> pellentesque id.',
 		operator: 'Екатерина',
 		client: 'Григорий',
 		expand: false,
@@ -440,7 +441,7 @@ const records = [
 		group: 'группа 2',
 		categ: 'Оплата',
 		record:
-			'Arcu felis, bibendum  <span class="found">претензия</span> ut tristique et, egestas quis? Nisl suscipit adipiscing.',
+			'<span class="emo green radost">Arcu felis, bibendum  <span class="found">претензия</span> ut tristique</span> et, egestas quis? Nisl suscipit adipiscing.',
 		operator: 'Елена',
 		client: 'Лев',
 		expand: false,
@@ -453,7 +454,7 @@ const records = [
 		group: 'группа 3',
 		categ: 'Сервис',
 		record:
-			'Ut placerat orci  <span class="found">претензия</span> nulla pellentesque dignissim enim, sit?',
+			'<span class="emo red sarcazm">Ut placerat orci <span class="found">претензия</span> nulla</span> pellentesque dignissim enim, sit?',
 		operator: 'Ксения',
 		client: 'Андрей',
 		expand: false,
@@ -466,7 +467,7 @@ const records = [
 		group: 'группа 1',
 		categ: 'Продажи',
 		record:
-			'In nibh mauris, cursus mattis  <span class="found">претензия</span> molestie a, iaculis.',
+			'<span class="emo red loud">In nibh mauris, cursus mattis  <span class="found">претензия</span> molestie a</span>, iaculis.',
 		operator: 'Ирина',
 		client: 'Роман',
 		expand: false,
@@ -479,7 +480,7 @@ const records = [
 		group: 'группа 2',
 		categ: 'Сервис',
 		record:
-			'Id neque aliquam vestibulum  <span class="found">претензия</span> morbi blandit cursus risus?',
+			'<span class="emo red tone">Id neque aliquam vestibulum  <span class="found">претензия</span></span> morbi blandit cursus risus?',
 		operator: 'Ева',
 		client: 'Арсений',
 		expand: false,
@@ -505,7 +506,7 @@ const records = [
 		group: 'группа 1',
 		categ: 'Продажи',
 		record:
-			'Varius duis  <span class="found">претензия</span> at consectetur lorem donec massa sapien.',
+			'<span class="emo red grust">Varius duis  <span class="found">претензия</span> at consectetur</span> lorem donec massa sapien.',
 		operator: 'Кира',
 		client: 'Владислав',
 		expand: false,

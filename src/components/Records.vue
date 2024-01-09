@@ -136,9 +136,9 @@ const columns: QTableProps['columns'] = [
 	{ name: 'record', label: 'Контекст', align: 'left', field: 'record', sortable: false },
 ]
 
-const setStar = ((e: any) => {
+const setStar = (e: any) => {
 	e.star = !e.star
-})
+}
 </script>
 
 <style scoped lang="scss">
