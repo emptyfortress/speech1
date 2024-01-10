@@ -140,3 +140,12 @@ interface AggregatBlock {
 	name: string
 	list: AggregatList[]
 }
+interface Talk {
+	time: string
+	send: boolean
+	text: string
+	class?: string
+	emo?: string
+	tt?: string
+	ttext?: string
+}
