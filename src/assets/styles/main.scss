@@ -292,8 +292,8 @@ body.desktop .nohov .q-focus-helper {
 	border-bottom-color: #fde047;
 }
 .emoactive .emo {
-	text-decoration-line: underline;
-	text-decoration-style: wavy;
+	// text-decoration-line: underline;
+	// text-decoration-style: wavy;
 	position: relative;
 	&::after {
 		position: absolute;
@@ -309,7 +309,8 @@ body.desktop .nohov .q-focus-helper {
 		}
 	}
 	&.red {
-		text-decoration-color: red;
+		background: #f3bebe;
+		// text-decoration-color: red;
 		&::after {
 			background: pink;
 		}
@@ -345,7 +346,8 @@ body.desktop .nohov .q-focus-helper {
 		}
 	}
 	&.green {
-		text-decoration-color: green;
+		background: #74df74;
+		// text-decoration-color: green;
 		&::after {
 			background: $light-green;
 		}
