@@ -1,8 +1,8 @@
 <template lang="pug">
 q-form(@submit="add")
 	.zg
-		div Библиотека
-		q-badge {{ items.length }}
+		div Слов: <span class="text-weight-bold">{{ items.length }}</span> 
+		q-btn(flat color="primary" label="Добавить слова" @click="toggleAddList" size="sm" dense) 
 	#step1
 		q-input#step1(ref="input" dense v-model="store.keywordFilter" clearable hide-bottom-space @clear="store.clearKeywordFilter")
 			template(v-slot:prepend)
@@ -60,6 +60,7 @@ transition(name="slide-bottom")
 			q-btn(label="Создать словарь" flat color="white" :disable="vocName.length < 3" @click="addVoc")
 
 ConfirmDialog(v-model="confirm" @remove="remMulti")
+AddWordListDialog(v-model="showListDialog" @add="addMulti")
 </template>
 
 <script setup lang="ts">
@@ -73,6 +74,7 @@ import WordHighlighter from 'vue-word-highlighter'
 import { useStore } from '@/stores/store'
 import { useOnboard } from '@/stores/onboard'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import AddWordListDialog from '@/components/AddWordListDialog.vue'
 
 interface Keyword {
 	key?: string
@@ -88,6 +90,11 @@ const onboard = useOnboard()
 const store = useStore()
 const selection: Ref<string[]> = ref([])
 const input = ref(null)
+const showListDialog = ref(false)
+
+const toggleAddList = () => {
+	showListDialog.value = !showListDialog.value
+}
 
 const items: Ref<Keyword[]> = ref(words)
 const filteredItems = computed(() => {
@@ -134,6 +141,23 @@ const add = () => {
 		store.keywordFilter = ''
 	}
 }
+const addMulti = (e: string) => {
+	const clean = e.replace(/\s+/g, '')
+	const split = clean.split(',')
+	const wordList = [...new Set(split)]
+	const temp = wordList.map((el) => {
+		return {
+			key: el,
+			label: el,
+			selected: false,
+			score: 4500,
+			part: '',
+		}
+	})
+	items.value.push(...temp)
+	items.value.sort(compare)
+	addedMulti()
+}
 
 watchEffect(() => {
 	if (onboard.addNewWord === true) {
@@ -175,6 +199,15 @@ const added = (e: string) => {
 		position: 'bottom-right',
 	})
 }
+const addedMulti = () => {
+	let message = 'Добавлен список слов'
+	$q.notify({
+		message: message,
+		icon: 'mdi-check',
+		position: 'bottom-right',
+	})
+}
+
 const vocName = ref('')
 
 const cancel = () => {
@@ -270,7 +303,7 @@ const save = () => {
 	font-size: 0.9rem;
 	display: flex;
 	justify-content: flex-start;
-	gap: 1rem;
+	gap: 0.5rem;
 }
 
 .notfound {
