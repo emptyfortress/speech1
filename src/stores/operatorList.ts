@@ -26,11 +26,11 @@ export const useOperatorList = defineStore({
 		removeFromGroupFilters(el: string) {
 			this.groupFilters = this.groupFilters.filter((item) => item !== el)
 		},
-		addToDateFilters(el: string) {
-			this.dateFilters.push(el)
-		},
-		removeFromDateFilters(el: string) {
-			this.dateFilters = this.dateFilters.filter((item) => item !== el)
-		},
+		// addToDateFilters(el: string) {
+		// 	this.dateFilters.push(el)
+		// },
+		// removeFromDateFilters(el: string) {
+		// 	this.dateFilters = this.dateFilters.filter((item) => item !== el)
+		// },
 	},
 })

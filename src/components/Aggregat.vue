@@ -24,6 +24,50 @@ const toggle = (item: any, el: any, index: number, ind: number) => {
 			q-item-section
 				q-item-label {{ el.title }}
 			.right {{ el.badge }}
+
+.list
+	.section Всего оценок
+	q-list(dense).q-mb-sm
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label меньше 10
+			.right 5
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label  от 10 до 30
+			.right 13
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label  больше 30
+			.right 9
+
+.list
+	.section Средняя оценка
+	q-list(dense).q-mb-sm
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label меньше 40
+			.right 5
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label  от 40 до 60
+			.right 13
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label  больше 30
+			.right 9
 </template>
 
 <style scoped lang="scss">
@@ -37,8 +81,8 @@ const toggle = (item: any, el: any, index: number, ind: number) => {
 }
 .list {
 	border-bottom: 1px solid #dedede;
-	padding-bottom: 1rem;
-	padding-top: 1rem;
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
 }
 .q-item {
 	font-size: 0.9rem;

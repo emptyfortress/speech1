@@ -93,12 +93,14 @@ function buildAggregate(array: Operator[], iteration: String[]) {
 					return 'Город'
 				case 'group':
 					return 'Группа'
-				case 'date':
-					return 'Last evalutation'
+				// case 'marks':
+				// 	return 'Всего оценок'
+				// case 'mean':
+				// 	return 'Средняя оценка'
 				// case 'good':
 				// 	return 'Оценка'
-				default:
-					return 'Остальное'
+				// default:
+				// 	return 'Остальное'
 			}
 		}
 		const list = block.map((el: any) => {

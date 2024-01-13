@@ -5,7 +5,10 @@ import type { QTableColumn } from 'quasar'
 import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
 import { buildAggregate, filterArray } from '@/utils/utils'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
+import ChipCalendar1 from '@/components/ChipCalendar1.vue'
+import VueApexCharts from 'vue3-apexcharts'
+import { randomArray } from '@/utils/utils'
 
 const opList = useOperatorList()
 const router = useRouter()
@@ -14,8 +17,9 @@ const opercolumns: QTableColumn[] = [
 	{ name: 'name', label: 'Оператор', field: 'name', align: 'left', sortable: true },
 	{ name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
 	{ name: 'group', label: 'Группа', field: 'group', align: 'left', sortable: true },
-	{ name: 'date', label: 'Last evaluation', field: 'date', align: 'right', sortable: true },
-	{ name: 'good', label: 'Оценка', field: 'good', align: 'right', sortable: true },
+	{ name: 'percent', label: 'Всего оценок', field: 'percent', align: 'center', sortable: true },
+	{ name: 'good', label: 'Среднее', field: 'good', align: 'center', sortable: true },
+	{ name: 'graph', label: 'Тренд', field: 'graph', align: 'left', sortable: false },
 	{ name: 'action', label: '', field: 'action', align: 'right', sortable: false },
 ]
 const pagination = ref({
@@ -32,7 +36,7 @@ const markOperator = (id: number) => {
 }
 const query = ref('')
 const table = ref()
-const selected = ref([])
+// const selected = ref([])
 
 const filteredRows = computed(() => {
 	let filt = {
@@ -50,7 +54,7 @@ const filteredRows = computed(() => {
 })
 
 watchEffect(() => {
-	let temp = buildAggregate(operators, ['city', 'group', 'date'])
+	let temp = buildAggregate(operators, ['city', 'group'])
 	opList.setAggregat(temp)
 })
 const goToOp = () => {
@@ -58,6 +62,43 @@ const goToOp = () => {
 		const firstOp: Operator = opList.selectedOperators[0]
 		router.push(`/oper/${firstOp.id}`)
 	}
+}
+const sparkLine = {
+	chart: {
+		type: 'line',
+		height: 35,
+		sparkline: {
+			enabled: true,
+		},
+	},
+	stroke: {
+		width: 3,
+		curve: 'smooth',
+	},
+	tooltip: {
+		enabled: false,
+		x: {
+			show: false,
+		},
+		y: {
+			title: {
+				formatter: function () {
+					return ''
+				},
+			},
+		},
+		marker: {
+			show: false,
+		},
+	},
+}
+const coolSeries = (e: any) => {
+	return [
+		{
+			name: 'Eval',
+			data: randomArray(5, e.bad, e.good),
+		},
+	]
 }
 </script>
 
@@ -67,6 +108,8 @@ q-page(padding)
 		.header
 			q-icon(name="mdi-headset")
 			.zag Операторы
+			q-space
+			ChipCalendar1
 		.grid
 			q-card.aggregat
 				q-input(dense v-model="query" placeholder="оператор" clearable hide-bottom-space @clear="query = ''")
@@ -84,6 +127,9 @@ q-page(padding)
 				@row-click="goto"
 				color="primary"
 				row-key="id")
+				template(v-slot:body-cell-graph="props")
+					q-td(:props="props")
+						component(:is="VueApexCharts" type="line" height="35" width="110" :options="sparkLine" :series="coolSeries(props.row)" )
 				template(v-slot:body-cell-action="props")
 					q-td.action(:props="props")
 						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row.id)")
@@ -134,6 +180,7 @@ q-page(padding)
 	font-size: 0.9rem;
 	.q-input {
 		padding: 1rem;
+		padding-bottom: 0;
 	}
 }
 .mybuttons {
