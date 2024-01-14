@@ -3,16 +3,13 @@ import { ref, computed } from 'vue'
 
 const list = ref('')
 const modelValue = defineModel()
-// const close = () => {
-// 	modelValue.value = false
-// }
 const emit = defineEmits(['add'])
 const add = () => {
 	emit('add', { list: list.value, voc: voc.value, vocName: vocName.value })
 	modelValue.value = false
 }
 const voc = ref(false)
-const vocName = ref('')
+const vocName = ref()
 
 const req = computed(() => {
 	if (vocName.value == false) {

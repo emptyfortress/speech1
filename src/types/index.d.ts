@@ -137,7 +137,7 @@ type AggregatList = {
 }
 interface AggregatBlock {
 	col: string
-	name: string
+	name: string | undefined
 	list: AggregatList[]
 }
 interface Talk {
