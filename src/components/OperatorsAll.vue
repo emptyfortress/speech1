@@ -7,6 +7,7 @@ import { useOperatorList } from '@/stores/operatorList'
 import { buildAggregate, filterArray } from '@/utils/utils'
 import { useRouter } from 'vue-router'
 import ChipCalendar1 from '@/components/ChipCalendar1.vue'
+import MarkDialog from '@/components/MarkDialog.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
 
@@ -36,7 +37,6 @@ const markOperator = (id: number) => {
 }
 const query = ref('')
 const table = ref()
-// const selected = ref([])
 
 const filteredRows = computed(() => {
 	let filt = {
@@ -57,11 +57,13 @@ watchEffect(() => {
 	let temp = buildAggregate(operators, ['city', 'group'])
 	opList.setAggregat(temp)
 })
+const markDialog = ref(false)
 const goToOp = () => {
-	if (opList.selectedOperators.length > 0) {
-		const firstOp: Operator = opList.selectedOperators[0]
-		router.push(`/oper/${firstOp.id}`)
-	}
+	markDialog.value = true
+	// if (opList.selectedOperators.length > 0) {
+	// 	const firstOp: Operator = opList.selectedOperators[0]
+	// 	router.push(`/oper/${firstOp.id}`)
+	// }
 }
 const sparkLine = {
 	chart: {
@@ -138,8 +140,8 @@ q-page(padding)
 			div
 				transition(name="slide-top")
 					.mybuttons(v-show="opList.selectedOperators.length")
-						q-btn(color="primary" label="Просмотреть" @click="goToOp")
 						q-btn(color="primary" label="Оценить" @click="goToOp")
+	MarkDialog(v-model="markDialog")
 </template>
 
 <style scoped lang="scss">
@@ -158,10 +160,6 @@ q-page(padding)
 	column-gap: 1rem;
 	row-gap: 0.5rem;
 	margin-top: 1rem;
-	// div {
-	// 	background: white;
-	// 	width: 100%;
-	// }
 }
 .table {
 	width: 100%;

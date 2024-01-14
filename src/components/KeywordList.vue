@@ -141,10 +141,28 @@ const add = () => {
 		store.keywordFilter = ''
 	}
 }
-const addMulti = (e: string) => {
-	const clean = e.replace(/\s+/g, '')
+type Vocabulary = {
+	list: string
+	voc: boolean
+	vocName: string
+}
+const addMulti = (e: Vocabulary) => {
+	const clean = e.list.replace(/\s+/g, '')
 	const split = clean.split(',')
 	const wordList = [...new Set(split)]
+
+	if (e.voc == true) {
+		let temp = {
+			id: words.length + 1,
+			label: e.vocName,
+			keys: wordList,
+			selected: false,
+			score: 5000,
+			voc: true,
+		}
+		items.value.push(temp)
+		items.value.sort(compare)
+	}
 	const temp = wordList.map((el) => {
 		return {
 			key: el,
