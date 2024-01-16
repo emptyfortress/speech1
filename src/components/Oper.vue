@@ -94,7 +94,7 @@ q-page(padding)
 				.name {{ oper.name }}
 			q-card.mean
 				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="coolSeries" )
-			.prevnext
+			.prevnext(v-if="opList.selectedOperators.length > 0")
 				q-btn(round unelevated icon="mdi-chevron-left" color="primary" @click="prev" :disable="idx == 0")
 					q-tooltip Предыдущий оператор
 				q-btn(round unelevated icon="mdi-chevron-right" color="primary" @click="next" :disable="idx == opList.selectedOperators.length - 1")
@@ -113,6 +113,13 @@ q-page(padding)
 </template>
 
 <style scoped lang="scss">
+:deep(.q-tab-panels) {
+	background: transparent;
+}
+:deep(.q-tab-panel) {
+	padding-left: 0;
+	padding-right: 0;
+}
 .huge {
 	display: grid;
 	grid-template-columns: repeat(22, 1fr);
