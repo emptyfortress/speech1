@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onBeforeMount } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { operators } from '@/stores/operators'
 import { useOperatorList } from '@/stores/operatorList'
 import { useRoute, useRouter } from 'vue-router'
@@ -14,9 +14,7 @@ const initOperator = operators.find((el: any) => el.id == route.params.id)
 
 const oper = ref(initOperator)
 
-onBeforeMount(() => {
-	const opList = useOperatorList()
-})
+const opList = useOperatorList()
 
 const idx = computed(() => {
 	if (!!oper) {
@@ -96,14 +94,19 @@ q-page(padding)
 				.name {{ oper.name }}
 			q-card.mean
 				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="coolSeries" )
+			.prevnext
+				q-btn(round unelevated icon="mdi-chevron-left" color="primary" @click="prev" :disable="idx == 0")
+					q-tooltip Предыдущий оператор
+				q-btn(round unelevated icon="mdi-chevron-right" color="primary" @click="next" :disable="idx == opList.selectedOperators.length - 1")
+					q-tooltip Следующй оператор
 
 		q-tabs(v-model="tabs" align="left" active-color="primary")
 			q-tab(name="history" label="История")
 			q-tab(name="record" label="Записи")
-		q-separator
+			q-separator
 		q-tab-panels(v-model="tabs" animated)
 			q-tab-panel(name="history")
-				OperMarksTable
+				OperMarksTable()
 
 	div(v-else) ...loading
 
@@ -145,8 +148,10 @@ q-page(padding)
 		font-weight: 600;
 	}
 }
-.chart {
-	grid-column: 12/15;
-	grid-row: 5/7;
+.prevnext {
+	grid-column: 21/23;
+	grid-row: 4/6;
+	margin-top: 1rem;
+	margin-left: 1rem;
 }
 </style>
