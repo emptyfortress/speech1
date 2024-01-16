@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onBeforeMount } from 'vue'
 import { operators } from '@/stores/operators'
 import { useOperatorList } from '@/stores/operatorList'
 import { useRoute, useRouter } from 'vue-router'
 import OperMarksTable from '@/components/evaluate/OperMarksTable.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
+import { chartOptionsSpark1 } from '@/stores/charts1'
 
 const route = useRoute()
 const router = useRouter()
 const initOperator = operators.find((el: any) => el.id == route.params.id)
 
 const oper = ref(initOperator)
-const opList = useOperatorList()
+
+onBeforeMount(() => {
+	const opList = useOperatorList()
+})
 
 const idx = computed(() => {
 	if (!!oper) {
@@ -33,32 +37,40 @@ const next = () => {
 	oper.value = nextItem
 }
 const tabs = ref('history')
-const sparkLine = {
+const chartOptionsSpark1 = {
 	chart: {
-		type: 'line',
-		height: 35,
+		type: 'area',
+		height: 120,
 		sparkline: {
 			enabled: true,
 		},
 	},
 	stroke: {
-		width: 3,
 		curve: 'smooth',
 	},
-	tooltip: {
-		enabled: false,
-		x: {
-			show: false,
+	fill: {
+		opacity: 0.3,
+	},
+	xaxis: {
+		crosshairs: {
+			width: 1,
 		},
-		y: {
-			title: {
-				formatter: function () {
-					return ''
-				},
-			},
+	},
+	yaxis: {
+		min: 0,
+	},
+	title: {
+		text: '78',
+		offsetX: 0,
+		style: {
+			fontSize: '24px',
 		},
-		marker: {
-			show: false,
+	},
+	subtitle: {
+		text: 'Средняя оценка',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
 		},
 	},
 }
@@ -74,7 +86,7 @@ const coolSeries = computed(() => {
 
 <template lang="pug">
 q-page(padding)
-	.container(v-if="!!oper")
+	.container(v-if="oper !== undefined")
 		.huge
 			q-img.bg(src="@/assets/img/abstract.jpg")
 			.q-avatar
@@ -82,49 +94,31 @@ q-page(padding)
 			.fio
 				.text-weight-bold Фамилия
 				.name {{ oper.name }}
-			.mean Средняя оценка: <span> 67</span>
-			component.chart(:is="VueApexCharts" type="line" height="35" width="110" :options="sparkLine" :series="coolSeries" )
+			q-card.mean
+				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="coolSeries" )
 
+		q-tabs(v-model="tabs" align="left" active-color="primary")
+			q-tab(name="history" label="История")
+			q-tab(name="record" label="Записи")
+		q-separator
+		q-tab-panels(v-model="tabs" animated)
+			q-tab-panel(name="history")
+				OperMarksTable
 
-			// 	q-space
-			// 	.q-gutter-x-xs(v-if="opList.selectedOperators.length > 1")
-			// 		q-btn(round unelevated icon="mdi-chevron-left" color="primary" @click="prev" :disable="idx == 0")
-			// 			q-tooltip Предыдущий оператор
-			// 		q-btn(round unelevated icon="mdi-chevron-right" color="primary" @click="next" :disable="idx == opList.selectedOperators.length - 1")
-			// 			q-tooltip Следущюий оператор
-			// q-btn.photo(color="white" round icon="mdi-camera" text-color="black" size="sm")
-		br
-		br
-		br
-		br
-		// q-tabs(v-model="tabs" align="left" active-color="primary")
-		// 	q-tab(name="history" label="История")
-		// 	q-tab(name="record" label="Записи")
-		// q-separator
-		// q-tab-panels(v-model="tabs" animated)
-		// 	q-tab-panel(name="history")
-		// 		OperMarksTable
+	div(v-else) ...loading
+
 </template>
 
 <style scoped lang="scss">
 .huge {
 	display: grid;
-	grid-template-columns: repeat(20, 1fr);
-	grid-template-rows: repeat(7, 1fr);
-	justify-items: start;
-	align-items: center;
+	grid-template-columns: repeat(22, 1fr);
+	grid-template-rows: repeat(5, 40px);
 	// background: #ccc;
-	// gap: 1rem;
-	// height: 100px;
-	// width: 100%;
-	// background: url(@/assets/img/abstract.jpg);
-	// background-size: cover;
-	// background-position: 0 30%;
-	// position: relative;
 }
 .bg {
 	grid-column: 1/-1;
-	grid-row: 1/5;
+	grid-row: 1/4;
 }
 .photo {
 	position: absolute;
@@ -135,15 +129,17 @@ q-page(padding)
 	width: 100px;
 	height: 100px;
 	grid-column: 2/4;
-	grid-row: 4/7;
+	grid-row: 3/6;
 }
 .fio {
+	margin-top: 0.5rem;
+	margin-left: 0.5rem;
 	grid-column: 4/8;
-	grid-row: 5/7;
+	grid-row: 4/6;
 }
 .mean {
-	grid-column: 8/12;
-	grid-row: 5/7;
+	grid-column: 14/19;
+	grid-row: 3/6;
 	span {
 		font-size: 1.3rem;
 		font-weight: 600;
