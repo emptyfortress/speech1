@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { QTableColumn } from 'quasar'
 
 const pagination = ref({
 	page: 1,
 	rowsPerPage: 8,
 })
-const filter = ref('')
 
-const columns: QTableColumn[] = [
+const columns = [
 	{ name: 'date', label: 'Дата', field: 'date', sortable: true, align: 'left' },
 	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
 	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },

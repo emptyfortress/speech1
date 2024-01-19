@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import OperMarksTable from '@/components/evaluate/OperMarksTable.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
-import { chartOptionsSpark1 } from '@/stores/charts1'
+// import { chartOptionsSpark1 } from '@/stores/charts1'
 
 const route = useRoute()
 const router = useRouter()
