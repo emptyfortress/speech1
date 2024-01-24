@@ -32,8 +32,10 @@ const pagination = ref({
 const goto = (evt: Event, row: any, index: number) => {
 	router.push(`/oper/${row.id}`)
 }
-const markOperator = (id: number) => {
-	console.log('fuck: ', id)
+const currentOperator = ref()
+const markOperator = (op: Operator) => {
+	currentOperator.value = op
+	markDialog.value = true
 }
 const query = ref('')
 const table = ref()
@@ -58,6 +60,7 @@ watchEffect(() => {
 	opList.setAggregat(temp)
 })
 const markDialog = ref(false)
+
 const goToOp = () => {
 	markDialog.value = true
 	// if (opList.selectedOperators.length > 0) {
@@ -134,14 +137,14 @@ q-page(padding)
 						component(:is="VueApexCharts" type="line" height="35" width="110" :options="sparkLine" :series="coolSeries(props.row)" )
 				template(v-slot:body-cell-action="props")
 					q-td.action(:props="props")
-						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row.id)")
+						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row)")
 
 			div
 			div
 				transition(name="slide-top")
 					.mybuttons(v-show="opList.selectedOperators.length")
 						q-btn(color="primary" label="Оценить" @click="goToOp")
-	MarkDialog(v-model="markDialog")
+	MarkDialog(v-model="markDialog" :operator="currentOperator")
 </template>
 
 <style scoped lang="scss">

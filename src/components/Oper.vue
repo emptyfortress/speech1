@@ -4,6 +4,7 @@ import { operators } from '@/stores/operators'
 import { useOperatorList } from '@/stores/operatorList'
 import { useRoute, useRouter } from 'vue-router'
 import OperMarksTable from '@/components/evaluate/OperMarksTable.vue'
+import OperRecordTable from '@/components/evaluate/OperRecordTable.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
 // import { chartOptionsSpark1 } from '@/stores/charts1'
@@ -101,12 +102,14 @@ q-page(padding)
 					q-tooltip Следующй оператор
 
 		q-tabs(v-model="tabs" align="left" active-color="primary")
-			q-tab(name="history" label="История")
+			q-tab(name="history" label="Оценки")
 			q-tab(name="record" label="Записи")
 			q-separator
 		q-tab-panels(v-model="tabs" animated)
 			q-tab-panel(name="history")
 				OperMarksTable()
+			q-tab-panel(name="record")
+				OperRecordTable()
 
 	div(v-else) ...loading
 

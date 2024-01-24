@@ -10,10 +10,10 @@ const filter = ref('')
 
 const columns: QTableColumn[] = [
 	{ name: 'date', label: 'Дата', field: 'date', sortable: true, align: 'left' },
-	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
 	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },
 	// { name: 'records', label: 'Записи', field: 'records', sortable: true, align: 'left' },
 	{ name: 'supervisor', label: 'Супервизор', field: 'supervisor', sortable: true, align: 'left' },
+	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
 ]
 const rows = [
 	{ date: '2022-04-25 18:11', mark: 65, anketa: 'Квартальная', supervisor: 'Соловьев П.С.' },

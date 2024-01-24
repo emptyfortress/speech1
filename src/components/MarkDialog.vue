@@ -1,12 +1,16 @@
 <script setup lang="ts">
 const modelValue = defineModel()
+
+const props = defineProps<{
+	operator: Operator
+}>()
 </script>
 
 <template lang="pug">
 q-dialog(v-model="modelValue" full-width)
 	q-card()
 		q-card-section.row.justify-between.items-center.q-pb-none
-			.text-h6 Оценка качества работы операторов
+			.text-h6 Оценка качества {{ props.operator.name }}
 			q-btn(icon="mdi-close" flat round dense v-close-popup)
 
 		q-card-section
