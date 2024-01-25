@@ -7,7 +7,6 @@ import OperMarksTable from '@/components/evaluate/OperMarksTable.vue'
 import OperRecordTable from '@/components/evaluate/OperRecordTable.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
-// import { chartOptionsSpark1 } from '@/stores/charts1'
 
 const route = useRoute()
 const router = useRouter()
@@ -109,7 +108,7 @@ q-page(padding)
 			q-tab-panel(name="history")
 				OperMarksTable()
 			q-tab-panel(name="record")
-				OperRecordTable()
+				OperRecordTable(:oper="oper")
 
 	div(v-else) ...loading
 
