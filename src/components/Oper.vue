@@ -35,7 +35,7 @@ const next = () => {
 	router.push(`/oper/${nextItem.id}`)
 	oper.value = nextItem
 }
-const tabs = ref('history')
+const tabs = ref('record')
 const chartOptionsSpark1 = {
 	chart: {
 		type: 'area',
