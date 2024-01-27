@@ -150,7 +150,7 @@ q-page(padding)
 	grid-row: 4/6;
 }
 .mean {
-	grid-column: 14/19;
+	grid-column: 17/22;
 	grid-row: 3/6;
 	span {
 		font-size: 1.3rem;
