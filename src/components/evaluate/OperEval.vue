@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { operators } from '@/stores/operators'
 import { useRoute } from 'vue-router'
 import Speech from '@/components/Speech.vue'
+import EvalProcess from '@/components/evaluate/EvalProcess.vue'
 
 const route = useRoute()
 const oper = operators.find((el) => el.id == route.params.id)
@@ -10,6 +11,8 @@ const splitterModel = ref(60)
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 125) + 'px;'
 })
+const star = ref(false)
+const sound = ref(50)
 </script>
 
 <template lang="pug">
@@ -20,9 +23,10 @@ q-page(padding)
 			q-breadcrumbs-el(label="Операторы" to="/operators")
 			q-breadcrumbs-el(:label="oper.name" :to="`/oper/${oper.id}`")
 			q-breadcrumbs-el(label="Оценка качества" to="`/oper/${oper.id}/eval`")
-		// pre {{oper}}
 		q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
-			template(v-slot:before) fuck
+			template(v-slot:before)
+				EvalProcess
+
 			template(v-slot:after)
 				.after
 					.myplayer
@@ -39,7 +43,7 @@ q-page(padding)
 							q-icon(name="mdi-volume-medium" size="sm")
 							q-slider.slide(color="primary" v-model="sound")
 							q-icon(name="mdi-volume-high" size="sm")
-					.q-mt-xl.q-pa-md
+					.q-mt-md.q-pa-md
 						Speech(drawer)
 </template>
 
@@ -64,6 +68,7 @@ q-page(padding)
 	gap: 2rem;
 	font-size: 0.9rem;
 	height: 48px;
+	border-bottom: 1px solid $primary;
 
 	.q-linear-progress {
 		position: absolute;

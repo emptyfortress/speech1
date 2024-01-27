@@ -10,7 +10,7 @@ import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
 import Help from '@/components/Help.vue'
 import { router } from './router/router'
-import { is } from 'quasar'
+// import { is } from 'quasar'
 
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
