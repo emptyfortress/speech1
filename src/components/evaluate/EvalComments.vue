@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { operators } from '@/stores/operators'
 import { date } from 'quasar'
 
 const route = useRoute()
-const oper = operators.find((el) => el.id == route.params.id)
+const oper = operators.find((el) => el.id.toString() == route.params.id)
+const name = computed(() => {
+	if (!!oper) {
+		return oper.name
+	} else return 'not found'
+})
 const list = ref([
 	{
 		id: 0,
 		date: '2024-01-26 15:31',
-		name: oper.name,
+		name: name,
 		text: 'Я не согласен с оценкой. Никогда не грублю клиентам.',
 	},
 	{

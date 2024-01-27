@@ -6,7 +6,7 @@ import Speech from '@/components/Speech.vue'
 import EvalProcess from '@/components/evaluate/EvalProcess.vue'
 
 const route = useRoute()
-const oper = operators.find((el) => el.id == route.params.id)
+const oper = operators.find((el) => el.id.toString() == route.params.id)
 const splitterModel = ref(60)
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 125) + 'px;'
