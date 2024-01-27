@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import EvalQuestions from '@/components/evaluate/EvalQuestions.vue'
 import EvalComments from '@/components/evaluate/EvalComments.vue'
 import EvalFinish from '@/components/evaluate/EvalFinish.vue'
-const step = ref(4)
+const step = ref(1)
 const stepper = ref()
 const selection = ref(0)
 const anketa = [
