@@ -2,7 +2,8 @@
 import { ref, reactive } from 'vue'
 import EvalQuestions from '@/components/evaluate/EvalQuestions.vue'
 import EvalComments from '@/components/evaluate/EvalComments.vue'
-const step = ref(3)
+import EvalFinish from '@/components/evaluate/EvalFinish.vue'
+const step = ref(4)
 const stepper = ref()
 const selection = ref(0)
 const anketa = [
@@ -48,6 +49,7 @@ q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat 
 	q-step(:name="3" title="Комментарии" prefix="3" :done="step > 3")
 		EvalComments
 	q-step(:name="4" title="Завершение" prefix="4" :done="step > 4")
+		EvalFinish
 
 	template(v-slot:navigation)
 		q-stepper-navigation(align="right")

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { operators } from '@/stores/operators'
 import { date } from 'quasar'
