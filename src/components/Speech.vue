@@ -1,5 +1,5 @@
 <template lang="pug">
-.row.justify-between.items-center
+.row.justify-between.items-center(v-if="!props.drawer")
 	q-btn(flat round icon="mdi-unfold-more-vertical" color="white" size="md" @click="mystore.wide = !mystore.wide")
 	#speech
 .talk(v-for="talk in filterTalks" :key="talk.time")
@@ -27,6 +27,12 @@
 import { computed } from 'vue'
 import { useStore } from '@/stores/store'
 import { talks, talks2, talks3 } from '@/stores/speech'
+const props = defineProps({
+	drawer: {
+		type: Boolean,
+		default: false,
+	},
+})
 
 const mystore = useStore()
 

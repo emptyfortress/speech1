@@ -68,6 +68,7 @@ div
 				q-td.text-right(key="mark")
 					.q-mr-md(v-if="props.row.mark") {{ props.row.mark }}
 					q-btn(v-else flat color="primary" label="Оценить" @click.stop="showMarkDialog(props.row)" size="sm") 
+					q-btn(flat color="primary" label="Оце" to="/oper/20/eval" size="sm") 
 
 				.myplayer(v-if="selected === props.row.id")
 					q-linear-progress(:value=".6" color="positive")

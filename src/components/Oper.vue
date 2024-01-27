@@ -94,11 +94,11 @@ q-page(padding)
 				.name {{ oper.name }}
 			q-card.mean
 				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="coolSeries" )
-			.prevnext(v-if="opList.selectedOperators.length > 0")
-				q-btn(round unelevated icon="mdi-chevron-left" color="primary" @click="prev" :disable="idx == 0")
-					q-tooltip Предыдущий оператор
-				q-btn(round unelevated icon="mdi-chevron-right" color="primary" @click="next" :disable="idx == opList.selectedOperators.length - 1")
-					q-tooltip Следующй оператор
+			// .prevnext(v-if="opList.selectedOperators.length > 0")
+			// 	q-btn(round unelevated icon="mdi-chevron-left" color="primary" @click="prev" :disable="idx == 0")
+			// 		q-tooltip Предыдущий оператор
+			// 	q-btn(round unelevated icon="mdi-chevron-right" color="primary" @click="next" :disable="idx == opList.selectedOperators.length - 1")
+			// 		q-tooltip Следующй оператор
 
 		q-tabs(v-model="tabs" align="left" active-color="primary")
 			q-tab(name="history" label="Оценки")

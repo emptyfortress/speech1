@@ -138,7 +138,6 @@ q-page(padding)
 				template(v-slot:body-cell-action="props")
 					q-td.action(:props="props")
 						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row)")
-
 			div
 			div
 				transition(name="slide-top")

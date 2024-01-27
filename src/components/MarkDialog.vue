@@ -7,7 +7,7 @@ const modelValue = defineModel()
 
 const props = defineProps<{
 	operator: Operator
-	record: any
+	record?: any
 }>()
 const step = ref(1)
 const star = ref()
