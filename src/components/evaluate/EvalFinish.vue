@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { date } from 'quasar'
 const timeStamp = Date.now()
 const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD HH:mm')
+const agree = ref(false)
 </script>
 
 <template lang="pug">
@@ -16,7 +18,9 @@ q-card.grid
 	div Квартальная
 	div Средний балл:
 	div 84
-	q-separator(space)
+	br
+	br
+	q-checkbox(v-model="agree" dense label="Оператор согласен")
 	q-btn.full-width(unelevated color="primary" label="Отправить оператору") 
 
 </template>
@@ -31,6 +35,10 @@ q-card.grid
 	margin: 0 auto;
 	width: 300px;
 	padding: 1rem;
+}
+.q-separator,
+.q-checkbox {
+	grid-column: 1/-1;
 }
 .q-btn {
 	grid-column: 1/-1;
