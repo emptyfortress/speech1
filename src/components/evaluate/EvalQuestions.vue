@@ -31,6 +31,10 @@ q-list()
 				.request(v-if="item.auto") Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
 				.request(v-else) Оценка:
 				q-input(filled type="number" dense v-model="item.mark")
+	q-separator(space)
+	.total
+		.text-h6 Средний балл:
+		.text-h6 43
 
 </template>
 
@@ -58,5 +62,10 @@ q-list()
 	grid-column: 1/2;
 	text-align: right;
 	justify-self: end;
+}
+.total {
+	display: flex;
+	justify-content: space-between;
+	margin: 0.5rem 4rem;
 }
 </style>
