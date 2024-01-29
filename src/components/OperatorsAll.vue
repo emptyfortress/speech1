@@ -21,7 +21,7 @@ const opercolumns: QTableColumn[] = [
 	{ name: 'percent', label: 'Всего оценок', field: 'percent', align: 'center', sortable: true },
 	{ name: 'good', label: 'Среднее', field: 'good', align: 'center', sortable: true },
 	{ name: 'graph', label: 'Тренд', field: 'graph', align: 'left', sortable: false },
-	{ name: 'action', label: '', field: 'action', align: 'right', sortable: false },
+	// { name: 'action', label: '', field: 'action', align: 'right', sortable: false },
 ]
 const pagination = ref({
 	sortBy: 'name' as keyof Row,
@@ -33,10 +33,10 @@ const goto = (evt: Event, row: any, index: number) => {
 	router.push(`/oper/${row.id}`)
 }
 const currentOperator = ref()
-const markOperator = (op: Operator) => {
-	currentOperator.value = op
-	markDialog.value = true
-}
+// const markOperator = (op: Operator) => {
+// 	currentOperator.value = op
+// 	markDialog.value = true
+// }
 const query = ref('')
 const table = ref()
 
@@ -114,7 +114,7 @@ q-page(padding)
 			q-icon(name="mdi-headset")
 			.zag Операторы
 			q-space
-			ChipCalendar1
+			ChipCalendar1()
 		.grid
 			q-card.aggregat
 				q-input(dense v-model="query" placeholder="оператор" clearable hide-bottom-space @clear="query = ''")
@@ -135,9 +135,9 @@ q-page(padding)
 				template(v-slot:body-cell-graph="props")
 					q-td(:props="props")
 						component(:is="VueApexCharts" type="line" height="35" width="110" :options="sparkLine" :series="coolSeries(props.row)" )
-				template(v-slot:body-cell-action="props")
-					q-td.action(:props="props")
-						q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row)")
+				// template(v-slot:body-cell-action="props")
+				// 	q-td.action(:props="props")
+				// 		q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row)")
 			div
 			div
 				transition(name="slide-top")

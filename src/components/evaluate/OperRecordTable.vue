@@ -3,12 +3,13 @@ import { ref } from 'vue'
 import { columns, rows } from '@/components/evaluate/data'
 import type { Ref } from 'vue'
 import { useStore } from '@/stores/store'
-import MarkDialog from '@/components/MarkDialog.vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
 	oper: Operator
 }>()
 
+const router = useRouter()
 const pagination = ref({
 	page: 1,
 	rowsPerPage: 8,
@@ -36,11 +37,9 @@ const select = (e: Row) => {
 	}
 }
 const sound = ref(50)
-const markDialog = ref(false)
-const currentRecord = ref()
-const showMarkDialog = (el: any) => {
-	currentRecord.value = el
-	markDialog.value = true
+const evaluate = () => {
+	let path = '/oper/' + props.oper.id + '/eval'
+	router.push(path)
 }
 </script>
 
@@ -67,8 +66,7 @@ div
 				q-td(key="anketa") {{ props.row.anketa }}
 				q-td.text-right(key="mark")
 					.q-mr-md(v-if="props.row.mark") {{ props.row.mark }}
-					q-btn(v-else flat color="primary" label="Оценить" @click.stop="showMarkDialog(props.row)" size="sm") 
-					q-btn(flat color="primary" label="Оце" to="/oper/20/eval" size="sm") 
+					q-btn(v-else flat color="primary" label="Оценить" @click.stop="evaluate" size="sm") 
 
 				.myplayer(v-if="selected === props.row.id")
 					q-linear-progress(:value=".6" color="positive")
@@ -88,7 +86,6 @@ div
 						q-icon(name="mdi-volume-high" size="sm")
 					Teleport(to="#speech")
 						.recdate(v-if="selected !== null") {{props.row.date}}
-	MarkDialog(v-model="markDialog" :operator="props.oper" :record="currentRecord")
 </template>
 
 <style scoped lang="scss">
