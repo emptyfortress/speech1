@@ -19,9 +19,10 @@ q-card.grid
 	div Средний балл:
 	div 84
 	br
-	br
-	q-checkbox(v-model="agree" dense label="Оператор согласен")
 	q-btn.full-width(unelevated color="primary" label="Отправить оператору") 
+
+.grid
+	q-checkbox(v-model="agree" dense label="Оператор согласен")
 
 </template>
 

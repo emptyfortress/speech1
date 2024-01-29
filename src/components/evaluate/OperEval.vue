@@ -7,12 +7,17 @@ import EvalProcess from '@/components/evaluate/EvalProcess.vue'
 
 const route = useRoute()
 const oper = operators.find((el) => el.id.toString() == route.params.id)
-const splitterModel = ref(60)
+const splitterModel = ref(100)
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 125) + 'px;'
 })
 const star = ref(false)
 const sound = ref(50)
+const togglePlayer = () => {
+	if (splitterModel.value < 99) {
+		splitterModel.value = 100
+	} else splitterModel.value = 70
+}
 </script>
 
 <template lang="pug">
@@ -21,11 +26,11 @@ q-page(padding)
 		q-breadcrumbs
 			q-breadcrumbs-el(icon="home" to="/")
 			q-breadcrumbs-el(label="Операторы" to="/operators")
-			q-breadcrumbs-el(:label="oper.name" :to="`/oper/${oper.id}`")
+			q-breadcrumbs-el(:label="oper?.name" :to="`/oper/${oper?.id}`")
 			q-breadcrumbs-el(label="Оценка качества" to="`/oper/${oper.id}/eval`")
 		q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 			template(v-slot:before)
-				EvalProcess
+				EvalProcess(:splitter="splitterModel" @toggle="togglePlayer" )
 
 			template(v-slot:after)
 				.after
@@ -41,18 +46,16 @@ q-page(padding)
 						.time 02:31
 						.row.items-center
 							q-icon(name="mdi-volume-medium" size="sm")
-							q-slider.slide(color="primary" v-model="sound")
 							q-icon(name="mdi-volume-high" size="sm")
+							// q-slider.slide(color="primary" v-model="sound")
 					.q-mt-md.q-pa-md
 						Speech(drawer)
 </template>
 
 <style scoped lang="scss">
 .after {
-	// height: 100%;
 	position: relative;
 	background: $blue-grey-10;
-	// padding: 1rem;
 }
 .myplayer {
 	position: sticky;
@@ -69,6 +72,7 @@ q-page(padding)
 	font-size: 0.9rem;
 	height: 48px;
 	border-bottom: 1px solid $primary;
+	z-index: 100;
 
 	.q-linear-progress {
 		position: absolute;

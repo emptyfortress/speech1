@@ -3,6 +3,9 @@ import { ref, reactive } from 'vue'
 import EvalQuestions from '@/components/evaluate/EvalQuestions.vue'
 import EvalComments from '@/components/evaluate/EvalComments.vue'
 import EvalFinish from '@/components/evaluate/EvalFinish.vue'
+
+const emit = defineEmits(['toggle'])
+
 const step = ref(1)
 const stepper = ref()
 const selection = ref(0)
@@ -29,6 +32,9 @@ const next = () => {
 const prev = () => {
 	stepper.value.previous()
 }
+const togglePlayer = () => {
+	emit('toggle')
+}
 </script>
 
 <template lang="pug">
@@ -43,7 +49,6 @@ q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat 
 				q-item-section
 					q-item-label {{item.label}}
 					q-item-label(caption) {{item.description}}
-				q-item-section(side) {{ item.num }}
 	q-step(:name="2" title="Вопросы" prefix="2" :done="step > 2")
 		EvalQuestions
 	q-step(:name="3" title="Комментарии" prefix="3" :done="step > 3")
@@ -52,7 +57,8 @@ q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat 
 		EvalFinish
 
 	template(v-slot:navigation)
-		q-stepper-navigation(align="right")
+		q-stepper-navigation.q-gutter-x-sm(align="right")
+			q-btn(flat color="primary" icon="mdi-play-box" @click="togglePlayer" label="Запись" class="q-ml-sm")
 			q-btn(v-if="step > 1" flat color="primary" @click="prev" label="Назад" class="q-ml-sm")
 			q-btn(unelevated @click="next" color="primary" :label="step === 4 ? 'Завершить' : 'Далее'")
 </template>

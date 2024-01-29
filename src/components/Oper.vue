@@ -65,7 +65,7 @@ const chartOptionsSpark1 = {
 		},
 	},
 	subtitle: {
-		text: 'Средняя оценка',
+		text: 'Средний балл',
 		offsetX: 0,
 		style: {
 			fontSize: '14px',
@@ -85,20 +85,27 @@ const coolSeries = computed(() => {
 <template lang="pug">
 q-page(padding)
 	.container(v-if="oper !== undefined")
+		q-breadcrumbs
+			q-breadcrumbs-el(icon="home" to="/")
+			q-breadcrumbs-el(label="Операторы" to="/operators")
+			q-breadcrumbs-el(:label="oper.name" :to="`/oper/${oper.id}`")
+
 		.huge
-			q-img.bg(src="@/assets/img/abstract.jpg")
 			.q-avatar
 				img(src="@/assets/img/user1.svg")
 			.fio
 				.text-weight-bold Фамилия
 				.name {{ oper.name }}
+			q-card.dash
+				.mean
+					span 2022-02-25
+				div Последняя оценка 
+			q-card.dash
+				.mean
+					span 14
+				div Всего оценок
 			q-card.mean
 				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="coolSeries" )
-			// .prevnext(v-if="opList.selectedOperators.length > 0")
-			// 	q-btn(round unelevated icon="mdi-chevron-left" color="primary" @click="prev" :disable="idx == 0")
-			// 		q-tooltip Предыдущий оператор
-			// 	q-btn(round unelevated icon="mdi-chevron-right" color="primary" @click="next" :disable="idx == opList.selectedOperators.length - 1")
-			// 		q-tooltip Следующй оператор
 
 		q-tabs(v-model="tabs" align="left" active-color="primary")
 			q-tab(name="history" label="Оценки")
@@ -106,7 +113,7 @@ q-page(padding)
 			q-separator
 		q-tab-panels(v-model="tabs" animated)
 			q-tab-panel(name="history")
-				OperMarksTable()
+				OperMarksTable(:oper="oper")
 			q-tab-panel(name="record")
 				OperRecordTable(:oper="oper")
 
@@ -124,13 +131,9 @@ q-page(padding)
 }
 .huge {
 	display: grid;
-	grid-template-columns: repeat(22, 1fr);
-	grid-template-rows: repeat(5, 40px);
-	// background: #ccc;
-}
-.bg {
-	grid-column: 1/-1;
-	grid-row: 1/4;
+	grid-template-columns: auto 1.5fr 1fr 1fr 2fr;
+	gap: 0.5rem;
+	margin-top: 1rem;
 }
 .photo {
 	position: absolute;
@@ -138,29 +141,23 @@ q-page(padding)
 	left: 40px;
 }
 .q-avatar {
-	width: 100px;
-	height: 100px;
-	grid-column: 2/4;
-	grid-row: 3/6;
+	width: 110px;
+	height: 110px;
 }
 .fio {
 	margin-top: 0.5rem;
 	margin-left: 0.5rem;
-	grid-column: 4/8;
-	grid-row: 4/6;
 }
 .mean {
-	grid-column: 17/22;
-	grid-row: 3/6;
 	span {
 		font-size: 1.3rem;
 		font-weight: 600;
 	}
 }
-.prevnext {
-	grid-column: 21/23;
-	grid-row: 4/6;
-	margin-top: 1rem;
-	margin-left: 1rem;
+.dash {
+	// padding: 0.5rem;
+	background: transparent;
+	box-shadow: none;
+	font-size: 0.95rem;
 }
 </style>
