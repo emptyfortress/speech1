@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, computed } from 'vue'
 import EvalQuestions from '@/components/evaluate/EvalQuestions.vue'
 import EvalComments from '@/components/evaluate/EvalComments.vue'
 import EvalFinish from '@/components/evaluate/EvalFinish.vue'
+import { useRoute } from 'vue-router'
 
 const emit = defineEmits(['toggle'])
 
@@ -35,6 +36,13 @@ const prev = () => {
 const togglePlayer = () => {
 	emit('toggle')
 }
+const route = useRoute()
+const dis = computed(() => {
+	if (route.hash == '#done') {
+		return true
+	}
+	return false
+})
 </script>
 
 <template lang="pug">
@@ -44,7 +52,7 @@ q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat 
 		q-list(padding separator)
 			q-item(tag="label" v-ripple v-for="item in anketa" :key="item.id" :class="{selected : selection == item.id}")
 				q-item-section(side top)
-					q-radio(v-model="selection" :val="item.id")
+					q-radio(v-model="selection" :val="item.id" :disable="dis")
 
 				q-item-section
 					q-item-label {{item.label}}

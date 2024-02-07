@@ -103,7 +103,7 @@ const rows = [
 
 const goto = (evt: Event, row: any, index: number) => {
 	let id = route.params.id
-	router.push(`/oper/${id}/eval`)
+	router.push(`/oper/${id}/eval#done`)
 }
 </script>
 
@@ -118,7 +118,7 @@ q-table(:columns="columns"
 	).table
 	template(v-slot:body-cell-status="props")
 		q-td(:props="props")
-			div(v-if="props.row.status == 'Завершено'") {{ props.row.status }}
+			div(v-if="props.row.status == 'Завершено'") ✓ {{ props.row.status }}
 			q-badge(v-else color="purple" :label="props.row.status")
 </template>
 

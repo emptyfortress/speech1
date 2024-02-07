@@ -22,18 +22,18 @@ const idx = computed(() => {
 	}
 	return 0
 })
-const prev = () => {
-	if (idx.value == 0) return
-	const prevItem: Operator = opList.selectedOperators[idx.value - 1]
-	router.push(`/oper/${prevItem.id}`)
-	oper.value = prevItem
-}
-const next = () => {
-	if (idx.value == opList.selectedOperators.length - 1) return
-	const nextItem: Operator = opList.selectedOperators[idx.value + 1]
-	router.push(`/oper/${nextItem.id}`)
-	oper.value = nextItem
-}
+// const prev = () => {
+// 	if (idx.value == 0) return
+// 	const prevItem: Operator = opList.selectedOperators[idx.value - 1]
+// 	router.push(`/oper/${prevItem.id}`)
+// 	oper.value = prevItem
+// }
+// const next = () => {
+// 	if (idx.value == opList.selectedOperators.length - 1) return
+// 	const nextItem: Operator = opList.selectedOperators[idx.value + 1]
+// 	router.push(`/oper/${nextItem.id}`)
+// 	oper.value = nextItem
+// }
 const tabs = ref('history')
 const chartOptionsSpark1 = {
 	chart: {

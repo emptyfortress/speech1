@@ -21,7 +21,6 @@ const opercolumns: QTableColumn[] = [
 	{ name: 'percent', label: 'Всего оценок', field: 'percent', align: 'center', sortable: true },
 	{ name: 'good', label: 'Среднее', field: 'good', align: 'center', sortable: true },
 	{ name: 'graph', label: 'Тренд', field: 'graph', align: 'left', sortable: false },
-	// { name: 'action', label: '', field: 'action', align: 'right', sortable: false },
 ]
 const pagination = ref({
 	sortBy: 'name' as keyof Row,
@@ -33,10 +32,6 @@ const goto = (evt: Event, row: any, index: number) => {
 	router.push(`/oper/${row.id}`)
 }
 const currentOperator = ref()
-// const markOperator = (op: Operator) => {
-// 	currentOperator.value = op
-// 	markDialog.value = true
-// }
 const query = ref('')
 const table = ref()
 
