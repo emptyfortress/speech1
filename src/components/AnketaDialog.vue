@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 const modelValue = defineModel()
 
 const props = defineProps<{
@@ -27,6 +27,12 @@ const list = reactive([
 	{ id: 5, text: 'Тон разговора' },
 	{ id: 6, text: 'Завершение разговора', auto: true, mark: 92 },
 ])
+const calcEdit = computed(() => {
+	return editMode.value ? true : false
+})
+const test = () => {
+	console.log(111)
+}
 </script>
 
 <template lang="pug">
@@ -34,8 +40,8 @@ q-dialog(v-model="modelValue")
 	q-card(:class="{edit: editMode}")
 		q-card-section.row.items-start.q-pb-none
 			div
-				.text-h6 {{ props.anketa.anketa }}
-				.descr {{props.anketa.descr}}
+				.text-h6(:contenteditable="calcEdit") {{ props.anketa.anketa }}
+				.descr(:contenteditable="calcEdit") {{props.anketa.descr}}
 			q-space
 			q-btn(icon="mdi-close" flat round dense v-close-popup)
 
@@ -52,14 +58,14 @@ q-dialog(v-model="modelValue")
 							q-item-section(avatar)
 								q-avatar(text-color="black") {{item.id + 1}}
 							q-item-section
-								q-item-label {{ item.text }}
+								q-item-label(:contenteditable="calcEdit") {{ item.text }}
 								.text-caption(v-if="item.auto") AUTO
 
 						q-card-section
 							.grid
 								.condition
 									.text-weight-bold Условия
-									p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+									p(:contenteditable="calcEdit") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
 								.request(v-if="item.auto") Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
 
 		.row.justify-between.q-ma-sm(align="right")
@@ -89,5 +95,8 @@ q-dialog(v-model="modelValue")
 .q-scrollarea {
 	// height: 300px;
 	height: 60vh;
+}
+div > *[contenteditable='true'] {
+	border-bottom: 1px dotted $primary;
 }
 </style>

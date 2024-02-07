@@ -51,7 +51,7 @@ q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat 
 		.done(v-if="dis") Оценка проведена 22.10.23
 		q-item-label Выберите анкету для оценки:
 		q-list(padding separator)
-			q-item(tag="label" v-ripple v-for="item in anketa" :key="item.id" :class="{selected : selection == item.id}")
+			q-item(tag="label" v-ripple="!dis" v-for="item in anketa" :key="item.id" :class="{selected : selection == item.id}")
 				q-item-section(side top)
 					q-radio(v-model="selection" :val="item.id" :disable="dis")
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { date } from 'quasar'
 import type { QTableColumn } from 'quasar'
 import AnketaDialog from '@/components/AnketaDialog.vue'
 
@@ -13,7 +12,7 @@ const cols: QTableColumn[] = [
 	{ name: 'author', label: 'Создал', field: 'author', sortable: true, align: 'left' },
 	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
 ]
-const rows = ref([
+const rows = ref<Anketa[]>([
 	{
 		id: 0,
 		anketa: 'Квартальная',
@@ -49,7 +48,7 @@ const rows = ref([
 ])
 const dialog = ref(false)
 
-const current = ref<Anketa>(rows[0])
+const current = ref<Anketa>(rows.value[0])
 const currIndex = ref(0)
 const showPreview = (evt: Event, row: any, index: number) => {
 	current.value = row
@@ -60,7 +59,7 @@ const create = () => {
 	console.log(111)
 }
 const duble = () => {
-	let temp = {
+	let temp: Anketa = {
 		id: rows.value.length,
 		date: '2024-02-05 18:11',
 		status: 'Подготовка',
