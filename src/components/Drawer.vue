@@ -74,6 +74,12 @@ const pages = [
 		icon: 'mdi-star-outline',
 		url: '/starred',
 	},
+	{
+		id: 8,
+		title: 'Анкеты',
+		icon: 'mdi-playlist-check',
+		url: '/anketa',
+	},
 ]
 </script>
 

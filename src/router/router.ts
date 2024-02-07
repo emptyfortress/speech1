@@ -114,6 +114,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Избранное', requiresAuth: false },
 		},
 		{
+			path: '/anketa',
+			component: () => import('@/components/Anketa.vue'),
+			meta: { transition: 'slide-left', title: 'Анкеты', requiresAuth: false },
+		},
+		{
 			path: '/:pathMatch(.*)*',
 			redirect: '/404',
 		},

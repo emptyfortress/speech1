@@ -1,3 +1,11 @@
+type Anketa = {
+	id: Number
+	anketa: String
+	descr: String
+	date: String
+	status: String
+	author: String
+}
 type Operator = {
 	id: number
 	name: string
