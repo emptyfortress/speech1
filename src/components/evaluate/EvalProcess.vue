@@ -48,6 +48,7 @@ const dis = computed(() => {
 <template lang="pug">
 q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat alternative-labels )
 	q-step(:name="1" title="Выбор анкеты" prefix="1" :done="step > 1")
+		.done(v-if="dis") Оценка проведена 22.10.23
 		q-item-label Выберите анкету для оценки:
 		q-list(padding separator)
 			q-item(tag="label" v-ripple v-for="item in anketa" :key="item.id" :class="{selected : selection == item.id}")
@@ -83,5 +84,14 @@ q-stepper(v-model="step" ref="stepper" header-nav color="primary" animated flat 
 	.q-item__section--side {
 		color: $blue-9;
 	}
+}
+.done {
+	text-align: center;
+	background: $primary;
+	padding: 1rem;
+	width: 300px;
+	margin: 0 auto;
+	color: white;
+	border-radius: 0.5rem;
 }
 </style>
