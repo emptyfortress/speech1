@@ -4,8 +4,9 @@ const modelValue = defineModel()
 
 const props = defineProps<{
 	anketa: Anketa
+	new: boolean
 }>()
-const emit = defineEmits(['duble'])
+const emit = defineEmits(['duble', 'cancel', 'save'])
 const duble = () => {
 	emit('duble')
 }
@@ -18,13 +19,14 @@ const add = () => {
 		mark: 0,
 		new: true,
 	}
-	list.push(question)
+	props.new == true ? list1.push(question) : list.push(question)
 }
 
 const editMode = ref(false)
 const edit = () => {
 	editMode.value = !editMode.value
 }
+const list1 = reactive([{ id: 0, text: 'Вопрос', auto: true, mark: 0, new: false }])
 const list = reactive([
 	{ id: 0, text: 'Приветствие', auto: true, mark: 53, new: false },
 	{ id: 1, text: 'Прогрев', auto: false, new: false },
@@ -40,11 +42,59 @@ const calcEdit = computed(() => {
 const del = (idx: number) => {
 	list.splice(idx, 1)
 }
+const close = () => {
+	modelValue.value = false
+	emit('cancel')
+}
+const save = () => {
+	modelValue.value = false
+	emit('save')
+}
 </script>
 
 <template lang="pug">
 q-dialog(v-model="modelValue")
-	q-card(:class="{edit: editMode}")
+	q-card(class="edit" v-if="props.new")
+		q-card-section.row.items-start.q-pb-none
+			div
+				.text-h6(contenteditable) Название анкеты
+				.descr(contenteditable) Описание
+			q-space
+			q-btn(icon="mdi-close" flat round dense v-close-popup)
+		q-card-section
+			.row.justify-between
+				.descr Создано: -дата-
+				.descr Автор: -фио автора-
+		q-card-section
+			q-scroll-area
+				q-list
+					q-expansion-item(expand-separator v-for="(item, index) in list1" :key="item.id")
+						template(v-slot:header)
+							q-item-section(avatar)
+								q-avatar(text-color="black") {{index + 1}}
+							q-item-section
+								q-item-label(contenteditable) {{ item.text }}
+								.text-caption(v-if="item.auto") AUTO
+							q-item-section(side)
+								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm" @click.stop="del(index)") 
+
+						q-card-section
+							.grid
+								.condition
+									.text-weight-bold Условия
+									p(contenteditable) Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+								.request(v-if="item.auto && !item.new")
+									q-checkbox.q-mr-md(v-model="rec" dense) 
+									label Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
+								.request(v-if="item.new")
+									q-checkbox(v-model="rec" dense) Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
+		.row.justify-between.q-ma-sm(align="right")
+			q-btn(flat color="primary" label="Отмена" @click="close") 
+			q-btn(flat color="primary" label="Добавить вопрос" @click="add") 
+			q-btn(flat color="primary" label="Сохранить" @click="save") 
+
+
+	q-card(:class="{edit: editMode}" v-else)
 		q-card-section.row.items-start.q-pb-none
 			div
 				.text-h6(:contenteditable="calcEdit") {{ props.anketa.anketa }}

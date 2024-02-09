@@ -56,8 +56,10 @@ const showPreview = (evt: Event, row: any, index: number) => {
 	currIndex.value = index
 	dialog.value = !dialog.value
 }
+const newAnketa = ref(false)
 const create = () => {
-	console.log(111)
+	newAnketa.value = true
+	dialog.value = !dialog.value
 }
 const duble = () => {
 	let temp: Anketa = {
@@ -72,11 +74,11 @@ const duble = () => {
 	current.value = temp
 	currIndex.value += 1
 }
-// const remove = () => {
-// 	rows.value.splice(currIndex.value, 1)
-// }
 const kill = (ind: number) => {
 	rows.value.splice(ind, 1)
+}
+const cancel = () => {
+	newAnketa.value = false
 }
 </script>
 
@@ -107,7 +109,7 @@ q-page(padding)
 
 			q-card-actions.q-mx-md(align="right")
 				q-btn(unelevated color="primary" label="Создать анкету" @click="create")
-	AnketaDialog(v-model="dialog" :anketa="current" @duble="duble")
+	AnketaDialog(v-model="dialog" :anketa="current" @duble="duble" :new="newAnketa" @cancel="cancel")
 </template>
 
 <style scoped lang="scss">
