@@ -80,6 +80,24 @@ const kill = (ind: number) => {
 const cancel = () => {
 	newAnketa.value = false
 }
+const add = (e: string) => {
+	let temp: Anketa = {
+		id: rows.value.length,
+		date: '2024-02-05 18:11',
+		status: 'Подготовка',
+		anketa: e,
+		descr: 'Описание',
+		author: 'Прокофьев А.С.',
+	}
+	rows.value.push(temp)
+	newAnketa.value = false
+}
+const test = () => {
+	console.log(rows.value)
+}
+const pagination = {
+	rowsPerPage: 0,
+}
 </script>
 
 <template lang="pug">
@@ -90,12 +108,12 @@ q-page(padding)
 				q-item-section.line(avatar)
 					q-avatar(icon="mdi-playlist-check" flat)
 				q-item-section
-					.zag Анкеты
+					.zag(@click="test") Анкеты
 			q-card-section.q-px-md
-				q-table(
-					:columns="cols"
+				q-table(:columns="cols"
 					:rows="rows"
 					@row-click="showPreview"
+					:pagination="pagination"
 					flat
 					hide-pagination)
 					template(v-slot:body-cell-action="props")
@@ -109,7 +127,7 @@ q-page(padding)
 
 			q-card-actions.q-mx-md(align="right")
 				q-btn(unelevated color="primary" label="Создать анкету" @click="create")
-	AnketaDialog(v-model="dialog" :anketa="current" @duble="duble" :new="newAnketa" @cancel="cancel")
+	AnketaDialog(v-model="dialog" :anketa="current" @duble="duble" :new="newAnketa" @cancel="cancel" @save="add")
 </template>
 
 <style scoped lang="scss">

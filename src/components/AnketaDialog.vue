@@ -46,9 +46,11 @@ const close = () => {
 	modelValue.value = false
 	emit('cancel')
 }
+const anketaName = ref()
 const save = () => {
+	let name = anketaName.value.textContent
+	emit('save', name)
 	modelValue.value = false
-	emit('save')
 }
 </script>
 
@@ -57,7 +59,7 @@ q-dialog(v-model="modelValue")
 	q-card(class="edit" v-if="props.new")
 		q-card-section.row.items-start.q-pb-none
 			div
-				.text-h6(contenteditable) Название анкеты
+				.text-h6(ref="anketaName" contenteditable) Название анкеты
 				.descr(contenteditable) Описание
 			q-space
 			q-btn(icon="mdi-close" flat round dense v-close-popup)
