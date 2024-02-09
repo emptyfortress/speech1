@@ -11,6 +11,7 @@ const cols: QTableColumn[] = [
 	{ name: 'date', label: 'Дата создания', field: 'date', sortable: true, align: 'left' },
 	{ name: 'author', label: 'Создал', field: 'author', sortable: true, align: 'left' },
 	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
+	{ name: 'action', label: '', field: 'action', sortable: false, align: 'right' },
 ]
 const rows = ref<Anketa[]>([
 	{
@@ -74,6 +75,9 @@ const duble = () => {
 const remove = () => {
 	rows.value.splice(currIndex.value, 1)
 }
+const kill = (ind: number) => {
+	rows.value.splice(ind, 1)
+}
 </script>
 
 <template lang="pug">
@@ -92,9 +96,18 @@ q-page(padding)
 					@row-click="showPreview"
 					flat
 					hide-pagination)
+					template(v-slot:body-cell-action="props")
+						q-td(:props="props")
+							q-btn(flat round icon="mdi-trash-can-outline" dense @click.stop="" size="sm") 
+								q-menu(anchor="bottom right" self="top right")
+									q-list
+										q-item(clickable v-close-popup @click="kill(props.rowIndex)").pink
+											q-item-section Удалить
+
+
 			q-card-actions.q-mx-md(align="right")
 				q-btn(unelevated color="primary" label="Создать анкету" @click="create")
-	AnketaDialog(v-model="dialog" :anketa="current" @duble="duble" @remove="remove")
+	AnketaDialog(v-model="dialog" :anketa="current" @duble="duble")
 </template>
 
 <style scoped lang="scss">
@@ -104,5 +117,21 @@ q-page(padding)
 	justify-content: start;
 	gap: 2rem;
 	align-items: center;
+}
+tr {
+	.q-btn {
+		visibility: hidden;
+	}
+	&:hover {
+		.q-btn {
+			visibility: visible;
+		}
+	}
+}
+:deep(.q-btn .q-icon) {
+	color: #999;
+	&:hover {
+		color: #333;
+	}
 }
 </style>
