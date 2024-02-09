@@ -72,9 +72,9 @@ const duble = () => {
 	current.value = temp
 	currIndex.value += 1
 }
-const remove = () => {
-	rows.value.splice(currIndex.value, 1)
-}
+// const remove = () => {
+// 	rows.value.splice(currIndex.value, 1)
+// }
 const kill = (ind: number) => {
 	rows.value.splice(ind, 1)
 }

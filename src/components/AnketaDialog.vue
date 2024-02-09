@@ -5,11 +5,7 @@ const modelValue = defineModel()
 const props = defineProps<{
 	anketa: Anketa
 }>()
-const emit = defineEmits(['duble', 'remove'])
-const remove = () => {
-	emit('remove')
-	modelValue.value = false
-}
+const emit = defineEmits(['duble'])
 const duble = () => {
 	emit('duble')
 }
@@ -72,7 +68,7 @@ q-dialog(v-model="modelValue")
 								q-item-label(:contenteditable="calcEdit") {{ item.text }}
 								.text-caption(v-if="item.auto") AUTO
 							q-item-section(side v-if="editMode")
-								q-btn(flat round dense icon="mdi-trash-can-outline" @click.stop="del(index)") 
+								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm" @click.stop="del(index)") 
 
 						q-card-section
 							.grid
@@ -87,7 +83,6 @@ q-dialog(v-model="modelValue")
 
 		.row.justify-between.q-ma-sm(align="right")
 			template(v-if="!editMode")
-				// q-btn(unelevated color="negative" label="Удалить анкету" @click="remove") 
 				q-btn(flat color="primary" label="Дублировать" @click="duble") 
 				q-btn(flat color="primary" label="Редактировать" @click="edit") 
 			template(v-else)
@@ -110,7 +105,6 @@ q-dialog(v-model="modelValue")
 	font-size: 0.9rem;
 }
 .q-scrollarea {
-	// height: 300px;
 	height: 60vh;
 }
 div > *[contenteditable='true'] {
