@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import draggable from 'vuedraggable'
+import LogicList from '@/components/LogicList.vue'
+import { useLogic } from '@/stores/logic'
+
 const modelValue = defineModel()
 
 const props = defineProps<{
@@ -16,6 +19,7 @@ const add = () => {
 	let question = {
 		id: list.value.length,
 		text: 'Вопрос',
+		zapros: '',
 		auto: true,
 		mark: 0,
 		new: true,
@@ -29,13 +33,13 @@ const edit = () => {
 }
 const list1 = ref([{ id: 0, text: 'Вопрос', auto: true, mark: 0, new: false }])
 const list = ref([
-	{ id: 0, text: 'Приветствие', auto: true, mark: 53, new: false },
-	{ id: 1, text: 'Прогрев', auto: false, new: false },
-	{ id: 2, text: 'Выяснение проблем', auto: false, new: false },
-	{ id: 3, text: 'Отработка возражений', auto: false, new: false },
-	{ id: 4, text: 'Предложение товаров по акции', auto: true, mark: 67, new: false },
-	{ id: 5, text: 'Тон разговора', new: false },
-	{ id: 6, text: 'Завершение разговора', auto: true, mark: 92, new: false },
+	{ id: 0, zapros: 'Приветствие', text: 'Приветствие', auto: true, mark: 53, new: false },
+	{ id: 1, zapros: '', text: 'Прогрев', auto: false, new: false },
+	{ id: 2, zapros: '', text: 'Выяснение проблем', auto: false, new: false },
+	{ id: 3, zapros: '', text: 'Отработка возражений', auto: false, new: false },
+	{ id: 4, zapros: '', text: 'Предложение товаров по акции', auto: false, mark: 67, new: false },
+	{ id: 5, zapros: '', text: 'Тон разговора', new: false },
+	{ id: 6, zapros: 'Прощание', text: 'Завершение разговора', auto: true, mark: 92, new: false },
 ])
 const calcEdit = computed(() => {
 	return editMode.value ? true : false
@@ -56,10 +60,26 @@ const save = () => {
 	emit('save', name)
 	modelValue.value = false
 }
+
+const mystore = useLogic()
+const zapros = ref(false)
+const elem = ref()
+const toggleZapros = (el: any) => {
+	elem.value = el
+	zapros.value = !zapros.value
+}
+const setZapros = () => {
+	elem.value.zapros = mystore.activeLogic.label
+	zapros.value = false
+}
+const removeZapros = (el: any) => {
+	el.zapros = ''
+	el.auto = false
+}
 </script>
 
 <template lang="pug">
-q-dialog(v-model="modelValue")
+q-dialog.rel(v-model="modelValue")
 	q-card(class="edit" v-if="props.new")
 		q-card-section.row.items-start.q-pb-none
 			div
@@ -80,7 +100,9 @@ q-dialog(v-model="modelValue")
 								q-avatar(text-color="black") {{index + 1}}
 							q-item-section
 								q-item-label(contenteditable) {{ item.text }}
-								.text-caption(v-if="item.auto") AUTO
+								.text-caption(v-if="item.auto")
+									q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
+									span AUTO
 							q-item-section(side)
 								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm") 
 									q-menu
@@ -106,60 +128,72 @@ q-dialog(v-model="modelValue")
 
 
 	q-card(:class="{edit: editMode}" v-else)
-		q-card-section.row.items-start.q-pb-none
-			div
-				.text-h6(:contenteditable="calcEdit") {{ props.anketa.anketa }}
-				.descr(:contenteditable="calcEdit") {{props.anketa.descr}}
-			q-space
-			q-btn(icon="mdi-close" flat round dense v-close-popup)
-
 		q-card-section
-			.row.justify-between
-				.descr Создано: {{props.anketa.date}}
-				.descr Автор: {{props.anketa.author}}
+			q-card-section.row.items-start.q-pb-none
+				div
+					.text-h6(:contenteditable="calcEdit") {{ props.anketa.anketa }}
+					.descr(:contenteditable="calcEdit") {{props.anketa.descr}}
+				q-space
+				q-btn(icon="mdi-close" flat round dense v-close-popup)
 
+			q-card-section
+				.row.justify-between
+					.descr Создано: {{props.anketa.date}}
+					.descr Автор: {{props.anketa.author}}
+
+			q-card-section
+				q-scroll-area
+					component(:is="draggable" v-model="list" :disabled="!editMode" ghost-class="ghost" itemKey="item.id").q-mb-lg
+						template(#item="{ element, index }")
+							q-expansion-item()
+								template(v-slot:header)
+									q-item-section(avatar)
+										q-avatar(text-color="black") {{index + 1}}
+									q-item-section
+										q-item-label(:contenteditable="calcEdit") {{ element.text }}
+										.text-caption(v-if="element.auto")
+											q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
+											span AUTO
+
+									q-item-section(side v-if="editMode")
+										q-btn(flat round dense icon="mdi-trash-can-outline" size="sm")
+											q-menu
+												q-list
+													q-item.pink(clickable @click="del(index)" v-close-popup)
+														q-item-section Удалить
+								q-card-section
+									.grid
+										.condition
+											.text-weight-bold Условия
+											p(:contenteditable="calcEdit") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+										.request
+											q-checkbox.q-mr-md(v-model="element.auto" dense :disable="!editMode || !element.zapros.length")
+											label Запрос для автоматической оценки:
+												q-chip(:removable="editMode" v-if="element.zapros.length" @remove="removeZapros(element)" ) {{ element.zapros}}
+												q-btn(v-else flat color="primary" label="Выбрать" @click="toggleZapros(element)" :disable="!editMode" )
+
+			.row.justify-between.q-ma-sm(align="right")
+				template(v-if="!editMode")
+					q-btn(flat color="primary" label="Отмена" @click="close") 
+					q-btn(flat color="primary" label="Дублировать" @click="duble") 
+					q-btn(flat color="primary" label="Редактировать" @click="edit") 
+				template(v-else)
+					q-btn(flat color="primary" label="Отмена" @click="edit") 
+					q-btn(flat color="primary" label="Добавить вопрос" @click="add") 
+					q-btn(flat color="primary" label="Сохранить" @click="edit") 
+
+q-dialog(v-model="zapros")
+	q-card.dop
 		q-card-section
-			q-scroll-area
-				component(:is="draggable" v-model="list" :disabled="!editMode" ghost-class="ghost" itemKey="item.id").q-mb-lg
-					template(#item="{ element, index }")
-						q-expansion-item()
-							template(v-slot:header)
-								q-item-section(avatar)
-									q-avatar(text-color="black") {{index + 1}}
-								q-item-section
-									q-item-label(:contenteditable="calcEdit") {{ element.text }}
-								q-item-section(side v-if="editMode")
-									q-btn(flat round dense icon="mdi-trash-can-outline" size="sm")
-										q-menu
-											q-list
-												q-item.pink(clickable @click="del(index)" v-close-popup)
-													q-item-section Удалить
-							q-card-section
-								.grid
-									.condition
-										.text-weight-bold Условия
-										p(:contenteditable="calcEdit") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
-									.request(v-if="element.auto && !element.new")
-										q-checkbox.q-mr-md(v-model="rec" dense v-if="editMode")
-										label Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
-									.request(v-if="element.new")
-										q-checkbox(v-model="rec" dense) Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
-
-		.row.justify-between.q-ma-sm(align="right")
-			template(v-if="!editMode")
-				q-btn(flat color="primary" label="Отмена" @click="close") 
-				q-btn(flat color="primary" label="Дублировать" @click="duble") 
-				q-btn(flat color="primary" label="Редактировать" @click="edit") 
-			template(v-else)
-				q-btn(flat color="primary" label="Отмена" @click="edit") 
-				q-btn(flat color="primary" label="Добавить вопрос" @click="add") 
-				q-btn(flat color="primary" label="Сохранить" @click="edit") 
-
+			LogicList()
+		q-card-actions.q-ma-sm(align="right")
+			q-btn(flat color="primary" label="Отмена" v-close-popup) 
+			q-btn(flat color="primary" label="Выбрать" @click="setZapros")
 </template>
 
 <style scoped lang="scss">
 .q-card {
-	min-width: 600px;
+	min-width: 700px;
 }
 .edit {
 	outline: 3px solid red;
@@ -179,5 +213,9 @@ div > *[contenteditable='true'] {
 	opacity: 0.5;
 	background: #c8ebfb;
 	border: 1px solid $primary;
+}
+.q-card.dop {
+	width: 500px;
+	min-width: 500px;
 }
 </style>
