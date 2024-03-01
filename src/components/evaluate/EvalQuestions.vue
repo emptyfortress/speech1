@@ -19,7 +19,9 @@ q-list()
 				q-avatar(text-color="black") {{item.id + 1}}
 			q-item-section
 				q-item-label {{ item.text }}
-				.text-caption(v-if="item.auto") AUTO
+				.text-caption(v-if="item.auto")
+					q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
+					span AUTO
 			q-item-section(avatar side v-if="item.mark")
 				q-avatar(color="secondary" text-color="white" size="md" ) {{item.mark}}
 
