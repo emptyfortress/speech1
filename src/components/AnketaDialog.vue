@@ -20,7 +20,7 @@ const add = () => {
 		id: list.value.length,
 		text: 'Вопрос',
 		zapros: '',
-		auto: true,
+		auto: false,
 		mark: 0,
 		new: true,
 	}
@@ -31,7 +31,7 @@ const editMode = ref(false)
 const edit = () => {
 	editMode.value = !editMode.value
 }
-const list1 = ref([{ id: 0, text: 'Вопрос', auto: true, mark: 0, new: false }])
+const list1 = ref([{ id: 0, text: 'Вопрос', zapros: '', auto: false, mark: 0, new: false }])
 const list = ref([
 	{ id: 0, zapros: 'Приветствие', text: 'Приветствие', auto: true, mark: 53, new: false },
 	{ id: 1, zapros: '', text: 'Прогрев', auto: false, new: false },
@@ -93,34 +93,29 @@ q-dialog.rel(v-model="modelValue")
 				.descr Автор: -фио автора-
 		q-card-section
 			q-scroll-area
-				q-list
-					q-expansion-item(expand-separator v-for="(item, index) in list1" :key="item.id")
-						template(v-slot:header)
-							q-item-section(avatar)
-								q-avatar(text-color="black") {{index + 1}}
-							q-item-section
-								q-item-label(contenteditable) {{ item.text }}
-								.text-caption(v-if="item.auto")
-									q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
-									span AUTO
-							q-item-section(side)
-								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm") 
-									q-menu
-										q-list
-											q-item.pink(clickable @click="del1(index)" v-close-popup)
-												q-item-section Удалить
+				component(:is="draggable" v-model="list1" ghost-class="ghost" itemKey="item.id").q-mb-lg
+					template(#item="{ element, index }")
+						q-expansion-item()
+							template(v-slot:header)
+								q-item-section(avatar)
+									q-avatar(text-color="black") {{index + 1}}
+								q-item-section
+									q-item-label(contenteditable) {{ element.text }}
+									.text-caption(v-if="element.auto")
+										q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
+										span AUTO
 
+							q-card-section
+								.grid
+									.condition
+										.text-weight-bold Условия
+										p(contenteditable) Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+									.request
+										q-checkbox.q-mr-md(v-model="element.auto" dense :disable="!element.zapros.length")
+										label Запрос для автоматической оценки:
+											q-chip(removable v-if="element.zapros.length" @remove="removeZapros(element)" ) {{ element.zapros}}
+											q-btn(v-else flat color="primary" label="Выбрать" @click="toggleZapros(element)" )
 
-						q-card-section
-							.grid
-								.condition
-									.text-weight-bold Условия
-									p(contenteditable) Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
-								.request(v-if="item.auto && !item.new")
-									q-checkbox.q-mr-md(v-model="rec" dense) 
-									label Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
-								.request(v-if="item.new")
-									q-checkbox(v-model="rec" dense) Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
 		.row.justify-between.q-ma-sm(align="right")
 			q-btn(flat color="primary" label="Отмена" @click="close") 
 			q-btn(flat color="primary" label="Добавить вопрос" @click="add") 
