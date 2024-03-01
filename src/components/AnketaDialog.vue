@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
+import draggable from 'vuedraggable'
 const modelValue = defineModel()
 
 const props = defineProps<{
@@ -13,21 +14,21 @@ const duble = () => {
 const rec = ref(false)
 const add = () => {
 	let question = {
-		id: list.length,
+		id: list.value.length,
 		text: 'Вопрос',
 		auto: true,
 		mark: 0,
 		new: true,
 	}
-	props.new == true ? list1.push(question) : list.push(question)
+	props.new == true ? list1.value.push(question) : list.value.push(question)
 }
 
 const editMode = ref(false)
 const edit = () => {
 	editMode.value = !editMode.value
 }
-const list1 = reactive([{ id: 0, text: 'Вопрос', auto: true, mark: 0, new: false }])
-const list = reactive([
+const list1 = ref([{ id: 0, text: 'Вопрос', auto: true, mark: 0, new: false }])
+const list = ref([
 	{ id: 0, text: 'Приветствие', auto: true, mark: 53, new: false },
 	{ id: 1, text: 'Прогрев', auto: false, new: false },
 	{ id: 2, text: 'Выяснение проблем', auto: false, new: false },
@@ -40,10 +41,10 @@ const calcEdit = computed(() => {
 	return editMode.value ? true : false
 })
 const del = (idx: number) => {
-	list.splice(idx, 1)
+	list.value.splice(idx, 1)
 }
 const del1 = (idx: number) => {
-	list1.splice(idx, 1)
+	list1.value.splice(idx, 1)
 }
 const close = () => {
 	modelValue.value = false
@@ -119,38 +120,38 @@ q-dialog(v-model="modelValue")
 
 		q-card-section
 			q-scroll-area
-				q-list
-					q-expansion-item(expand-separator v-for="(item, index) in list" :key="item.id")
-						template(v-slot:header)
-							q-item-section(avatar)
-								q-avatar(text-color="black") {{index + 1}}
-							q-item-section
-								q-item-label(:contenteditable="calcEdit") {{ item.text }}
-								.text-caption(v-if="item.auto") AUTO
-							q-item-section(side v-if="editMode")
-								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm") 
-									q-menu
-										q-list
-											q-item.pink(clickable @click="del(index)" v-close-popup)
-												q-item-section Удалить
-
-						q-card-section
-							.grid
-								.condition
-									.text-weight-bold Условия
-									p(:contenteditable="calcEdit") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
-								.request(v-if="item.auto && !item.new")
-									q-checkbox.q-mr-md(v-model="rec" dense v-if="editMode") 
-									label Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
-								.request(v-if="item.new")
-									q-checkbox(v-model="rec" dense) Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
+				component(:is="draggable" v-model="list" :disabled="!editMode" ghost-class="ghost" itemKey="item.id").q-mb-lg
+					template(#item="{ element, index }")
+						q-expansion-item()
+							template(v-slot:header)
+								q-item-section(avatar)
+									q-avatar(text-color="black") {{index + 1}}
+								q-item-section
+									q-item-label(:contenteditable="calcEdit") {{ element.text }}
+								q-item-section(side v-if="editMode")
+									q-btn(flat round dense icon="mdi-trash-can-outline" size="sm")
+										q-menu
+											q-list
+												q-item.pink(clickable @click="del(index)" v-close-popup)
+													q-item-section Удалить
+							q-card-section
+								.grid
+									.condition
+										.text-weight-bold Условия
+										p(:contenteditable="calcEdit") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+									.request(v-if="element.auto && !element.new")
+										q-checkbox.q-mr-md(v-model="rec" dense v-if="editMode")
+										label Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
+									.request(v-if="element.new")
+										q-checkbox(v-model="rec" dense) Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
 
 		.row.justify-between.q-ma-sm(align="right")
 			template(v-if="!editMode")
+				q-btn(flat color="primary" label="Отмена" @click="close") 
 				q-btn(flat color="primary" label="Дублировать" @click="duble") 
 				q-btn(flat color="primary" label="Редактировать" @click="edit") 
 			template(v-else)
-				q-btn(flat color="primary" label="Отмена" @click="edit" v-if="!editMode") 
+				q-btn(flat color="primary" label="Отмена" @click="edit") 
 				q-btn(flat color="primary" label="Добавить вопрос" @click="add") 
 				q-btn(flat color="primary" label="Сохранить" @click="edit") 
 
@@ -173,5 +174,10 @@ q-dialog(v-model="modelValue")
 }
 div > *[contenteditable='true'] {
 	border-bottom: 1px dotted $primary;
+}
+.ghost {
+	opacity: 0.5;
+	background: #c8ebfb;
+	border: 1px solid $primary;
 }
 </style>
