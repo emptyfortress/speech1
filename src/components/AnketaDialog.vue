@@ -42,6 +42,9 @@ const calcEdit = computed(() => {
 const del = (idx: number) => {
 	list.splice(idx, 1)
 }
+const del1 = (idx: number) => {
+	list1.splice(idx, 1)
+}
 const close = () => {
 	modelValue.value = false
 	emit('cancel')
@@ -78,7 +81,12 @@ q-dialog(v-model="modelValue")
 								q-item-label(contenteditable) {{ item.text }}
 								.text-caption(v-if="item.auto") AUTO
 							q-item-section(side)
-								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm" @click.stop="del(index)") 
+								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm") 
+									q-menu
+										q-list
+											q-item.pink(clickable @click="del1(index)" v-close-popup)
+												q-item-section Удалить
+
 
 						q-card-section
 							.grid
@@ -120,7 +128,11 @@ q-dialog(v-model="modelValue")
 								q-item-label(:contenteditable="calcEdit") {{ item.text }}
 								.text-caption(v-if="item.auto") AUTO
 							q-item-section(side v-if="editMode")
-								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm" @click.stop="del(index)") 
+								q-btn(flat round dense icon="mdi-trash-can-outline" size="sm") 
+									q-menu
+										q-list
+											q-item.pink(clickable @click="del(index)" v-close-popup)
+												q-item-section Удалить
 
 						q-card-section
 							.grid
