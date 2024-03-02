@@ -5,6 +5,8 @@ type Anketa = {
 	date: String
 	status: String
 	author: String
+	supervisor?: String
+	mark?: Number
 }
 type Operator = {
 	id: number
@@ -17,12 +19,6 @@ type Operator = {
 	notgood: number
 	bad: number
 	date: string
-}
-type Mark = {
-	id: number
-	text: string
-	mark: number
-	read: boolean
 }
 interface Chip {
 	id: number

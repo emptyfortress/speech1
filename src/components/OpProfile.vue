@@ -38,10 +38,10 @@ q-page(padding)
 						q-td(:props="props")
 							q-badge(:color="calcColor(props.value)") {{props.value}}
 
-			q-tab-panel(name="records" )
+			q-tab-panel(name="records")
 				div records
 
-	DialogOperatorMarks(v-model="dialog" :mark="currMark")
+	DialogOperatorMarks(v-model="dialog" :anketa="currAnketa")
 </template>
 
 <script setup lang="ts">
@@ -52,8 +52,6 @@ import DialogOperatorMarks from '@/components/common/DialogOperatorMarks.vue'
 import type { QTableColumn } from 'quasar'
 
 const tab = ref('marks')
-// const current = ref(1)
-const dialog = ref(false)
 
 const cols: QTableColumn[] = [
 	{ name: 'date', label: 'Дата', field: 'date', sortable: true, align: 'left' },
@@ -75,19 +73,14 @@ const calcColor = (e: string) => {
 	else return 'primary'
 }
 
-const currMark = ref()
+const currAnketa = ref<Anketa>()
 
-const toggleDialog = (item: Mark) => {
-	currMark.value = item
+const dialog = ref(false)
+const toggleDialog = (evt: Event, row: Anketa) => {
+	console.log(row)
+	currAnketa.value = row
 	dialog.value = !dialog.value
 }
-
-const calcCat = computed(() => {
-	return marks.map((el) => el.text)
-})
-const calcSer = computed(() => {
-	return marks.map((el) => el.mark)
-})
 
 const series1 = [{ name: 'Оценки', data: [55, 57, 65, 70, 77, 80, 67] }]
 const chartOptionsSpark1 = {
