@@ -11,7 +11,7 @@ q-page(padding)
 				q-space
 				q-card.card
 					VueApexCharts(type="area" height="130px" :options="chartOptionsSpark1" :series="series1" )
-				q-space
+				// q-space
 				q-btn(label="Выйти" unelevated color="primary")
 			q-btn(color="white" round icon="mdi-camera" text-color="black" size="sm").photo
 		br
@@ -19,27 +19,24 @@ q-page(padding)
 		br
 		br
 		q-tabs(v-model="tab" dense active-color="primary" indicator-color="primary" align="left" )
-			q-tab(name="marks" label="Оценки")
+			q-tab(name="marks" label="Мои оценки")
 			q-tab(name="records" label="Мои записи")
 		q-separator
 
 		q-tab-panels(v-model="tab" animated)
 			q-tab-panel(name="marks")
-				// .mygrid
-				// 	.q-pt-lg
-				// 		q-list
-				// 			q-item(v-for="item in pagemarks" clickable  @click="toggleDialog(item)" :key="item.id" :class="{ 'text-weight-bold' : item.read == false }")
-				// 				q-item-section(avatar)
-				// 					q-icon(name="mdi-tooltip-check-outline" v-if="item.read")
-				// 					q-icon(name="mdi-tooltip-check" v-else)
-				// 				q-item-section
-				// 					q-item-label {{ item.text }}
-				// 				q-item-section
-				// 					q-item-label {{ item.supervisor }}
-				// 				q-item-section(side) {{ item.mark }}
-				// 		.flex.flex-center.q-ma-lg
-				// 			q-pagination(v-model="current" :max="2")
-
+				q-table(:columns="cols"
+					:rows="marks"
+					@row-click="toggleDialog"
+					:pagination="pagination"
+					row-key="id"
+					flat)
+					template(v-slot:body-cell-mark="props")
+						q-td(:props="props")
+							.mrk {{props.value}}
+					template(v-slot:body-cell-status="props")
+						q-td(:props="props")
+							q-badge(:color="calcColor(props.value)") {{props.value}}
 
 			q-tab-panel(name="records" )
 				div records
@@ -52,16 +49,34 @@ import { ref, computed } from 'vue'
 import { marks } from '@/stores/marks'
 import VueApexCharts from 'vue3-apexcharts'
 import DialogOperatorMarks from '@/components/common/DialogOperatorMarks.vue'
+import type { QTableColumn } from 'quasar'
 
 const tab = ref('marks')
-const current = ref(1)
+// const current = ref(1)
 const dialog = ref(false)
-const pagemarks = computed(() => {
-	return current.value == 1
-		? marks.filter((el: any) => el.id < 7)
-		: marks.filter((el: any) => el.id >= 7)
-})
+
+const cols: QTableColumn[] = [
+	{ name: 'date', label: 'Дата', field: 'date', sortable: true, align: 'left' },
+	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },
+	{ name: 'descr', label: 'Описание', field: 'descr', sortable: true, align: 'left' },
+	{ name: 'supervisor', label: 'Супервизор', field: 'supervisor', sortable: true, align: 'left' },
+	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
+	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
+]
+const pagination = {
+	rowsPerPage: 7,
+	sortBy: 'date',
+	descending: true,
+}
+
+const calcColor = (e: string) => {
+	if (e == 'Эскалация') return 'negative'
+	if (e == 'Завершено') return 'secondary'
+	else return 'primary'
+}
+
 const currMark = ref()
+
 const toggleDialog = (item: Mark) => {
 	currMark.value = item
 	dialog.value = !dialog.value
@@ -175,5 +190,10 @@ const chartOptionsSpark1 = {
 	padding-top: 0;
 	border-radius: 0 0 4px 4px;
 	font-size: 0.9rem;
+}
+.mrk {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-right: 0.5rem;
 }
 </style>
