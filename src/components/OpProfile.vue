@@ -9,6 +9,9 @@ q-page(padding)
 					.text-weight-bold Голомудько
 					.name Разубай Буранович
 				q-space
+				q-card.card
+					VueApexCharts(type="area" height="130px" :options="chartOptionsSpark1" :series="series1" )
+				q-space
 				q-btn(label="Выйти" unelevated color="primary")
 			q-btn(color="white" round icon="mdi-camera" text-color="black" size="sm").photo
 		br
@@ -22,20 +25,21 @@ q-page(padding)
 
 		q-tab-panels(v-model="tab" animated)
 			q-tab-panel(name="marks")
-				.mygrid
-					.q-pt-lg
-						q-list
-							q-item(v-for="item in pagemarks" clickable  @click="toggleDialog(item)" :key="item.id" :class="{ 'text-weight-bold' : item.read == false }")
-								q-item-section(avatar)
-									q-icon(name="mdi-tooltip-check-outline" v-if="item.read")
-									q-icon(name="mdi-tooltip-check" v-else)
-								q-item-section
-									q-item-label {{ item.text }}
-								q-item-section(side) {{ item.mark }}
-						.flex.flex-center.q-ma-lg
-							q-pagination(v-model="current" :max="2")
+				// .mygrid
+				// 	.q-pt-lg
+				// 		q-list
+				// 			q-item(v-for="item in pagemarks" clickable  @click="toggleDialog(item)" :key="item.id" :class="{ 'text-weight-bold' : item.read == false }")
+				// 				q-item-section(avatar)
+				// 					q-icon(name="mdi-tooltip-check-outline" v-if="item.read")
+				// 					q-icon(name="mdi-tooltip-check" v-else)
+				// 				q-item-section
+				// 					q-item-label {{ item.text }}
+				// 				q-item-section
+				// 					q-item-label {{ item.supervisor }}
+				// 				q-item-section(side) {{ item.mark }}
+				// 		.flex.flex-center.q-ma-lg
+				// 			q-pagination(v-model="current" :max="2")
 
-					VueApexCharts(type="area" height="340" :options="options" :series="series")
 
 			q-tab-panel(name="records" )
 				div records
@@ -70,31 +74,42 @@ const calcSer = computed(() => {
 	return marks.map((el) => el.mark)
 })
 
-const series = [{ name: 'Оценки', data: calcSer.value }]
-const options = {
-	xaxis: {
-		type: 'datetime',
-		categories: calcCat.value,
-	},
+const series1 = [{ name: 'Оценки', data: [55, 57, 65, 70, 77, 80, 67] }]
+const chartOptionsSpark1 = {
 	chart: {
 		type: 'area',
-		zoom: {
-			enabled: false,
+		height: 130,
+		sparkline: {
+			enabled: true,
 		},
-	},
-	dataLabels: {
-		enabled: true,
 	},
 	stroke: {
 		curve: 'smooth',
 	},
-	title: {
-		text: 'Оценки',
-		align: 'left',
+	fill: {
+		opacity: 0.3,
 	},
-	yais: {
-		opposite: true,
-		data: calcSer.value,
+	xaxis: {
+		crosshairs: {
+			width: 1,
+		},
+	},
+	yaxis: {
+		min: 0,
+	},
+	title: {
+		text: '64',
+		offsetX: 0,
+		style: {
+			fontSize: '24px',
+		},
+	},
+	subtitle: {
+		text: 'Средняя оценка',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
+		},
 	},
 }
 </script>
@@ -102,10 +117,11 @@ const options = {
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
 .huge {
-	height: 100px;
-	background: url(@/assets/img/abstract.jpg);
+	height: 150px;
+	// background: url(@/assets/img/abstract.jpg);
+	background: url(@/assets/img/city.webp);
 	background-size: cover;
-	background-position: 0 30%;
+	background-position: 0 40%;
 	position: relative;
 }
 .photo {
@@ -132,7 +148,7 @@ const options = {
 }
 .mygrid {
 	display: grid;
-	grid-template-columns: 1fr 2fr;
+	grid-template-columns: 1fr 1fr;
 	justify-content: start;
 	grid-column-gap: 3rem;
 	align-items: center;
