@@ -16,9 +16,9 @@ q-page(padding)
 					.mean.all
 						span 14
 						div Всего оценок
-				q-card.card
+				q-card.card.q-mr-md
 					component(:is="VueApexCharts" type="area" height="130px" :options="chartOptionsSpark1" :series="series1")
-				q-btn(label="Выйти" unelevated color="primary")
+				// q-btn(label="Выйти" unelevated color="primary")
 			q-btn(color="white" round icon="mdi-camera" text-color="black" size="sm").photo
 		br
 		br
