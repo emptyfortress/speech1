@@ -31,7 +31,7 @@ q-page(padding)
 
 		q-tab-panels(v-model="tab" animated)
 			q-tab-panel(name="marks")
-				q-table(:columns="cols"
+				q-table.table(:columns="cols"
 					:rows="marks"
 					@row-click="toggleDialog"
 					:pagination="pagination"
@@ -45,7 +45,7 @@ q-page(padding)
 							q-badge(:color="calcColor(props.value)") {{props.value}}
 
 			q-tab-panel(name="records")
-				OperRecordTable(:oper="oper")
+				OperRecordTable(:oper="oper" :private="true")
 
 	DialogOperatorMarks(v-model="dialog" :anketa="currAnketa")
 </template>
@@ -196,14 +196,6 @@ const chartOptionsSpark1 = {
 	gap: 1rem;
 	grid-column-gap: 2rem;
 }
-.q-tab-panels {
-	min-height: 500px;
-	box-shadow: $card-shadow;
-	padding: 1rem;
-	padding-top: 0;
-	border-radius: 0 0 4px 4px;
-	font-size: 0.9rem;
-}
 .mrk {
 	font-size: 1rem;
 	font-weight: 600;
@@ -225,5 +217,12 @@ const chartOptionsSpark1 = {
 	// background: transparent;
 	// box-shadow: none;
 	font-size: 0.95rem;
+}
+:deep(.q-tab-panels) {
+	background: transparent;
+}
+:deep(.q-tab-panel) {
+	padding-left: 0;
+	padding-right: 0;
 }
 </style>

@@ -115,7 +115,7 @@ q-page(padding)
 			q-tab-panel(name="history")
 				OperMarksTable(:oper="oper")
 			q-tab-panel(name="record")
-				OperRecordTable(:oper="oper")
+				OperRecordTable(:oper="oper" :private="false")
 
 	div(v-else) ...loading
 

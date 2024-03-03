@@ -5,7 +5,7 @@ const columns: QTableColumn[] = [
 	{ name: 'star', label: '', align: 'center', field: 'star', sortable: true },
 	{ name: 'date', label: 'Дата', field: 'date', sortable: true, align: 'left' },
 	{ name: 'client', label: 'Клиент', field: 'client', sortable: true, align: 'left' },
-	{ name: 'group', label: 'Группа', field: 'group', sortable: true, align: 'right' },
+	{ name: 'group', label: 'Группа', field: 'group', sortable: true, align: 'left' },
 	{ name: 'category', label: 'Категория', field: 'category', sortable: true, align: 'left' },
 	{ name: 'supervisor', label: 'Супервизор', field: 'supervisor', sortable: true, align: 'left' },
 	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { columns, rows } from '@/components/evaluate/data'
 import type { Ref } from 'vue'
 import { useStore } from '@/stores/store'
@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router'
 
 const props = defineProps<{
 	oper: Operator
+	private: Boolean
 }>()
 
 const router = useRouter()
@@ -41,17 +42,24 @@ const evaluate = () => {
 	let path = '/oper/' + props.oper.id + '/eval'
 	router.push(path)
 }
+const calcColumn = computed(() => {
+	return props.private ? columns.filter((el) => el.name !== 'star') : columns
+})
+const showEval = (mark: any) => {
+	if (mark == undefined && props.private == false) {
+		return true
+	} else return false
+}
 </script>
 
 <template lang="pug">
 div
-	q-table(:columns="columns"
+	q-table.table(:columns="calcColumn"
 		:rows="recRows"
 		:pagination="pagination"
 		:filter="filter"
 		rows-per-page-label="Строк на стр."
-		row-key="id"
-		).table
+		row-key="id")
 		template(v-slot:body="props")
 			q-tr.rel(:props="props" @click="select(props.row)")
 				q-td(auto-width key="star" :props="props")
@@ -66,8 +74,7 @@ div
 				q-td(key="anketa") {{ props.row.anketa }}
 				q-td.text-right(key="mark")
 					.q-mr-md(v-if="props.row.mark") {{ props.row.mark }}
-					q-btn(v-else flat color="primary" label="Оценить" @click.stop="evaluate" size="sm") 
-
+					q-btn(v-if="showEval(props.row.mark)" flat color="primary" label="Оценить" @click.stop="evaluate" size="sm" )
 				.myplayer(v-if="selected === props.row.id")
 					q-linear-progress(:value=".6" color="positive")
 					q-btn(flat round size="sm" @click.stop="setStar(props.row)")
