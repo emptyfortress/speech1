@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+const props = defineProps({
+	operator: {
+		type: Boolean,
+		default: false,
+	},
+})
 const list = reactive([
 	{ id: 0, text: 'Приветствие', auto: true, mark: 53 },
 	{ id: 1, text: 'Прогрев', auto: false },
@@ -30,13 +36,14 @@ q-list()
 				.condition
 					.text-weight-bold Условия
 					p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
-				.request(v-if="item.auto") Запрос для автоматической оценки: <span class="text-weight-bold">Запрос запросыч</span>
+				.request(v-if="item.auto") Запрос для автоматической оценки: <span class="text-weight-bold">Приветствие</span>
 				.request(v-else) Оценка:
-				q-input(filled type="number" dense v-model="item.mark")
+				q-input(filled type="number" dense v-model="item.mark" :disable="props.operator")
+
 	q-separator(space)
 	.total
 		.text-h6 Средний балл:
-		.text-h6 43
+		.text-h6 53
 
 </template>
 

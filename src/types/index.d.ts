@@ -4,7 +4,7 @@ type Anketa = {
 	descr: String
 	date: String
 	status: String
-	author: String
+	author?: String
 	supervisor?: String
 	mark?: Number
 }

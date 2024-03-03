@@ -9,9 +9,15 @@ q-page(padding)
 					.text-weight-bold Голомудько
 					.name Разубай Буранович
 				q-space
+				q-card.dash
+					.mean
+						span 2022-02-25
+						div Последняя оценка
+					.mean.all
+						span 14
+						div Всего оценок
 				q-card.card
-					VueApexCharts(type="area" height="130px" :options="chartOptionsSpark1" :series="series1" )
-				// q-space
+					component(:is="VueApexCharts" type="area" height="130px" :options="chartOptionsSpark1" :series="series1")
 				q-btn(label="Выйти" unelevated color="primary")
 			q-btn(color="white" round icon="mdi-camera" text-color="black" size="sm").photo
 		br
@@ -39,7 +45,7 @@ q-page(padding)
 							q-badge(:color="calcColor(props.value)") {{props.value}}
 
 			q-tab-panel(name="records")
-				div records
+				OperRecordTable(:oper="oper")
 
 	DialogOperatorMarks(v-model="dialog" :anketa="currAnketa")
 </template>
@@ -50,9 +56,22 @@ import { marks } from '@/stores/marks'
 import VueApexCharts from 'vue3-apexcharts'
 import DialogOperatorMarks from '@/components/common/DialogOperatorMarks.vue'
 import type { QTableColumn } from 'quasar'
+import OperRecordTable from './evaluate/OperRecordTable.vue'
 
 const tab = ref('marks')
 
+const oper = {
+	id: 0,
+	name: 'Екатерина',
+	group: 'Юрлица',
+	city: 'Москва',
+	total: 169,
+	percent: 9,
+	good: 15,
+	notgood: 47,
+	bad: 53,
+	date: '2022-12-14',
+}
 const cols: QTableColumn[] = [
 	{ name: 'date', label: 'Дата', field: 'date', sortable: true, align: 'left' },
 	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },
@@ -73,9 +92,10 @@ const calcColor = (e: string) => {
 	else return 'primary'
 }
 
-const currAnketa = ref<Anketa>()
+const currAnketa = ref<Anketa>(marks[0])
 
 const dialog = ref(false)
+
 const toggleDialog = (evt: Event, row: Anketa) => {
 	console.log(row)
 	currAnketa.value = row
@@ -147,7 +167,7 @@ const chartOptionsSpark1 = {
 	padding-left: 50px;
 	justify-content: flex-start;
 	align-items: flex-end;
-	gap: 2rem;
+	gap: 0.5rem;
 	font-size: 1.2rem;
 	.q-avatar {
 		width: 100px;
@@ -188,5 +208,22 @@ const chartOptionsSpark1 = {
 	font-size: 1rem;
 	font-weight: 600;
 	margin-right: 0.5rem;
+}
+.mean {
+	span {
+		font-size: 1.3rem;
+		font-weight: 600;
+		line-height: 92%;
+	}
+	&.all {
+		margin-top: 20px;
+	}
+}
+.dash {
+	padding: 0.7rem;
+	height: 130px;
+	// background: transparent;
+	// box-shadow: none;
+	font-size: 0.95rem;
 }
 </style>

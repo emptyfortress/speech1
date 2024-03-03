@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import EvalQuestions from '@/components/evaluate/EvalQuestions.vue'
+
 const props = defineProps<{ anketa: Anketa }>()
 
 const modelValue = defineModel()
@@ -13,12 +15,25 @@ q-dialog(v-model="modelValue")
 		q-card-section
 			.text-h6 {{ props.anketa.anketa }} - ({{ props.anketa.supervisor }})
 			.total
-				div {{ props.anketa.date}}
+				div {{ props.anketa.date}} - 13:05
 				.text-weight-bold Общая оценка - {{ props.anketa.mark }}
 			q-tabs(v-model="tab" dense active-color="primary" indicator-color="primary" align="left" )
 				q-tab(name="anketa" label="Анкета")
 				q-tab(name="records" label="Запись разговора")
 				q-tab(name="comments" label="Комментарии")
+
+			q-separator
+
+			q-tab-panels(v-model="tab" animated)
+				q-tab-panel(name="anketa")
+					q-scroll-area
+						EvalQuestions(operator)
+				q-tab-panel(name="records")
+					q-scroll-area
+						p recrord
+				q-tab-panel(name="comments")
+					q-scroll-area
+						p comments
 					
 		q-card-section
 			q-card-actions(align="right")
@@ -31,7 +46,9 @@ q-dialog(v-model="modelValue")
 
 <style scoped lang="scss">
 .q-card {
-	min-width: 700px;
+	min-width: 860px;
+	min-height: 90vh;
+	height: 90vh;
 }
 .total {
 	border-top: 1px solid #ccc;
@@ -48,5 +65,8 @@ q-dialog(v-model="modelValue")
 	&:hover {
 		text-decoration: underline;
 	}
+}
+.q-scrollarea {
+	height: 61vh;
 }
 </style>
