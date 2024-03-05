@@ -1,22 +1,3 @@
-<template lang="pug">
-.grid
-	q-card( v-for="trend in trends" :key="trend.id" @click="showDialog(trend.id)")
-		div(v-if="trend.id === 1" )
-			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark1" :series="series1")
-		div(v-if="trend.id === 2" )
-			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark2" :series="series2")
-		div(v-if="trend.id === 3" )
-			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark3" :series="series3")
-		div(v-if="trend.id === 4" )
-			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark4" :series="series4")
-
-q-dialog(v-model="dialog")
-	q-card(style="width: 900px; max-width: 80vw;")
-		q-btn(round color="negative" icon="mdi-close" @click="dialog = false").close
-		q-card-section
-			VueApexCharts(type="area" :options="computeOptions" :series="computeSeries")
-</template>
-
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
@@ -30,6 +11,7 @@ import {
 	chartOptionsSpark3,
 	chartOptionsSpark4,
 } from '@/stores/charts1'
+import { Vue3Marquee } from 'vue3-marquee'
 
 const trends = [
 	{ id: 1, label: 'Вызовы' },
@@ -81,14 +63,26 @@ const computeSeries = computed(() => {
 })
 </script>
 
+<template lang="pug">
+Vue3Marquee(:delay="4" pauseOnHover)
+	q-card( v-for="trend in trends" :key="trend.id" @click="showDialog(trend.id)")
+		div(v-if="trend.id === 1")
+			VueApexCharts(v-if="trend.id === 1" type="area" height="130px" :options="chartOptionsSpark1" :series="series1")
+		div(v-if="trend.id === 2" )
+			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark2" :series="series2")
+		div(v-if="trend.id === 3" )
+			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark3" :series="series3")
+		div(v-if="trend.id === 4" )
+			VueApexCharts(type="area" height="130px" :options="chartOptionsSpark4" :series="series4")
+
+q-dialog(v-model="dialog")
+	q-card(style="width: 900px; max-width: 80vw;")
+		q-btn(round color="negative" icon="mdi-close" @click="dialog = false").close
+		q-card-section
+			VueApexCharts(type="area" :options="computeOptions" :series="computeSeries")
+</template>
 <style scoped lang="scss">
-//@import '@/assets/css/colors.scss';
-.grid {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 1rem;
-	.q-card {
-		padding: 0.5rem 0 0 0;
-	}
+.q-card {
+	margin-right: 1rem;
 }
 </style>

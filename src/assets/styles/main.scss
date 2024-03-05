@@ -355,3 +355,8 @@ body.desktop .nohov .q-focus-helper {
 	font-size: 0.9rem;
 	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
 }
+.vue3-marquee.horizontal {
+	// height: 135px;
+	padding: 4px;
+	overflow: hidden;
+}

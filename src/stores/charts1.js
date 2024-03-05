@@ -164,13 +164,13 @@ const chartOptionsSpark1 = {
 			fontSize: '24px',
 		},
 	},
-	// subtitle: {
-	// 	text: 'Вызовы',
-	// 	offsetX: 0,
-	// 	style: {
-	// 		fontSize: '14px',
-	// 	},
-	// },
+	subtitle: {
+		text: 'Вызовы',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
+		},
+	},
 }
 
 const chartOptionsSpark2 = {
