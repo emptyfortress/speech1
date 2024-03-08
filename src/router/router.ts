@@ -21,6 +21,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
 		{
+			path: '/dash',
+			component: () => import('@/components/Layout.vue'),
+			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
+		},
+		{
 			path: '/operator',
 			component: () => import('@/components/OpProfile.vue'),
 			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },

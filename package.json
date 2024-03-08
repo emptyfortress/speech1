@@ -26,6 +26,7 @@
 		"vue-content-loader": "^2.0.1",
 		"vue-create-ripple": "^0.3.1",
 		"vue-router": "^4.2.0",
+		"vue-ts-responsive-grid-layout": "^1.2.9",
 		"vue-word-highlighter": "^1.0.4",
 		"vue3-apexcharts": "^1.4.1",
 		"vue3-click-away": "^1.2.4",
