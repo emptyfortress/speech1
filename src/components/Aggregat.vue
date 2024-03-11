@@ -26,26 +26,53 @@ const toggle = (item: any, el: any, index: number, ind: number) => {
 			.right {{ el.badge }}
 
 .list
-	.section Всего оценок
+	.section Анкеты
 	q-list(dense).q-mb-sm
 		q-item
 			q-item-section(side)
 				q-checkbox.reset(dense :model-value="false")
 			q-item-section
-				q-item-label меньше 10
-			.right 5
+				q-item-label Квартальная
+			.right 15
 		q-item
 			q-item-section(side)
 				q-checkbox.reset(dense :model-value="false")
 			q-item-section
-				q-item-label  от 10 до 30
-			.right 13
+				q-item-label По категориям
+			.right 4
 		q-item
 			q-item-section(side)
 				q-checkbox.reset(dense :model-value="false")
 			q-item-section
-				q-item-label  больше 30
+				q-item-label Выборочная
 			.right 9
+		q-item
+			q-item-section(side)
+				q-checkbox.reset(dense :model-value="false")
+			q-item-section
+				q-item-label Тестовая
+			.right 7
+// .list
+// 	.section Всего оценок
+// 	q-list(dense).q-mb-sm
+// 		q-item
+// 			q-item-section(side)
+// 				q-checkbox.reset(dense :model-value="false")
+// 			q-item-section
+// 				q-item-label меньше 10
+// 			.right 5
+// 		q-item
+// 			q-item-section(side)
+// 				q-checkbox.reset(dense :model-value="false")
+// 			q-item-section
+// 				q-item-label  от 10 до 30
+// 			.right 13
+// 		q-item
+// 			q-item-section(side)
+// 				q-checkbox.reset(dense :model-value="false")
+// 			q-item-section
+// 				q-item-label  больше 30
+// 			.right 9
 
 .list
 	.section Средняя оценка

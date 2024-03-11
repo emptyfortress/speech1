@@ -18,7 +18,6 @@ import { WordCloudChart } from 'chartjs-chart-wordcloud'
 import { onMounted } from 'vue'
 import { words } from '@/stores/cloud'
 import StackedChart from '@/components/common/StackedChart.vue'
-import { is } from 'quasar'
 // import Heat from '@/components/Heat.vue'
 
 Chart.register(...registerables)
@@ -44,10 +43,10 @@ onMounted(() => {
 })
 const isFullscreen = ref(false)
 
-const togg = () => {
-	isFullscreen.value = !isFullscreen.value
-}
-const toggleFull = (() => {
+// const togg = () => {
+// 	isFullscreen.value = !isFullscreen.value
+// }
+const toggleFull = () => {
 	const cloud = document.getElementById('tags')
 	if (isFullscreen.value === false) {
 		cloud.classList.add('full')
@@ -59,7 +58,7 @@ const toggleFull = (() => {
 		canvas.removeAttribute('style')
 		isFullscreen.value = false
 	}
-})
+}
 </script>
 
 <style scoped lang="scss">

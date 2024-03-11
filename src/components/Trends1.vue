@@ -81,6 +81,7 @@ q-dialog(v-model="dialog")
 		q-card-section
 			VueApexCharts(type="area" :options="computeOptions" :series="computeSeries")
 </template>
+
 <style scoped lang="scss">
 .q-card {
 	margin-right: 1rem;

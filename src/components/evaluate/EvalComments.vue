@@ -46,13 +46,15 @@ const add = () => {
 <template lang="pug">
 div
 	q-list(separator)
-		q-item(v-for="item in list" :key="item.id")
+		q-item(v-for="item in list" :key="item.id" :class="{red : item.id == 0}")
 			q-item-section(avatar top)
 				q-avatar(size="30px")
 					img(src="@/assets/img/user1.svg")
 			q-item-section
 				q-item-label(overline) {{ item.name }}
-				q-item-label {{ item.text}}
+				q-item-label
+					q-badge.q-mr-md(color="purple" v-if="item.id == 0") Эскалация
+					span {{ item.text}}
 			q-item-section(side top)
 				q-item-label(caption) {{ item.date}}
 
@@ -67,5 +69,8 @@ div
 .big {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+}
+.red {
+	color: red;
 }
 </style>

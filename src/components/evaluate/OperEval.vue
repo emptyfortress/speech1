@@ -55,7 +55,7 @@ q-page(padding)
 <style scoped lang="scss">
 .after {
 	position: relative;
-	background: $blue-grey-10;
+	background: $blue-grey-9;
 }
 .myplayer {
 	position: sticky;

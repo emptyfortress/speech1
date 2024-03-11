@@ -83,8 +83,8 @@ q-dialog.rel(v-model="modelValue")
 	q-card(class="edit" v-if="props.new")
 		q-card-section.row.items-start.q-pb-none
 			div
-				.text-h6(ref="anketaName" contenteditable) Название анкеты
-				.descr(contenteditable) Описание
+				.text-h6(ref="anketaName" :contenteditable="true") Название анкеты
+				.descr(:contenteditable="true") Описание
 			q-space
 			q-btn(icon="mdi-close" flat round dense v-close-popup)
 		q-card-section
@@ -100,16 +100,22 @@ q-dialog.rel(v-model="modelValue")
 								q-item-section(avatar)
 									q-avatar(text-color="black") {{index + 1}}
 								q-item-section
-									q-item-label(contenteditable) {{ element.text }}
+									q-item-label(:contenteditable="true") {{ element.text }}
 									.text-caption(v-if="element.auto")
 										q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
 										span AUTO
 
+								q-item-section(side)
+									q-btn(flat round dense icon="mdi-trash-can-outline" size="sm")
+										q-menu
+											q-list
+												q-item.pink(clickable @click="del1(index)" v-close-popup)
+													q-item-section Удалить
 							q-card-section
 								.grid
 									.condition
 										.text-weight-bold Условия
-										p(contenteditable) Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+										p(:contenteditable="true") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
 									.request
 										q-checkbox.q-mr-md(v-model="element.auto" dense :disable="!element.zapros.length")
 										label Запрос для автоматической оценки:
@@ -191,7 +197,7 @@ q-dialog(v-model="zapros")
 	min-width: 700px;
 }
 .edit {
-	outline: 3px solid red;
+	outline: 3px solid #00ff00;
 	-webkit-animation: shake-horizontal 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 	animation: shake-horizontal 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
@@ -203,6 +209,10 @@ q-dialog(v-model="zapros")
 }
 div > *[contenteditable='true'] {
 	border-bottom: 1px dotted $primary;
+	&:focus {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
 }
 .ghost {
 	opacity: 0.5;

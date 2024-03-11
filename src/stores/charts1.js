@@ -135,6 +135,43 @@ const chartOptions4 = {
 	colors: ['#21BA45'],
 }
 
+const chartOptionsSpark = {
+	chart: {
+		type: 'area',
+		height: 130,
+		sparkline: {
+			enabled: true,
+		},
+	},
+	stroke: {
+		curve: 'smooth',
+	},
+	fill: {
+		opacity: 0.3,
+	},
+	xaxis: {
+		crosshairs: {
+			width: 1,
+		},
+	},
+	yaxis: {
+		min: 0,
+	},
+	title: {
+		text: '64',
+		offsetX: 0,
+		style: {
+			fontSize: '24px',
+		},
+	},
+	subtitle: {
+		text: 'Средняя оценка',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
+		},
+	},
+}
 const chartOptionsSpark1 = {
 	chart: {
 		type: 'area',
@@ -398,6 +435,7 @@ export {
 	chartOptions2,
 	chartOptions3,
 	chartOptions4,
+	chartOptionsSpark,
 	chartOptionsSpark1,
 	chartOptionsSpark2,
 	chartOptionsSpark3,

@@ -7,6 +7,8 @@ import OperMarksTable from '@/components/evaluate/OperMarksTable.vue'
 import OperRecordTable from '@/components/evaluate/OperRecordTable.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
+// import { series } from '@/stores/operoptions'
+import { chartOptionsSpark, chartOptionsSpark1, chartOptionsSpark2 } from '@/stores/charts1'
 
 const route = useRoute()
 const router = useRouter()
@@ -22,64 +24,10 @@ const idx = computed(() => {
 	}
 	return 0
 })
-// const prev = () => {
-// 	if (idx.value == 0) return
-// 	const prevItem: Operator = opList.selectedOperators[idx.value - 1]
-// 	router.push(`/oper/${prevItem.id}`)
-// 	oper.value = prevItem
-// }
-// const next = () => {
-// 	if (idx.value == opList.selectedOperators.length - 1) return
-// 	const nextItem: Operator = opList.selectedOperators[idx.value + 1]
-// 	router.push(`/oper/${nextItem.id}`)
-// 	oper.value = nextItem
-// }
 const tabs = ref('history')
-const chartOptionsSpark1 = {
-	chart: {
-		type: 'area',
-		height: 120,
-		sparkline: {
-			enabled: true,
-		},
-	},
-	stroke: {
-		curve: 'smooth',
-	},
-	fill: {
-		opacity: 0.3,
-	},
-	xaxis: {
-		crosshairs: {
-			width: 1,
-		},
-	},
-	yaxis: {
-		min: 0,
-	},
-	title: {
-		text: '78',
-		offsetX: 0,
-		style: {
-			fontSize: '24px',
-		},
-	},
-	subtitle: {
-		text: 'Средний балл',
-		offsetX: 0,
-		style: {
-			fontSize: '14px',
-		},
-	},
-}
-const coolSeries = computed(() => {
-	return [
-		{
-			name: 'Eval',
-			data: randomArray(5, 46, 87),
-		},
-	]
-})
+const series = [{ name: 'Оценки', data: [60, 43, 65, 55, 77, 62, 67] }]
+const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
+const series2 = [{ name: 'АНТ', data: [60, 57, 65, 67, 72, 42, 68] }]
 </script>
 
 <template lang="pug">
@@ -96,16 +44,12 @@ q-page(padding)
 			.fio
 				.text-weight-bold Фамилия
 				.name {{ oper.name }}
-			q-card.dash
-				.mean
-					span 2022-02-25
-				div Последняя оценка 
-			q-card.dash
-				.mean
-					span 14
-				div Всего оценок
-			q-card.mean
-				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="coolSeries" )
+			q-card
+				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark1" :series="series1" )
+			q-card
+				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark2" :series="series2" )
+			q-card
+				component(:is="VueApexCharts" type="area" height="120px" :options="chartOptionsSpark" :series="series" )
 
 		q-tabs(v-model="tabs" align="left" active-color="primary")
 			q-tab(name="history" label="Оценки")
@@ -131,7 +75,7 @@ q-page(padding)
 }
 .huge {
 	display: grid;
-	grid-template-columns: auto 1.5fr 1fr 1fr 2fr;
+	grid-template-columns: auto 1.5fr 1fr 1fr 1fr;
 	gap: 0.5rem;
 	margin-top: 1rem;
 }

@@ -18,7 +18,9 @@ export const useDash = defineStore({
 	getters: {},
 	actions: {
 		addPanel(e: any) {
-			this.panels.push(e)
+			if (e.def) {
+				this.panels.unshift(e)
+			} else this.panels.push(e)
 		},
 	},
 })

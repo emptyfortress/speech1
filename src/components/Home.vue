@@ -16,6 +16,7 @@ interface Panel {
 	radius: number
 	flat: boolean
 	marg: boolean
+	def: boolean
 }
 const dash = useDash()
 
@@ -34,7 +35,8 @@ q-page
 	.container
 		q-tabs(v-model="tabs" active-color="primary")
 			q-tab(:name="panel.name" :label="panel.label" v-for="panel in dash.panels" :key="panel.id")
-			q-btn(flat round icon="mdi-plus" @click="toggleDialog" dense) 
+			q-btn.q-ml-xl(flat round icon="mdi-plus" @click="toggleDialog" dense) 
+			q-btn(flat round icon="mdi-pencil-outline" @click="toggleDialog" dense) 
 		q-tab-panels(v-model="tabs" animated)
 			q-tab-panel(name="home")
 				.row.justify-between.items-center

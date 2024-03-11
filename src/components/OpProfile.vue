@@ -1,28 +1,20 @@
 <template lang="pug">
 q-page(padding)
 	.container
-		.huge
-			.ava
+		.ava
+			.row.rel.items-center.q-gutter-x-sm
 				.q-avatar
 					img(src="@/assets/img/user1.svg")
 				div
 					.text-weight-bold Голомудько
 					.name Разубай Буранович
-				q-space
-				q-card.dash
-					.mean
-						span 2022-02-25
-						div Последняя оценка
-					.mean.all
-						span 14
-						div Всего оценок
-				q-card.card.q-mr-md
-					component(:is="VueApexCharts" type="area" height="130px" :options="chartOptionsSpark1" :series="series1")
-				// q-btn(label="Выйти" unelevated color="primary")
-			q-btn(color="white" round icon="mdi-camera" text-color="black" size="sm").photo
-		br
-		br
-		br
+				q-btn.photo(color="white" round icon="mdi-camera" text-color="black" size="sm" )
+			q-card.card
+				component(:is="VueApexCharts" type="area" height="130px" :options="chartOptionsSpark1" :series="series1")
+			q-card.card
+				component(:is="VueApexCharts" type="area" height="130px" :options="chartOptionsSpark2" :series="series2")
+			q-card.card
+				component(:is="VueApexCharts" type="area" height="130px" :options="chartOptionsSpark" :series="series")
 		br
 		q-tabs(v-model="tab" dense active-color="primary" indicator-color="primary" align="left" )
 			q-tab(name="marks" label="Мои оценки")
@@ -51,12 +43,13 @@ q-page(padding)
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { marks } from '@/stores/marks'
 import VueApexCharts from 'vue3-apexcharts'
 import DialogOperatorMarks from '@/components/common/DialogOperatorMarks.vue'
 import type { QTableColumn } from 'quasar'
 import OperRecordTable from './evaluate/OperRecordTable.vue'
+import { chartOptionsSpark, chartOptionsSpark1, chartOptionsSpark2 } from '@/stores/charts1'
 
 const tab = ref('marks')
 
@@ -97,78 +90,29 @@ const currAnketa = ref<Anketa>(marks[0])
 const dialog = ref(false)
 
 const toggleDialog = (evt: Event, row: Anketa) => {
-	console.log(row)
 	currAnketa.value = row
 	dialog.value = !dialog.value
 }
 
-const series1 = [{ name: 'Оценки', data: [55, 57, 65, 70, 77, 80, 67] }]
-const chartOptionsSpark1 = {
-	chart: {
-		type: 'area',
-		height: 130,
-		sparkline: {
-			enabled: true,
-		},
-	},
-	stroke: {
-		curve: 'smooth',
-	},
-	fill: {
-		opacity: 0.3,
-	},
-	xaxis: {
-		crosshairs: {
-			width: 1,
-		},
-	},
-	yaxis: {
-		min: 0,
-	},
-	title: {
-		text: '64',
-		offsetX: 0,
-		style: {
-			fontSize: '24px',
-		},
-	},
-	subtitle: {
-		text: 'Средняя оценка',
-		offsetX: 0,
-		style: {
-			fontSize: '14px',
-		},
-	},
-}
+const series = [{ name: 'Оценки', data: [60, 43, 65, 55, 77, 62, 67] }]
+const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
+const series2 = [{ name: 'АНТ', data: [60, 57, 65, 67, 72, 42, 68] }]
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
-.huge {
-	height: 150px;
-	// background: url(@/assets/img/abstract.jpg);
-	background: url(@/assets/img/city.webp);
-	background-size: cover;
-	background-position: 0 40%;
-	position: relative;
-}
 .photo {
 	position: absolute;
-	bottom: -70px;
-	left: 40px;
+	bottom: 0;
+	left: -5px;
 }
 .ava {
-	height: 100px;
-	width: 100%;
-	position: absolute;
-	bottom: -70px;
-	left: 0;
-	display: flex;
-	padding-left: 50px;
-	justify-content: flex-start;
-	align-items: flex-end;
-	gap: 0.5rem;
-	font-size: 1.2rem;
+	display: grid;
+	grid-template-columns: 420px 1fr 1fr 1fr;
+	justify-items: start;
+	align-items: center;
+	column-gap: 0.5rem;
+	font-size: 1.1rem;
 	.q-avatar {
 		width: 100px;
 		height: 100px;
