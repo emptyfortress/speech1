@@ -1231,4 +1231,38 @@ const records = [
 	},
 ]
 
-export { operators, records }
+const anketas = [
+	{
+		id: 0,
+		label: 'Квартальная',
+		descr: 'Для оценок раз в квартал',
+		date: '2022-04-25 18:11',
+		status: 'Активна',
+		author: 'Соловьев П.С.',
+	},
+	{
+		id: 1,
+		label: 'По категориям',
+		descr: 'Для оценок категорий',
+		date: '2022-04-25 18:11',
+		status: 'Активна',
+		author: 'Соловьев П.С.',
+	},
+	{
+		id: 2,
+		date: '2022-04-24 18:09',
+		status: 'Активна',
+		label: 'Выборочная',
+		descr: 'Разовые проверки',
+		author: 'Орлова Г.Н.',
+	},
+	{
+		id: 3,
+		date: '2022-05-27 18:09',
+		status: 'На утверждении',
+		label: 'Тестовая',
+		descr: 'Тест на устойчивость',
+		author: 'Орлова Г.Н.',
+	},
+]
+export { operators, records, anketas }

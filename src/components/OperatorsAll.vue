@@ -10,6 +10,8 @@ import ChipCalendar1 from '@/components/ChipCalendar1.vue'
 import MarkDialog from '@/components/MarkDialog.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
+import Chiplist from '@/components/common/Chiplist.vue'
+import { starredReports } from '@/stores/data'
 
 const opList = useOperatorList()
 const router = useRouter()
@@ -100,13 +102,23 @@ const coolSeries = (e: any) => {
 		},
 	]
 }
+const setup = ref(true)
 </script>
 
 <template lang="pug">
 q-page(padding)
 	.container
+		q-expansion-item(v-model="setup")
+			template(v-slot:header)
+				q-item-section.line(avatar)
+					q-avatar(icon="mdi-headset" flat)
+				q-item-section
+					.zag Операторы
+			q-card-section
+				Chiplist(:chips="starredReports" :multiple="false" :tooltip="false")
+
 		.header
-			q-icon(name="mdi-headset")
+			q-icon(name="mdi-headset" )
 			.zag Операторы
 			q-space
 			ChipCalendar1()

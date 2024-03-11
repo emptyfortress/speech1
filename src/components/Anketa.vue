@@ -2,51 +2,19 @@
 import { ref } from 'vue'
 import type { QTableColumn } from 'quasar'
 import AnketaDialog from '@/components/AnketaDialog.vue'
+import { anketas } from '@/stores/operators'
 
 const panel = ref(true)
 
 const cols: QTableColumn[] = [
-	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },
+	{ name: 'label', label: 'Анкета', field: 'label', sortable: true, align: 'left' },
 	{ name: 'descr', label: 'Описание', field: 'descr', sortable: true, align: 'left' },
 	{ name: 'date', label: 'Дата создания', field: 'date', sortable: true, align: 'left' },
 	{ name: 'author', label: 'Создал', field: 'author', sortable: true, align: 'left' },
 	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
 	{ name: 'action', label: '', field: 'action', sortable: false, align: 'right' },
 ]
-const rows = ref<Anketa[]>([
-	{
-		id: 0,
-		anketa: 'Квартальная',
-		descr: 'Для оценок раз в квартал',
-		date: '2022-04-25 18:11',
-		status: 'Активна',
-		author: 'Соловьев П.С.',
-	},
-	{
-		id: 1,
-		anketa: 'По категориям',
-		descr: 'Для оценок категорий',
-		date: '2022-04-25 18:11',
-		status: 'Активна',
-		author: 'Соловьев П.С.',
-	},
-	{
-		id: 2,
-		date: '2022-04-24 18:09',
-		status: 'Активна',
-		anketa: 'Выборочная',
-		descr: 'Разовые проверки',
-		author: 'Орлова Г.Н.',
-	},
-	{
-		id: 3,
-		date: '2022-05-27 18:09',
-		status: 'На утверждении',
-		anketa: 'Тестовая',
-		descr: 'Тест на устойчивость',
-		author: 'Орлова Г.Н.',
-	},
-])
+const rows = ref<Anketa[]>(anketas)
 const dialog = ref(false)
 
 const current = ref<Anketa>(rows.value[0])
