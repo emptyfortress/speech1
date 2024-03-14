@@ -12,7 +12,7 @@ export const useCat = defineStore({
 		cat: [
 			{
 				id: '0',
-				label: 'Дерево категорий',
+				label: 'Все',
 				header: 'root',
 				level: 0,
 				breads: [],
