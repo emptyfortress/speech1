@@ -2,6 +2,7 @@ const marks = [
 	{
 		id: 0,
 		anketa: 'Квартальная',
+		selected: false,
 		descr: 'Для квартальных оценок',
 		date: '2023-12-20',
 		supervisor: 'Орлов П.С',
@@ -11,6 +12,7 @@ const marks = [
 	{
 		id: 1,
 		anketa: 'По категориям',
+		selected: false,
 		descr: 'Для оценок категорий',
 		date: '2023-11-20',
 		supervisor: 'Серегин В.В.',
@@ -20,6 +22,7 @@ const marks = [
 	{
 		id: 2,
 		anketa: 'Выборочная',
+		selected: false,
 		descr: 'Разовые проверки',
 		date: '2023-10-20',
 		supervisor: 'Орлов П.С',
@@ -29,6 +32,7 @@ const marks = [
 	{
 		id: 3,
 		anketa: 'По категориям',
+		selected: false,
 		descr: 'Для оценок категорий',
 		date: '2023-09-20',
 		supervisor: 'Серегин В.В.',
@@ -38,6 +42,7 @@ const marks = [
 	{
 		id: 4,
 		anketa: 'По категориям',
+		selected: false,
 		descr: 'Для оценок категорий',
 		date: '2023-08-20',
 		supervisor: 'Орлов П.С',
@@ -47,6 +52,7 @@ const marks = [
 	{
 		id: 5,
 		anketa: 'Квартальная',
+		selected: false,
 		descr: 'Для квартальных оценок',
 		date: '2023-07-20',
 		supervisor: 'Воробьев Г.А.',
@@ -56,6 +62,7 @@ const marks = [
 	{
 		id: 6,
 		anketa: 'Выборочная',
+		selected: false,
 		descr: 'Разовые проверки',
 		date: '2023-06-20',
 		supervisor: 'Орлов П.С',
@@ -65,6 +72,7 @@ const marks = [
 	{
 		id: 7,
 		anketa: 'Квартальная',
+		selected: false,
 		descr: 'Для квартальных оценок',
 		date: '2023-05-20',
 		supervisor: 'Орлов П.С',
@@ -74,6 +82,7 @@ const marks = [
 	{
 		id: 8,
 		anketa: 'По категориям',
+		selected: false,
 		descr: 'Для оценок категорий',
 		date: '2023-04-20',
 		supervisor: 'Воробьев Г.А.',
@@ -83,6 +92,7 @@ const marks = [
 	{
 		id: 9,
 		anketa: 'По категориям',
+		selected: false,
 		descr: 'Для оценок категорий',
 		date: '2023-03-20',
 		supervisor: 'Орлов П.С',
@@ -92,6 +102,7 @@ const marks = [
 	{
 		id: 10,
 		anketa: 'Квартальная',
+		selected: false,
 		descr: 'Для квартальных оценок',
 		date: '2023-02-20',
 		supervisor: 'Воробьев Г.А.',
@@ -101,6 +112,7 @@ const marks = [
 	{
 		id: 11,
 		anketa: 'Выборочная',
+		selected: false,
 		descr: 'Разовые проверки',
 		date: '2023-01-20',
 		supervisor: 'Воробьев Г.А.',
@@ -110,6 +122,7 @@ const marks = [
 	{
 		id: 12,
 		anketa: 'По категориям',
+		selected: false,
 		descr: 'Для оценок категорий',
 		date: '2022-12-20',
 		supervisor: 'Орлов П.С',
@@ -119,6 +132,7 @@ const marks = [
 	{
 		id: 13,
 		anketa: 'Выборочная',
+		selected: false,
 		descr: 'Разовые проверки',
 		date: '2022-11-20',
 		supervisor: 'Воробьев Г.А.',

@@ -10,3 +10,4 @@ declare module '*.vue' {
 // declare module '@globalhive/vuejs-tour'
 declare module 'v-onboarding'
 declare module 'vue-create-ripple'
+declare module 'vue-ts-responsive-grid-layout'

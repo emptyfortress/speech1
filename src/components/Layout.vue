@@ -24,8 +24,8 @@ const layout = reactive([
 	{ x: 0, y: 9, w: 2, h: 3, i: '18' },
 	{ x: 2, y: 6, w: 2, h: 2, i: '19' },
 ])
-const test = (e) => {
-	let temp = document.getElementsByClassName('vue-grid-item')
+const test = (e: number) => {
+	let temp = [...document.getElementsByClassName('vue-grid-item')]
 	temp.forEach((el) => el.classList.add('move'))
 	layout.splice(e, 1)
 }

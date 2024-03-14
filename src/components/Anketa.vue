@@ -34,6 +34,7 @@ const duble = () => {
 		id: rows.value.length,
 		date: '2024-02-05 18:11',
 		status: 'Подготовка',
+		selected: false,
 		anketa: current.value.anketa + '-copy',
 		descr: current.value.descr,
 		author: current.value.author,
@@ -54,6 +55,7 @@ const add = (e: string) => {
 		date: '2024-02-05 18:11',
 		status: 'Подготовка',
 		anketa: e,
+		selected: false,
 		descr: 'Описание',
 		author: 'Прокофьев А.С.',
 	}

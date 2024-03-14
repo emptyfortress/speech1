@@ -1,9 +1,10 @@
 type Anketa = {
 	id: Number
-	anketa: String
+	anketa?: String
 	descr: String
 	date: String
 	status: String
+	selected: Boolean
 	author?: String
 	supervisor?: String
 	mark?: Number

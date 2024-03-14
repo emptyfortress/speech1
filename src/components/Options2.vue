@@ -31,7 +31,7 @@ const setRange = () => {
 const cat = ref(['Жалобы'])
 const modal = ref(false)
 
-const setKeys = (e: String[]) => {
+const setKeys = (e: string[]) => {
 	cat.value = [...e]
 }
 </script>

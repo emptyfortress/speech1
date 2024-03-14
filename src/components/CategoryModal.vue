@@ -11,10 +11,6 @@ const action = () => {
 	emit('setTicked', cat.ticked)
 	modelValue.value = false
 }
-
-const setTicked = (e: String[]) => {
-	ticked.value = e
-}
 </script>
 
 <template lang="pug">
