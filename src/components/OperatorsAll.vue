@@ -11,7 +11,8 @@ import MarkDialog from '@/components/MarkDialog.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
 import Chiplist from '@/components/common/Chiplist.vue'
-import { starredReports } from '@/stores/data'
+import { anketas } from '@/stores/operators'
+import Options2 from '@/components/Options2.vue'
 
 const opList = useOperatorList()
 const router = useRouter()
@@ -114,14 +115,14 @@ q-page(padding)
 					q-avatar(icon="mdi-headset" flat)
 				q-item-section
 					.zag Операторы
-			q-card-section
-				Chiplist(:chips="starredReports" :multiple="false" :tooltip="false")
+			// q-card-section
+			.q-mt-sm
+				Chiplist(:chips="anketas" :multiple="false" :tooltip="false" :anketa="true" )
+					template(v-slot:header)
+						span.q-ml-sm Выберите анкету и настройте другие параметры для просмотра:
 
-		.header
-			q-icon(name="mdi-headset" )
-			.zag Операторы
-			q-space
-			ChipCalendar1()
+			Options2()
+
 		.grid
 			q-card.aggregat
 				q-input(dense v-model="query" placeholder="оператор" clearable hide-bottom-space @clear="query = ''")

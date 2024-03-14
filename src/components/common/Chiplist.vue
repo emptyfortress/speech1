@@ -25,7 +25,7 @@
 			clickable
 			@remove="removeChip(index)"
 			@click="click(item)").rel
-			.inf(@click.stop) ?
+			.inf(@click.stop v-if="!props.anketa" ) ?
 				q-menu(transition-show="jump-down" transition-hide="jump-up" anchor="bottom middle" self="top middle")
 					.infmenu
 						.zg {{ item.label }}
@@ -47,6 +47,7 @@ const props = defineProps<{
 	multiple: boolean
 	tooltip: boolean
 	repeat?: boolean
+	anketa?: boolean
 }>()
 
 const mystore = useStore()
