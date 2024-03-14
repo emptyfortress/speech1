@@ -19,7 +19,6 @@ const expandAll = () => {
 watchEffect(() => {
 	cat.setCatselect(selected.value)
 	cat.setTicked(ticked.value)
-	console.log(cat.ticked)
 })
 
 onMounted(() => {
@@ -28,10 +27,8 @@ onMounted(() => {
 			tree.value.expandAll()
 		}
 		cat.setCatselect(selected.value)
-		emit('setTicked', ticked.value)
 	})
 })
-const emit = defineEmits(['setTicked'])
 </script>
 
 <template lang="pug">

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CategTree from '@/components/CategTree.vue'
+import { useCat } from '@/stores/category1'
+
 const modelValue = defineModel()
 
-const emit = defineEmits(['setcategory'])
+const emit = defineEmits(['setTicked'])
+const cat = useCat()
 const action = () => {
-	emit('setcategory', ticked.value)
+	emit('setTicked', cat.ticked)
+	modelValue.value = false
 }
-const ticked = ref([])
 
 const setTicked = (e: String[]) => {
 	ticked.value = e
@@ -22,7 +25,7 @@ q-dialog(v-model="modelValue")
 			.text-h6 Выберите категории
 
 		q-card-section
-			CategTree(@setTicked="setTicked")
+			CategTree
 		q-card-actions.q-ma-md(align="right")
 			q-btn(flat color="primary" label="Отмена" v-close-popup) 
 			q-btn(unelevated color="primary" label="OK" @click="action") 

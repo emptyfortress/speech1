@@ -11,7 +11,7 @@ export const useCat = defineStore({
 	state: () => ({
 		cat: [
 			{
-				id: '0',
+				id: 'Все',
 				label: 'Все',
 				header: 'root',
 				level: 0,
@@ -19,7 +19,7 @@ export const useCat = defineStore({
 				childs: [],
 				children: [
 					{
-						id: '1',
+						id: 'Продажи',
 						label: 'Продажи',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -29,7 +29,7 @@ export const useCat = defineStore({
 						breads: ['Тема'],
 						children: [
 							{
-								id: '100',
+								id: 'Госсектор',
 								label: 'Госсектор',
 								breads: ['Тема', 'Продажи'],
 								level: 2,
@@ -40,7 +40,7 @@ export const useCat = defineStore({
 								childs: [],
 								children: [
 									{
-										id: '1001',
+										id: 'ТЭК',
 										label: 'ТЭК',
 										breads: ['Тема', 'Продажи', 'Госсектор'],
 										level: 3,
@@ -52,7 +52,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1002',
+										id: 'Гидроэнергетика',
 										label: 'Гидроэнергетика',
 										breads: ['Тема', 'Продажи', 'Госсектор'],
 										level: 3,
@@ -64,7 +64,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1003',
+										id: 'Торговля',
 										label: 'Торговля',
 										breads: ['Тема', 'Продажи', 'Госсектор'],
 										level: 3,
@@ -76,7 +76,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1004',
+										id: 'Здравоохранение',
 										label: 'Здравоохранение',
 										breads: ['Тема', 'Продажи', 'Госсектор'],
 										level: 3,
@@ -88,7 +88,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1005',
+										id: 'Металлургия',
 										label: 'Металлургия',
 										breads: ['Тема', 'Продажи', 'Госсектор'],
 										level: 3,
@@ -100,7 +100,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1006',
+										id: 'Сети связи',
 										label: 'Сети связи',
 										breads: ['Тема', 'Продажи', 'Госсектор'],
 										level: 3,
@@ -114,7 +114,7 @@ export const useCat = defineStore({
 								],
 							},
 							{
-								id: '101',
+								id: 'Корпоративные',
 								label: 'Корпоративные',
 								breads: ['Тема', 'Продажи'],
 								level: 2,
@@ -125,7 +125,7 @@ export const useCat = defineStore({
 								childs: [],
 								children: [
 									{
-										id: '1011',
+										id: 'Норникель',
 										label: 'Норникель',
 										breads: ['Тема', 'Продажи', 'Корпоративные'],
 										level: 3,
@@ -137,7 +137,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1012',
+										id: 'Сибнефть',
 										label: 'Сибнефть',
 										breads: ['Тема', 'Продажи', 'Корпоративные'],
 										level: 3,
@@ -149,7 +149,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1013',
+										id: 'Альфабанк',
 										label: 'Альфабанк',
 										breads: ['Тема', 'Продажи', 'Корпоративные'],
 										level: 3,
@@ -163,7 +163,7 @@ export const useCat = defineStore({
 								],
 							},
 							{
-								id: '102',
+								id: 'Малый бизнес',
 								label: 'Малый бизнес',
 								level: 2,
 								breads: ['Тема', 'Продажи'],
@@ -174,7 +174,7 @@ export const useCat = defineStore({
 								childs: [],
 								children: [
 									{
-										id: '1021',
+										id: 'Услуги населению',
 										label: 'Услуги населению',
 										breads: ['Тема', 'Продажи', 'Малый бизнес'],
 										level: 3,
@@ -186,7 +186,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1022',
+										id: 'Ремонт',
 										label: 'Ремонт',
 										breads: ['Тема', 'Продажи', 'Малый бизнес'],
 										level: 3,
@@ -198,7 +198,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1023',
+										id: 'Такси',
 										label: 'Такси',
 										breads: ['Тема', 'Продажи', 'Малый бизнес'],
 										level: 3,
@@ -210,7 +210,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '1024',
+										id: 'Образование',
 										label: 'Образование',
 										breads: ['Тема', 'Продажи', 'Малый бизнес'],
 										level: 3,
@@ -224,7 +224,7 @@ export const useCat = defineStore({
 								],
 							},
 							{
-								id: '103',
+								id: 'Население',
 								label: 'Население',
 								level: 2,
 								breads: ['Тема', 'Продажи'],
@@ -238,7 +238,7 @@ export const useCat = defineStore({
 						],
 					},
 					{
-						id: '2',
+						id: 'Сервис',
 						label: 'Сервис',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -249,7 +249,7 @@ export const useCat = defineStore({
 						childs: [],
 						children: [
 							{
-								id: '201',
+								id: 'Гарантийное обслуживание',
 								breads: ['Тема', 'Сервис'],
 								label: 'Гарантийное обслуживание',
 								level: 2,
@@ -260,7 +260,7 @@ export const useCat = defineStore({
 								childs: [],
 								children: [
 									{
-										id: '2011',
+										id: 'Дефект производителя',
 										label: 'Дефект производителя',
 										level: 3,
 										breads: ['Тема', 'Сервис', 'Гарантийное обслуживание'],
@@ -272,7 +272,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '2012',
+										id: 'Брак',
 										label: 'Брак',
 										level: 3,
 										breads: ['Тема', 'Сервис', 'Гарантийное обслуживание'],
@@ -284,7 +284,7 @@ export const useCat = defineStore({
 										children: [],
 									},
 									{
-										id: '2013',
+										id: 'Внешние повреждения',
 										label: 'Внешние повреждения',
 										level: 3,
 										breads: ['Тема', 'Сервис', 'Гарантийное обслуживание'],
@@ -298,7 +298,7 @@ export const useCat = defineStore({
 								],
 							},
 							{
-								id: '202',
+								id: 'Предпродажная подготовка',
 								breads: ['Тема', 'Сервис'],
 								label: 'Предпродажная подготовка',
 								level: 2,
@@ -310,7 +310,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '203',
+								id: 'Тюнинг',
 								breads: ['Тема', 'Сервис'],
 								label: 'Тюнинг',
 								level: 2,
@@ -318,7 +318,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '204',
+								id: 'Страховка',
 								breads: ['Тема', 'Сервис'],
 								label: 'Страховка',
 								level: 2,
@@ -328,7 +328,7 @@ export const useCat = defineStore({
 						],
 					},
 					{
-						id: '3',
+						id: 'Оплата',
 						label: 'Оплата',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -339,7 +339,7 @@ export const useCat = defineStore({
 						childs: [],
 						children: [
 							{
-								id: '202',
+								id: 'Нал',
 								label: 'Нал',
 								level: 2,
 								breads: ['Тема', 'Оплата'],
@@ -351,7 +351,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '203',
+								id: 'Безнал',
 								label: 'Безнал',
 								level: 2,
 								breads: ['Тема', 'Оплата'],
@@ -363,7 +363,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '204',
+								id: 'Крипто',
 								label: 'Крипто',
 								level: 2,
 								breads: ['Тема', 'Оплата'],
@@ -377,7 +377,7 @@ export const useCat = defineStore({
 						],
 					},
 					{
-						id: '8',
+						id: 'Регионы',
 						label: 'Регионы',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -388,7 +388,7 @@ export const useCat = defineStore({
 						childs: [],
 						children: [
 							{
-								id: '81',
+								id: 'Центр',
 								label: 'Центр',
 								level: 2,
 								breads: ['Тема', 'Регионы'],
@@ -400,7 +400,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '82',
+								id: 'Северо-Запад',
 								label: 'Северо-Запад',
 								level: 2,
 								breads: ['Тема', 'Регионы'],
@@ -412,7 +412,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '83',
+								id: 'Юг',
 								label: 'Юг',
 								level: 2,
 								breads: ['Тема', 'Регионы'],
@@ -425,7 +425,7 @@ export const useCat = defineStore({
 							},
 
 							{
-								id: '84',
+								id: 'Урал',
 								label: 'Урал',
 								level: 2,
 								breads: ['Тема', 'Регионы'],
@@ -437,7 +437,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '85',
+								id: 'Сибирь',
 								label: 'Сибирь',
 								level: 2,
 								breads: ['Тема', 'Регионы'],
@@ -449,7 +449,7 @@ export const useCat = defineStore({
 								children: [],
 							},
 							{
-								id: '86',
+								id: 'Дальний восток',
 								label: 'Дальний восток',
 								level: 2,
 								call: randomNumber(15, 60, 0),
@@ -463,7 +463,7 @@ export const useCat = defineStore({
 						],
 					},
 					{
-						id: '4',
+						id: 'Жалобы',
 						label: 'Жалобы',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -475,7 +475,7 @@ export const useCat = defineStore({
 						children: [],
 					},
 					{
-						id: '5',
+						id: 'Неисправности',
 						label: 'Неисправности',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -487,7 +487,7 @@ export const useCat = defineStore({
 						children: [],
 					},
 					{
-						id: '6',
+						id: 'Услуги',
 						label: 'Услуги',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -499,7 +499,7 @@ export const useCat = defineStore({
 						children: [],
 					},
 					{
-						id: '7',
+						id: 'Работа',
 						label: 'Работа',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -511,7 +511,7 @@ export const useCat = defineStore({
 						children: [],
 					},
 					{
-						id: '9',
+						id: 'Грубость',
 						label: 'Грубость',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -523,7 +523,7 @@ export const useCat = defineStore({
 						children: [],
 					},
 					{
-						id: '10',
+						id: 'Остальное',
 						label: 'Остальное',
 						level: 1,
 						call: randomNumber(50, 350, 0),
@@ -537,7 +537,7 @@ export const useCat = defineStore({
 				],
 			},
 		],
-		catselect: '1',
+		catselect: 'Все',
 		ticked: [],
 		selectedPodcategories: [],
 	}),
@@ -555,7 +555,7 @@ export const useCat = defineStore({
 		},
 		getItemChildren() {
 			let item = getNodeFromTree(this.cat[0], this.catselect)
-			return item.children
+			return item?.children
 		},
 		getItemPodcat() {
 			let item = getNodeFromTree(this.cat[0], this.catselect)

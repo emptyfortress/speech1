@@ -28,8 +28,12 @@ const setRange = () => {
 	let temp = Object.values(date.value)
 	perModel.value = temp[0] + ' -- ' + temp[1]
 }
-const cat = ref(['Все'])
+const cat = ref(['Жалобы'])
 const modal = ref(false)
+
+const setKeys = (e: String[]) => {
+	cat.value = [...e]
+}
 </script>
 
 <template lang="pug">
@@ -43,6 +47,7 @@ const modal = ref(false)
 			clearable
 			bg-color="white"
 			v-model="cat"
+			placeholder="fuck"
 			@click="modal = true"
 		)
 	MySelect(label="Период" v-model="perModel" :options="period")
@@ -55,14 +60,15 @@ const modal = ref(false)
 						q-btn(label="Cancel" color="primary" flat v-close-popup)
 						q-btn(label="OK" color="primary" flat v-close-popup @click="setRange")
 
-q-card-actions.q-px-none.q-mt-md
+q-card-actions.q-px-none.q-mt-md(align="right")
 	q-btn(flat color="primary" label="Сбросить").q-mr-sm
-	q-space
-	q-btn(color="primary" flat label="Добавить к сравнению")
-	q-btn(unelevated color="primary" icon="mdi-star-outline"  label="Сохранить" @click="dialog = !dialog").q-mr-sm
+	// q-space
+	// q-btn(color="primary" flat label="Добавить к сравнению")
+	// q-btn(unelevated color="primary" icon="mdi-star-outline"  label="Сохранить" @click="dialog = !dialog").q-mr-sm
 	q-btn(unelevated color="primary" icon="mdi-check-bold" label="Применить" @click="toggle")
 
-CategoryModal(v-model="modal")
+CategoryModal(v-model="modal" @setTicked="setKeys" )
+
 q-dialog(v-model="dialog" persistent)
 	q-card.save
 		q-card-section(class="row items-center q-pb-none")

@@ -32,11 +32,11 @@ const cat = useCat()
 const getLevel = computed(() => {
 	if (cat.getItem && cat.getItem.level) {
 		return cat.getItem.level
-	}
+	} else return 0
 })
 
 const levelCheck = computed(() => {
-	if (cat.getItem?.level! > 2 || cat.getItemChildren?.length! == 0) {
+	if (cat.getItem?.level! > 2 || cat.getItemChildren?.length == 0) {
 		return true
 	} else return false
 })
