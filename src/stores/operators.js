@@ -1234,6 +1234,7 @@ const records = [
 const anketas = [
 	{
 		id: 0,
+		selected: true,
 		label: 'Квартальная',
 		descr: 'Для оценок раз в квартал',
 		date: '2022-04-25 18:11',
@@ -1242,6 +1243,7 @@ const anketas = [
 	},
 	{
 		id: 1,
+		selected: false,
 		label: 'По категориям',
 		descr: 'Для оценок категорий',
 		date: '2022-04-25 18:11',
@@ -1250,6 +1252,7 @@ const anketas = [
 	},
 	{
 		id: 2,
+		selected: false,
 		date: '2022-04-24 18:09',
 		status: 'Активна',
 		label: 'Выборочная',
@@ -1258,6 +1261,7 @@ const anketas = [
 	},
 	{
 		id: 3,
+		selected: false,
 		date: '2022-05-27 18:09',
 		status: 'На утверждении',
 		label: 'Тестовая',

@@ -6,8 +6,6 @@ import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
 import { buildAggregate, filterArray } from '@/utils/utils'
 import { useRouter } from 'vue-router'
-import ChipCalendar1 from '@/components/ChipCalendar1.vue'
-import MarkDialog from '@/components/MarkDialog.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { randomArray } from '@/utils/utils'
 import Chiplist from '@/components/common/Chiplist.vue'
@@ -23,18 +21,17 @@ const opercolumns: QTableColumn[] = [
 	{ name: 'group', label: 'Группа', field: 'group', align: 'left', sortable: true },
 	{ name: 'percent', label: 'Всего оценок', field: 'percent', align: 'center', sortable: true },
 	{ name: 'good', label: 'Среднее', field: 'good', align: 'center', sortable: true },
-	{ name: 'graph', label: 'Тренд', field: 'graph', align: 'left', sortable: false },
+	{ name: 'graph', label: 'Выполнение чеклиста', field: 'graph', align: 'left', sortable: false },
 ]
 const pagination = ref({
 	sortBy: 'name' as keyof Row,
 	descending: false,
 	page: 1,
-	rowsPerPage: 10,
+	rowsPerPage: 12,
 })
 const goto = (evt: Event, row: any, index: number) => {
 	router.push(`/oper/${row.id}`)
 }
-const currentOperator = ref()
 const query = ref('')
 const table = ref()
 
@@ -57,39 +54,17 @@ watchEffect(() => {
 	let temp = buildAggregate(operators, ['city', 'group'])
 	opList.setAggregat(temp)
 })
-const markDialog = ref(false)
 
-const goToOp = () => {
-	markDialog.value = true
-	// if (opList.selectedOperators.length > 0) {
-	// 	const firstOp: Operator = opList.selectedOperators[0]
-	// 	router.push(`/oper/${firstOp.id}`)
-	// }
-}
 const sparkLine = {
 	chart: {
-		type: 'line',
-		height: 35,
+		type: 'bar',
+		height: 32,
 		sparkline: {
 			enabled: true,
 		},
 	},
-	stroke: {
-		width: 3,
-		curve: 'smooth',
-	},
 	tooltip: {
 		enabled: false,
-		x: {
-			show: false,
-		},
-		y: {
-			title: {
-				formatter: function () {
-					return ''
-				},
-			},
-		},
 		marker: {
 			show: false,
 		},
@@ -104,6 +79,7 @@ const coolSeries = (e: any) => {
 	]
 }
 const setup = ref(true)
+const data = ref(true)
 </script>
 
 <template lang="pug">
@@ -123,35 +99,31 @@ q-page(padding)
 
 			Options2()
 
-		.grid
-			q-card.aggregat
-				q-input(dense v-model="query" placeholder="оператор" clearable hide-bottom-space @clear="query = ''")
-					template(v-slot:prepend)
-						q-icon(name="mdi-magnify")
-				Aggregat
+		q-expansion-item(v-model="data")
+			template(v-slot:header)
+				q-item-section.line(avatar)
+					q-avatar(icon="mdi-phone-check" flat)
+				q-item-section
+					.zag Данные для выбранной анкеты и категорий
 
-			q-table.table(
-				ref="table"
-				:rows="filteredRows"
-				:pagination="pagination"
-				:columns="opercolumns"
-				selection="multiple"
-				v-model:selected="opList.selectedOperators"
-				@row-click="goto"
-				color="primary"
-				row-key="id")
-				template(v-slot:body-cell-graph="props")
-					q-td(:props="props")
-						component(:is="VueApexCharts" type="line" height="35" width="110" :options="sparkLine" :series="coolSeries(props.row)" )
-				// template(v-slot:body-cell-action="props")
-				// 	q-td.action(:props="props")
-				// 		q-btn(flat round icon="mdi-tooltip-check-outline" dense size="sm" color="primary" @click.stop="markOperator(props.row)")
-			div
-			div
-				transition(name="slide-top")
-					.mybuttons(v-show="opList.selectedOperators.length")
-						q-btn(color="primary" label="Оценить" @click="goToOp")
-	MarkDialog(v-model="markDialog" :operator="currentOperator")
+			.grid
+				q-card.aggregat
+					q-input(dense v-model="query" placeholder="оператор" clearable hide-bottom-space @clear="query = ''")
+						template(v-slot:prepend)
+							q-icon(name="mdi-magnify")
+					Aggregat
+
+				q-table.table(
+					ref="table"
+					:rows="filteredRows"
+					:pagination="pagination"
+					:columns="opercolumns"
+					@row-click="goto"
+					color="primary"
+					row-key="id")
+					template(v-slot:body-cell-graph="props")
+						q-td(:props="props")
+							component(:is="VueApexCharts" type="bar" height="32" width="100" :options="sparkLine" :series="coolSeries(props.row)")
 </template>
 
 <style scoped lang="scss">
