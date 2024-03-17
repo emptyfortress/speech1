@@ -6,11 +6,10 @@ import Aggregat from '@/components/Aggregat.vue'
 import { useOperatorList } from '@/stores/operatorList'
 import { buildAggregate, filterArray } from '@/utils/utils'
 import { useRouter } from 'vue-router'
-import VueApexCharts from 'vue3-apexcharts'
-import { randomArray } from '@/utils/utils'
 import Chiplist from '@/components/common/Chiplist.vue'
 import { anketas } from '@/stores/operators'
 import Options2 from '@/components/Options2.vue'
+import GistForTable from '@/components/graph/GistForTable.vue'
 
 const opList = useOperatorList()
 const router = useRouter()
@@ -20,8 +19,8 @@ const opercolumns: QTableColumn[] = [
 	{ name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
 	{ name: 'group', label: 'Группа', field: 'group', align: 'left', sortable: true },
 	{ name: 'percent', label: 'Всего оценок', field: 'percent', align: 'center', sortable: true },
-	{ name: 'good', label: 'Среднее', field: 'good', align: 'center', sortable: true },
 	{ name: 'graph', label: 'Выполнение чеклиста', field: 'graph', align: 'left', sortable: false },
+	{ name: 'good', label: 'Среднее', field: 'good', align: 'center', sortable: true },
 ]
 const pagination = ref({
 	sortBy: 'name' as keyof Row,
@@ -55,29 +54,6 @@ watchEffect(() => {
 	opList.setAggregat(temp)
 })
 
-const sparkLine = {
-	chart: {
-		type: 'bar',
-		height: 32,
-		sparkline: {
-			enabled: true,
-		},
-	},
-	tooltip: {
-		enabled: false,
-		marker: {
-			show: false,
-		},
-	},
-}
-const coolSeries = (e: any) => {
-	return [
-		{
-			name: 'Eval',
-			data: randomArray(5, e.bad, e.good),
-		},
-	]
-}
 const setup = ref(true)
 const data = ref(true)
 </script>
@@ -123,7 +99,7 @@ q-page(padding)
 					row-key="id")
 					template(v-slot:body-cell-graph="props")
 						q-td(:props="props")
-							component(:is="VueApexCharts" type="bar" height="32" width="100" :options="sparkLine" :series="coolSeries(props.row)")
+							GistForTable
 </template>
 
 <style scoped lang="scss">

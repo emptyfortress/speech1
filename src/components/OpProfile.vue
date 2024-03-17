@@ -36,6 +36,10 @@ q-page(padding)
 						q-td(:props="props")
 							q-badge(:color="calcColor(props.value)") {{props.value}}
 
+					template(v-slot:body-cell-graph="props")
+						q-td(:props="props")
+							GistForTable
+
 			q-tab-panel(name="records")
 				OperRecordTable(:oper="oper" :private="true")
 
@@ -50,6 +54,7 @@ import DialogOperatorMarks from '@/components/common/DialogOperatorMarks.vue'
 import type { QTableColumn } from 'quasar'
 import OperRecordTable from './evaluate/OperRecordTable.vue'
 import { chartOptionsSpark, chartOptionsSpark1, chartOptionsSpark2 } from '@/stores/charts1'
+import GistForTable from '@/components/graph/GistForTable.vue'
 
 const tab = ref('marks')
 
@@ -71,6 +76,7 @@ const cols: QTableColumn[] = [
 	{ name: 'descr', label: 'Описание', field: 'descr', sortable: true, align: 'left' },
 	{ name: 'supervisor', label: 'Супервизор', field: 'supervisor', sortable: true, align: 'left' },
 	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
+	{ name: 'graph', label: 'Выполнение чеклиста', field: 'graph', align: 'left', sortable: false },
 	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
 ]
 const pagination = {

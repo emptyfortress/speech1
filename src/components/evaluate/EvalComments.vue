@@ -13,16 +13,46 @@ const name = computed(() => {
 })
 const list = ref([
 	{
+		id: 2,
+		date: '2024-01-24 10:31',
+		name: 'Событие',
+		text: 'Старт процесса оценки',
+		type: 1,
+	},
+	{
+		id: 5,
+		date: '2024-01-24 10:31',
+		name: 'Событие',
+		text: 'Оценка отправлена оператору',
+		type: 1,
+	},
+	{
 		id: 0,
 		date: '2024-01-26 15:31',
 		name: name,
 		text: 'Я не согласен с оценкой. Никогда не грублю клиентам.',
+		type: 0,
 	},
 	{
 		id: 1,
 		date: '2024-01-27 20:37',
 		name: 'Супервизор',
 		text: 'Послушайте запись на отметке 1:34',
+		type: 0,
+	},
+	{
+		id: 3,
+		date: '2024-01-26 15:31',
+		name: name,
+		text: 'Да, вырвалось невольно',
+		type: 0,
+	},
+	{
+		id: 4,
+		date: '2024-01-26 15:31',
+		name: 'Событие',
+		text: 'Оператор согласен с оценкой. Завершение',
+		type: 1,
 	},
 ])
 const text = ref('')
@@ -36,6 +66,7 @@ const add = () => {
 			date: formattedString,
 			name: 'Супервизор',
 			text: text.value,
+			type: 0,
 		}
 		list.value.push(comment)
 		text.value = ''
@@ -48,8 +79,10 @@ div
 	q-list(separator)
 		q-item(v-for="item in list" :key="item.id" :class="{red : item.id == 0}")
 			q-item-section(avatar top)
-				q-avatar(size="30px")
+				q-avatar(size="30px" v-if="item.type == 0")
 					img(src="@/assets/img/user1.svg")
+				// q-icon(name="mdi-calendar-clock" v-else size="md")
+				q-icon(name="mdi-flag-checkered" v-else size="md")
 			q-item-section
 				q-item-label(overline) {{ item.name }}
 				q-item-label
