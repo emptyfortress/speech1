@@ -9,6 +9,8 @@ const props = defineProps<{ anketa: Anketa }>()
 const modelValue = defineModel()
 const tab = ref('anketa')
 const sound = ref(50)
+const agree = ref(false)
+const text = ref('')
 </script>
 
 <template lang="pug">
@@ -20,9 +22,21 @@ q-dialog(v-model="modelValue")
 			.total
 				div {{ props.anketa.date}} - 13:05
 				.text-weight-bold Общая оценка - {{ props.anketa.mark }}
+
+			.myplayer
+				q-linear-progress(:value=".6" color="positive")
+				.player
+					q-btn(round flat icon="mdi-rewind" @click.stop)
+					q-btn(round flat icon="mdi-pause" @click.stop)
+					q-btn(round flat icon="mdi-fast-forward" @click.stop)
+				.time 02:31
+				.row.items-center
+					q-icon(name="mdi-volume-medium" size="sm")
+					q-slider.slide(color="primary" v-model="sound")
+					q-icon(name="mdi-volume-high" size="sm")
 			q-tabs(v-model="tab" dense active-color="primary" indicator-color="primary" align="left" )
 				q-tab(name="anketa" label="Анкета")
-				q-tab(name="records" label="Запись разговора")
+				q-tab(name="records" label="Расшифровка разговора")
 				q-tab(name="comments" label="Комментарии")
 
 			q-separator
@@ -32,17 +46,6 @@ q-dialog(v-model="modelValue")
 					q-scroll-area
 						EvalQuestions(operator)
 				q-tab-panel(name="records")
-					.myplayer
-						q-linear-progress(:value=".6" color="positive")
-						.player
-							q-btn(round flat icon="mdi-rewind" @click.stop)
-							q-btn(round flat icon="mdi-pause" @click.stop)
-							q-btn(round flat icon="mdi-fast-forward" @click.stop)
-						.time 02:31
-						.row.items-center
-							q-icon(name="mdi-volume-medium" size="sm")
-							q-slider.slide(color="primary" v-model="sound")
-							q-icon(name="mdi-volume-high" size="sm")
 					q-scroll-area.dark
 						Speech
 				q-tab-panel(name="comments")
@@ -51,18 +54,25 @@ q-dialog(v-model="modelValue")
 					
 		q-card-section
 			q-card-actions(align="right")
-				q-btn(flat color="negative" label="Я не согласен!" v-close-popup) 
+				q-btn(flat color="negative" label="Я не согласен!" @click="agree = true") 
 				q-space
 				q-btn(unelevated color="primary" label="Хорошо" v-close-popup) 
 
+	q-dialog(v-model="agree")
+		q-card
+			q-card-section.row.items-center.q-pb-none
+				.text-h6 Ваши возражения
 
+			q-card-section
+				q-input(v-model="text" type="textarea" filled)
+			q-card-actions.q-ma-md(align="right")
+				q-btn(flat color="primary" label="Отмена" v-close-popup) 
+				q-btn(unelevated color="primary" label="Отправить" v-close-popup) 
 </template>
 
 <style scoped lang="scss">
 .q-card {
 	min-width: 860px;
-	min-height: 90vh;
-	height: 90vh;
 }
 .total {
 	border-top: 1px solid #ccc;
@@ -81,7 +91,7 @@ q-dialog(v-model="modelValue")
 	}
 }
 .q-scrollarea {
-	height: 61vh;
+	height: 51vh;
 }
 .myplayer {
 	position: relative;
