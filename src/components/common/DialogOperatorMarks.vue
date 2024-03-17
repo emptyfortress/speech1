@@ -64,7 +64,7 @@ q-dialog(v-model="modelValue")
 				.text-h6 Ваши возражения
 
 			q-card-section
-				q-input(v-model="text" type="textarea" filled)
+				q-input(v-model="text" type="textarea" filled autofocus)
 			q-card-actions.q-ma-md(align="right")
 				q-btn(flat color="primary" label="Отмена" v-close-popup) 
 				q-btn(unelevated color="primary" label="Отправить" v-close-popup) 
