@@ -15,7 +15,7 @@ const text = ref('')
 
 <template lang="pug">
 q-dialog(v-model="modelValue")
-	q-card()
+	q-card.maindialog
 		q-btn.close(round color="negative" icon="mdi-close" v-close-popup)
 		q-card-section
 			.text-h6 {{ props.anketa.anketa }} - ({{ props.anketa.supervisor }})
@@ -74,6 +74,9 @@ q-dialog(v-model="modelValue")
 .q-card {
 	min-width: 860px;
 }
+.maindialog {
+	height: 90vh;
+}
 .total {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
@@ -91,7 +94,7 @@ q-dialog(v-model="modelValue")
 	}
 }
 .q-scrollarea {
-	height: 51vh;
+	height: 55vh;
 }
 .myplayer {
 	position: relative;
@@ -133,6 +136,5 @@ q-dialog(v-model="modelValue")
 .dark {
 	margin-top: 1px;
 	background: $blue-grey-9;
-	height: calc(61vh - 50px);
 }
 </style>
