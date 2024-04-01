@@ -24,7 +24,7 @@ const layout = reactive([
 	{ x: 0, y: 9, w: 2, h: 3, i: '18' },
 	{ x: 2, y: 6, w: 2, h: 2, i: '19' },
 ])
-const test = (e: number) => {
+const remove = (e: number) => {
 	let temp = [...document.getElementsByClassName('vue-grid-item')]
 	temp.forEach((el) => el.classList.add('move'))
 	layout.splice(e, 1)
@@ -33,7 +33,7 @@ const editMode = ref(true)
 </script>
 
 <template lang="pug">
-grid-layout(
+component(:is="GridLayout"
 	:layout.sync="layout"
 	:col-num="12"
 	:row-height="30"
@@ -45,7 +45,7 @@ grid-layout(
 	:show-close-button="false"
 	:use-css-transforms="true")
 
-	grid-item(v-for="( item, index ) in layout"
+	component(:is="GridItem" v-for="( item, index ) in layout"
 		:enableEditMode="editMode"
 		:x="item.x"
 		:y="item.y"
@@ -57,7 +57,7 @@ grid-layout(
 		)
 		q-card
 			q-card-section {{item.i}}
-			q-icon(name="mdi-close" @click="test(index)" dense) 
+			q-icon(name="mdi-close" @click="remove(index)" dense) 
 </template>
 
 <style scoped lang="scss">
