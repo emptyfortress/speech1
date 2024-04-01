@@ -33,31 +33,33 @@ const editMode = ref(true)
 </script>
 
 <template lang="pug">
-component(:is="GridLayout"
-	:layout.sync="layout"
-	:col-num="12"
-	:row-height="30"
-	:is-draggable="true"
-	:is-resizable="true"
-	:is-mirrored="false"
-	:vertical-compact="true"
-	:margin="[10, 10]"
-	:show-close-button="false"
-	:use-css-transforms="true")
+q-page(padding)
+	.container
+		component(:is="GridLayout"
+			:layout.sync="layout"
+			:col-num="12"
+			:row-height="30"
+			:is-draggable="true"
+			:is-resizable="true"
+			:is-mirrored="false"
+			:vertical-compact="true"
+			:margin="[10, 10]"
+			:show-close-button="false"
+			:use-css-transforms="true")
 
-	component(:is="GridItem" v-for="( item, index ) in layout"
-		:enableEditMode="editMode"
-		:x="item.x"
-		:y="item.y"
-		:w="item.w"
-		:h="item.h"
-		:i="item.i"
-		:show-close-button="false"
-		:key="item.i"
-		)
-		q-card
-			q-card-section {{item.i}}
-			q-icon(name="mdi-close" @click="remove(index)" dense) 
+			component(:is="GridItem" v-for="( item, index ) in layout"
+				:enableEditMode="editMode"
+				:x="item.x"
+				:y="item.y"
+				:w="item.w"
+				:h="item.h"
+				:i="item.i"
+				:show-close-button="false"
+				:key="item.i"
+				)
+				q-card
+					q-card-section {{item.i}}
+					q-icon(name="mdi-close" @click="remove(index)" dense) 
 </template>
 
 <style scoped lang="scss">
