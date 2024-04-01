@@ -60,7 +60,8 @@ q-page(padding)
 				)
 				q-card
 					q-card-section {{item.i}}
-					q-icon(name="mdi-close" @click="remove(index)" dense) 
+					q-icon.close(name="mdi-close" @click="remove(index)" dense)
+					q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 </template>
 
 <style scoped lang="scss">
@@ -71,10 +72,16 @@ q-page(padding)
 	touch-action: none;
 	position: relative;
 }
-.q-icon {
+.close {
 	position: absolute;
 	right: 3px;
 	top: 3px;
+	cursor: pointer;
+}
+.resize {
+	position: absolute;
+	right: 3px;
+	bottom: 3px;
 	cursor: pointer;
 }
 .q-card {
