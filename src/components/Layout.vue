@@ -35,6 +35,7 @@ const editMode = ref(true)
 <template lang="pug">
 q-page(padding)
 	.container
+		q-btn.fab(round color="primary" icon="mdi-plus" @click="action" size="lg") 
 		component(:is="GridLayout"
 			:layout.sync="layout"
 			:col-num="12"
