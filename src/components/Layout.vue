@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { uid } from 'quasar'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 import SetupWidgetDialog from '@/components/dash/SetupWidgetDialog.vue'
@@ -38,8 +38,7 @@ q-page(padding)
 	.container
 		q-btn.fab(round color="primary" icon="mdi-plus" @click="add" size="lg") 
 
-		component(
-			:is="GridLayout"
+		component(:is="GridLayout"
 			:layout.sync="layout"
 			:col-num="12"
 			:row-height="30"
@@ -106,5 +105,9 @@ q-page(padding)
 }
 .fab {
 	z-index: 1;
+}
+p {
+	color: v-bind(color);
+	font-size: v-bind(size);
 }
 </style>
