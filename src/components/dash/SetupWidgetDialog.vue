@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 const width = computed(() => {
-	return '270px'
+	return 'width:' + props.width + 'px; height: ' + props.height + 'px;'
 })
 const modelValue = defineModel()
 
@@ -42,7 +42,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 					.div before
 				template(v-slot:after)
 					.right
-						q-card.test
+						q-card(:style="width")
 							p {{width}}
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" v-close-popup) 
@@ -65,8 +65,9 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	padding: 1rem;
 }
 .test {
-	color: v-bind('theme.color');
-	// width: v-bind(props.width);
+	// color: v-bind('theme.color');
+	width: v-bind(width);
+	color: v-bind(color);
 }
 
 .zg {

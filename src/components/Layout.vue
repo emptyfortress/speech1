@@ -66,7 +66,7 @@ q-page(padding)
 					q-icon.close(name="mdi-close" @click="remove(index)" dense)
 					q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-	SetupWidgetDialog(v-model="dialog")
+	SetupWidgetDialog(v-model="dialog" :width="width" :height="height")
 </template>
 
 <style scoped lang="scss">
