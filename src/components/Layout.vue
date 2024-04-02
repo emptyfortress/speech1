@@ -23,10 +23,10 @@ const add = () => {
 const dialog = ref(false)
 
 const setup = (e: string) => {
-	// dialog.value = !dialog.value
-	console.log(e)
-	console.log(cardRef.value)
-	console.log(width.value)
+	dialog.value = !dialog.value
+	// console.log(e)
+	// console.log(cardRef.value)
+	// console.log(width.value)
 }
 
 const cardRef = ref([])
