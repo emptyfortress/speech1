@@ -40,9 +40,12 @@ const hei = computed(() => {
 })
 
 const widgetSet = ref(false)
-const drop = () => {
+
+const drop = (evt: Event) => {
 	over.value = false
 	widgetSet.value = true
+	const item = evt.dataTransfer.getData('item')
+	console.log(item)
 }
 const over = ref(false)
 </script>
@@ -57,12 +60,14 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 		.content
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree()
+					WidgetTree( )
 				template(v-slot:after)
 					.right
-						q-card.preview(:style="width" @dragover.prevent="over = true" @dragleave="over = false" @drop="drop" :class="{over: over}" )
+						q-card.preview(:style="width" @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 							.cent
-								.empty Перетащите сюда виджет или его тип
+								.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
+								.notempty(v-else)
+									// .digit(v-if="")
 
 						transition(name="fade")
 							div(v-if="props.set || widgetSet")

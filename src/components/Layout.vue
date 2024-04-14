@@ -22,7 +22,7 @@ const add = () => {
 	layout.push(tmp)
 }
 
-const dialog = ref(false)
+const dialog = ref(true)
 
 const activeWidget = ref({})
 

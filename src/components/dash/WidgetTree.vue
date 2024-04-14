@@ -6,6 +6,13 @@ const treeData = ref(widgets)
 const expanded = ref(['ready', 'charts', 'tables'])
 
 const query = ref('')
+
+const startDrag = (evt, item) => {
+	console.log(item)
+	evt.dataTransfer.dropEffect = 'copy'
+	evt.dataTransfer.effectAllowed = 'copy'
+	evt.dataTransfer.setData('item', JSON.stringify(item))
+}
 </script>
 
 <template lang="pug">
@@ -20,10 +27,10 @@ q-tree(ref="tree"
 	dense
 	node-key="id"
 	v-model:expanded="expanded"
-	icon="mdi-chevron-right" )
+	icon="mdi-chevron-right")
 
 	template(v-slot:default-header="prop")
-		.wnode(:draggable="prop.node.drag")
+		.wnode(:draggable="prop.node.drag" @dragstart="startDrag($event, prop.node)")
 			q-icon.q-mr-sm(v-if="prop.node.icon" :name="prop.node.icon" size="18px")
 			label {{ prop.node.text }}
 </template>
