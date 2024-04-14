@@ -87,8 +87,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 								WidgetTabs
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" v-close-popup) 
-							q-btn(flat color="primary" label="Применить" v-close-popup) 
-							q-btn(unelevated color="primary" label="Сохранить" v-close-popup) 
+							q-btn(v-if="widgetSet" flat color="primary" label="Применить" v-close-popup) 
+							q-btn(v-if="widgetSet" unelevated color="primary" label="Сохранить" v-close-popup) 
 	
 </template>
 
