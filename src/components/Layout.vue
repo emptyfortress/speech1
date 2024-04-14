@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
+import type { Ref } from 'vue'
 import { uid } from 'quasar'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 import SetupWidgetDialog from '@/components/dash/SetupWidgetDialog.vue'
@@ -17,12 +18,12 @@ const editMode = ref(true)
 
 const date = new Date()
 const add = () => {
-	const tmp = { ...layout.at(-1) }
+	const tmp = { ...layout[layout.length - 1] }
 	tmp.i = uid()
 	layout.push(tmp)
 }
 
-const dialog = ref(true)
+const dialog = ref(false)
 
 const activeWidget = ref({})
 
@@ -31,7 +32,8 @@ const setup = (e: any) => {
 	dialog.value = !dialog.value
 }
 
-const cardRef = ref([])
+const cardRef: Ref<any> = ref([])
+
 const { width, height } = useElementSize(cardRef.value)
 </script>
 
@@ -109,8 +111,8 @@ q-page(padding)
 .fab {
 	z-index: 1;
 }
-p {
-	color: v-bind(color);
-	font-size: v-bind(size);
-}
+// p {
+// 	color: v-bind(color);
+// 	font-size: v-bind(size);
+// }
 </style>

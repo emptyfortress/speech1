@@ -7,11 +7,11 @@ const expanded = ref(['ready', 'charts', 'tables'])
 
 const query = ref('')
 
-const startDrag = (evt, item) => {
-	console.log(item)
-	evt.dataTransfer.dropEffect = 'copy'
-	evt.dataTransfer.effectAllowed = 'copy'
-	evt.dataTransfer.setData('item', JSON.stringify(item))
+const startDrag = (evt: DragEvent, item: Widget) => {
+	// console.log(item)
+	// evt.dataTransfer.dropEffect = 'copy'
+	// evt.dataTransfer.effectAllowed = 'copy'
+	evt.dataTransfer!.setData('item', JSON.stringify(item))
 }
 </script>
 

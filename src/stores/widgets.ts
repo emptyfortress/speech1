@@ -20,7 +20,7 @@ const widgets = [
 		drag: false,
 		children: [
 			{ id: '7', drag: true, type: 'digit', text: 'Число', children: [] },
-			{ id: '8', drag: true, type: 'chart', text: 'Sparkline', children: [] },
+			{ id: '8', drag: true, type: 'spark', text: 'Sparkline', children: [] },
 			{ id: '9', drag: true, type: 'chart', text: 'Area chart', children: [] },
 			{ id: '10', drag: true, type: 'chart', text: 'Bar chart', children: [] },
 			{ id: '11', drag: true, type: 'chart', text: 'Column chart', children: [] },

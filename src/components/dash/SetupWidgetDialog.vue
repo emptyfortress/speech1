@@ -2,6 +2,8 @@
 import { ref, computed } from 'vue'
 import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
+import VueApexCharts from 'vue3-apexcharts'
+import { chartOptionsSpark1 } from '@/stores/charts1'
 
 const props = defineProps({
 	width: {
@@ -31,6 +33,10 @@ const props = defineProps({
 const width = computed(() => {
 	return 'width:' + props.width + 'px; height: ' + props.height + 'px;'
 })
+const calcHeight = computed(() => {
+	return props.height + 'px'
+})
+
 const modelValue = defineModel()
 
 const splitterModel = ref(20)
@@ -41,13 +47,16 @@ const hei = computed(() => {
 
 const widgetSet = ref(false)
 
-const drop = (evt: Event) => {
+const dropWidget = ref()
+
+const drop = (evt: DragEvent) => {
 	over.value = false
 	widgetSet.value = true
-	const item = evt.dataTransfer.getData('item')
-	console.log(item)
+	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
 }
 const over = ref(false)
+
+const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 </script>
 
 <template lang="pug">
@@ -67,7 +76,11 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 							.cent
 								.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
 								.notempty(v-else)
-									// .digit(v-if="")
+									.digit(v-if="dropWidget.type == 'digit'" )
+										.dig 127
+										div Параметр
+									.spark(v-if="dropWidget.type == 'spark'" )
+										VueApexCharts(type="area" :height="calcHeight" :options="chartOptionsSpark1" :series="series1")
 
 						transition(name="fade")
 							div(v-if="props.set || widgetSet")
@@ -95,7 +108,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	padding: 1rem;
 }
 .preview {
-	padding: 0.5rem;
+	// padding: 0.5rem;
 	&.over {
 		background: #dcffe4;
 	}
@@ -111,6 +124,11 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	font-size: 0.8rem;
 	text-align: center;
 	color: #aaa;
+}
+.dig {
+	font-size: 2rem;
+	font-weight: 600;
+	line-height: 0.9;
 }
 
 .zg {

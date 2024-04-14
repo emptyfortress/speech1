@@ -1,3 +1,11 @@
+interface Widget {
+	id: string
+	text: string
+	icon?: string
+	drag?: boolean
+	type?: string
+	children?: Widget[]
+}
 type Anketa = {
 	id: Number
 	anketa?: String
