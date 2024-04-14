@@ -5,7 +5,9 @@ import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 import SetupWidgetDialog from '@/components/dash/SetupWidgetDialog.vue'
 import { useElementSize } from '@vueuse/core'
 
-const layout = reactive([{ x: 0, y: 0, w: 3, h: 3, i: 'el' }])
+const layout = reactive([
+	{ x: 0, y: 0, w: 3, h: 3, i: 'el', set: false, data: { chart: 0, table: 2 } },
+])
 const remove = (e: number) => {
 	let temp = [...document.getElementsByClassName('vue-grid-item')]
 	temp.forEach((el) => el.classList.add('move'))
@@ -20,13 +22,13 @@ const add = () => {
 	layout.push(tmp)
 }
 
-const dialog = ref(true)
+const dialog = ref(false)
 
-const setup = (e: string) => {
+const activeWidget = ref({})
+
+const setup = (e: any) => {
+	activeWidget.value = e
 	dialog.value = !dialog.value
-	// console.log(e)
-	// console.log(cardRef.value)
-	// console.log(width.value)
 }
 
 const cardRef = ref([])
@@ -48,7 +50,7 @@ q-page(padding)
 			:vertical-compact="true"
 			:margin="[10, 10]"
 			:show-close-button="false"
-			:use-css-transforms="true")
+			:use-css-transforms="true" )
 
 			component(:is="GridItem"
 				v-for="( item, index ) in layout"
@@ -62,11 +64,12 @@ q-page(padding)
 				:key="item.i")
 				q-card(ref="cardRef")
 					q-card-section
-						q-btn(flat color="primary" label="Настроить" @click="setup(item.i)" size="sm") 
+						q-btn(flat color="primary" label="Настроить" @click="setup(item)" size="sm") 
 					q-icon.close(name="mdi-close" @click="remove(index)" dense)
 					q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-	SetupWidgetDialog(v-model="dialog" :width="width" :height="height")
+	// SetupWidgetDialog(v-model="dialog" :width="width" :height="height")
+	SetupWidgetDialog(v-model="dialog" :width="width" :height="height" :set="activeWidget.set" :data="activeWidget.data" )
 </template>
 
 <style scoped lang="scss">

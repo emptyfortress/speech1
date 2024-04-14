@@ -14,6 +14,18 @@ const props = defineProps({
 		required: true,
 		default: 100,
 	},
+	set: {
+		type: Boolean,
+		default: false,
+	},
+	data: {
+		type: Object,
+		default: {
+			type: 'chart',
+			source: 'one',
+			size: 1,
+		},
+	},
 })
 
 const width = computed(() => {
@@ -53,11 +65,12 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 								.empty Перетащите сюда виджет или его тип
 
 						transition(name="fade")
-							div(v-if="widgetSet")
+							div(v-if="props.set || widgetSet")
 								WidgetTabs
-								q-card-actions(align="center")
-									q-btn(flat color="primary" label="Отмена" v-close-popup) 
-									q-btn(unelevated color="primary" label="Сохранить" v-close-popup) 
+						q-card-actions(align="center")
+							q-btn(flat color="primary" label="Отмена" v-close-popup) 
+							q-btn(flat color="primary" label="Применить" v-close-popup) 
+							q-btn(unelevated color="primary" label="Сохранить" v-close-popup) 
 	
 </template>
 
