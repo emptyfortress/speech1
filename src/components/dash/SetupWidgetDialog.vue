@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import WidgetTree from '@/components/dash/WidgetTree.vue'
+import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 
 const props = defineProps({
 	width: {
@@ -25,8 +26,11 @@ const splitterModel = ref(20)
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 115) + 'px;'
 })
+
+const widgetSet = ref(false)
 const drop = () => {
 	over.value = false
+	widgetSet.value = true
 }
 const over = ref(false)
 </script>
@@ -47,9 +51,14 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 						q-card.preview(:style="width" @dragover.prevent="over = true" @dragleave="over = false" @drop="drop" :class="{over: over}" )
 							.cent
 								.empty Перетащите сюда виджет или его тип
-						q-card-actions(align="center")
-							q-btn(flat color="primary" label="Отмена" v-close-popup) 
-							q-btn(unelevated color="primary" label="Отмена" v-close-popup) 
+
+						transition(name="fade")
+							div(v-if="widgetSet")
+								WidgetTabs
+								q-card-actions(align="center")
+									q-btn(flat color="primary" label="Отмена" v-close-popup) 
+									q-btn(unelevated color="primary" label="Сохранить" v-close-popup) 
+	
 </template>
 
 <style scoped lang="scss">
