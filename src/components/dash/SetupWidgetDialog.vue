@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import WidgetTree from '@/components/dash/WidgetTree.vue'
 
 const props = defineProps({
 	width: {
@@ -19,14 +20,15 @@ const width = computed(() => {
 })
 const modelValue = defineModel()
 
-const splitterModel = ref(25)
+const splitterModel = ref(20)
 
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 115) + 'px;'
 })
-const theme = {
-	color: 'red',
+const drop = () => {
+	over.value = false
 }
+const over = ref(false)
 </script>
 
 <template lang="pug">
@@ -39,11 +41,12 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 		.content
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					.div before
+					WidgetTree()
 				template(v-slot:after)
 					.right
-						q-card(:style="width")
-							p {{width}}
+						q-card.preview(:style="width" @dragover.prevent="over = true" @dragleave="over = false" @drop="drop" :class="{over: over}" )
+							.cent
+								.empty Перетащите сюда виджет или его тип
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" v-close-popup) 
 							q-btn(unelevated color="primary" label="Отмена" v-close-popup) 
@@ -64,10 +67,23 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 .right {
 	padding: 1rem;
 }
-.test {
-	// color: v-bind('theme.color');
-	width: v-bind(width);
-	color: v-bind(color);
+.preview {
+	padding: 0.5rem;
+	&.over {
+		background: #dcffe4;
+	}
+}
+.cent {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.empty {
+	font-size: 0.8rem;
+	text-align: center;
+	color: #aaa;
 }
 
 .zg {

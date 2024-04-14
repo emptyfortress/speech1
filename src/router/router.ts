@@ -26,6 +26,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
 		},
 		{
+			path: '/tr',
+			component: () => import('@/components/dash/WidgetTree.vue'),
+			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
+		},
+		{
 			path: '/operator',
 			component: () => import('@/components/OpProfile.vue'),
 			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },

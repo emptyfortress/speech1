@@ -20,7 +20,7 @@ const add = () => {
 	layout.push(tmp)
 }
 
-const dialog = ref(false)
+const dialog = ref(true)
 
 const setup = (e: string) => {
 	dialog.value = !dialog.value
