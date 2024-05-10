@@ -6,35 +6,32 @@ import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
 
 const props = defineProps({
-	width: {
-		type: Number,
-		required: true,
-		default: 100,
-	},
-	height: {
-		type: Number,
-		required: true,
-		default: 100,
-	},
-	set: {
-		type: Boolean,
-		default: false,
-	},
-	data: {
+	box: {
 		type: Object,
 		default: {
-			type: 'chart',
-			source: 'one',
-			size: 1,
+			x: 0,
+			y: 0,
+			w: 0,
+			h: 0,
+			i: 'el',
+			width: 150,
+			height: 50,
+			set: false,
 		},
 	},
 })
+// const props = defineProps({
+// 	width: Number,
+// 	height: Number,
+// 	set: Boolean,
+// })
 
-const width = computed(() => {
-	return 'width:' + props.width + 'px; height: ' + props.height + 'px;'
+const boxSize = computed(() => {
+	return 'width:' + props.box.width + 'px; height: ' + props.box.height + 'px;'
 })
+
 const calcHeight = computed(() => {
-	return props.height + 'px'
+	return props.box.height + 'px'
 })
 
 const modelValue = defineModel()
@@ -69,10 +66,10 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 		.content
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree( )
+					WidgetTree()
 				template(v-slot:after)
 					.right
-						q-card.preview(:style="width" @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
+						q-card.preview(:style="boxSize" @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 							.cent
 								.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
 								.notempty(v-else)
@@ -83,7 +80,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										VueApexCharts(type="area" :height="calcHeight" :options="chartOptionsSpark1" :series="series1")
 
 						transition(name="fade")
-							div(v-if="props.set || widgetSet")
+							div(v-if="props.box.set || widgetSet" )
 								WidgetTabs
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" v-close-popup) 
@@ -108,7 +105,6 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	padding: 1rem;
 }
 .preview {
-	// padding: 0.5rem;
 	&.over {
 		background: #dcffe4;
 	}
