@@ -13,8 +13,6 @@ const layout = reactive([
 		w: 3,
 		h: 3,
 		i: 'el',
-		width: 0,
-		height: 0,
 		set: false,
 		data: { chart: 0, table: 2 },
 	},
@@ -35,16 +33,7 @@ const add = () => {
 
 const dialog = ref(false)
 
-const activeWidget = ref({
-	x: 0,
-	y: 0,
-	w: 0,
-	h: 0,
-	i: 'el',
-	width: 150,
-	height: 150,
-	set: false,
-})
+const activeWidget = ref([])
 
 const cardRef: Ref<any> = ref([])
 
@@ -52,12 +41,8 @@ const width = ref(0)
 const height = ref(0)
 
 const setup = (e: any, index: number) => {
-	activeWidget.value = e
-	activeWidget.value.width = useElementSize(cardRef.value[index]).width.value
-	activeWidget.value.height = useElementSize(cardRef.value[index]).height.value
-	console.log(e)
-
-	// dialog.value = !dialog.value
+	activeWidget.value.push(e)
+	dialog.value = !dialog.value
 }
 </script>
 
@@ -80,27 +65,24 @@ q-page(padding)
 
 			component(:is="GridItem"
 				v-for="( item, index ) in layout"
-				:enableEditMode="editMode"
-				:x="item.x"
-				:y="item.y"
-				:w="item.w"
-				:h="item.h"
-				:i="item.i"
-				:show-close-button="false"
-				:key="item.i")
-				q-card(ref="cardRef")
-					q-card-section
-						q-btn(flat color="primary" label="Настроить" @click="setup(item, index)" size="sm") 
-					q-icon.close(name="mdi-close" @click="remove(index)" dense)
-					q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
+					:enableEditMode="editMode"
+					:x="item.x"
+					:y="item.y"
+					:w="item.w"
+					:h="item.h"
+					:i="item.i"
+					:show-close-button="false"
+					:key="item.i")
+					q-card(ref="cardRef")
+						q-card-section
+							q-btn(flat color="primary" label="Настроить" @click="setup(item, index)" size="sm") 
+						q-icon.close(name="mdi-close" @click="remove(index)" dense)
+						q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" )
+	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget")
 </template>
 
 <style scoped lang="scss">
-// .vue-grid-layout {
-// 	background: green;
-// }
 .move {
 	transition: 0.2s ease all;
 }

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
+import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 
 const props = defineProps({
 	box: {
@@ -11,28 +12,18 @@ const props = defineProps({
 		default: {
 			x: 0,
 			y: 0,
-			w: 0,
-			h: 0,
+			w: 3,
+			h: 3,
 			i: 'el',
-			width: 150,
-			height: 50,
-			set: true,
+			set: false,
+			data: { chart: 0, table: 2 },
 		},
 	},
 })
-// const props = defineProps({
-// 	width: Number,
-// 	height: Number,
-// 	set: Boolean,
+
+// const calcHeight = computed(() => {
+// 	return props.box.height + 'px'
 // })
-
-const boxSize = computed(() => {
-	return 'width:' + props.box.width + 'px; height: ' + props.box.height + 'px;'
-})
-
-const calcHeight = computed(() => {
-	return props.box.height + 'px'
-})
 
 const modelValue = defineModel()
 
@@ -64,12 +55,38 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 			q-icon(name="mdi-widgets-outline" size="26px")
 			span Конструктор виджетов
 		.content
+
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
 					WidgetTree()
 				template(v-slot:after)
 					.right
-						q-card.preview(:style="boxSize" @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
+						component(:is="GridLayout"
+							:layout.sync="props.box"
+							:col-num="12"
+							:row-height="30"
+							:is-draggable="true"
+							:is-resizable="true"
+							:is-mirrored="false"
+							:vertical-compact="true"
+							:margin="[10, 10]"
+							:show-close-button="false"
+							:use-css-transforms="true" )
+
+							component(:is="GridItem"
+								v-for="( item, index ) in props.box"
+									:x="item.x"
+									:y="item.y"
+									:w="item.w"
+									:h="item.h"
+									:i="item.i"
+									:show-close-button="false"
+									:key="item.i")
+									q-card(ref="cardRef")
+										q-card-section laksj
+										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
+
+						// q-card.preview(:style="boxSize" @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 							.cent
 								.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
 								.notempty(v-else)
@@ -142,5 +159,26 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	padding: 2px 2rem;
 	font-size: 1rem;
 	text-align: center;
+}
+
+.resize {
+	position: absolute;
+	right: 3px;
+	bottom: 3px;
+	cursor: pointer;
+}
+.q-card {
+	width: 100%;
+	height: 100%;
+	z-index: 1001;
+}
+:deep(.vue-grid-item) {
+	touch-action: none;
+	position: relative;
+}
+:deep(.vue-grid-item.vue-grid-placeholder) {
+	background: green !important;
+	opacity: 0.3;
+	z-index: -10;
 }
 </style>
