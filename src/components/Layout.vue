@@ -55,8 +55,9 @@ const setup = (e: any, index: number) => {
 	activeWidget.value = e
 	activeWidget.value.width = useElementSize(cardRef.value[index]).width.value
 	activeWidget.value.height = useElementSize(cardRef.value[index]).height.value
+	console.log(e)
 
-	dialog.value = !dialog.value
+	// dialog.value = !dialog.value
 }
 </script>
 
@@ -97,6 +98,9 @@ q-page(padding)
 </template>
 
 <style scoped lang="scss">
+// .vue-grid-layout {
+// 	background: green;
+// }
 .move {
 	transition: 0.2s ease all;
 }

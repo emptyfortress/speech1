@@ -16,7 +16,7 @@ const props = defineProps({
 			i: 'el',
 			width: 150,
 			height: 50,
-			set: false,
+			set: true,
 		},
 	},
 })
