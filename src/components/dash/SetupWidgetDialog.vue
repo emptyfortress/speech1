@@ -5,6 +5,7 @@ import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
+// import { useElementSize } from '@vueuse/core'
 
 const props = defineProps({
 	box: {
@@ -22,16 +23,20 @@ const props = defineProps({
 	width: Number,
 })
 
-// const calcHeight = computed(() => {
-// 	return props.box.height + 'px'
-// })
+const card = ref(null)
+// const { width, height } = useElementSize(card)
+
+const calcHeight = computed(() => {
+	const item = document.querySelector('.vue-grid-item')
+	return item.offsetHeight + 'px'
+})
 
 const calcWidth = computed(() => {
 	return 'width: ' + props.width + 'px;'
 })
 const modelValue = defineModel()
 
-const splitterModel = ref(20)
+const splitterModel = ref(16)
 
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 115) + 'px;'
@@ -52,6 +57,10 @@ const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 const cancel = () => {
 	modelValue.value = false
 }
+// const test = () => {
+// 	const item = document.querySelector('.vue-grid-item')
+// 	console.log(item.offsetHeight)
+// }
 </script>
 
 <template lang="pug">
@@ -65,7 +74,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree( )
+					WidgetTree()
 				template(v-slot:after)
 					.right(:style="calcWidth")
 						component(:is="GridLayout"
@@ -78,7 +87,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 							:vertical-compact="true"
 							:margin="[10, 10]"
 							:show-close-button="false"
-							:use-css-transforms="true" )
+							:use-css-transforms="true")
 
 							component(:is="GridItem"
 								v-for="( item, index ) in props.box"
@@ -97,8 +106,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 												.digit(v-if="dropWidget.type == 'digit'" )
 													.dig 127
 													div Параметр
-												.spark(v-if="dropWidget.type == 'spark'" )
-													VueApexCharts(type="area" :height="calcHeight" :options="chartOptionsSpark1" :series="series1")
+												.spark(v-if="dropWidget.type == 'chart'" )
+													VueApexCharts( type="area" :height="calcHeight" width="100%" :options="chartOptionsSpark1" :series="series1")
 
 						transition(name="fade")
 							div(v-if="props.box.set || widgetSet" )

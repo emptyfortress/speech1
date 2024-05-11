@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { widgets } from '@/stores/widgets'
 
 const treeData = ref(widgets)
-const expanded = ref(['ready', 'charts', 'tables'])
+const expanded = ref(['ready', 'types', 'data'])
 
 const query = ref('')
 
@@ -12,6 +12,7 @@ const startDrag = (evt: DragEvent, item: Widget) => {
 	// evt.dataTransfer.dropEffect = 'copy'
 	// evt.dataTransfer.effectAllowed = 'copy'
 	evt.dataTransfer!.setData('item', JSON.stringify(item))
+	console.log(item)
 }
 </script>
 

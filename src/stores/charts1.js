@@ -175,7 +175,7 @@ const chartOptionsSpark = {
 const chartOptionsSpark1 = {
 	chart: {
 		type: 'area',
-		height: 130,
+		// height: 130,
 		sparkline: {
 			enabled: true,
 		},
