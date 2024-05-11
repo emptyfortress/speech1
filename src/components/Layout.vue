@@ -6,7 +6,7 @@ import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 import SetupWidgetDialog from '@/components/dash/SetupWidgetDialog.vue'
 import { useElementSize } from '@vueuse/core'
 
-const layout = reactive([
+const layout: Widget[] = reactive([
 	{
 		x: 0,
 		y: 0,
@@ -26,21 +26,25 @@ const editMode = ref(true)
 
 const date = new Date()
 const add = () => {
-	const tmp = { ...layout[layout.length - 1] }
-	tmp.i = uid()
+	const tmp = {
+		x: layout.length * 3,
+		y: layout.length + 1, // puts it at the bottom
+		w: 3,
+		h: 3,
+		i: uid(),
+		set: false,
+	}
 	layout.push(tmp)
 }
 
 const dialog = ref(false)
 
-const activeWidget = ref([])
+const activeWidget = ref<Widget[]>([])
 
-const cardRef: Ref<any> = ref([])
+const grid = ref(null)
+const { width } = useElementSize(grid)
 
-const width = ref(0)
-const height = ref(0)
-
-const setup = (e: any, index: number) => {
+const setup = (e: Widget, index: number) => {
 	activeWidget.value.push(e)
 	dialog.value = !dialog.value
 }
@@ -52,6 +56,7 @@ q-page(padding)
 		q-btn.fab(round color="primary" icon="mdi-plus" @click="add" size="lg") 
 
 		component(:is="GridLayout"
+			ref="grid"
 			:layout.sync="layout"
 			:col-num="12"
 			:row-height="30"
@@ -73,13 +78,13 @@ q-page(padding)
 					:i="item.i"
 					:show-close-button="false"
 					:key="item.i")
-					q-card(ref="cardRef")
+					q-card
 						q-card-section
 							q-btn(flat color="primary" label="Настроить" @click="setup(item, index)" size="sm") 
 						q-icon.close(name="mdi-close" @click="remove(index)" dense)
 						q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget")
+	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width")
 </template>
 
 <style scoped lang="scss">
@@ -109,8 +114,8 @@ q-page(padding)
 }
 :deep(.vue-grid-item.vue-grid-placeholder) {
 	background: green !important;
-	opacity: 0.3;
-	z-index: -10;
+	opacity: 0.2;
+	z-index: -1;
 }
 :deep(.vue-draggable-dragging) {
 	z-index: 1000;

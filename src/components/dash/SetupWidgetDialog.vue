@@ -19,12 +19,16 @@ const props = defineProps({
 			data: { chart: 0, table: 2 },
 		},
 	},
+	width: Number,
 })
 
 // const calcHeight = computed(() => {
 // 	return props.box.height + 'px'
 // })
 
+const calcWidth = computed(() => {
+	return 'width: ' + props.width + 'px;'
+})
 const modelValue = defineModel()
 
 const splitterModel = ref(20)
@@ -45,6 +49,9 @@ const drop = (evt: DragEvent) => {
 const over = ref(false)
 
 const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
+const cancel = () => {
+	modelValue.value = false
+}
 </script>
 
 <template lang="pug">
@@ -58,14 +65,14 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree()
+					WidgetTree( )
 				template(v-slot:after)
-					.right
+					.right(:style="calcWidth")
 						component(:is="GridLayout"
 							:layout.sync="props.box"
 							:col-num="12"
 							:row-height="30"
-							:is-draggable="true"
+							:is-draggable="false"
 							:is-resizable="true"
 							:is-mirrored="false"
 							:vertical-compact="true"
@@ -75,32 +82,29 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 
 							component(:is="GridItem"
 								v-for="( item, index ) in props.box"
-									:x="item.x"
-									:y="item.y"
+									:x="0"
+									:y="0"
 									:w="item.w"
 									:h="item.h"
 									:i="item.i"
 									:show-close-button="false"
 									:key="item.i")
-									q-card(ref="cardRef")
-										q-card-section laksj
+									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
-
-						// q-card.preview(:style="boxSize" @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
-							.cent
-								.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
-								.notempty(v-else)
-									.digit(v-if="dropWidget.type == 'digit'" )
-										.dig 127
-										div Параметр
-									.spark(v-if="dropWidget.type == 'spark'" )
-										VueApexCharts(type="area" :height="calcHeight" :options="chartOptionsSpark1" :series="series1")
+										.cent
+											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
+											.notempty(v-else)
+												.digit(v-if="dropWidget.type == 'digit'" )
+													.dig 127
+													div Параметр
+												.spark(v-if="dropWidget.type == 'spark'" )
+													VueApexCharts(type="area" :height="calcHeight" :options="chartOptionsSpark1" :series="series1")
 
 						transition(name="fade")
 							div(v-if="props.box.set || widgetSet" )
 								WidgetTabs
 						q-card-actions(align="center")
-							q-btn(flat color="primary" label="Отмена" v-close-popup) 
+							q-btn(flat color="primary" label="Отмена" @click="cancel") 
 							q-btn(v-if="widgetSet" flat color="primary" label="Применить" v-close-popup) 
 							q-btn(v-if="widgetSet" unelevated color="primary" label="Сохранить" v-close-popup) 
 	
@@ -113,13 +117,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	background: linear-gradient(180deg, #d8e3f1 0%, #f4e8f4 52.6%, #fdf5e5 100%);
 	background-attachment: fixed;
 	.content {
-		max-width: 1200px;
-		margin: 0 auto;
-		margin-top: 1rem;
+		margin: 1rem;
 	}
-}
-.right {
-	padding: 1rem;
 }
 .preview {
 	&.over {
@@ -170,7 +169,6 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 .q-card {
 	width: 100%;
 	height: 100%;
-	z-index: 1001;
 }
 :deep(.vue-grid-item) {
 	touch-action: none;
@@ -178,7 +176,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 }
 :deep(.vue-grid-item.vue-grid-placeholder) {
 	background: green !important;
-	opacity: 0.3;
-	z-index: -10;
+	opacity: 0.2;
+	z-index: -1;
 }
 </style>
