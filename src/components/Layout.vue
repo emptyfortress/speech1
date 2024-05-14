@@ -5,6 +5,8 @@ import { uid } from 'quasar'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 import SetupWidgetDialog from '@/components/dash/SetupWidgetDialog.vue'
 import { useElementSize } from '@vueuse/core'
+import VueApexCharts from 'vue3-apexcharts'
+import { chartOptionsSpark1 } from '@/stores/charts1'
 
 const layout: Widget[] = reactive([
 	{
@@ -45,9 +47,20 @@ const grid = ref(null)
 const { width } = useElementSize(grid)
 
 const setup = (e: Widget, index: number) => {
+	activeWidget.value.length = 0
 	activeWidget.value.push(e)
 	dialog.value = !dialog.value
 }
+
+const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
+
+// const card = ref(null)
+// const width1 = useElementSize(card).width
+// const height1 = useElementSize(card).height
+// const calcHeight = computed(() => {
+// 	let item = document.querySelector('.vue-grid-item')
+// 	return height1.value
+// })
 </script>
 
 <template lang="pug">
@@ -79,6 +92,7 @@ q-page(padding)
 					:show-close-button="false"
 					:key="item.i")
 					q-card
+						// VueApexCharts(type="area" height="100%" width="100%" :options="chartOptionsSpark1" :series="series1")
 						q-card-section
 							q-btn(flat color="primary" label="Настроить" @click="setup(item, index)" size="sm") 
 						q-icon.close(name="mdi-close" @click="remove(index)" dense)
