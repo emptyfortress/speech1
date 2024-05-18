@@ -23,8 +23,8 @@ const props = defineProps({
 	width: Number,
 })
 
-const card = ref(null)
-// const { width, height } = useElementSize(card)
+const card = ref([])
+// const { width, height } = useElementSize(card[0])
 
 const calcHeight = computed(() => {
 	const item = document.querySelector('.vue-grid-item')
@@ -57,10 +57,46 @@ const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 const cancel = () => {
 	modelValue.value = false
 }
-// const test = () => {
-// 	const item = document.querySelector('.vue-grid-item')
-// 	console.log(item.offsetHeight)
-// }
+
+const sparkOptions = {
+	chart: {
+		type: 'area',
+		sparkline: {
+			enabled: true,
+		},
+	},
+	stroke: {
+		curve: 'smooth',
+	},
+	fill: {
+		opacity: 0.3,
+	},
+	xaxis: {
+		crosshairs: {
+			width: 1,
+		},
+	},
+	// yaxis: {
+	// 	min: 0,
+	// },
+	title: {
+		text: '0',
+		offsetX: 0,
+		style: {
+			fontSize: '24px',
+		},
+	},
+	subtitle: {
+		text: 'Текст',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
+		},
+	},
+}
+const chartHeight = computed(() => {
+	return calcHeight.value
+})
 </script>
 
 <template lang="pug">
@@ -98,7 +134,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:i="item.i"
 									:show-close-button="false"
 									:key="item.i")
-									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
+									q-card.preview(ref="card" flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 										.cent
 											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
@@ -109,8 +145,10 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 												.digit(v-if="dropWidget.type == 'percent'" )
 													.dig 0%
 													div Параметр
-												VueApexCharts(v-if="dropWidget.type == 'spark'" type="area" height="100%" width="100%" :options="chartOptionsSpark1" :series="series1")
 
+												VueApexCharts(v-if="dropWidget.type == 'spark'" type="area" :height="chartHeight" :options="sparkOptions" :series="series1")
+
+						pre {{ chartHeight }} - {{ calcHeight }}
 						WidgetTabs(v-if="props.box.set || widgetSet"  )
 						// transition(name="fade")
 						// 	WidgetTabs(v-if="props.box.set || widgetSet"  )
