@@ -104,14 +104,17 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
 											.notempty(v-else)
 												.digit(v-if="dropWidget.type == 'digit'" )
-													.dig 127
+													.dig 0
 													div Параметр
-												.spark(v-if="dropWidget.type == 'chart'" )
-													VueApexCharts( type="area" :height="calcHeight" width="100%" :options="chartOptionsSpark1" :series="series1")
+												.digit(v-if="dropWidget.type == 'percent'" )
+													.dig 0%
+													div Параметр
+												VueApexCharts(v-if="dropWidget.type == 'spark'" type="area" height="100%" width="100%" :options="chartOptionsSpark1" :series="series1")
 
-						transition(name="fade")
-							div(v-if="props.box.set || widgetSet" )
-								WidgetTabs
+						WidgetTabs(v-if="props.box.set || widgetSet"  )
+						// transition(name="fade")
+						// 	WidgetTabs(v-if="props.box.set || widgetSet"  )
+							// div(v-if="props.box.set || widgetSet" )
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" @click="cancel") 
 							q-btn(v-if="widgetSet" flat color="primary" label="Применить" v-close-popup) 
@@ -130,6 +133,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	}
 }
 .preview {
+	height: 100%;
 	&.over {
 		background: #dcffe4;
 	}
@@ -176,8 +180,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	cursor: pointer;
 }
 .q-card {
-	width: 100%;
-	height: 100%;
+	// width: 100%;
+	// height: 100%;
 }
 :deep(.vue-grid-item) {
 	touch-action: none;

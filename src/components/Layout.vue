@@ -7,6 +7,7 @@ import SetupWidgetDialog from '@/components/dash/SetupWidgetDialog.vue'
 import { useElementSize } from '@vueuse/core'
 import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
+import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 
 const layout: Widget[] = reactive([
 	{
@@ -99,6 +100,8 @@ q-page(padding)
 						q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
 	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width")
+
+	WidgetTabs
 </template>
 
 <style scoped lang="scss">
