@@ -8,7 +8,7 @@ import { useElementSize } from '@vueuse/core'
 import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
 
-const layout: Widget[] = reactive([
+const layout: any[] = reactive([
 	{
 		x: 0,
 		y: 0,
@@ -45,7 +45,7 @@ const dialog = ref(false)
 const activeWidget = ref<Widget[]>([])
 
 const grid = ref(null)
-const { width } = useElementSize(grid)
+const { height, width } = useElementSize(grid)
 
 const setup = (e: Widget, index: number) => {
 	activeWidget.value.length = 0
@@ -55,13 +55,42 @@ const setup = (e: Widget, index: number) => {
 
 const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 
-// const card = ref(null)
-// const width1 = useElementSize(card).width
-// const height1 = useElementSize(card).height
-// const calcHeight = computed(() => {
-// 	let item = document.querySelector('.vue-grid-item')
-// 	return height1.value
-// })
+const sparkOptions = {
+	chart: {
+		type: 'area',
+		sparkline: {
+			enabled: true,
+		},
+	},
+	stroke: {
+		curve: 'smooth',
+	},
+	fill: {
+		opacity: 0.3,
+	},
+	xaxis: {
+		crosshairs: {
+			width: 1,
+		},
+	},
+	// yaxis: {
+	// 	min: 0,
+	// },
+	title: {
+		text: '0',
+		offsetX: 0,
+		style: {
+			fontSize: '24px',
+		},
+	},
+	subtitle: {
+		text: 'Текст',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
+		},
+	},
+}
 </script>
 
 <template lang="pug">
@@ -99,11 +128,24 @@ q-page(padding)
 						q-icon.close(name="mdi-close" @click="remove(index)" dense)
 						q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width")
+	// pre {{ height }}
+
+	// .car
+	// 	VueApexCharts(type="area" :options="sparkOptions" :series="series1" )
+
+	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width" :height="height" )
 
 </template>
 
 <style scoped lang="scss">
+.car {
+	width: 250px;
+	// height: 250px;
+	background: #fff;
+	padding: 1rem;
+	overflow: hidden;
+	resize: both;
+}
 .move {
 	transition: 0.2s ease all;
 }

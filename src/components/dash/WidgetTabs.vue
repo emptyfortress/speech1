@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { Ref } from 'vue'
 import MySelect from '@/components/common/MySelect.vue'
 
 const group = ref(null)

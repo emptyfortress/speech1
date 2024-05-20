@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watchEffect } from 'vue'
 import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
-// import { useElementSize } from '@vueuse/core'
 
 const props = defineProps({
 	box: {
@@ -21,20 +20,16 @@ const props = defineProps({
 		},
 	},
 	width: Number,
+	height: Number,
 })
 
-const card = ref([])
-// const { width, height } = useElementSize(card[0])
+const modelValue = defineModel()
 
-const calcHeight = computed(() => {
-	const item = document.querySelector('.vue-grid-item')
-	return item.offsetHeight + 'px'
-})
+// const card = ref([])
 
 const calcWidth = computed(() => {
 	return 'width: ' + props.width + 'px;'
 })
-const modelValue = defineModel()
 
 const splitterModel = ref(16)
 
@@ -94,9 +89,19 @@ const sparkOptions = {
 		},
 	},
 }
-const chartHeight = computed(() => {
-	return calcHeight.value
+
+const height = ref()
+
+watchEffect(() => {
+	if (props.height) {
+		height.value = props.height - 20 + 'px'
+	}
 })
+
+const resizedEvent = (e: any) => {
+	const temp: HTMLElement | null = document.querySelector('.vue-grid-item')
+	height.value = temp?.offsetHeight + 'px'
+}
 </script>
 
 <template lang="pug">
@@ -133,8 +138,9 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:h="item.h"
 									:i="item.i"
 									:show-close-button="false"
+									@resized="resizedEvent"
 									:key="item.i")
-									q-card.preview(ref="card" flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
+									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 										.cent
 											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
@@ -145,14 +151,11 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 												.digit(v-if="dropWidget.type == 'percent'" )
 													.dig 0%
 													div Параметр
+												VueApexCharts(v-if="dropWidget.type == 'spark'" :height="height" type="area" :options="sparkOptions" :series="series1" )
 
-												VueApexCharts(v-if="dropWidget.type == 'spark'" type="area" :height="chartHeight" :options="sparkOptions" :series="series1")
-
-						pre {{ chartHeight }} - {{ calcHeight }}
-						WidgetTabs(v-if="props.box.set || widgetSet"  )
-						// transition(name="fade")
-						// 	WidgetTabs(v-if="props.box.set || widgetSet"  )
-							// div(v-if="props.box.set || widgetSet" )
+						// pre {{ props.width }} - {{ height }}
+						transition(name="fade")
+							WidgetTabs(v-if="props.box.set || widgetSet"  )
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" @click="cancel") 
 							q-btn(v-if="widgetSet" flat color="primary" label="Применить" v-close-popup) 
@@ -172,6 +175,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 }
 .preview {
 	height: 100%;
+	// overflow: hidden;
+	// resize: both;
 	&.over {
 		background: #dcffe4;
 	}
