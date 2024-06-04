@@ -73,9 +73,6 @@ const sparkOptions = {
 			width: 1,
 		},
 	},
-	// yaxis: {
-	// 	min: 0,
-	// },
 	title: {
 		text: '0',
 		offsetX: 0,

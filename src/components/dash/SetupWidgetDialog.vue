@@ -102,6 +102,10 @@ const resizedEvent = (e: any) => {
 	const temp: HTMLElement | null = document.querySelector('.vue-grid-item')
 	height.value = temp?.offsetHeight + 'px'
 }
+const chartWidth = computed(() => {
+	let tmpWidth = (props.width / 12) * props.box[0].w - 17
+	return tmpWidth + 'px'
+})
 </script>
 
 <template lang="pug">
@@ -115,7 +119,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree()
+					WidgetTree( )
 				template(v-slot:after)
 					.right(:style="calcWidth")
 						component(:is="GridLayout"
@@ -151,7 +155,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 												.digit(v-if="dropWidget.type == 'percent'" )
 													.dig 0%
 													div Параметр
-												VueApexCharts(v-if="dropWidget.type == 'spark'" :height="height" type="area" :options="sparkOptions" :series="series1" )
+												VueApexCharts(v-if="dropWidget.type == 'spark'" :height="height" :width="chartWidth" type="area" :options="sparkOptions" :series="series1" )
 
 						// pre {{ props.width }} - {{ height }}
 						transition(name="fade")
