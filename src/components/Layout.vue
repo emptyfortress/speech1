@@ -45,9 +45,16 @@ const dialog = ref(false)
 const activeWidget = ref<Widget[]>([])
 
 const grid = ref(null)
-const { height, width } = useElementSize(grid)
+const { width } = useElementSize(grid)
 
-const setup = (e: Widget, index: number) => {
+const cardHeight = ref('110px')
+const cardWidth = ref('280px')
+
+const setup = (ev: Event, e: Widget, index: number) => {
+	cardHeight.value =
+		ev.target?.parentElement.parentElement.parentElement.parentElement.parentElement.style.height
+	cardWidth.value =
+		ev.target?.parentElement.parentElement.parentElement.parentElement.parentElement.style.width
 	activeWidget.value.length = 0
 	activeWidget.value.push(e)
 	dialog.value = !dialog.value
@@ -95,7 +102,7 @@ q-page(padding)
 	.container
 		q-btn.fab(round color="primary" icon="mdi-plus" @click="add" size="lg") 
 
-		component(:is="GridLayout"
+		component.test(:is="GridLayout"
 			ref="grid"
 			:layout.sync="layout"
 			:col-num="12"
@@ -106,7 +113,7 @@ q-page(padding)
 			:vertical-compact="true"
 			:margin="[10, 10]"
 			:show-close-button="false"
-			:use-css-transforms="true" )
+			:use-css-transforms="true")
 
 			component(:is="GridItem"
 				v-for="( item, index ) in layout"
@@ -121,16 +128,11 @@ q-page(padding)
 					q-card
 						// VueApexCharts(type="area" height="100%" width="100%" :options="chartOptionsSpark1" :series="series1")
 						q-card-section
-							q-btn(flat color="primary" label="Настроить" @click="setup(item, index)" size="sm") 
+							q-btn(flat color="primary" label="Настроить" @click="setup($event, item, index)" size="sm") 
 						q-icon.close(name="mdi-close" @click="remove(index)" dense)
 						q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-	// pre {{ height }}
-
-	// .car
-	// 	VueApexCharts(type="area" :options="sparkOptions" :series="series1" )
-
-	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width" :height="height" )
+	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width" :cardHeight="cardHeight" :cardWidth="cardWidth")
 
 </template>
 
@@ -179,8 +181,7 @@ q-page(padding)
 .fab {
 	z-index: 1;
 }
-// p {
-// 	color: v-bind(color);
-// 	font-size: v-bind(size);
-// }
+.test {
+	background: pink;
+}
 </style>

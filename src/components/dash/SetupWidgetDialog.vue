@@ -6,10 +6,18 @@ import VueApexCharts from 'vue3-apexcharts'
 import { chartOptionsSpark1 } from '@/stores/charts1'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
 
-const props = defineProps({
-	box: {
-		type: Object,
-		default: {
+interface Props {
+	width: number
+	cardWidth: string
+	cardHeight: string
+	box: Widget[]
+}
+const props = withDefaults(defineProps<Props>(), {
+	width: 1000,
+	cardWidth: '280px',
+	cardHeight: '110px',
+	box: () => [
+		{
 			x: 0,
 			y: 0,
 			w: 3,
@@ -18,17 +26,15 @@ const props = defineProps({
 			set: false,
 			data: { chart: 0, table: 2 },
 		},
-	},
-	width: Number,
-	height: Number,
+	],
 })
+
+// const mybox = ref(props.box[0])
 
 const modelValue = defineModel()
 
-// const card = ref([])
-
 const calcWidth = computed(() => {
-	return 'width: ' + props.width + 'px;'
+	return 'width: ' + props.width + 'px'
 })
 
 const splitterModel = ref(16)
@@ -40,13 +46,6 @@ const hei = computed(() => {
 const widgetSet = ref(false)
 
 const dropWidget = ref()
-
-const drop = (evt: DragEvent) => {
-	over.value = false
-	widgetSet.value = true
-	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
-}
-const over = ref(false)
 
 const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 const cancel = () => {
@@ -90,24 +89,32 @@ const sparkOptions = {
 	},
 }
 
-const height = ref()
+const chartHeight = ref(props.cardHeight)
+const chartWidth = ref(props.cardWidth)
+
+const over = ref(false)
+const drop = (evt: DragEvent) => {
+	over.value = false
+	widgetSet.value = true
+	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
+	resizedEvent()
+}
 
 // watchEffect(() => {
-// height.value = props.box[0]?.h * 30 + 'px'
-// if (props.height) {
-// 	height.value = props.height - 20 + 'px'
-// }
+// 	const el = document.querySelector('.vue-grid-item')
+// 	chartHeight.value = el?.offsetHeight + 'px'
+// 	chartWidth.value = el?.offsetWidth + 'px'
+// 	console.log(chartHeight.value)
+// 	console.log(chartWidth.value)
 // })
 
 const resizedEvent = () => {
-	console.log(props.box)
 	const el: HTMLElement | null = document.querySelector('.vue-grid-item')
-	height.value = el?.offsetHeight + 'px'
+	chartHeight.value = el?.offsetHeight + 'px'
+	chartWidth.value = el?.offsetWidth + 'px'
+	console.log('height ', chartHeight.value)
+	console.log('width ', chartWidth.value)
 }
-const chartWidth = computed(() => {
-	let tmpWidth = (props.width / 12) * props.box[0].w - 17
-	return tmpWidth + 'px'
-})
 </script>
 
 <template lang="pug">
@@ -157,9 +164,9 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 												.digit(v-if="dropWidget.type == 'percent'" )
 													.dig 0%
 													div Параметр
-												VueApexCharts(v-if="dropWidget.type == 'spark'" :height="height" :width="chartWidth" type="area" :options="sparkOptions" :series="series1" )
+												VueApexCharts(v-if="dropWidget.type == 'spark'" :height="chartHeight" :width="chartWidth" type="area" :options="sparkOptions" :series="series1")
 
-						// pre {{ props.width }} - {{ height }}
+						pre {{ props.width }} - {{ chartHeight }} fuck
 						transition(name="fade")
 							WidgetTabs(v-if="props.box.set || widgetSet"  )
 						q-card-actions(align="center")
@@ -228,10 +235,10 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	bottom: 3px;
 	cursor: pointer;
 }
-.q-card {
-	// width: 100%;
-	// height: 100%;
-}
+// .q-card {
+// width: 100%;
+// height: 100%;
+// }
 :deep(.vue-grid-item) {
 	touch-action: none;
 	position: relative;
@@ -240,5 +247,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	background: green !important;
 	opacity: 0.2;
 	z-index: -1;
+}
+.right {
+	background: yellow;
 }
 </style>
