@@ -92,15 +92,17 @@ const sparkOptions = {
 
 const height = ref()
 
-watchEffect(() => {
-	if (props.height) {
-		height.value = props.height - 20 + 'px'
-	}
-})
+// watchEffect(() => {
+// height.value = props.box[0]?.h * 30 + 'px'
+// if (props.height) {
+// 	height.value = props.height - 20 + 'px'
+// }
+// })
 
-const resizedEvent = (e: any) => {
-	const temp: HTMLElement | null = document.querySelector('.vue-grid-item')
-	height.value = temp?.offsetHeight + 'px'
+const resizedEvent = () => {
+	console.log(props.box)
+	const el: HTMLElement | null = document.querySelector('.vue-grid-item')
+	height.value = el?.offsetHeight + 'px'
 }
 const chartWidth = computed(() => {
 	let tmpWidth = (props.width / 12) * props.box[0].w - 17
