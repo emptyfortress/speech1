@@ -153,7 +153,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:show-close-button="false"
 									@resized="resizedEvent"
 									:key="item.i")
-									q-btn(flat round dense icon="mdi-refresh" @click="refresh") 
+									q-btn(v-if="widgetSet" flat round dense icon="mdi-refresh" @click="refresh") 
+										q-tooltip Обновить
 									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 										.cent
