@@ -47,8 +47,8 @@ const activeWidget = ref<Widget[]>([])
 const grid = ref(null)
 const { width } = useElementSize(grid)
 
-const cardHeight = ref('0px')
-const cardWidth = ref('0px')
+const cardHeight = ref('110px')
+const cardWidth = ref('280px')
 
 const setup = (ev: Event, e: Widget, index: number) => {
 	activeWidget.value.length = 0
