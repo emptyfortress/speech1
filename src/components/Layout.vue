@@ -47,14 +47,10 @@ const activeWidget = ref<Widget[]>([])
 const grid = ref(null)
 const { width } = useElementSize(grid)
 
-const cardHeight = ref('110px')
-const cardWidth = ref('280px')
+const cardHeight = ref('0px')
+const cardWidth = ref('0px')
 
 const setup = (ev: Event, e: Widget, index: number) => {
-	cardHeight.value =
-		ev.target?.parentElement.parentElement.parentElement.parentElement.parentElement.style.height
-	cardWidth.value =
-		ev.target?.parentElement.parentElement.parentElement.parentElement.parentElement.style.width
 	activeWidget.value.length = 0
 	activeWidget.value.push(e)
 	dialog.value = !dialog.value
@@ -95,6 +91,11 @@ const sparkOptions = {
 		},
 	},
 }
+
+const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
+	cardHeight.value = newHPx + 'px'
+	cardWidth.value = newWPx + 'px'
+}
 </script>
 
 <template lang="pug">
@@ -124,6 +125,7 @@ q-page(padding)
 					:h="item.h"
 					:i="item.i"
 					:show-close-button="false"
+					@resized="resizedEvent"
 					:key="item.i")
 					q-card
 						// VueApexCharts(type="area" height="100%" width="100%" :options="chartOptionsSpark1" :series="series1")
@@ -131,6 +133,8 @@ q-page(padding)
 							q-btn(flat color="primary" label="Настроить" @click="setup($event, item, index)" size="sm") 
 						q-icon.close(name="mdi-close" @click="remove(index)" dense)
 						q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
+
+	// pre {{cardHeight}}
 
 	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width" :cardHeight="cardHeight" :cardWidth="cardWidth")
 
@@ -182,6 +186,6 @@ q-page(padding)
 	z-index: 1;
 }
 .test {
-	background: pink;
+	// background: pink;
 }
 </style>

@@ -23,8 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
 			w: 3,
 			h: 3,
 			i: 'el',
-			set: false,
-			data: { chart: 0, table: 2 },
+			// set: false,
+			// data: { chart: 0, table: 2 },
 		},
 	],
 })
@@ -97,7 +97,6 @@ const drop = (evt: DragEvent) => {
 	over.value = false
 	widgetSet.value = true
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
-	resizedEvent()
 }
 
 // watchEffect(() => {
@@ -108,12 +107,11 @@ const drop = (evt: DragEvent) => {
 // 	console.log(chartWidth.value)
 // })
 
-const resizedEvent = () => {
-	const el: HTMLElement | null = document.querySelector('.vue-grid-item')
-	chartHeight.value = el?.offsetHeight + 'px'
-	chartWidth.value = el?.offsetWidth + 'px'
-	console.log('height ', chartHeight.value)
-	console.log('width ', chartWidth.value)
+const chart = ref([])
+
+const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
+	chartHeight.value = newHPx + 'px'
+	chartWidth.value = newWPx + 'px'
 }
 </script>
 
@@ -153,7 +151,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:show-close-button="false"
 									@resized="resizedEvent"
 									:key="item.i")
-									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
+									q-card.preview(ref="card" flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 										.cent
 											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
@@ -164,10 +162,10 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 												.digit(v-if="dropWidget.type == 'percent'" )
 													.dig 0%
 													div Параметр
-												VueApexCharts(v-if="dropWidget.type == 'spark'" :height="chartHeight" :width="chartWidth" type="area" :options="sparkOptions" :series="series1")
+												VueApexCharts(ref="chart" v-if="dropWidget.type == 'spark'"  type="area" :width="chartWidth" :height="chartHeight" :options="sparkOptions" :series="series1")
 
-						pre {{ props.width }} - {{ chartHeight }} fuck
-						transition(name="fade")
+						// pre {{ props.width }} - {{ chartHeight }} fuck
+						// transition(name="fade")
 							WidgetTabs(v-if="props.box.set || widgetSet"  )
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" @click="cancel") 
@@ -188,7 +186,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 }
 .preview {
 	height: 100%;
-	// overflow: hidden;
+	overflow: hidden;
 	// resize: both;
 	&.over {
 		background: #dcffe4;
@@ -249,6 +247,5 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	z-index: -1;
 }
 .right {
-	background: yellow;
 }
 </style>

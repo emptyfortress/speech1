@@ -6,9 +6,8 @@ interface Widget {
 	i: string
 	set?: boolean
 	data?: Object
-
-	id: string
-	text: string
+	id?: string
+	text?: string
 	icon?: string
 	drag?: boolean
 	type?: string
