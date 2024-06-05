@@ -23,13 +23,11 @@ const props = withDefaults(defineProps<Props>(), {
 			w: 3,
 			h: 3,
 			i: 'el',
-			// set: false,
-			// data: { chart: 0, table: 2 },
+			set: false,
+			data: { chart: 0, table: 2 },
 		},
 	],
 })
-
-// const mybox = ref(props.box[0])
 
 const modelValue = defineModel()
 
@@ -50,7 +48,7 @@ const dropWidget = ref()
 const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 const cancel = () => {
 	modelValue.value = false
-	dropWidget.value = {}
+	dropWidget.value = null
 	widgetSet.value = false
 }
 
@@ -101,20 +99,20 @@ const drop = (evt: DragEvent) => {
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
 }
 
-const chart = ref([])
-
-const temp = ref('fuck')
+const keep = ref('start')
 const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
 	chartHeight.value = newHPx + 'px'
 	chartWidth.value = newWPx + 'px'
-	temp.value = dropWidget.value.type
-	dropWidget.value.type = ''
-	nextTick(() => {
+	if (dropWidget.value) {
+		keep.value = dropWidget.value?.type
 		refresh()
-	})
+	}
 }
 const refresh = () => {
-	dropWidget.value.type = temp.value
+	dropWidget.value.type = ''
+	nextTick(() => {
+		dropWidget.value.type = keep.value
+	})
 }
 </script>
 
@@ -155,12 +153,12 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:show-close-button="false"
 									@resized="resizedEvent"
 									:key="item.i")
-									q-card.preview(ref="card" flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
+									q-btn(flat round dense icon="mdi-refresh" @click="refresh") 
+									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 										.cent
 											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
 											.notempty(v-else)
-												q-btn.q-ml-md( v-if="dropWidget.type == ''" unelevated color="primary" label="Обновить" @click="refresh" ) 
 												.digit(v-if="dropWidget.type == 'digit'" )
 													.dig 0
 													div Параметр
@@ -169,13 +167,11 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 													div Параметр
 												VueApexCharts(ref="chart" v-if="dropWidget.type == 'spark'"  type="area" :width="chartWidth" :height="chartHeight" :options="sparkOptions" :series="series1")
 
-
-						// pre {{ props.width }} - {{ chartHeight }} fuck
 						transition(name="fade")
 							WidgetTabs(v-if="props.box.set || widgetSet"  )
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" @click="cancel") 
-							q-btn(v-if="widgetSet" flat color="primary" label="Применить" v-close-popup) 
+							q-btn(v-if="widgetSet" flat color="primary" label="Применить") 
 							q-btn(v-if="widgetSet" unelevated color="primary" label="Сохранить" v-close-popup) 
 	
 </template>
@@ -239,10 +235,6 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	bottom: 3px;
 	cursor: pointer;
 }
-// .q-card {
-// width: 100%;
-// height: 100%;
-// }
 :deep(.vue-grid-item) {
 	touch-action: none;
 	position: relative;
@@ -252,6 +244,12 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	opacity: 0.2;
 	z-index: -1;
 }
-.right {
+.vue-grid-item {
+	position: relative;
+	.q-btn {
+		position: absolute;
+		top: 0;
+		right: -2rem;
+	}
 }
 </style>
