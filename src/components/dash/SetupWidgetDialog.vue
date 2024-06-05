@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed, watchEffect } from 'vue'
+import { ref, reactive, computed, watchEffect, nextTick } from 'vue'
 import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
@@ -50,6 +50,8 @@ const dropWidget = ref()
 const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 const cancel = () => {
 	modelValue.value = false
+	dropWidget.value = {}
+	widgetSet.value = false
 }
 
 const sparkOptions = {
@@ -99,19 +101,20 @@ const drop = (evt: DragEvent) => {
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
 }
 
-// watchEffect(() => {
-// 	const el = document.querySelector('.vue-grid-item')
-// 	chartHeight.value = el?.offsetHeight + 'px'
-// 	chartWidth.value = el?.offsetWidth + 'px'
-// 	console.log(chartHeight.value)
-// 	console.log(chartWidth.value)
-// })
-
 const chart = ref([])
 
+const temp = ref('fuck')
 const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
 	chartHeight.value = newHPx + 'px'
 	chartWidth.value = newWPx + 'px'
+	temp.value = dropWidget.value.type
+	dropWidget.value.type = ''
+	nextTick(() => {
+		refresh()
+	})
+}
+const refresh = () => {
+	dropWidget.value.type = temp.value
 }
 </script>
 
@@ -129,6 +132,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 					WidgetTree( )
 				template(v-slot:after)
 					.right(:style="calcWidth")
+
 						component(:is="GridLayout"
 							:layout.sync="props.box"
 							:col-num="12"
@@ -156,6 +160,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										.cent
 											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
 											.notempty(v-else)
+												q-btn.q-ml-md( v-if="dropWidget.type == ''" unelevated color="primary" label="Обновить" @click="refresh" ) 
 												.digit(v-if="dropWidget.type == 'digit'" )
 													.dig 0
 													div Параметр
@@ -164,8 +169,9 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 													div Параметр
 												VueApexCharts(ref="chart" v-if="dropWidget.type == 'spark'"  type="area" :width="chartWidth" :height="chartHeight" :options="sparkOptions" :series="series1")
 
+
 						// pre {{ props.width }} - {{ chartHeight }} fuck
-						// transition(name="fade")
+						transition(name="fade")
 							WidgetTabs(v-if="props.box.set || widgetSet"  )
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" @click="cancel") 
