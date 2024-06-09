@@ -101,7 +101,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
-										.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
+										.cent(v-if="!widgetSet")
+											.empty Перетащите сюда виджет или его тип
 
 										.cent(v-if="widgetSet && dropWidget.type == 'digit'")
 											.digit
