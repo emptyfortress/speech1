@@ -3,19 +3,20 @@ import { ref, reactive, computed, watchEffect, nextTick } from 'vue'
 import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
-import { chartOptionsSpark1 } from '@/stores/charts1'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
+import { sparkOptions, areaOptions } from '@/stores/layoutChartOptions'
+import { randomArray } from '@/utils/utils'
 
 interface Props {
 	width: number
-	cardWidth: string
-	cardHeight: string
+	cardWidth: number
+	cardHeight: number
 	box: Widget[]
 }
 const props = withDefaults(defineProps<Props>(), {
 	width: 1000,
-	cardWidth: '280px',
-	cardHeight: '110px',
+	cardWidth: 280,
+	cardHeight: 110,
 	box: () => [
 		{
 			x: 0,
@@ -45,48 +46,12 @@ const widgetSet = ref(false)
 
 const dropWidget = ref()
 
-const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
+const series = ref([{ name: 'Параметр', data: randomArray(7, 80, 5) }])
+
 const cancel = () => {
 	modelValue.value = false
 	dropWidget.value = null
 	widgetSet.value = false
-}
-
-const sparkOptions = {
-	chart: {
-		type: 'area',
-		sparkline: {
-			enabled: true,
-		},
-	},
-	stroke: {
-		curve: 'smooth',
-	},
-	fill: {
-		opacity: 0.3,
-	},
-	xaxis: {
-		crosshairs: {
-			width: 1,
-		},
-	},
-	// yaxis: {
-	// 	min: 0,
-	// },
-	title: {
-		text: '0',
-		offsetX: 0,
-		style: {
-			fontSize: '24px',
-		},
-	},
-	subtitle: {
-		text: 'Текст',
-		offsetX: 0,
-		style: {
-			fontSize: '14px',
-		},
-	},
 }
 
 const chartHeight = ref(props.cardHeight)
@@ -101,8 +66,8 @@ const drop = (evt: DragEvent) => {
 
 const keep = ref('start')
 const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
-	chartHeight.value = newHPx + 'px'
-	chartWidth.value = newWPx + 'px'
+	chartHeight.value = newHPx
+	chartWidth.value = newWPx
 	if (dropWidget.value) {
 		keep.value = dropWidget.value?.type
 		refresh()
@@ -114,6 +79,12 @@ const refresh = () => {
 		dropWidget.value.type = keep.value
 	})
 }
+const apply = () => {
+	series.value[0].data = randomArray(7, 90, 5)
+}
+const chartHeightArea = computed(() => {
+	return '100px'
+})
 </script>
 
 <template lang="pug">
@@ -127,7 +98,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree( )
+					WidgetTree
 				template(v-slot:after)
 					.right(:style="calcWidth")
 
@@ -157,22 +128,27 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										q-tooltip Обновить
 									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
-										.cent
-											.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
-											.notempty(v-else)
-												.digit(v-if="dropWidget.type == 'digit'" )
-													.dig 0
-													div Параметр
-												.digit(v-if="dropWidget.type == 'percent'" )
-													.dig 0%
-													div Параметр
-												VueApexCharts(ref="chart" v-if="dropWidget.type == 'spark'"  type="area" :width="chartWidth" :height="chartHeight" :options="sparkOptions" :series="series1")
+
+										.empty(v-if="!widgetSet") Перетащите сюда виджет или его тип
+
+										.cent(v-if="widgetSet && dropWidget.type == 'digit'")
+											.digit
+												.dig 123
+												div Параметр
+										.cent(v-if="widgetSet && dropWidget.type == 'percent'")
+											.digit
+												.dig 5%
+												div Параметр
+
+										VueApexCharts(v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="sparkOptions" :series="series")
+										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="areaOptions" :series="series")
+
 
 						transition(name="fade")
-							WidgetTabs(v-if="props.box.set || widgetSet"  )
+							WidgetTabs(v-if="props.box.set || widgetSet")
 						q-card-actions(align="center")
 							q-btn(flat color="primary" label="Отмена" @click="cancel") 
-							q-btn(v-if="widgetSet" flat color="primary" label="Применить") 
+							q-btn(v-if="widgetSet" flat color="primary" label="Применить" @click="apply") 
 							q-btn(v-if="widgetSet" unelevated color="primary" label="Сохранить" v-close-popup) 
 	
 </template>
@@ -190,7 +166,6 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 .preview {
 	height: 100%;
 	overflow: hidden;
-	// resize: both;
 	&.over {
 		background: #dcffe4;
 	}
@@ -206,6 +181,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	font-size: 0.8rem;
 	text-align: center;
 	color: #aaa;
+	margin: auto;
 }
 .dig {
 	font-size: 2rem;

@@ -22,7 +22,7 @@ export const router = createRouter({
 		},
 		{
 			path: '/ff',
-			component: () => import('@/components/dash/SetupWidgetDialog.vue'),
+			component: () => import('@/components/dash/ChartTest.vue'),
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
 		{

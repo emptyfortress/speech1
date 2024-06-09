@@ -47,8 +47,8 @@ const activeWidget = ref<Widget[]>([])
 const grid = ref(null)
 const { width } = useElementSize(grid)
 
-const cardHeight = ref('110px')
-const cardWidth = ref('280px')
+const cardHeight = ref(110)
+const cardWidth = ref(280)
 
 const setup = (ev: Event, e: Widget, index: number) => {
 	activeWidget.value.length = 0
@@ -93,8 +93,8 @@ const sparkOptions = {
 }
 
 const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
-	cardHeight.value = newHPx + 'px'
-	cardWidth.value = newWPx + 'px'
+	cardHeight.value = newHPx
+	cardWidth.value = newWPx
 }
 </script>
 
