@@ -193,20 +193,20 @@ const chartOptionsSpark1 = {
 	yaxis: {
 		min: 0,
 	},
-	// title: {
-	// 	text: '234',
-	// 	offsetX: 0,
-	// 	style: {
-	// 		fontSize: '24px',
-	// 	},
-	// },
-	// subtitle: {
-	// 	text: 'Вызовы',
-	// 	offsetX: 0,
-	// 	style: {
-	// 		fontSize: '14px',
-	// 	},
-	// },
+	title: {
+		text: '234',
+		offsetX: 0,
+		style: {
+			fontSize: '24px',
+		},
+	},
+	subtitle: {
+		text: 'Вызовы',
+		offsetX: 0,
+		style: {
+			fontSize: '14px',
+		},
+	},
 }
 
 const chartOptionsSpark2 = {
