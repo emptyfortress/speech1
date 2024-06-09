@@ -9,14 +9,10 @@ import { randomArray } from '@/utils/utils'
 
 interface Props {
 	width: number
-	cardWidth: number
-	cardHeight: number
 	box: Widget[]
 }
 const props = withDefaults(defineProps<Props>(), {
 	width: 1000,
-	cardWidth: 280,
-	cardHeight: 110,
 	box: () => [
 		{
 			x: 0,
@@ -54,9 +50,6 @@ const cancel = () => {
 	widgetSet.value = false
 }
 
-const chartHeight = ref(props.cardHeight)
-const chartWidth = ref(props.cardWidth)
-
 const over = ref(false)
 const drop = (evt: DragEvent) => {
 	over.value = false
@@ -64,27 +57,9 @@ const drop = (evt: DragEvent) => {
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
 }
 
-const keep = ref('start')
-const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
-	chartHeight.value = newHPx
-	chartWidth.value = newWPx
-	if (dropWidget.value) {
-		keep.value = dropWidget.value?.type
-		refresh()
-	}
-}
-const refresh = () => {
-	dropWidget.value.type = ''
-	nextTick(() => {
-		dropWidget.value.type = keep.value
-	})
-}
 const apply = () => {
 	series.value[0].data = randomArray(7, 90, 5)
 }
-const chartHeightArea = computed(() => {
-	return '100px'
-})
 </script>
 
 <template lang="pug">
@@ -122,10 +97,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:h="item.h"
 									:i="item.i"
 									:show-close-button="false"
-									@resized="resizedEvent"
 									:key="item.i")
-									q-btn(v-if="widgetSet" flat round dense icon="mdi-refresh" @click="refresh") 
-										q-tooltip Обновить
 									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 

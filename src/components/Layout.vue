@@ -47,54 +47,10 @@ const activeWidget = ref<Widget[]>([])
 const grid = ref(null)
 const { width } = useElementSize(grid)
 
-const cardHeight = ref(110)
-const cardWidth = ref(280)
-
 const setup = (ev: Event, e: Widget, index: number) => {
 	activeWidget.value.length = 0
 	activeWidget.value.push(e)
 	dialog.value = !dialog.value
-}
-
-const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
-
-const sparkOptions = {
-	chart: {
-		type: 'area',
-		sparkline: {
-			enabled: true,
-		},
-	},
-	stroke: {
-		curve: 'smooth',
-	},
-	fill: {
-		opacity: 0.3,
-	},
-	xaxis: {
-		crosshairs: {
-			width: 1,
-		},
-	},
-	title: {
-		text: '0',
-		offsetX: 0,
-		style: {
-			fontSize: '24px',
-		},
-	},
-	subtitle: {
-		text: 'Текст',
-		offsetX: 0,
-		style: {
-			fontSize: '14px',
-		},
-	},
-}
-
-const resizedEvent = (i: number, newX: number, newY: number, newHPx: number, newWPx: number) => {
-	cardHeight.value = newHPx
-	cardWidth.value = newWPx
 }
 </script>
 
@@ -125,10 +81,8 @@ q-page(padding)
 					:h="item.h"
 					:i="item.i"
 					:show-close-button="false"
-					@resized="resizedEvent"
 					:key="item.i")
 					q-card
-						// VueApexCharts(type="area" height="100%" width="100%" :options="chartOptionsSpark1" :series="series1")
 						q-card-section
 							q-btn(flat color="primary" label="Настроить" @click="setup($event, item, index)" size="sm") 
 						q-icon.close(name="mdi-close" @click="remove(index)" dense)
@@ -136,14 +90,13 @@ q-page(padding)
 
 	// pre {{cardHeight}}
 
-	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width" :cardHeight="cardHeight" :cardWidth="cardWidth")
+	component(:is="SetupWidgetDialog" v-model="dialog" :box="activeWidget" :width="width")
 
 </template>
 
 <style scoped lang="scss">
 .car {
 	width: 250px;
-	// height: 250px;
 	background: #fff;
 	padding: 1rem;
 	overflow: hidden;
@@ -184,8 +137,5 @@ q-page(padding)
 }
 .fab {
 	z-index: 1;
-}
-.test {
-	// background: pink;
 }
 </style>
