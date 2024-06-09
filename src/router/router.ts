@@ -21,11 +21,6 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
 		{
-			path: '/ff',
-			component: () => import('@/components/dash/ChartTest.vue'),
-			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
-		},
-		{
 			path: '/dash',
 			component: () => import('@/components/Layout.vue'),
 			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },

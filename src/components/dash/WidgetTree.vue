@@ -12,7 +12,6 @@ const startDrag = (evt: DragEvent, item: Widget) => {
 	// evt.dataTransfer.dropEffect = 'copy'
 	// evt.dataTransfer.effectAllowed = 'copy'
 	evt.dataTransfer!.setData('item', JSON.stringify(item))
-	console.log(item)
 }
 </script>
 
