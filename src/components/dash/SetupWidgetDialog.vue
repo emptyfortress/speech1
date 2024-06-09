@@ -86,6 +86,13 @@ const rotate = () => {
 		},
 	})
 }
+const pie = ref('pie')
+
+const switchPie = () => {
+	if (pie.value == 'donut') {
+		pie.value = 'pie'
+	} else pie.value = 'donut'
+}
 </script>
 
 <template lang="pug">
@@ -125,6 +132,8 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:show-close-button="false"
 									:key="item.i")
 									q-btn(v-if="widgetSet && dropWidget.type == 'gist'" flat round dense icon="mdi-rotate-left-variant" @click="rotate") 
+									q-btn(v-if="widgetSet && dropWidget.type == 'pie'" flat round dense @click="switchPie") 
+										q-icon(:name="pie == 'pie' ? 'mdi-chart-donut' : 'mdi-chart-pie'")
 									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
@@ -143,7 +152,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="sparkOptions" :series="series")
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="areaOptions" :series="series")
 										VueApexCharts(ref="barChart" v-if="widgetSet && dropWidget.type == 'gist'" type="bar" height="100%" :options="barOptions" :series="barSeries")
-										VueApexCharts(ref="donutChart" v-if="widgetSet && dropWidget.type == 'pie'" type="donut" height="100%" :options="donutOptions" :series="donutSeries")
+										VueApexCharts(v-if="widgetSet && dropWidget.type == 'pie'" :type="pie" height="100%" :options="donutOptions" :series="donutSeries")
 
 
 						transition(name="fade")
