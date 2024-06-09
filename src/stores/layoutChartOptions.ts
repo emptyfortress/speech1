@@ -47,7 +47,6 @@ const areaOptions = {
 	},
 	chart: {
 		type: 'area',
-		// height: 'auto',
 		zoom: {
 			enabled: false,
 		},
@@ -59,7 +58,7 @@ const areaOptions = {
 		curve: 'smooth',
 	},
 	title: {
-		text: 'АНТ',
+		text: 'Параметр',
 		align: 'left',
 	},
 	yaxis: {
