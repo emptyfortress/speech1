@@ -80,4 +80,17 @@ const barOptions = {
 		},
 	},
 }
-export { sparkOptions, areaOptions, barOptions }
+
+const donutOptions = {
+	chart: {
+		type: 'donut',
+	},
+	title: {
+		text: 'Заголовок',
+		align: 'left',
+	},
+	stroke: {
+		width: 1,
+	},
+}
+export { sparkOptions, areaOptions, barOptions, donutOptions }

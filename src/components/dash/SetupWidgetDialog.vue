@@ -4,7 +4,7 @@ import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
-import { sparkOptions, areaOptions, barOptions } from '@/stores/layoutChartOptions'
+import { sparkOptions, areaOptions, barOptions, donutOptions } from '@/stores/layoutChartOptions'
 import { randomArray } from '@/utils/utils'
 import { templateRef } from '@vueuse/core'
 
@@ -55,6 +55,7 @@ const barSeries = [
 		],
 	},
 ]
+const donutSeries = randomArray(4, 20, 5)
 
 const cancel = () => {
 	modelValue.value = false
@@ -142,6 +143,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="sparkOptions" :series="series")
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="areaOptions" :series="series")
 										VueApexCharts(ref="barChart" v-if="widgetSet && dropWidget.type == 'gist'" type="bar" height="100%" :options="barOptions" :series="barSeries")
+										VueApexCharts(ref="donutChart" v-if="widgetSet && dropWidget.type == 'pie'" type="donut" height="100%" :options="donutOptions" :series="donutSeries")
 
 
 						transition(name="fade")
