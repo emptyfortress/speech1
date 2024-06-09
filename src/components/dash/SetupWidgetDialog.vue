@@ -4,8 +4,9 @@ import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
-import { sparkOptions, areaOptions } from '@/stores/layoutChartOptions'
+import { sparkOptions, areaOptions, barOptions } from '@/stores/layoutChartOptions'
 import { randomArray } from '@/utils/utils'
+import { templateRef } from '@vueuse/core'
 
 interface Props {
 	width: number
@@ -43,6 +44,17 @@ const widgetSet = ref(false)
 const dropWidget = ref()
 
 const series = ref([{ name: 'Параметр', data: randomArray(7, 80, 5) }])
+const barSeries = [
+	{
+		data: [
+			{ x: '1', y: 15 },
+			{ x: '2', y: 93 },
+			{ x: '3', y: 87 },
+			{ x: '4', y: 59 },
+			{ x: '5', y: 19 },
+		],
+	},
+]
 
 const cancel = () => {
 	modelValue.value = false
@@ -60,6 +72,19 @@ const drop = (evt: DragEvent) => {
 const apply = () => {
 	series.value[0].data = randomArray(7, 90, 5)
 }
+const barChart = templateRef('barChart')
+
+const horizontal = ref(false)
+const rotate = () => {
+	horizontal.value = !horizontal.value
+	barChart.value[0].updateOptions({
+		plotOptions: {
+			bar: {
+				horizontal: horizontal.value,
+			},
+		},
+	})
+}
 </script>
 
 <template lang="pug">
@@ -73,7 +98,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 
 			q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				template(v-slot:before)
-					WidgetTree
+					WidgetTree()
 				template(v-slot:after)
 					.right(:style="calcWidth")
 
@@ -98,6 +123,7 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 									:i="item.i"
 									:show-close-button="false"
 									:key="item.i")
+									q-btn(v-if="widgetSet && dropWidget.type == 'gist'" flat round dense icon="mdi-rotate-left-variant" @click="rotate") 
 									q-card.preview(flat @dragover.prevent="over = true" @dragleave.prevent="over = false" @drop="drop($event)"  :class="{over: over}")
 										q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px") 
 
@@ -107,14 +133,15 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										.cent(v-if="widgetSet && dropWidget.type == 'digit'")
 											.digit
 												.dig 123
-												div Параметр
+												div Заголовок
 										.cent(v-if="widgetSet && dropWidget.type == 'percent'")
 											.digit
 												.dig 5%
-												div Параметр
+												div Заголовок
 
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="sparkOptions" :series="series")
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="areaOptions" :series="series")
+										VueApexCharts(ref="barChart" v-if="widgetSet && dropWidget.type == 'gist'" type="bar" height="100%" :options="barOptions" :series="barSeries")
 
 
 						transition(name="fade")

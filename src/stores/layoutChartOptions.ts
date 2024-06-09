@@ -24,7 +24,7 @@ const sparkOptions = {
 		},
 	},
 	subtitle: {
-		text: 'Текст',
+		text: 'Заголовок',
 		offsetX: 0,
 		style: {
 			fontSize: '14px',
@@ -58,7 +58,7 @@ const areaOptions = {
 		curve: 'smooth',
 	},
 	title: {
-		text: 'Параметр',
+		text: 'Заголовок',
 		align: 'left',
 	},
 	yaxis: {
@@ -66,4 +66,18 @@ const areaOptions = {
 	},
 }
 
-export { sparkOptions, areaOptions }
+const barOptions = {
+	chart: {
+		type: 'bar',
+	},
+	title: {
+		text: 'Заголовок',
+		align: 'left',
+	},
+	plotOptions: {
+		bar: {
+			horizontal: false,
+		},
+	},
+}
+export { sparkOptions, areaOptions, barOptions }
