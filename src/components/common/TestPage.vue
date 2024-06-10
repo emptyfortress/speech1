@@ -11,6 +11,7 @@ q-page(padding)
 <style scoped lang="scss">
 .panel {
 	min-height: 400px;
+	max-width: 1000px;
 	background: white;
 	padding: 1rem;
 }
