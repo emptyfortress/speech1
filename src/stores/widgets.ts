@@ -28,18 +28,6 @@ const widgets = [
 			{ id: '11', drag: true, type: 'table', text: 'Таблица', children: [] },
 		],
 	},
-	// {
-	// 	id: 'data',
-	// 	text: 'Источник данных',
-	// 	icon: 'mdi-table',
-	// 	drag: false,
-	// 	children: [
-	// 		{ id: '14', drag: true, type: 'table', text: 'Звонки', children: [] },
-	// 		{ id: '15', drag: true, type: 'table', text: 'Категории', children: [] },
-	// 		{ id: '13', drag: true, type: 'table', text: 'Слова/словари/эмоции', children: [] },
-	// 		{ id: '13', drag: true, type: 'table', text: 'Чек-листы', children: [] },
-	// 	],
-	// },
 ]
 
 export { widgets }

@@ -1,31 +1,17 @@
 const sparkOptions = {
 	chart: {
-		type: 'area',
 		sparkline: {
 			enabled: true,
 		},
 	},
-	stroke: {
-		curve: 'smooth',
-	},
-	fill: {
-		opacity: 0.3,
-	},
-	xaxis: {
-		crosshairs: {
-			width: 1,
-		},
-	},
 	title: {
 		text: '0',
-		offsetX: 0,
 		style: {
 			fontSize: '24px',
 		},
 	},
 	subtitle: {
 		text: 'Заголовок',
-		offsetX: 0,
 		style: {
 			fontSize: '14px',
 		},
@@ -46,16 +32,9 @@ const areaOptions = {
 		],
 	},
 	chart: {
-		type: 'area',
 		zoom: {
 			enabled: false,
 		},
-	},
-	dataLabels: {
-		enabled: true,
-	},
-	stroke: {
-		curve: 'smooth',
 	},
 	title: {
 		text: 'Заголовок',
@@ -67,9 +46,9 @@ const areaOptions = {
 }
 
 const barOptions = {
-	chart: {
-		type: 'bar',
-	},
+	// chart: {
+	// 	type: 'bar',
+	// },
 	title: {
 		text: 'Заголовок',
 		align: 'left',
@@ -89,8 +68,8 @@ const donutOptions = {
 		text: 'Заголовок',
 		align: 'left',
 	},
-	stroke: {
-		width: 1,
-	},
+	// stroke: {
+	// 	width: 1,
+	// },
 }
 export { sparkOptions, areaOptions, barOptions, donutOptions }

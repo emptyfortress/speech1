@@ -4,9 +4,9 @@ import WidgetTree from '@/components/dash/WidgetTree.vue'
 import WidgetTabs from '@/components/dash/WidgetTabs.vue'
 import VueApexCharts from 'vue3-apexcharts'
 import { GridItem, GridLayout } from 'vue-ts-responsive-grid-layout'
-import { sparkOptions, areaOptions, barOptions, donutOptions } from '@/stores/layoutChartOptions'
-import { randomArray } from '@/utils/utils'
+import { randomArray, randomNumber } from '@/utils/utils'
 import { templateRef } from '@vueuse/core'
+import { useWidget } from '@/stores/widgetStore'
 
 interface Props {
 	width: number
@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
 	],
 })
 
+const widget = useWidget()
 const modelValue = defineModel()
 
 const calcWidth = computed(() => {
@@ -41,10 +42,10 @@ const hei = computed(() => {
 
 const widgetSet = ref(false)
 
-const dropWidget = ref()
+const dropWidget = ref<null | Widget>(null)
 
 const series = ref([{ name: 'Параметр', data: randomArray(7, 80, 5) }])
-const barSeries = [
+const barSeries = ref([
 	{
 		data: [
 			{ x: '1', y: 15 },
@@ -54,7 +55,7 @@ const barSeries = [
 			{ x: '5', y: 19 },
 		],
 	},
-]
+])
 const donutSeries = randomArray(4, 20, 5)
 
 const cancel = () => {
@@ -64,16 +65,30 @@ const cancel = () => {
 }
 
 const over = ref(false)
+
 const drop = (evt: DragEvent) => {
 	over.value = false
 	widgetSet.value = true
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
+	widget.setCurrentWidget(dropWidget.value)
+}
+
+function calcNew() {
+	const length = randomNumber(3, 8, 0)
+	let arr = []
+	arr.length = length
+	arr.forEach((item, index) => {})
 }
 
 const apply = () => {
 	series.value[0].data = randomArray(7, 90, 5)
+	barSeries.value[0].data = calcNew()
+	console.log(dropWidget.value.text)
+
+	sparkChart.value[0].updateOptions(widget.sparkOptions)
 }
 const barChart = templateRef('barChart')
+const sparkChart = templateRef('spark')
 
 const horizontal = ref(false)
 const rotate = () => {
@@ -93,6 +108,32 @@ const switchPie = () => {
 		pie.value = 'pie'
 	} else pie.value = 'donut'
 }
+const cols = [
+	{
+		name: 'name',
+		required: true,
+		label: 'Колонка 1',
+		align: 'left',
+		field: 'name',
+		sortable: true,
+	},
+	{
+		name: 'total',
+		required: false,
+		label: 'Колонка 2',
+		align: 'right',
+		field: 'total',
+		sortable: true,
+	},
+	{
+		name: 'good',
+		required: false,
+		label: 'Колонка 3',
+		align: 'right',
+		field: 'good',
+		sortable: true,
+	},
+]
 </script>
 
 <template lang="pug">
@@ -140,19 +181,23 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										.cent(v-if="!widgetSet")
 											.empty Перетащите сюда виджет или его тип
 
+										.cent(v-if="widgetSet && dropWidget.type == 'widget'")
+											div {{ widget.currentWidget.text}}
+
 										.cent(v-if="widgetSet && dropWidget.type == 'digit'")
 											.digit
 												.dig 123
-												div Заголовок
+												div Число
 										.cent(v-if="widgetSet && dropWidget.type == 'percent'")
 											.digit
 												.dig 5%
-												div Заголовок
+												div Процент
 
-										VueApexCharts(v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="sparkOptions" :series="series")
-										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="areaOptions" :series="series")
-										VueApexCharts(ref="barChart" v-if="widgetSet && dropWidget.type == 'gist'" type="bar" height="100%" :options="barOptions" :series="barSeries")
-										VueApexCharts(v-if="widgetSet && dropWidget.type == 'pie'" :type="pie" height="100%" :options="donutOptions" :series="donutSeries")
+										VueApexCharts(ref="spark" v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="widget.sparkOptions" :series="series")
+										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="widget.areaOptions" :series="series")
+										VueApexCharts(ref="barChart" v-if="widgetSet && dropWidget.type == 'gist'" type="bar" height="100%" :options="widget.barOptions" :series="barSeries")
+										VueApexCharts(v-if="widgetSet && dropWidget.type == 'pie'" :type="pie" height="100%" :options="widget.donutOptions" :series="donutSeries" )
+										q-table(v-if="widgetSet && dropWidget.type == 'table'" flat :rows="rows" :columns="cols")
 
 
 						transition(name="fade")

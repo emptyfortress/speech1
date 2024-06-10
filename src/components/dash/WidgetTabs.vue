@@ -2,6 +2,9 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import MySelect from '@/components/common/MySelect.vue'
+import { useWidget } from '@/stores/widgetStore'
+
+const widget = useWidget()
 
 const group = ref(null)
 const options = [
@@ -28,6 +31,7 @@ const check = ref(false)
 .q-mt-lg
 	q-tabs(v-model="tab" align="left" active-color="primary" )
 		q-tab(name="data" label="Данные")
+		q-tab(v-if="widget.currentWidget.type == 'table'" name="table" label="Таблица")
 		q-tab(name="zag" label="Заголовок")
 		q-tab(name="style" label="Оформление")
 		q-tab(name="color" label="Цвет")
@@ -63,6 +67,8 @@ const check = ref(false)
 							div штук
 
 
+		q-tab-panel(name="table")
+			p Здесь настраиваем таблицу
 		q-tab-panel(name="zag")
 			p Здесь настраиваем заголовок
 		q-tab-panel(name="style")
