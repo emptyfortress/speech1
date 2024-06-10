@@ -70,6 +70,7 @@ const drop = (evt: DragEvent) => {
 	over.value = false
 	widgetSet.value = true
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
+	console.log(dropWidget.value)
 	widget.setCurrentWidget(dropWidget.value)
 }
 

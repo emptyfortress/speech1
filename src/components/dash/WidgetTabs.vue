@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import MySelect from '@/components/common/MySelect.vue'
 import { useWidget } from '@/stores/widgetStore'
+import MySelect from '@/components/common/MySelect.vue'
+import ZagSetup from '@/components/dash/ZagSetup.vue'
 
 const widget = useWidget()
 
@@ -70,7 +71,7 @@ const check = ref(false)
 		q-tab-panel(name="table")
 			p Здесь настраиваем таблицу
 		q-tab-panel(name="zag")
-			p Здесь настраиваем заголовок
+			ZagSetup
 		q-tab-panel(name="style")
 			p Здесь настраиваем шрифты, легенды и тп
 		q-tab-panel(name="color")
@@ -81,13 +82,9 @@ const check = ref(false)
 .q-tab-panel {
 	min-height: 300px;
 }
-// .q-tab-panels {
-// 	background: transparent;
-// }
 .grid {
 	display: grid;
 	grid-template-columns: auto 1fr;
-	// justify-items: start;
 	column-gap: 3rem;
 }
 .hd {
