@@ -67,11 +67,11 @@ export const useWidget = defineStore({
 		},
 		head: {
 			auto: false,
-			size: 1.1,
+			size: 1.7,
 			weight: 600,
 			style: 'normal',
 			align: 'left',
-			fontColor: '#333',
+			fontColor: 'green',
 			padding: [6, 16],
 			bgColor: '#ffffff',
 			borderWidth: [0, 0, 0, 0],

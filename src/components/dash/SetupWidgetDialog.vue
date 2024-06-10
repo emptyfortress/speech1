@@ -70,9 +70,12 @@ const drop = (evt: DragEvent) => {
 	over.value = false
 	widgetSet.value = true
 	dropWidget.value = JSON.parse(evt.dataTransfer!.getData('item'))
-	console.log(dropWidget.value)
 	widget.setCurrentWidget(dropWidget.value)
+	console.log(dropWidget.value)
 }
+const calcSubtitle = computed(() => {
+	return widget.currentWidget ? widget.currentWidget.text : 'fuck'
+})
 
 function calcNew() {
 	const length = randomNumber(3, 8, 0)
@@ -135,6 +138,10 @@ const cols = [
 		sortable: true,
 	},
 ]
+const headsize = computed(() => {
+	return widget.head.size + 'rem;'
+})
+const fuck = ref('red')
 </script>
 
 <template lang="pug">
@@ -188,11 +195,12 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 										.cent(v-if="widgetSet && dropWidget.type == 'digit'")
 											.digit
 												.dig 123
-												div Число
+												div {{ widget.currentWidget.text}}
+
 										.cent(v-if="widgetSet && dropWidget.type == 'percent'")
 											.digit
 												.dig 5%
-												div Процент
+												div {{ widget.currentWidget.text}}
 
 										VueApexCharts(ref="spark" v-if="widgetSet && dropWidget.type == 'spark'" type="area" height="100%" :options="widget.sparkOptions" :series="series")
 										VueApexCharts(v-if="widgetSet && dropWidget.type == 'chart'" type="area" height="100%" :options="widget.areaOptions" :series="series")
@@ -240,11 +248,11 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 	color: #aaa;
 	margin: auto;
 }
-.dig {
-	font-size: 2rem;
-	font-weight: 600;
-	line-height: 0.9;
-}
+// .dig {
+// 	font-size: 2rem;
+// 	font-weight: 600;
+// 	line-height: 0.9;
+// }
 
 .zg {
 	margin-top: 1rem;
@@ -285,5 +293,12 @@ q-dialog(v-model="modelValue" persistent maximized transition-show="slide-up" tr
 		top: 0;
 		right: -2rem;
 	}
+}
+
+.dig {
+	// font-size: v-bind(headsize);
+	font-size: 2rem;
+	font-weight: 600;
+	color: v-bind('fuck');
 }
 </style>

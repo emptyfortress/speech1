@@ -24,10 +24,10 @@ onMounted(() => {
 <template lang="pug">
 .grid2
 	div
-		MyInput(filled bg="#ccc" label="Заголовок" v-model="title")
+		MyInput(filled bg="#ccc" label="Заголовок" v-model="widget.currentWidget.text" :disable="zagData")
 		q-checkbox(v-model="zagData" dense label="Показывать данные вместо заголовка")
 	div
-		MyInput(filled bg="#ccc" label="Подзаголовок" v-model="subtitle")
+		MyInput(filled bg="#ccc" label="Подзаголовок" v-model="subtitle" :disable="podzagData")
 		q-checkbox(v-model="podzagData" dense label="Показывать данные вместо подзаголовка")
 
 	fieldset
@@ -35,7 +35,7 @@ onMounted(() => {
 		q-checkbox(v-model="zagAuto" dense label="Использовать настройки по умолчанию")
 		.form.q-mt-md(v-if="!zagAuto")
 			label Размер шрифта, rem:
-			q-slider( v-model="widget.head.size" label :min="0.3" :max="1.8" :step="0.01" )
+			q-slider(v-model="widget.head.size" label :min="0.3" :max="1.8" :step="0.01" )
 			label Жирность
 			q-select(v-model="widget.head.weight" dense filled bg-color="#ccc" :options="wOptions" )
 			label Стиль
