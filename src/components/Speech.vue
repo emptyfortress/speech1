@@ -12,6 +12,7 @@ ul.txt
 	li Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum.
 
 
+br
 .rezume Стенограмма
 .talk(v-for="talk in filterTalks" :key="talk.time")
 	.grid(v-if="talk.send")
@@ -146,7 +147,7 @@ const filterTalks = computed(() => {
 }
 .txt {
 	color: #fff;
-	background: #000;
+	background: #242e33;
 	border-radius: 0.5rem;
 	font-size: 0.9rem;
 	padding: 0.5rem;
