@@ -2,6 +2,17 @@
 .row.justify-between.items-center(v-if="!props.drawer")
 	q-btn(flat round icon="mdi-unfold-more-vertical" color="white" size="md" @click="mystore.wide = !mystore.wide")
 	#speech
+.row.justify-between.items-center
+	.rezume Резюме записи
+	q-img(src="@/assets/img/logoai.webp" width="150px" height="30px")
+
+ul.txt
+	li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim praesentium vitae! Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum iusto earum ipsam, et aut, sed dolore?
+	li Consectetur adipisicing elit. Ullam enim praesentium vitae!
+	li Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum.
+
+
+.rezume Стенограмма
 .talk(v-for="talk in filterTalks" :key="talk.time")
 	.grid(v-if="talk.send")
 		q-btn(flat color="blue-5" padding="xs" :label="talk.time" size="md")
@@ -127,5 +138,23 @@ const filterTalks = computed(() => {
 	top: 1.1rem;
 	left: 0.4rem;
 	font-size: 1.3rem;
+}
+.rezume {
+	color: #fff;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+.txt {
+	color: #fff;
+	background: #000;
+	border-radius: 0.5rem;
+	font-size: 0.9rem;
+	padding: 0.5rem;
+	li {
+		margin-left: 1rem;
+		margin-bottom: 1rem;
+	}
+	// margin: 0;
+	// padding: 0;
 }
 </style>
