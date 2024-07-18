@@ -68,6 +68,7 @@ const show = () => {
 		message: message,
 		color: 'primary',
 		icon: 'mdi-check',
+		position: 'top',
 	})
 }
 </script>
