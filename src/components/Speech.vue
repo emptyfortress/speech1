@@ -2,15 +2,17 @@
 .row.justify-between.items-center(v-if="!props.drawer")
 	q-btn(flat round icon="mdi-unfold-more-vertical" color="white" size="md" @click="mystore.wide = !mystore.wide")
 	#speech
-.row.justify-between.items-center
-	.rezume Резюме записи
-	q-img(src="@/assets/img/logoai.webp" width="150px" height="30px")
+.rezume Резюме записи
 
-ul.txt
-	li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim praesentium vitae! Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum iusto earum ipsam, et aut, sed dolore?
-	li Consectetur adipisicing elit. Ullam enim praesentium vitae!
-	li Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum.
-
+.aiblock
+	ul.txt
+		li Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim praesentium vitae! Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum iusto earum ipsam, et aut, sed dolore?
+		li Consectetur adipisicing elit. Ullam enim praesentium vitae!
+		li Explicabo repudiandae vero ipsum, voluptate aperiam nulla maiores modi quaerat eum.
+	.copy
+		.text-center
+			q-btn(unelevated color="primary" label="Копировать" @click="show")
+			.ai Составлено с использованием генеративного искусственного интеллекта
 
 br
 .rezume Стенограмма
@@ -39,6 +41,7 @@ br
 import { computed } from 'vue'
 import { useStore } from '@/stores/store'
 import { talks, talks2, talks3 } from '@/stores/speech'
+import { useQuasar } from 'quasar'
 const props = defineProps({
 	drawer: {
 		type: Boolean,
@@ -58,6 +61,15 @@ const filterTalks = computed(() => {
 			return talks
 	}
 })
+const $q = useQuasar()
+const show = () => {
+	let message = 'Скопировано'
+	$q.notify({
+		message: message,
+		color: 'primary',
+		icon: 'mdi-check',
+	})
+}
 </script>
 
 <style scoped lang="scss">
@@ -142,8 +154,27 @@ const filterTalks = computed(() => {
 }
 .rezume {
 	color: #fff;
-	font-weight: 600;
 	text-transform: uppercase;
+}
+.aiblock {
+	position: relative;
+	.copy {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba($color: #000000, $alpha: 0.7);
+		border-radius: 0.5rem;
+		display: none;
+		justify-content: center;
+		align-items: center;
+	}
+	&:hover {
+		.copy {
+			display: grid;
+		}
+	}
 }
 .txt {
 	color: #fff;
@@ -155,7 +186,25 @@ const filterTalks = computed(() => {
 		margin-left: 1rem;
 		margin-bottom: 1rem;
 	}
-	// margin: 0;
-	// padding: 0;
+}
+.copy {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba($color: #000000, $alpha: 0.7);
+	border-radius: 0.5rem;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+}
+.ai {
+	margin-top: 2rem;
+	color: #fff;
+	font-size: 0.8rem;
+	padding: 1rem;
+	background: #000;
+	line-height: 1;
 }
 </style>
