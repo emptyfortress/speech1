@@ -20,9 +20,14 @@ export const router = createRouter({
 			component: Home,
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
+		// {
+		// 	path: '/dash',
+		// 	component: () => import('@/components/Layout.vue'),
+		// 	meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
+		// },
 		{
-			path: '/dash',
-			component: () => import('@/components/Layout.vue'),
+			path: '/test',
+			component: () => import('@/components/common/TestPage.vue'),
 			meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
 		},
 		{
