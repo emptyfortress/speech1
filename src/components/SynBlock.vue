@@ -9,6 +9,7 @@ interface Syn {
 	id: number
 	label: string
 	selected: boolean
+	show: boolean
 }
 
 const chips = ref([
@@ -36,7 +37,7 @@ const remove = () => {
 	dialog.value = false
 }
 const revert = () => {
-	current.value.show = true
+	current.value!.show = true
 	dialog.value = false
 }
 </script>

@@ -20,6 +20,7 @@ q-page(padding)
 			q-tab(name="setup" label="Права")
 			q-tab(name="notific" label="Уведомления")
 			q-tab(name="login" label="Безопасность")
+			q-tab(name="search" label="Поиск")
 		q-separator
 
 		q-tab-panels(v-model="tab" animated)
@@ -73,6 +74,14 @@ q-page(padding)
 					q-btn(flat color="primary") Отмена
 					q-btn(unelevated color="primary") Сохранить
 
+			q-tab-panel(name="search")
+				q-card-section
+					q-checkbox(v-model='futureDefault' label='Всегда искать синонимы, если они есть' dense)
+
+				q-card-actions(v-if="futureDefault")
+					q-btn(flat color="primary" @click="edit = false") Отмена
+					q-btn(unelevated color="primary" @click="edit = false") Сохранить
+
 </template>
 
 <script setup lang="ts">
@@ -102,6 +111,7 @@ onMounted(() => {
 		tab.value = 'notific'
 	}
 })
+const futureDefault = ref(false)
 </script>
 
 <style scoped lang="scss">
