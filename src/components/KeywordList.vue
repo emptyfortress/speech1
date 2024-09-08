@@ -34,8 +34,8 @@ q-form(@submit="add")
 					q-item-section(side v-if="!editMode")
 						.row
 							q-icon.q-mr-sm.hov(name="mdi-pencil" size="xs" @click="edit(element)" v-if="element.voc")
-							q-icon.hov(name="mdi-trash-can-outline" size="xs" @click="")
-								q-menu
+							q-icon.hov(name="mdi-trash-can-outline" size="xs" @click="remove(element)")
+								// q-menu
 									q-list
 										q-item.pink(clickable @click="remove(element)" v-close-popup)
 											q-item-section Удалить
@@ -45,6 +45,9 @@ q-form(@submit="add")
 				q-icon(name="mdi-emoticon-tongue-outline" size="sm" color="primary")
 				span.q-mx-sm Ничего нет.
 				q-btn(color="primary" label="Добавить" size="sm" unelevated @click="add")
+
+		// template(v-if='store.keywordFilter.length')
+		// 	SynonymBlock
 
 transition(name="slide-bottom")
 	.addvoc#dialog(v-show="selection.length > 0 && !editMode")
@@ -75,6 +78,7 @@ import { useStore } from '@/stores/store'
 import { useOnboard } from '@/stores/onboard'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import AddWordListDialog from '@/components/AddWordListDialog.vue'
+// import SynonymBlock from '@/components/SynonymBlock.vue'
 
 interface Keyword {
 	key?: string
