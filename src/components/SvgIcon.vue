@@ -1,6 +1,6 @@
 <template>
 	<svg aria-hidden="true" class="icon" :class="{ 'icon-spin': spin }">
-		<use :href="symbolId" :fill="color" />
+		<use :href="symbolId" fill="color" />
 	</svg>
 </template>
 

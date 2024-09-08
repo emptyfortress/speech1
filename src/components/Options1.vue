@@ -25,14 +25,18 @@ q-dialog(v-model="dialog" persistent)
 import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import CommonOptions from '@/components/common/CommonOptions.vue'
+import { useSynStore } from '@/stores/synonim'
 
 const mystore = useStore()
+const mysyn = useSynStore()
+
 const toggle = () => {
 	mystore.loading = true
 	mystore.sett = false
 	mystore.integral = true
 	setTimeout(() => {
 		mystore.loading = false
+		mysyn.setSyn(true)
 	}, 1700)
 }
 const dialog = ref(false)
