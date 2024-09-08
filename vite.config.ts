@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
@@ -22,6 +23,7 @@ export default defineConfig({
 				defineModel: true
 			}
 		}),
+		VueDevTools(),
 		quasar({
 			sassVariables: 'src/quasar-variables.scss',
 		}),
