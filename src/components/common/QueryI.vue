@@ -28,6 +28,7 @@
 				template(v-slot:no-option)
 					q-item.text-grey
 						q-item-section Слово не найдено. Чтобы добавить, нажмите "Ввод".
+		q-checkbox.syn(v-model='syn' label='Cинонимы' dense size='sm')
 		q-select(label="Канал" dense v-model="channel" :options="channelOptions")
 		q-btn.reload(round flat dense @click="clear")
 			q-icon(name="mdi-reload" size="sm")
@@ -152,6 +153,7 @@ const addWord = (e: any) => {
 		options.value.sort(compare)
 	}
 }
+const syn = ref(false)
 </script>
 
 <style scoped lang="scss">
@@ -186,9 +188,9 @@ const addWord = (e: any) => {
 }
 .myrow {
 	display: grid;
-	grid-template-columns: 170px 1fr 130px auto;
+	grid-template-columns: 170px 1fr 100px 130px auto;
 	align-items: flex-start;
-	column-gap: 2rem;
+	column-gap: 1rem;
 	row-gap: 1rem;
 }
 .start {
@@ -202,5 +204,9 @@ const addWord = (e: any) => {
 }
 .reload {
 	color: #666;
+}
+.syn {
+	font-size: 0.9rem;
+	margin-top: 0.5rem;
 }
 </style>
