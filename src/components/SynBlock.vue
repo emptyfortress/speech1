@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useSynStore } from '@/stores/synonim'
 
 const mysyn = useSynStore()
@@ -40,11 +40,14 @@ const revert = () => {
 	current.value!.show = true
 	dialog.value = false
 }
+const calcClass = computed(() => {
+	return mysyn.showSyn ? 'jello' : ''
+})
 </script>
 
 <template lang="pug">
 q-dialog(v-model="mysyn.showSyn" position='bottom' seamless)
-	q-card
+	q-card(:class='calcClass')
 		q-btn.close(icon="mdi-close" round dense color="negative" v-close-popup)
 		q-card-section
 			q-checkbox(v-model="searchSyn" dark label='Поиск с синонимами')
@@ -80,5 +83,68 @@ q-dialog(v-model="mysyn.showSyn" position='bottom' seamless)
 .q-dialog .q-card .close {
 	top: -1rem;
 	right: -1rem;
+}
+.jello {
+	-webkit-animation: wobble-hor-bottom 0.8s 1.5s both;
+	animation: wobble-hor-bottom 0.8s 1.5s both;
+}
+
+@-webkit-keyframes wobble-hor-bottom {
+	0%,
+	100% {
+		-webkit-transform: translateX(0%);
+		transform: translateX(0%);
+		-webkit-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+	}
+	15% {
+		-webkit-transform: translateX(-30px) rotate(-6deg);
+		transform: translateX(-30px) rotate(-6deg);
+	}
+	30% {
+		-webkit-transform: translateX(15px) rotate(6deg);
+		transform: translateX(15px) rotate(6deg);
+	}
+	45% {
+		-webkit-transform: translateX(-15px) rotate(-3.6deg);
+		transform: translateX(-15px) rotate(-3.6deg);
+	}
+	60% {
+		-webkit-transform: translateX(9px) rotate(2.4deg);
+		transform: translateX(9px) rotate(2.4deg);
+	}
+	75% {
+		-webkit-transform: translateX(-6px) rotate(-1.2deg);
+		transform: translateX(-6px) rotate(-1.2deg);
+	}
+}
+@keyframes wobble-hor-bottom {
+	0%,
+	100% {
+		-webkit-transform: translateX(0%);
+		transform: translateX(0%);
+		-webkit-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+	}
+	15% {
+		-webkit-transform: translateX(-30px) rotate(-6deg);
+		transform: translateX(-30px) rotate(-6deg);
+	}
+	30% {
+		-webkit-transform: translateX(15px) rotate(6deg);
+		transform: translateX(15px) rotate(6deg);
+	}
+	45% {
+		-webkit-transform: translateX(-15px) rotate(-3.6deg);
+		transform: translateX(-15px) rotate(-3.6deg);
+	}
+	60% {
+		-webkit-transform: translateX(9px) rotate(2.4deg);
+		transform: translateX(9px) rotate(2.4deg);
+	}
+	75% {
+		-webkit-transform: translateX(-6px) rotate(-1.2deg);
+		transform: translateX(-6px) rotate(-1.2deg);
+	}
 }
 </style>
