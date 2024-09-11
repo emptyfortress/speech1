@@ -47,12 +47,12 @@ q-dialog(v-model="mysyn.showSyn" position='bottom' seamless)
 	q-card
 		q-btn.close(icon="mdi-close" round dense color="negative" v-close-popup)
 		q-card-section
-			q-checkbox(v-model="searchSyn" label='Поиск с синонимами')
+			q-checkbox(v-model="searchSyn" dark label='Поиск с синонимами')
 		q-card-section(v-if='searchSyn')
 			q-chip(v-for="chip in chips" :key='chip.id' v-model:selected='chip.selected' v-model="chip.show" clickable removable @update:modelValue='confirm(chip)') {{ chip.label }}
 
 		q-card-actions.q-mb-md.q-mx-md(v-if='searchSyn' align='left')
-			q-checkbox(v-model='futureDefault' label='Всегда искать синонимы, если они есть' dense)
+			q-checkbox(v-model='futureDefault' dark label='Всегда искать синонимы, если они есть' dense)
 			q-space
 			q-btn(flat color="primary" label="Отмена" v-close-popup) 
 			q-btn(unelevated color="primary" label="Искать включая синонимы" v-close-popup) 
@@ -74,6 +74,8 @@ q-dialog(v-model="mysyn.showSyn" position='bottom' seamless)
 <style scoped lang="scss">
 .q-card {
 	min-width: 800px;
+	color: white;
+	background: #012949;
 }
 .q-dialog .q-card .close {
 	top: -1rem;
