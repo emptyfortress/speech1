@@ -53,8 +53,8 @@ q-dialog(v-model="mysyn.showSyn" position='bottom' seamless)
 			q-checkbox(v-model="searchSyn" dark label='Поиск с синонимами')
 		q-card-section(v-if='searchSyn')
 			q-chip(v-for="chip in chips" :key='chip.id' v-model:selected='chip.selected' v-model="chip.show" clickable removable @update:modelValue='confirm(chip)') {{ chip.label }}
-		q-card-section(v-if='searchSyn')
-			.q-ma-md Для просмотра списка синонимов введите конкретное слово.
+	q-card-section(v-if='searchSyn')
+	.q-ma-md Для просмотра списка синонимов введите конкретное слово.
 
 		q-card-actions.q-mb-md.q-mx-md(v-if='searchSyn' align='left')
 			q-checkbox(v-model='futureDefault' dark label='Всегда искать синонимы, если они есть' dense)
