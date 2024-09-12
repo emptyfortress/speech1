@@ -17,18 +17,22 @@ const colorFlat = computed(() => {
 	return focusFlat.value ? '' : 'primary'
 })
 const loading = ref(false)
-const result = ref(true)
+const result = ref(false)
+const place = ref('Вопрос на естественном языке')
 const ask = () => {
 	loading.value = true
 	setTimeout(() => {
 		loading.value = false
 		result.value = true
+		query.value = ''
+		place.value = 'Вы можете уточнить вопрос.'
 	}, 2000)
 }
 const query = ref('')
 const action1 = () => {
 	query.value = 'покажи мне все звонки, где люди ругаются'
 	presearch.value = false
+	times[3].selected = true
 }
 const presearch = ref(true)
 
@@ -39,7 +43,7 @@ const times = reactive([
 	{ label: 'Текущий месяц', selected: false },
 	{ label: 'Прошлый месяц', selected: false },
 ])
-const select = (chip) => {
+const select = (chip: { label: string; selected: boolean }) => {
 	times.map((el) => (el.selected = false))
 	chip.selected = true
 }
@@ -47,7 +51,17 @@ const select = (chip) => {
 
 <template lang="pug">
 q-card-section
-	q-linear-progress.q-mb-md(indeterminate color="accent" v-if='loading')
+	q-linear-progress(indeterminate color="accent" v-if='loading')
+	.summary(v-if='result')
+		.hd
+			|Структура запроса &nbsp;
+			span.text-primary 'покажи мне все звонки, где люди ругаются'
+		ol
+			li Выбрать словари содержащие нецензурную лексику
+			li Включить распознование эмоций (Гнев, раздражение)
+			li Отфильтровать архив записей по выбранным словарям и эмоциям
+			li Показать результат в виде таблицы записей не старше 1 месяца
+
 	q-card.result(v-if='result')
 		.found
 			|Найдено 3 похожих ответа.
@@ -102,7 +116,7 @@ q-card-section
 	.grid
 		div
 			.input
-				q-input(v-model="query" type='textarea' outlined autogrow class="bg-white" placeholder='Вопрос на естественном языке')
+				q-input(v-model="query" type='textarea' outlined autogrow class="bg-white" :placeholder='place')
 				.filt
 					q-btn(icon='mdi-filter-variant' label="Фокус" size='sm' :flat='focusFlat' :color="colorFlat") 
 						q-menu
@@ -212,6 +226,15 @@ q-card-section
 		display: grid;
 		grid-template-columns: auto 1fr;
 		column-gap: 0.5rem;
+	}
+}
+.summary {
+	margin-bottom: 1rem;
+	margin-left: 0.5rem;
+	font-size: 0.9rem;
+	.hd {
+		font-weight: 600;
+		font-size: 0.9rem;
 	}
 }
 </style>
