@@ -25,6 +25,24 @@ const ask = () => {
 		result.value = true
 	}, 2000)
 }
+const query = ref('')
+const action1 = () => {
+	query.value = 'покажи мне все звонки, где люди ругаются'
+	presearch.value = false
+}
+const presearch = ref(true)
+
+const times = reactive([
+	{ label: 'Вчера', selected: false },
+	{ label: 'Текущая неделя', selected: false },
+	{ label: 'Прошлая неделя', selected: false },
+	{ label: 'Текущий месяц', selected: false },
+	{ label: 'Прошлый месяц', selected: false },
+])
+const select = (chip) => {
+	times.map((el) => (el.selected = false))
+	chip.selected = true
+}
 </script>
 
 <template lang="pug">
@@ -32,15 +50,54 @@ q-card-section
 	q-linear-progress.q-mb-md(indeterminate color="accent" v-if='loading')
 	q-card.result(v-if='result')
 		.found
-			|Найдено 3 результата.
+			|Найдено 3 похожих ответа.
 			q-btn(flat icon='mdi-close' label='Закрыть' @click="action" dense size='sm') 
 		.resgrid
 			.res
-				q-chip(size='sm') Результат 1
+				.found
+					q-chip(size='sm') Результат 1
+					q-btn(flat round icon="mdi-pencil-outline" @click="action" dense size='sm') 
+				.pad
+					.hd Мат при звонке
+					.gr
+						label Вид:
+						div Сохраненный отчет
+						label Фокус:
+						div Записи, Отчеты
+						label Словарь:
+						div Нецензурная лексика
+						label Период:
+						div Текущий месяц
+
+
 			.res
-				q-chip(size='sm') Результат 2
+				.found
+					q-chip(size='sm') Результат 2
+					q-btn(flat round icon="mdi-pencil-outline" @click="action" dense size='sm') 
+				.pad
+					.hd Повышенный тон
+					.gr
+						label Вид:
+						div Новый поиск
+						label Фокус:
+						div Звонки
+						label Эмоции:
+						div Гнев, раздражение
+						label Период:
+						div Текущий месяц
 			.res
-				q-chip(size='sm') Результат 3
+				.found
+					q-chip(size='sm') Результат 3
+					q-btn(flat round icon="mdi-pencil-outline" @click="action" dense size='sm') 
+				.pad
+					.hd Негативный клиент
+					.gr
+						label Вид:
+						div Сохраненный отчет
+						label Фокус:
+						div Записи, Отчеты
+						label Период:
+						div Текущий месяц
 
 	.grid
 		div
@@ -51,15 +108,15 @@ q-card-section
 						q-menu
 							q-card.focus
 								q-card-section
-									q-chip(v-for="chip in focus" clickable v-model:selected='chip.selected') {{ chip.label }}
+									q-chip(v-for="chip in focus" clickable v-model:selected='chip.selected' :key='chip.label') {{ chip.label }}
 
-					q-btn(flat icon='mdi-tag-outline' label="Контекст" @click="showContext" size='sm') 
+					q-btn(flat icon='mdi-tag-outline' label="Контекст" size='sm') 
 			.search
 				.txt Вы всегда сможете дополнить и уточнить свой вопрос.
 				q-btn(unelevated color="primary" label="Спросить" @click="ask") 
 
-		div
-			.example
+		div(v-if='presearch')
+			.example(@click='action1')
 				q-icon(name="mdi-lightbulb-outline")
 				|покажи мне все звонки, где люди ругаются
 			.example
@@ -68,7 +125,10 @@ q-card-section
 			.example
 				q-icon(name="mdi-lightbulb-outline")
 				|покажи все звонки за месяц, где есть несоответствие чек-листу Базовый
-	.focus
+		div(v-else)
+			q-chip(v-for="chip in times" clickable v-model:selected='chip.selected' :key='chip.label' @click='select(chip)') {{ chip.label }}
+			q-btn(flat color="primary" icon='mdi-calendar' label="Задать диапазон" size='sm') 
+
 </template>
 
 <style scoped lang="scss">
@@ -140,6 +200,18 @@ q-card-section
 		width: 100%;
 		// height: 200px;
 		border: 1px solid #ccc;
+	}
+}
+.pad {
+	padding: 0.5rem;
+	.hd {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+	.gr {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		column-gap: 0.5rem;
 	}
 }
 </style>
