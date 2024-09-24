@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
+import NlqStructure from '@/components/nlq/NlqStructure.vue'
 
 const focus = reactive([
 	{ label: 'Звонки', selected: false },
@@ -17,7 +18,7 @@ const colorFlat = computed(() => {
 	return focusFlat.value ? '' : 'primary'
 })
 const loading = ref(false)
-const result = ref(false)
+const result = ref(true)
 const place = ref('Вопрос на естественном языке')
 const ask = () => {
 	loading.value = true
@@ -56,21 +57,18 @@ q-card-section
 		.hd
 			|Структура запроса &nbsp;
 			span.text-primary 'покажи мне все звонки, где люди ругаются'
-		ol
-			li Выбрать словари содержащие нецензурную лексику
-			li Включить распознование эмоций (Гнев, раздражение)
-			li Отфильтровать архив записей по выбранным словарям и эмоциям
-			li Показать результат в виде таблицы записей не старше 1 месяца
+
+		NlqStructure
 
 	q-card.result(v-if='result')
 		.found
 			|Найдено 3 похожих ответа.
-			q-btn(flat icon='mdi-close' label='Закрыть' @click="action" dense size='sm') 
+			q-btn(flat icon='mdi-close' label='Закрыть' @click="" dense size='sm') 
 		.resgrid
 			.res
 				.found
 					q-chip(size='sm') Результат 1
-					q-btn(flat round icon="mdi-pencil-outline" @click="action" dense size='sm') 
+					q-btn(flat round icon="mdi-pencil-outline" @click="" dense size='sm') 
 				.pad
 					.hd Мат при звонке
 					.gr
@@ -87,7 +85,7 @@ q-card-section
 			.res
 				.found
 					q-chip(size='sm') Результат 2
-					q-btn(flat round icon="mdi-pencil-outline" @click="action" dense size='sm') 
+					q-btn(flat round icon="mdi-pencil-outline" @click="" dense size='sm') 
 				.pad
 					.hd Повышенный тон
 					.gr

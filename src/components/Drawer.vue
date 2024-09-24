@@ -33,6 +33,12 @@ const pages = [
 		url: '/',
 	},
 	{
+		id: 7,
+		title: 'Семантика',
+		icon: 'mdi-lightbulb-outline',
+		url: '/semantic',
+	},
+	{
 		id: 1,
 		title: 'Отчеты',
 		icon: 'mdi-finance',

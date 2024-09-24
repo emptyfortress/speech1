@@ -15,6 +15,7 @@ const duble = () => {
 	emit('duble')
 }
 const rec = ref(false)
+
 const add = () => {
 	let question = {
 		id: list.value.length,
@@ -23,6 +24,7 @@ const add = () => {
 		auto: false,
 		mark: 0,
 		new: true,
+		gpt: false,
 	}
 	props.new == true ? list1.value.push(question) : list.value.push(question)
 }
@@ -31,15 +33,15 @@ const editMode = ref(false)
 const edit = () => {
 	editMode.value = !editMode.value
 }
-const list1 = ref([{ id: 0, text: 'Вопрос', zapros: '', auto: false, mark: 0, new: false }])
+const list1 = ref([{ id: 0, text: 'Вопрос', zapros: '', auto: false, gpt:false, mark: 0, new: false }])
 const list = ref([
-	{ id: 0, zapros: 'Приветствие', text: 'Приветствие', auto: true, mark: 53, new: false },
-	{ id: 1, zapros: '', text: 'Прогрев', auto: false, new: false },
-	{ id: 2, zapros: '', text: 'Выяснение проблем', auto: false, new: false },
-	{ id: 3, zapros: '', text: 'Отработка возражений', auto: false, new: false },
-	{ id: 4, zapros: '', text: 'Предложение товаров по акции', auto: false, mark: 67, new: false },
-	{ id: 5, zapros: '', text: 'Тон разговора', new: false },
-	{ id: 6, zapros: 'Прощание', text: 'Завершение разговора', auto: true, mark: 92, new: false },
+	{ id: 0, zapros: 'Приветствие', text: 'Приветствие', auto: true, gpt:false, mark: 53, new: false },
+	{ id: 1, zapros: '', text: 'Прогрев', auto: false,  gpt:false, new: false },
+	{ id: 2, zapros: '', text: 'Выяснение проблем', auto: false,  gpt:false, new: false },
+	{ id: 3, zapros: '', text: 'Отработка возражений', auto: false,  gpt:false, new: false },
+	{ id: 4, zapros: '', text: 'Предложение товаров по акции', auto: false,  gpt:false, mark: 67, new: false },
+	{ id: 5, zapros: '', text: 'Тон разговора', new: false, auto: false,  gpt:false, },
+	{ id: 6, zapros: 'Прощание', text: 'Завершение разговора', auto: true, gpt:false, mark: 92, new: false },
 ])
 const calcEdit = computed(() => {
 	return editMode.value ? true : false
@@ -76,6 +78,44 @@ const removeZapros = (el: any) => {
 	el.zapros = ''
 	el.auto = false
 }
+const toggle1 = ((el: any) => {
+	if (editMode.value == false) return
+		else {
+			if (el.auto == false) {
+				el.auto = true
+				el.gpt = false
+			} else if (el.auto == true) {
+				el.auto = false
+			}
+		}
+})
+const toggle2 = ((el: any) => {
+	if (editMode.value == false) return
+		else {
+			if (el.gpt == false) {
+				el.gpt = true
+				el.auto = false
+			} else if (el.gpt == true) {
+				el.gpt = false
+			}
+	}
+})
+const toggle3 = ((el: any) => {
+	if (el.auto == false) {
+		el.auto = true
+		el.gpt = false
+	} else if (el.auto == true) {
+		el.auto = false
+	}
+})
+const toggle4 = ((el: any) => {
+	if (el.gpt == false) {
+		el.gpt = true
+		el.auto = false
+	} else if (el.gpt == true) {
+		el.gpt = false
+	}
+})
 </script>
 
 <template lang="pug">
@@ -101,9 +141,14 @@ q-dialog.rel(v-model="modelValue")
 									q-avatar(text-color="black") {{index + 1}}
 								q-item-section
 									q-item-label(:contenteditable="true") {{ element.text }}
+
 									.text-caption(v-if="element.auto")
 										q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
 										span AUTO
+
+									.text-caption(v-if="element.gpt")
+										q-icon.q-mr-xs(name="mdi-alpha-a-box" color="negative" size="xs")
+										span GPT
 
 								q-item-section(side)
 									q-btn(flat round dense icon="mdi-trash-can-outline" size="sm")
@@ -111,16 +156,21 @@ q-dialog.rel(v-model="modelValue")
 											q-list
 												q-item.pink(clickable @click="del1(index)" v-close-popup)
 													q-item-section Удалить
+
 							q-card-section
 								.grid
 									.condition
 										.text-weight-bold Условия
 										p(:contenteditable="true") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+
 									.request
-										q-checkbox.q-mr-md(v-model="element.auto" dense :disable="!element.zapros.length")
-										label Запрос для автоматической оценки:
-											q-chip(removable v-if="element.zapros.length" @remove="removeZapros(element)" ) {{ element.zapros}}
-											q-btn(v-else flat color="primary" label="Выбрать" @click="toggleZapros(element)" )
+										q-checkbox.q-mr-md(:model-value="element.auto" label='Запрос для автоматической оценки:' dense  @click='toggle3(element)')
+										q-chip(:removable="editMode" v-if="element.zapros.length" @remove="removeZapros(element)" ) {{ element.zapros}}
+										q-btn(v-else flat color="primary" label="Выбрать" @click="toggleZapros(element)" )
+
+									.request
+										q-checkbox.q-mr-md(:model-value="element.gpt" label='Запрос на естественном языке' dense  color="negative" @click='toggle4(element)')
+										q-input(v-model="gpt" v-if='element.gpt' type='textarea' outlined placeholder='Сформулируйте запрос')
 
 		.row.justify-between.q-ma-sm(align="right")
 			q-btn(flat color="primary" label="Отмена" @click="close") 
@@ -152,9 +202,14 @@ q-dialog.rel(v-model="modelValue")
 										q-avatar(text-color="black") {{index + 1}}
 									q-item-section
 										q-item-label(:contenteditable="calcEdit") {{ element.text }}
+
 										.text-caption(v-if="element.auto")
 											q-icon.q-mr-xs(name="mdi-alpha-a-box" color="primary" size="xs")
 											span AUTO
+
+										.text-caption(v-if="element.gpt")
+											q-icon.q-mr-xs(name="mdi-alpha-a-box" color="negative" size="xs")
+											span GPT
 
 									q-item-section(side v-if="editMode")
 										q-btn(flat round dense icon="mdi-trash-can-outline" size="sm")
@@ -167,11 +222,15 @@ q-dialog.rel(v-model="modelValue")
 										.condition
 											.text-weight-bold Условия
 											p(:contenteditable="calcEdit") Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis nesciunt officiis dicta quae voluptates sequi? Minima eaque, repellat neque praesentium perspiciatis amet expedita. Vitae at quam, veniam ipsa sequi quia.
+
 										.request
-											q-checkbox.q-mr-md(v-model="element.auto" dense :disable="!editMode || !element.zapros.length")
-											label Запрос для автоматической оценки:
-												q-chip(:removable="editMode" v-if="element.zapros.length" @remove="removeZapros(element)" ) {{ element.zapros}}
-												q-btn(v-else flat color="primary" label="Выбрать" @click="toggleZapros(element)" :disable="!editMode" )
+											q-checkbox.q-mr-md(:model-value="element.auto" label='Запрос для автоматической оценки:' dense :disable="!editMode || !element.zapros.length" @click='toggle1(element)')
+											q-chip(:removable="editMode" v-if="element.zapros.length" @remove="removeZapros(element)" ) {{ element.zapros}}
+											q-btn(v-else flat color="primary" label="Выбрать" @click="toggleZapros(element)" :disable="!editMode" )
+
+										.request
+											q-checkbox.q-mr-md(:model-value="element.gpt" label='Запрос на естественном языке' dense :disable="!editMode || !element.zapros.length" color="negative" @click='toggle2(element)')
+											q-input(v-model="gpt" v-if='element.gpt' type='textarea' outlined placeholder='Сформулируйте запрос')
 
 			.row.justify-between.q-ma-sm(align="right")
 				template(v-if="!editMode")

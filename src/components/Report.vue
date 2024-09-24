@@ -1,7 +1,7 @@
 <template lang="pug">
 q-page(padding)
 	.container
-		q-expansion-item(v-model="mystore.nat")
+		// q-expansion-item(v-model="mystore.nat")
 			template(v-slot:header)
 				q-item-section(avatar).line
 					q-avatar(flat)
@@ -50,7 +50,7 @@ import Records from '@/components/Records.vue'
 import Chiplist from '@/components/common/Chiplist.vue'
 import { starredReports } from '@/stores/data'
 import SynBlock from '@/components/SynBlock.vue'
-import NlqModule from '@/components/nlq/NlqModule.vue'
+// import NlqModule from '@/components/nlq/NlqModule.vue'
 
 const mystore = useStore()
 </script>

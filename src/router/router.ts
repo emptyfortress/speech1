@@ -20,11 +20,11 @@ export const router = createRouter({
 			component: Home,
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
-		// {
-		// 	path: '/dash',
-		// 	component: () => import('@/components/Layout.vue'),
-		// 	meta: { transition: 'slide-left', title: 'Личный кабинет', requiresAuth: false },
-		// },
+		{
+			path: '/semantic',
+			component: () => import('@/components/Semantic.vue'),
+			meta: { transition: 'slide-left', title: 'Семантический поиск', requiresAuth: false },
+		},
 		{
 			path: '/operator',
 			component: () => import('@/components/OpProfile.vue'),
