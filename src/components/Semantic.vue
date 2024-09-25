@@ -2,12 +2,12 @@
 import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import NlqSearch from '@/components/nlq/NlqSearch.vue'
-import NlqAnalyze from '@/components/nlq/NlqAnalyze.vue'
+// import NlqAnalyze from '@/components/nlq/NlqAnalyze.vue'
 
 const mystore = useStore()
 
-const search = ref(false)
-const analize = ref(true)
+const search = ref(true)
+// const analize = ref(true)
 </script>
 
 <template lang="pug">
@@ -24,7 +24,7 @@ q-page(padding)
 
 			NlqSearch
 
-		q-expansion-item(v-model="analize")
+		// q-expansion-item(v-model="analize")
 			template(v-slot:header)
 				q-item-section(avatar).line
 					q-avatar(flat)

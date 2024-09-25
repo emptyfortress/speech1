@@ -10,6 +10,11 @@ const focus = reactive([
 	{ label: 'Отчеты', selected: false },
 	{ label: 'Анкеты', selected: false },
 ])
+const questions = [
+	{id: 0, text: 'покажи мне все звонки, где люди ругаются'},
+	{id: 1, text: 'покажи мне звонки Иванова, где он продавал'},
+	{id: 2, text: 'покажи все звонки за месяц, где есть несоответствие чек-листу Базовый'},
+]
 
 const focusFlat = computed(() => {
 	return focus.filter((el) => el.selected).length > 0 ? false : true
@@ -18,21 +23,26 @@ const colorFlat = computed(() => {
 	return focusFlat.value ? '' : 'primary'
 })
 const loading = ref(false)
-const result = ref(true)
+const result = ref(false)
 const place = ref('Вопрос на естественном языке')
+
 const ask = () => {
 	loading.value = true
 	setTimeout(() => {
 		loading.value = false
 		result.value = true
 		query.value = ''
+		presearch.value = false
 		place.value = 'Вы можете уточнить вопрос.'
 	}, 2000)
 }
+const calcLabel = computed(() => {
+	return presearch.value == false ? 'Уточнить' : 'Спросить'
+})
+
 const query = ref('')
-const action1 = () => {
-	query.value = 'покажи мне все звонки, где люди ругаются'
-	presearch.value = false
+const action1 = (e: any) => {
+	query.value = e.text
 	times[3].selected = true
 }
 const presearch = ref(true)
@@ -48,6 +58,7 @@ const select = (chip: { label: string; selected: boolean }) => {
 	times.map((el) => (el.selected = false))
 	chip.selected = true
 }
+const show = ref(true)
 </script>
 
 <template lang="pug">
@@ -60,9 +71,9 @@ q-card-section
 
 		NlqStructure
 
-	q-card.result(v-if='result')
+	q-card.result(v-if='result && show')
 		.found
-			|Найдено 3 похожих ответа.
+			|Найдено 2 похожих сохраненных результата.
 			q-btn(flat icon='mdi-close' label='Закрыть' @click="" dense size='sm') 
 		.resgrid
 			.res
@@ -81,7 +92,6 @@ q-card-section
 						label Период:
 						div Текущий месяц
 
-
 			.res
 				.found
 					q-chip(size='sm') Результат 2
@@ -90,27 +100,15 @@ q-card-section
 					.hd Повышенный тон
 					.gr
 						label Вид:
-						div Новый поиск
+						div Сохраненный отчет
 						label Фокус:
 						div Звонки
 						label Эмоции:
 						div Гнев, раздражение
 						label Период:
 						div Текущий месяц
-			.res
-				.found
-					q-chip(size='sm') Результат 3
-					q-btn(flat round icon="mdi-pencil-outline" @click="action" dense size='sm') 
-				.pad
-					.hd Негативный клиент
-					.gr
-						label Вид:
-						div Сохраненный отчет
-						label Фокус:
-						div Записи, Отчеты
-						label Период:
-						div Текущий месяц
 
+	q-btn.full-width.q-mb-md(v-if='result' unelevated color="primary" label="Искать" @click="" ) 
 	.grid
 		div
 			.input
@@ -125,18 +123,12 @@ q-card-section
 					q-btn(flat icon='mdi-tag-outline' label="Контекст" size='sm') 
 			.search
 				.txt Вы всегда сможете дополнить и уточнить свой вопрос.
-				q-btn(unelevated color="primary" label="Спросить" @click="ask") 
+				q-btn(unelevated color="primary" :label="calcLabel" @click="ask") 
 
 		div(v-if='presearch')
-			.example(@click='action1')
+			.example(v-for="item in questions" @click='action1(item)')
 				q-icon(name="mdi-lightbulb-outline")
-				|покажи мне все звонки, где люди ругаются
-			.example
-				q-icon(name="mdi-lightbulb-outline")
-				|покажи мне звонки Иванова, где он продавал
-			.example
-				q-icon(name="mdi-lightbulb-outline")
-				|покажи все звонки за месяц, где есть несоответствие чек-листу Базовый
+				|{{ item.text }}
 		div(v-else)
 			q-chip(v-for="chip in times" clickable v-model:selected='chip.selected' :key='chip.label' @click='select(chip)') {{ chip.label }}
 			q-btn(flat color="primary" icon='mdi-calendar' label="Задать диапазон" size='sm') 
@@ -234,5 +226,10 @@ q-card-section
 		font-weight: 600;
 		font-size: 0.9rem;
 	}
+}
+.zap {
+	font-size: 1rem;
+	color: $primary;
+	margin-bottom: 1rem;
 }
 </style>
