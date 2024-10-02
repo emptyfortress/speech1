@@ -16,7 +16,6 @@ const ask = () => {
 		loading.value = false
 		result.value = true
 		query.value = ''
-		presearch.value = false
 		place.value = 'Вы можете уточнить вопрос.'
 	}, 2000)
 }
