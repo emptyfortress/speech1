@@ -32,12 +32,12 @@ const pages = [
 		icon: 'mdi-home-roof',
 		url: '/',
 	},
-	{
-		id: 7,
-		title: 'Семантика',
-		icon: 'mdi-lightbulb-outline',
-		url: '/semantic',
-	},
+	// {
+	// 	id: 7,
+	// 	title: 'Семантика',
+	// 	icon: 'mdi-lightbulb-outline',
+	// 	url: '/semantic',
+	// },
 	{
 		id: 1,
 		title: 'Отчеты',
