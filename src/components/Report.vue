@@ -35,7 +35,7 @@ q-page(padding)
 		Operatorstat
 		Records
 
-	SynBlock
+	// SynBlock
 
 </template>
 
@@ -49,7 +49,7 @@ import Operatorstat from '@/components/Operatorstat.vue'
 import Records from '@/components/Records.vue'
 import Chiplist from '@/components/common/Chiplist.vue'
 import { starredReports } from '@/stores/data'
-import SynBlock from '@/components/SynBlock.vue'
+// import SynBlock from '@/components/SynBlock.vue'
 import NlqModule from '@/components/nlq/NlqModule.vue'
 
 const mystore = useStore()
