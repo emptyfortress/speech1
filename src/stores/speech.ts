@@ -147,7 +147,7 @@ const talks3: Talk[] = [
 		text: 'эй',
 	},
 	{
-		time: '00:26',
+		time: '00:27',
 		send: true,
 		text: 'средства',
 	},
@@ -162,17 +162,17 @@ const talks3: Talk[] = [
 		text: 'денежные средства',
 	},
 	{
-		time: '00:35',
+		time: '00:36',
 		send: false,
 		text: 'там одиноко',
 	},
 	{
-		time: '00:35',
+		time: '00:37',
 		send: false,
 		text: 'на банковскую',
 	},
 	{
-		time: '00:36',
+		time: '00:38',
 		send: true,
 		text: 'карту. зачисляется в течение трёх банковских дней',
 	},
@@ -182,17 +182,17 @@ const talks3: Talk[] = [
 		text: 'да',
 	},
 	{
-		time: '00:39',
+		time: '00:40',
 		send: true,
 		text: 'в зависимости',
 	},
 	{
-		time: '00:39',
+		time: '00:41',
 		send: true,
 		text: 'от банков выпущенные.',
 	},
 	{
-		time: '00:41',
+		time: '00:42',
 		send: false,
 		text: 'точно.',
 	},
