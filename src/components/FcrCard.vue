@@ -45,53 +45,66 @@ const repNum = ref(2)
 const timeFrame = ref('в день')
 const options = ['в час', 'в день', 'в неделю']
 const contain = ref(true)
+const update = (() => {
+	console.log(111)
+})
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
+
 #zg {
 	font-size: 1rem;
 	text-transform: uppercase;
 	font-weight: 600;
 	padding: 0.5rem;
 	padding-bottom: 0;
+
 	&:hover {
 		background: $bgLight;
 	}
+
 	&:focus {
 		outline: none;
 		border-bottom: 1px dotted $primary;
 		background: $bgSelection;
 	}
 }
+
 #comment {
 	font-size: 0.9rem;
 	margin-top: 1rem;
 	padding: 0.5rem;
 	padding-bottom: 0;
+
 	/* text-align: center; */
 	&:hover {
 		background: $bgLight;
 	}
+
 	&:focus {
 		outline: none;
 		border-bottom: 1px dotted $primary;
 		background: $bgSelection;
 	}
 }
+
 .rowline {
 	margin-top: 2rem;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	gap: 1rem;
+
 	.q-select {
 		transform: translateY(-5px);
 	}
 }
+
 .q-input {
 	transform: translateY(-7px);
 	width: 230px;
+
 	&.small {
 		width: 70px;
 	}

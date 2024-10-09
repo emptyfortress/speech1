@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import CategTree from '@/components/CategTree.vue'
 import { useCat } from '@/stores/category1'
 
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 
 const emit = defineEmits(['setTicked'])
 const cat = useCat()

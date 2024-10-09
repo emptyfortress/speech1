@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import OperStenogramma from '@/components/evaluate/OperStenogramma.vue'
 import OperAnketa from '@/components/evaluate/OperAnketa.vue'
 
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 
 const props = defineProps<{
 	operator: Operator
@@ -50,8 +50,8 @@ q-dialog(v-model="modelValue")
 									q-radio(v-model="selection" :val="item.id")
 
 								q-item-section
-									q-item-label {{item.label}}
-									q-item-label(caption) {{item.description}}
+									q-item-label {{ item.label }}
+									q-item-label(caption) {{ item.description }}
 
 				q-step(:name="2" title="Стенограмма" prefix="2" :done="step > 2")
 					q-scroll-area.sten
@@ -63,7 +63,7 @@ q-dialog(v-model="modelValue")
 				q-step(:name="4" title="Комментарий" prefix="4"  :done="step > 4")
 					p For each ad campaign that you create, you can control how much you're willing to spend on clicks and conversions, which networks and geographical locations you want your ads to show on, and more.
 				q-step(:name="5" title="Сохранение" prefix="5"  :done="step > 4")
-    
+
 		.myplayer
 			q-linear-progress(:value=".6" color="positive")
 			q-btn(flat round size="sm" @click.stop="star = true")
@@ -85,6 +85,7 @@ q-dialog(v-model="modelValue")
 .sten {
 	height: calc(80vh - 250px);
 }
+
 .myplayer {
 	position: absolute;
 	left: 0;

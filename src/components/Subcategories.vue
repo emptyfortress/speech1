@@ -12,8 +12,8 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 						q-icon(name="mdi-menu-right" size="sm")
 					q-item-section
 						q-item-label
-							|{{item.label}}
-						q-popup-edit(v-model="item.label" auto-save v-slot="scope" :ref="(el: any) => {editNode[index] = el}" )
+							|{{ item.label }}
+						q-popup-edit(v-model="item.label" auto-save v-slot="scope" :ref="(el: any) => { editNode[index] = el }" )
 							q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
 					q-item-section(side).hove
 						q-btn(round flat dense icon="mdi-pencil" size="11px" @click.stop="editItem(index)")
@@ -22,7 +22,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 
 				q-item(clickable v-if="props.selectedItem.level < 3" v-click-away="addModeOff")
 					q-item-section(avatar)
-						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{'rot' : addMode}" @click.stop="addMode = !addMode")
+						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{ 'rot': addMode }" @click.stop="addMode = !addMode")
 					q-item-section
 						q-item-label(v-if="!addMode" @click.stop="addMode = !addMode") Добавить
 						.inlineAdd(v-else)
@@ -41,7 +41,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 						.list.item
 							component(:is="SvgIcon" name="vocabulary" v-if="element.voc").small.q-mr-sm
 							q-icon(name="mdi-toy-brick-search-outline" v-if="!element.score" size="18px").q-mr-sm
-							|{{element.label}}
+							|{{ element.label }}
 							q-icon(name="mdi-trash-can-outline" size="xs" @click="killVoc(index)").del
 
 	template(v-slot:after)
@@ -158,11 +158,13 @@ const editItem = (e: number) => {
 .right {
 	padding-left: 0.5rem;
 }
+
 .cool {
 	background: transparent;
 	box-shadow: none;
 	margin-top: 0;
 }
+
 .podzag {
 	padding-left: 1.2rem;
 	font-size: 0.75rem;
@@ -170,22 +172,27 @@ const editItem = (e: number) => {
 	color: grey;
 	border-bottom: 1px solid #ccc;
 }
+
 .list {
 	// display: grid;
 	// grid-template-columns: 1fr 1fr;
 	// column-gap: 2rem;
 	position: relative;
+
 	&.item {
 		padding: 0.5rem 1rem;
 		background: #fff;
 		cursor: pointer;
 	}
+
 	&:hover {
 		background: #efefef;
+
 		.del {
 			display: block;
 		}
 	}
+
 	.del {
 		position: absolute;
 		right: 6px;
@@ -193,9 +200,11 @@ const editItem = (e: number) => {
 		display: none;
 	}
 }
+
 .list-group:empty {
 	padding-bottom: 3rem;
 }
+
 .empty {
 	background: $bgMain;
 	padding: 0.5rem 1rem;
@@ -205,46 +214,55 @@ const editItem = (e: number) => {
 	border: 1px solid #ccc;
 	margin-top: 0.5rem;
 }
+
 .related {
 	// position: relative;
 	margin: 0 0.5rem;
 	// height: 100%;
 }
+
 .sub {
 	padding: 1rem;
 }
+
 .grid {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: flex-start;
+
 	// flex-wrap: wrap;
-	& > div {
+	&>div {
 		font-size: 0.9rem;
 		padding: 0.5rem 1rem;
 		cursor: pointer;
 		border: 1px solid transparent;
+
 		&:hover {
 			border: 1px solid #cdcdcd;
 		}
 	}
 }
+
 .nohov {
 	.hove {
 		display: none;
 	}
+
 	&:hover {
 		.hove {
 			display: block;
 		}
 	}
 }
+
 .fab1 {
 	position: absolute;
 	bottom: 0.8rem;
 	left: 0;
 	z-index: 10;
 }
+
 .ccc {
 	position: absolute;
 	bottom: 0.5rem;
@@ -254,24 +272,30 @@ const editItem = (e: number) => {
 	width: 250px;
 	z-index: 10;
 	border-bottom-left-radius: 1.5rem;
+
 	.sub {
 		padding: 1rem;
 	}
 }
+
 .inlineAdd {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 }
+
 .smallinput {
 	margin-top: -9px;
 }
+
 .my-h6 {
 	font-size: 1.1rem;
 }
+
 .small {
 	font-size: 0.7rem;
 }
+
 .vocicon {
 	font-size: 13px;
 	margin-right: 0.5rem;

@@ -7,7 +7,9 @@ const layout = reactive([
 	{ x: 3, y: 0, w: 3, h: 4, i: '1' },
 ])
 const remove = (e: number) => {
-	let temp = [...document.getElementsByClassName('vue-grid-item')]
+	// let temp = [...document.getElementsByClassName('vue-grid-item')]
+	let htmlColletction = document.getElementsByClassName('vue-grid-item')
+	let temp = Array.prototype.slice.call(htmlColletction)
 	temp.forEach((el) => el.classList.add('move'))
 	layout.splice(e, 1)
 }
@@ -42,7 +44,7 @@ q-page(padding)
 				q-card
 					q-icon.close(name="mdi-close" @click="remove(index)" dense size="14px") 
 					q-icon.resize(name="mdi-resize-bottom-right" @click="" dense size="16px" ) 
-					q-card-section {{item.i}}
+					q-card-section {{ item.i }}
 q-btn.fab(round color="primary" icon="mdi-plus" @click="" size="lg") 
 </template>
 
@@ -51,39 +53,47 @@ q-btn.fab(round color="primary" icon="mdi-plus" @click="" size="lg")
 	background: pink;
 	padding: 0;
 }
+
 .move {
 	transition: 0.2s ease all;
 }
+
 :deep(.vue-grid-item) {
 	touch-action: none;
 	position: relative;
 }
+
 .close {
 	position: absolute;
 	right: 3px;
 	top: 3px;
 	cursor: pointer;
 }
+
 .resize {
 	position: absolute;
 	right: 3px;
 	bottom: 3px;
 	cursor: pointer;
 }
+
 .q-card {
 	width: 100%;
 	height: 100%;
 	z-index: 1001;
 }
+
 :deep(.vue-grid-item.vue-grid-placeholder) {
 	background: green !important;
 	opacity: 0.3;
 	z-index: -10;
 }
+
 :deep(.vue-draggable-dragging) {
 	z-index: 1000;
 	box-shadow: 3px 3px 17px rgba(0, 0, 0, 0.4);
 }
+
 .fab {
 	position: fixed;
 	bottom: 2rem;

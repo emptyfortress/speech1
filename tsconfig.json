@@ -11,6 +11,7 @@
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"allowJs": true,
+		"outDir": "dist",
 		"lib": [
 			"es2022",
 			"DOM"
@@ -28,6 +29,10 @@
 		"src/**/*.d.ts",
 		"src/**/*.tsx",
 		"src/**/*.vue"
+	],
+	"exclude": [
+		"node_modules",
+		"dist/**/*.d.ts"
 	],
 	"references": [
 		{

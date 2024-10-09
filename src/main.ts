@@ -38,3 +38,6 @@ const opts = { class: 'my-ripple-class' }
 app.directive('AppRipple', createRippleDirective(opts))
 
 app.mount('#app')
+
+// "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+

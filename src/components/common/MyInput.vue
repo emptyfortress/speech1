@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
 	bg: 'white',
 })
 
-const modelValue = defineModel()
+const modelValue = defineModel<string | number | FileList | null | undefined>()
 </script>
 
 <template lang="pug">
@@ -33,6 +33,7 @@ div
 	font-size: 0.8rem;
 	font-weight: 600;
 }
+
 :deep(.q-input) {
 	width: 100%;
 }

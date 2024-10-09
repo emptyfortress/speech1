@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 
 const list = ref('')
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 const emit = defineEmits(['add'])
 const add = () => {
 	emit('add', { list: list.value, voc: voc.value, vocName: vocName.value })
@@ -44,6 +44,7 @@ q-dialog(v-model="modelValue")
 .q-card {
 	min-width: 700px;
 }
+
 .q-input {
 	// min-height: 150px;
 }

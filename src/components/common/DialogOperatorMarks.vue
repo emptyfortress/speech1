@@ -6,7 +6,7 @@ import EvalComments from '@/components/evaluate/EvalComments.vue'
 
 const props = defineProps<{ anketa: Anketa }>()
 
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 const tab = ref('anketa')
 const sound = ref(50)
 const agree = ref(false)
@@ -20,7 +20,7 @@ q-dialog(v-model="modelValue")
 		q-card-section
 			.text-h6 {{ props.anketa.anketa }} - ({{ props.anketa.supervisor }})
 			.total
-				div {{ props.anketa.date}} - 13:05
+				div {{ props.anketa.date }} - 13:05
 				.text-weight-bold Общая оценка - {{ props.anketa.mark }}
 
 			.myplayer
@@ -51,7 +51,7 @@ q-dialog(v-model="modelValue")
 				q-tab-panel(name="comments")
 					q-scroll-area
 						EvalComments
-					
+
 		q-card-section
 			q-card-actions(align="right")
 				q-btn(flat color="negative" label="Я не согласен!" @click="agree = true") 
@@ -74,9 +74,11 @@ q-dialog(v-model="modelValue")
 .q-card {
 	min-width: 860px;
 }
+
 .maindialog {
 	height: 90vh;
 }
+
 .total {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
@@ -86,16 +88,20 @@ q-dialog(v-model="modelValue")
 	display: flex;
 	justify-content: space-between;
 }
+
 .links {
 	cursor: pointer;
 	color: $primary;
+
 	&:hover {
 		text-decoration: underline;
 	}
 }
+
 .q-scrollarea {
 	height: 55vh;
 }
+
 .myplayer {
 	position: relative;
 	height: 50px;
@@ -133,6 +139,7 @@ q-dialog(v-model="modelValue")
 		width: 150px;
 	}
 }
+
 .dark {
 	margin-top: 1px;
 	background: $blue-grey-9;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 
 const emit = defineEmits(['remove'])
 </script>

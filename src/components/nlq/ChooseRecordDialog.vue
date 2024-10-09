@@ -3,7 +3,7 @@ import { ref, reactive, computed } from 'vue'
 import RecordsTable from '@/components/nlq/RecordsTable.vue'
 import { records as myrecords } from '@/stores/operators'
 
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 
 const star = ref()
 const sound = ref(50)

@@ -103,7 +103,7 @@ br
 			q-tooltip.emotooltip(v-if="talk.ttext" :class="talk.tt" anchor="top middle" self="center middle") {{ talk.ttext }}
 
 Teleport(to='body')
-	vue-draggable-resizable(v-if='nav' :x="calcX" :y="calcY" :w="250" :h="270" :active="false" :z="2000" )
+	vue-draggable-resizable(v-if='nav && mystore.speechDrawer' :x="calcX" :y="calcY" :w="250" :h="270" :active="false" :z="2000" )
 		.bar
 			div Навигация по стенограмме
 			q-icon(name="mdi-close" @click='closeNav')

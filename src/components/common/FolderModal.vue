@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import WordHighlighter from 'vue-word-highlighter'
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 </script>
 
 <template lang="pug">
@@ -49,9 +49,11 @@ q-dialog(v-model="modelValue")
 	padding: 1rem;
 	padding-bottom: 0;
 }
+
 .input {
 	width: 200px;
 }
+
 .scroll {
 	height: 332px;
 }

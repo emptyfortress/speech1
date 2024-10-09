@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useDash } from '@/stores/dash'
 import { uid } from 'quasar'
 
-const modelValue = defineModel()
+const modelValue = defineModel<boolean>()
 const dash = useDash()
 
 const panel = ref('Моя панель')
@@ -66,6 +66,7 @@ q-dialog(v-model="modelValue")
 .q-card {
 	min-width: 480px;
 }
+
 .form {
 	display: grid;
 	grid-template-columns: 1fr auto;
@@ -77,6 +78,7 @@ q-dialog(v-model="modelValue")
 	background: #eee;
 	margin: 0.5rem 1rem;
 }
+
 .q-checkbox {
 	grid-column: 1/-1;
 }

@@ -13,12 +13,13 @@ const anketa = reactive([
 	{ id: 3, quesiton: 'fuck', description: '', auto: false },
 ])
 const zapros = ref('Приветствие')
+const options = ['Option 1', 'Option 2']
 </script>
 
 <template lang="pug">
 q-list(padding separator)
 	q-item(v-for="(item, index) in anketa" :key="item.id")
-		q-item-section(side) {{ index + 1}}
+		q-item-section(side) {{ index + 1 }}
 		q-item-section
 			q-item-label {{ item.quesiton }}
 			q-item-label(caption) {{ item.description }}

@@ -24,8 +24,8 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 								:filter="filter").cat
 								template(v-slot:default-header="prop")
 									.nod
-										WordHighlighter(:query="filter") {{prop.node.label}}
-										q-popup-edit(v-model="prop.node.label" auto-save v-slot="scope" v-if="editMode" :ref="(el: any) => {node[prop.node.id] = el}" @hide="editMode = false")
+										WordHighlighter(:query="filter") {{ prop.node.label }}
+										q-popup-edit(v-model="prop.node.label" auto-save v-slot="scope" v-if="editMode" :ref="(el: any) => { node[prop.node.id] = el }" @hide="editMode = false")
 											q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
 
 										q-menu(context-menu auto-close)
@@ -62,7 +62,15 @@ const selected = ref(cat.cat[0].id)
 
 const selectedItem = computed(() => {
 	let node = cat.cat[0]
-	return getNodeFromTree(node, selected.value)
+	return getNodeFromTree(node, selected.value) || {
+		id: 'Все',
+		label: 'Все',
+		header: 'root',
+		level: 0,
+		breads: [],
+		childs: [],
+		children: []
+	}
 })
 
 const select = (e: string) => {
@@ -171,6 +179,7 @@ const menu = [
 	background: webkit-linear-gradient(top, #d8e3f1 0%, #f4e8f4 52.6%, #fdf5e5 100%);
 	background: linear-gradient(180deg, #d8e3f1 0%, #f4e8f4 52.6%, #fdf5e5 100%);
 	background-attachment: fixed;
+
 	.content {
 		max-width: 1200px;
 		margin: 0 auto;
@@ -182,11 +191,13 @@ const menu = [
 	font-size: 1.3rem;
 	text-align: center;
 	vertical-align: baseline;
+
 	.q-icon {
 		margin-right: 1rem;
 		transform: translateY(-5px);
 	}
 }
+
 .tip {
 	background: #9db2c3;
 	padding: 2px 2rem;
@@ -198,6 +209,7 @@ const menu = [
 	border-top: 1px solid #ccc;
 	color: darkred;
 }
+
 .q-tree__node * {
 	user-select: none;
 }
