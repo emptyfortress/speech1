@@ -1,8 +1,3 @@
-<template lang="pug">
-q-drawer.rd.speech(v-model="mystore.speechDrawer" overlay side="right" :width="width" )
-	Speech
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useStore } from '@/stores/store'
@@ -17,6 +12,12 @@ const width = computed(() => {
 	return 400
 })
 </script>
+
+<template lang="pug">
+q-drawer.rd.speech(v-model="mystore.speechDrawer" overlay side="right" :width="width" )
+	Speech
+</template>
+
 
 <style scoped lang="scss">
 .q-drawer {
