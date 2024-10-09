@@ -11,3 +11,4 @@ declare module '*.vue' {
 declare module 'v-onboarding'
 declare module 'vue-create-ripple'
 declare module 'vue-ts-responsive-grid-layout'
+declare module 'vue-draggable-resizable'
