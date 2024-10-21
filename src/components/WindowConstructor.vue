@@ -50,12 +50,13 @@ q-dialog(v-model="logic.inception")
 		q-card-section
 			q-btn.close(icon="mdi-close" round dense v-close-popup color="negative")
 			#zg1(contenteditable @blur="update") {{ logic.currentLogic.label }}
+				q-badge(color="red" rounded)
 			.q-mx-lg
 				#comment1(contenteditable @blur="updatecomment") {{ logic.currentLogic.comment }}
 			.row.justify-between
 				q-tabs(v-model="tabs" inline-label indicator-color="primary" active-color="primary" dense align="left")
 					q-tab(name="logic" label="Конструктор запросов")
-					q-tab(name="gpt" alert="red" label="Запрос на естественном языке")
+					q-tab(name="gpt" label="Запрос на естественном языке")
 
 			q-tab-panels(v-model="tabs")
 				q-tab-panel(name="logic")
@@ -64,13 +65,13 @@ q-dialog(v-model="logic.inception")
 					q-input(v-model="gptRequest" type='textarea' filled placeholder="Расскажите, что Вас интересует")
 
 		q-card-section
-			q-card-actions(align="right")
+			.bottom
 				.experiment
 					q-badge.q-mr-sm(color="red" rounded)
-					span Экспериментальная функция. Может быть изменена или удалена в будущем.
-				q-space
-				q-btn(flat label="Отмена" color="primary" v-close-popup)
-				q-btn(unelevated color="primary" icon="mdi-content-save-outline" label="Применить" @click="save")
+					span Вы можете использовать конктруктор логических запросов или искусственный интеллект. Выберите типа запроса, заполните детали и сохраните его. При дальнейшем анализе будет использован выбранный Вами тип запроса.
+				.text-right
+					q-btn(flat label="Отмена" color="primary" v-close-popup)
+					q-btn(unelevated color="primary" icon="mdi-content-save-outline" label="Сохранить" @click="save")
 		
 </template>
 
@@ -119,11 +120,18 @@ q-dialog(v-model="logic.inception")
 	}
 }
 
-:deep(.q-tab__alert) {
-	right: -16px;
+.experiment {
+	font-size: .8rem;
 }
 
-.experiment {
+.bottom {
+	display: grid;
+	grid-template-columns: 1fr 300px;
+	column-gap: 1rem;
+}
+
+:deep(.q-badge) {
+	transform: translateY(-7px);
 	font-size: .8rem;
 }
 </style>
