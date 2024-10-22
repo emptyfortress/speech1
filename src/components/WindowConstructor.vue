@@ -50,11 +50,10 @@ q-dialog(v-model="logic.inception")
 		q-card-section
 			q-btn.close(icon="mdi-close" round dense v-close-popup color="negative")
 			#zg1(contenteditable @blur="update") {{ logic.currentLogic.label }}
-				q-badge(color="red" rounded)
 			.q-mx-lg
 				#comment1(contenteditable @blur="updatecomment") {{ logic.currentLogic.comment }}
 			.row.justify-between
-				q-tabs(v-model="tabs" inline-label indicator-color="primary" active-color="primary" dense align="left")
+				q-tabs(v-model="tabs" indicator-color="primary" active-color="primary" dense align="left")
 					q-tab(name="logic" label="Конструктор запросов")
 					q-tab(name="gpt" label="Запрос на естественном языке")
 
@@ -67,7 +66,7 @@ q-dialog(v-model="logic.inception")
 		q-card-section
 			.bottom
 				.experiment
-					q-badge.q-mr-sm(color="red" rounded)
+					q-icon.q-mr-sm(name="mdi-information" color="primary" size="24px")
 					span Вы можете использовать конктруктор логических запросов или искусственный интеллект. Выберите типа запроса, заполните детали и сохраните его. При дальнейшем анализе будет использован выбранный Вами тип запроса.
 				.text-right
 					q-btn(flat label="Отмена" color="primary" v-close-popup)

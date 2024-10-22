@@ -11,11 +11,23 @@
 				.btngroup
 					q-btn(outline size="10px" color="primary" @click="mystore.duble").q-mr-xs Дублировать
 					q-btn(round flat icon="mdi-plus" dense color="primary" @click="mystore.addLogic")
-			#comment(contenteditable @blur="updatecomment") {{mystore.activeLogic.comment}}
+			#comment(contenteditable @blur="updatecomment") {{ mystore.activeLogic.comment }}
 
-			Puzzle
+			q-tabs(v-model="tabs" indicator-color="primary" active-color="primary" dense align="left")
+				q-tab(name="logic" label="Конструктор запросов")
+				q-tab(name="gpt" label="Запрос на естественном языке")
 
-			.row.items-center.justify-between.q-mt-xl
+			q-tab-panels(v-model="tabs")
+				q-tab-panel(name="logic")
+					Puzzle
+				q-tab-panel(name="gpt")
+					q-input(v-model="gptRequest" type='textarea' filled placeholder="Расскажите, что Вас интересует")
+
+			.experiment
+				q-icon.q-mr-sm(name="mdi-information" color="primary" size="24px")
+				span Вы можете использовать конктруктор логических запросов или искусственный интеллект. Выберите типа запроса, заполните детали и сохраните его. При дальнейшем анализе будет использован выбранный Вами тип запроса.
+
+			.row.items-center.justify-between.q-mt-sm
 				q-btn(flat icon="mdi-trash-can-outline" label="Удалить запрос" color="primary")
 					q-menu(anchor="bottom right" self="top right")
 						q-list
@@ -76,38 +88,57 @@ const save = () => {
 		position: 'top-right',
 	})
 }
+
+const tabs = ref('logic')
+const gptRequest = ref()
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
+
 #zg {
 	font-size: 1rem;
 	text-transform: uppercase;
 	font-weight: 600;
 	padding: 0.5rem;
 	padding-bottom: 0;
+
 	&:hover {
 		background: $bgLight;
 	}
+
 	&:focus {
 		outline: none;
 		border-bottom: 1px dotted $primary;
 		background: $bgSelection;
 	}
 }
+
 #comment {
 	font-size: 0.9rem;
-	margin-top: 1rem;
+	// margin-top: 1rem;
 	padding: 0.5rem;
 	padding-bottom: 0;
+	margin-bottom: 1.5rem;
+
 	/* text-align: center; */
 	&:hover {
 		background: $bgLight;
 	}
+
 	&:focus {
 		outline: none;
 		border-bottom: 1px dotted $primary;
 		background: $bgSelection;
 	}
+}
+
+:deep(.q-badge) {
+	transform: translateY(-7px);
+	font-size: .8rem;
+}
+
+.experiment {
+	font-size: .8rem;
 }
 </style>
