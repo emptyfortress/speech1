@@ -55,5 +55,4 @@ import NlqModule from '@/components/nlq/NlqModule.vue'
 const mystore = useStore()
 </script>
 
-<style scoped lang="scss">
-//@import '@/assets/css/colors.scss';</style>
+<style scoped lang="scss"></style>

@@ -23,6 +23,7 @@ const chips = ref([
 	{ id: 7, show: true, label: 'молочный', selected: true },
 	{ id: 8, show: true, label: 'восковой', selected: true },
 ])
+
 const futureDefault = ref(false)
 
 const confirm = (e: Syn) => {
@@ -36,10 +37,12 @@ const dialog = ref(false)
 const remove = () => {
 	dialog.value = false
 }
+
 const revert = () => {
 	current.value!.show = true
 	dialog.value = false
 }
+
 const calcClass = computed(() => {
 	return mysyn.showSyn ? 'jello' : ''
 })
@@ -69,7 +72,7 @@ q-dialog(v-model="mysyn.showSyn" position='bottom' seamless)
 				.text-h6 Удалить синоним
 
 			q-card-section
-				div Удалить "<b>{{ current!.label.toUpperCase() }}</b>" из списка синонимов? Это действие нельзя отменить.
+				div Удалить "<b>{{ current?.label.toUpperCase() }}</b>" из списка синонимов? Это действие нельзя отменить.
 			q-card-actions.q-mb-md.q-mx-md(align='right')
 				q-btn(flat color="primary" label="Отмена" @click='revert') 
 				q-btn(unelevated color="primary" label="Удалить" @click='remove') 
