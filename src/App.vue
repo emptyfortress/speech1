@@ -53,8 +53,21 @@ template(v-if="isLogged")
 					span.hd Речевая платформа Speech Drive
 				q-space
 				template(v-if="!isOper")
-					q-btn.q-mr-sm(dense flat round @click="refresh")
-						SvgIcon(name="refresh" :spin="isLoading" )
+					.refreshInfo
+						q-btn.q-mr-sm(dense flat round @click="refresh")
+							SvgIcon(name="refresh" :spin="isLoading" )
+						q-card
+							.grid
+								div Дашборд:
+								div 2 мин назад
+								div Отчеты:
+								div 2 мин назад
+								div Чек-лист:
+								div 6 мин назад
+								div Категории:
+								div 8 мин назад
+
+
 					q-btn#library.q-mr-sm(dense flat round icon="mdi-book-open-page-variant-outline" @click="mystore.toggleKeyDrawer")
 					q-btn(dense flat round icon="mdi-bell-outline" @click="mystore.toggleNotificationDrawer")
 						q-badge(floating rounded color="red") 3
@@ -125,6 +138,37 @@ template(v-else)
 	svg {
 		width: 10px;
 		height: 10px;
+	}
+}
+
+.refreshInfo {
+	position: relative;
+
+	.grid {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		row-gap: .2rem;
+		column-gap: .5rem;
+
+	}
+
+
+	.q-card {
+		position: absolute;
+		top: 2rem;
+		left: 50%;
+		padding: .5rem 1rem;
+		transform: translateX(-50%);
+		font-size: .8rem;
+		white-space: nowrap;
+
+		display: none;
+	}
+
+	&:hover {
+		.q-card {
+			display: block;
+		}
 	}
 }
 </style>
