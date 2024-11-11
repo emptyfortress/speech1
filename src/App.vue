@@ -10,7 +10,8 @@ import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
 import Help from '@/components/Help.vue'
 import { router } from './router/router'
-// import { is } from 'quasar'
+import { useInterval } from '@vueuse/core'
+import { useTimeAgo } from '@vueuse/core'
 
 const mystore = useStore()
 const toggleLeftDrawer = mystore.toggleLeftDrawer
@@ -39,6 +40,8 @@ const logout = () => {
 	isLogged.value = false
 	router.push('/')
 }
+const counter = useInterval(1000)
+const timeAgo = useTimeAgo(Date.now())
 </script>
 
 <template lang="pug">
@@ -54,8 +57,9 @@ template(v-if="isLogged")
 				q-space
 				template(v-if="!isOper")
 					.refreshInfo
-						q-btn.q-mr-none(dense flat round @click="refresh" icon='mdi-clock-outline')
-						div 2:30
+						q-btn.q-mr-none(dense flat round @click="refresh" icon='mdi-history')
+						.q-mr-md 00:{{ counter }}
+						div Обновлено: {{ timeAgo }}
 						q-card
 							.text-weight-bold Обновление данных
 							.grid
