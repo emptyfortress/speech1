@@ -54,9 +54,10 @@ template(v-if="isLogged")
 				q-space
 				template(v-if="!isOper")
 					.refreshInfo
-						q-btn.q-mr-sm(dense flat round @click="refresh")
-							SvgIcon(name="refresh" :spin="isLoading" )
+						q-btn.q-mr-none(dense flat round @click="refresh" icon='mdi-clock-outline')
+						div 2:30
 						q-card
+							.text-weight-bold Обновление данных
 							.grid
 								div Дашборд:
 								div 2 мин назад
@@ -143,13 +144,16 @@ template(v-else)
 
 .refreshInfo {
 	position: relative;
+	display: flex;
+	align-items: center;
+	margin-right: 1rem;
 
 	.grid {
 		display: grid;
 		grid-template-columns: auto 1fr;
 		row-gap: .2rem;
 		column-gap: .5rem;
-
+		margin-top: .5rem;
 	}
 
 
