@@ -38,6 +38,7 @@ const added = (e: string) => {
 
 const add = (() => {
 	added(props.selection)
+
 	modelValue.value = false
 })
 </script>
