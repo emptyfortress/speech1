@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStore } from '@/stores/store'
 import { talks, talks2, talks3 } from '@/stores/speech'
 import { useQuasar } from 'quasar'
 import VueDraggableResizable from 'vue-draggable-resizable'
-// import { useElementSize } from '@vueuse/core'
+import { useTextSelection } from '@vueuse/core'
+import { useDebouncedRefHistory } from '@vueuse/core'
 
 const props = defineProps({
 	drawer: {
@@ -58,6 +59,16 @@ const calcY = computed(() => {
 const showNav = ((e: any) => {
 	nav.value = !nav.value
 })
+
+const state = useTextSelection()
+
+const { history, undo, redo } = useDebouncedRefHistory(state.text, { deep: true, debounce: 1000 })
+
+watch(history, (val) => {
+	if (val) {
+		console.log(22222)
+	}
+})
 </script>
 
 <template lang="pug">
@@ -81,7 +92,6 @@ br
 .row.items-center.justify-between
 	.rezume Стенограмма
 	q-btn.nav(flat color="primary" label="Навигация" @click="showNav" size="sm")
-
 
 .talk(v-for="talk in filterTalks" :key="talk.time")
 	.grid(v-if="talk.send")

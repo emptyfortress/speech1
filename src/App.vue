@@ -10,7 +10,6 @@ import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
 import Help from '@/components/Help.vue'
 import { router } from './router/router'
-import { useInterval } from '@vueuse/core'
 import { useTimeAgo } from '@vueuse/core'
 
 const mystore = useStore()
@@ -29,18 +28,10 @@ const login1 = () => {
 	isOper.value = true
 }
 
-const isLoading = ref(false)
-const refresh = () => {
-	isLoading.value = true
-	setTimeout(() => {
-		isLoading.value = false
-	}, 3000)
-}
 const logout = () => {
 	isLogged.value = false
 	router.push('/')
 }
-const counter = useInterval(1000)
 const timeAgo = useTimeAgo(Date.now())
 </script>
 
@@ -57,9 +48,7 @@ template(v-if="isLogged")
 				q-space
 				template(v-if="!isOper")
 					.refreshInfo
-						q-btn.q-mr-none(dense flat round @click="refresh" icon='mdi-history')
-						.q-mr-md 00:{{ counter }}
-						div Обновлено: {{ timeAgo }}
+						.time Обновлено: {{ timeAgo }}
 						q-card
 							.text-weight-bold Обновление данных
 							.grid
@@ -99,7 +88,7 @@ template(v-if="isLogged")
 									q-item-section Выйти
 					q-btn#help(dense flat round icon="mdi-help-circle-outline" @click="mystore.openHelp")
 
-			q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
+			// q-linear-progress(indeterminate color="accent" size="3px" v-show="isLoading")
 
 		Drawer(:show="mystore.leftDrawer" v-if="!isOper")
 		DateDrawer(v-if="!isOper")
@@ -151,6 +140,11 @@ template(v-else)
 	display: flex;
 	align-items: center;
 	margin-right: 1rem;
+
+	.time {
+		font-size: .8rem;
+		color: #666;
+	}
 
 	.grid {
 		display: grid;
