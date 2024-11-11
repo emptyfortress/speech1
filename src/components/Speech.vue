@@ -6,6 +6,7 @@ import { useQuasar } from 'quasar'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import { useTextSelection } from '@vueuse/core'
 import { useDebouncedRefHistory } from '@vueuse/core'
+import addSelectionToVoc from '@/components/addSelectionToVoc.vue'
 
 const props = defineProps({
 	drawer: {
@@ -64,11 +65,17 @@ const state = useTextSelection()
 
 const { history, undo, redo } = useDebouncedRefHistory(state.text, { deep: true, debounce: 1000 })
 
+const dialog = ref(false)
+
+let sel = ''
+
 watch(history, (val) => {
-	if (val) {
-		console.log(22222)
+	if (val && mystore.speechDrawer) {
+		sel = history.value[0].snapshot
+		dialog.value = true
 	}
 })
+
 </script>
 
 <template lang="pug">
@@ -140,6 +147,7 @@ Teleport(to='body')
 				div 10:30,
 				div 11:03,
 
+addSelectionToVoc(v-model="dialog" :selection="sel")
 </template>
 
 
