@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useQuasar } from 'quasar'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 const props = defineProps({
 	selection: {
@@ -91,7 +92,7 @@ q-dialog(v-model="modelValue")
 			q-list(dense)
 				q-item(clickable v-for="item in filtervocs" :key="item.id" @click.stop="select(item)" :class="{ selected: item.selected }")
 					q-item-section(avatar)
-						q-icon(name="mdi-book")
+						component(:is="SvgIcon" name="vocabulary")
 					q-item-section {{ item.label }}
 		q-card-actions.q-ma-md(align="right")
 			q-btn(flat color="primary" label="Отмена" v-close-popup) 
