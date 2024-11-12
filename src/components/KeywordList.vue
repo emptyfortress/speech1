@@ -26,10 +26,12 @@ q-form(@submit="add")
 			template(#item="{ element }")
 				q-item#voc(clickable dense)
 					q-item-section
-						label
+						.row.items-center
 							q-checkbox.q-mr-sm(v-model="selection" size="xs" dense :val="element.label")
 							component(:is="SvgIcon" name="vocabulary" v-if="element.voc" class="voc")
 							WordHighlighter(:query="store.keywordFilter") {{ element.label }}
+							q-popup-edit(v-model="element.label" auto-save v-slot="scope")
+								q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
 
 					q-item-section(side v-if="!editMode")
 						.row
@@ -360,6 +362,7 @@ const save = () => {
 		transform: translateY(-2px);
 	}
 }
+
 .right {
 	float: right;
 }
@@ -387,5 +390,9 @@ const save = () => {
 	.q-icon {
 		visibility: hidden;
 	}
+}
+
+:deep(.q-popup-edit) {
+	z-index: 8000;
 }
 </style>
