@@ -22,7 +22,7 @@ q-form(@submit="add")
 						q-icon.hov(name="mdi-close" size="xs" @click="removeFromVoc(item)")
 
 
-		component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" )
+		component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" @start='start')
 			template(#item="{ element }")
 				q-item#voc(clickable dense)
 					q-item-section
@@ -261,9 +261,12 @@ const editMode = ref(false)
 const currentVoc: Ref<null | Keyword> = ref(null)
 
 const edit = (item: Keyword) => {
-	editMode.value = !editMode.value
+	// editMode.value = !editMode.value
 	currentVoc.value = item
-	selection.value = item.keys?.flat(2) || []
+	store.setCurrentVoc(item)
+	store.vocDrawer = true
+	console.log(currentVoc.value)
+	// selection.value = item.keys?.flat(2) || []
 }
 
 const removeFromVoc = (e: string) => {
@@ -274,6 +277,13 @@ const save = () => {
 	selection.value = []
 	editMode.value = false
 }
+
+const start = ((event: DragEvent) => {
+	const draggedElement = filteredItems.value[event.oldIndex];
+	// console.log('Dragging:', draggedElement)
+	store.setDraggingWord(draggedElement.label)
+	// console.log(store.draggingWord)
+})
 </script>
 
 <style scoped lang="scss">

@@ -5,6 +5,7 @@ import SvgIcon from '@/components/SvgIcon.vue'
 import Drawer from '@/components/Drawer.vue'
 import DateDrawer from '@/components/DateDrawer.vue'
 import KeyDrawer from '@/components/KeyDrawer.vue'
+import VocDrawer from '@/components/VocDrawer.vue'
 import NotificationDrawer from '@/components/NotificationDrawer.vue'
 import SpeechDrawer from '@/components/SpeechDrawer.vue'
 import Login from '@/components/Login.vue'
@@ -92,6 +93,7 @@ template(v-if="isLogged")
 
 		Drawer(:show="mystore.leftDrawer" v-if="!isOper")
 		DateDrawer(v-if="!isOper")
+		VocDrawer(v-if="!isOper")
 		KeyDrawer(v-if="!isOper")
 		NotificationDrawer(v-if="!isOper")
 		SpeechDrawer(v-if="!isOper")

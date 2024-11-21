@@ -8,6 +8,7 @@ export const useStore = defineStore({
 		leftDrawer: true,
 		dateDrawer: false,
 		keyDrawer: false,
+		vocDrawer: false,
 		notificationDrawer: false,
 		speechDrawer: false,
 		mini: false,
@@ -26,10 +27,21 @@ export const useStore = defineStore({
 		loading: false,
 		help: false,
 		keywordFilter: '',
+		currentVoc: { name: '', keys: [] },
+		draggingWord: ''
 	}),
 	getters: {},
 
 	actions: {
+		setDraggingWord(e) {
+			this.draggingWord = e
+		},
+		addKeyToCurrentVoc(e) {
+			this.currentVoc.keys.push(e)
+		},
+		setCurrentVoc(e) {
+			this.currentVoc = e
+		},
 		setKeywordFilter(e) {
 			this.keywordFilter = e
 		},
