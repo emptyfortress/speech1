@@ -37,7 +37,7 @@ const remove = (e: string) => {
 	let index = mystore.currentVoc.keys.findIndex((item) => item === e)
 	mystore.currentVoc.keys.splice(index, 1)
 }
-const onChange = ((evt) => {
+const onChange = ((evt: any) => {
 	if (evt.added && mystore.currentVoc.keys.filter((item) => item == evt.added.element).length > 1) {
 		remove(evt.added.element)
 	}
