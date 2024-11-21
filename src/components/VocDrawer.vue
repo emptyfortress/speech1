@@ -12,7 +12,7 @@ q-drawer.rd(v-model="mystore.vocDrawer" overlay side="right" :width="600" )
 				q-icon(name="mdi-magnify")
 
 		q-list(dense )
-			draggable(v-model="mystore.currentVoc.keys" itemKey="id" @drop="add")
+			draggable(:list="mystore.currentVoc.keys" itemKey="id" group="subcat" @change="onChange")
 				template(#item="{ element }")
 					q-item#voc(clickable dense)
 						q-item-section
@@ -33,17 +33,14 @@ const mystore = useStore()
 
 const filter = ref('')
 
-const items = ref([])
-
-onMounted(() => {
-	items.value = mystore.currentVoc?.keys
-})
-
-const add = (() => {
-	if (mystore.currentVoc.keys.filter((item) => item == mystore.draggingWord).length > 0) {
-		return
+const remove = (e: string) => {
+	let index = mystore.currentVoc.keys.findIndex((item) => item === e)
+	mystore.currentVoc.keys.splice(index, 1)
+}
+const onChange = ((evt) => {
+	if (evt.added && mystore.currentVoc.keys.filter((item) => item == evt.added.element).length > 1) {
+		remove(evt.added.element)
 	}
-	mystore.addKeyToCurrentVoc(mystore.draggingWord)
 })
 </script>
 

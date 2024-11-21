@@ -22,7 +22,7 @@ q-form(@submit="add")
 						q-icon.hov(name="mdi-close" size="xs" @click="removeFromVoc(item)")
 
 
-		component(:is="draggable" v-model="filteredItems" itemKey="item.id" group="subcat" @start='start')
+		component(:is="draggable" :list="filteredItems" itemKey="item.id" :group="{ name: 'subcat', pull: 'clone', put: false }" :clone="cloneWord")
 			template(#item="{ element }")
 				q-item#voc(clickable dense)
 					q-item-section
@@ -278,11 +278,8 @@ const save = () => {
 	editMode.value = false
 }
 
-const start = ((event: DragEvent) => {
-	const draggedElement = filteredItems.value[event.oldIndex];
-	// console.log('Dragging:', draggedElement)
-	store.setDraggingWord(draggedElement.label)
-	// console.log(store.draggingWord)
+const cloneWord = (({ label }: { label: string }) => {
+	return label
 })
 </script>
 
