@@ -21,13 +21,14 @@ q-page.rel(padding)
 					q-btn(color="primary" flat label="Добавить к сравнению")
 					q-btn(unelevated color="primary" icon="mdi-check-bold" label="Применить" @click="toggle")
 				br
-		component(:is="Graph1")
-		component(:is="VehaStat")
-		component(:is="OperStat")
-		component(:is="VehaRecord")
+		Graph1
+		VehaStat
+		OperStat1
+		OperStat
+		VehaRecord
 
-		component(:is="Constructor1" :dialog="dialog1" :maximized="maximizedToggle")
-		component(:is="WindowConstructor")
+		Constructor1(:dialog="dialog1" :maximized="maximizedToggle")
+		// WindowConstructor
 </template>
 
 <script setup lang="ts">
@@ -39,9 +40,10 @@ import CommonOptions from '@/components/common/CommonOptions.vue'
 import Graph1 from '@/components/Graph1.vue'
 import VehaStat from '@/components/VehaStat.vue'
 import OperStat from '@/components/OperStat.vue'
+import OperStat1 from '@/components/OperStat1.vue'
 import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
-import WindowConstructor from '@/components/WindowConstructor.vue'
+// import WindowConstructor from '@/components/WindowConstructor.vue'
 import FabButton from '@/components/common/FabButton.vue'
 
 const mystore = useStore()
@@ -59,7 +61,7 @@ const toggle = () => {
 	}, 1700)
 }
 
-const openDialog = () => {
+	const openDialog = () => {
 	if (mycheck.activeCheck === undefined) {
 		mycheck.allCheck[0].selected = true
 	}

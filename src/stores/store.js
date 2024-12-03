@@ -18,7 +18,7 @@ export const useStore = defineStore({
 		sett: false,
 		fcr: true,
 		req: true,
-		chec: true,
+		chec: false,
 		cat: true,
 		integral: false,
 		record: 'группа 1',
