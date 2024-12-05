@@ -61,9 +61,18 @@ const options = [
 ]
 
 const vehi2 = computed(() => {
-	const duplicatedArray = vehi.map(item => [item, item]).flat();
-	return duplicatedArray
+	const newArray: any[] = []
+	let idCounter = Math.max(...vehi.map(item => item.id)) + 1
+
+	vehi.forEach(item => {
+			newArray.push(item); // Push the original item
+			// Create a duplicate with a new unique ID
+			newArray.push({ ...item, id: idCounter++ })
+	});
+
+	return newArray;
 })
+
 const calcCols = computed(() => {
 	return vehi.map((item) => item)
 })
@@ -110,16 +119,16 @@ q-expansion-item(v-model="oper")
 						v-model="group")
 
 			template(#header="props")
-				q-tr.main(:props="props")
+				q-tr.main
 					q-th Операторы
-					q-th(v-for="(col, index) in vehi" :key="col.name" :props="props" colspan='2' @click.stop)
+					q-th(v-for="(col, index) in vehi" colspan='2')
 						span.rot {{ col.label }}
 	
 				q-tr(:props="props").sma
 					q-th.blo
-					template(v-for="(col, index) in vehi2" :key="col.name" :props="props")
-						q-th() one
-						q-th() two
+
+					template(v-for="(col, index) in props.cols" :key="col.id" :props="props")
+						q-th() {{ col.id}}
 
 				// q-tr(:props="props").sma
 				// 	q-th.blo
@@ -130,8 +139,9 @@ q-expansion-item(v-model="oper")
 			template(v-slot:body="props")
 				q-tr(:props="props" @click="select(props.row)")
 					q-td {{ props.row.name }}
-			//		q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
-			// 		q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
+					q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
+					// q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
+					q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
 			// 		q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
 			// 		q-td.cell(:style="calcBg(props.row.veh4)") {{ props.row.veh4 }}
 			// 		q-td.cell(:style="calcBg(props.row.veh5)") {{ props.row.veh5 }}

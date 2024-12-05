@@ -124,6 +124,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Анкеты', requiresAuth: false },
 		},
 		{
+			path: '/tmp',
+			component: () => import('@/components/Tmp.vue'),
+			meta: { transition: 'slide-left', title: 'Анкеты', requiresAuth: false },
+		},
+		{
 			path: '/:pathMatch(.*)*',
 			redirect: '/404',
 		},

@@ -1,5 +1,6 @@
 const vehi: Column[] = [
 	{
+		id: 1,
 		name: 'veh1',
 		label: 'презентация автострахование',
 		field: 'veh1',
@@ -7,6 +8,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 2,
 		name: 'veh2',
 		label: 'выявление автострахование',
 		field: 'veh2',
@@ -14,6 +16,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 3,
 		name: 'veh3',
 		label: 'презентация командировки',
 		field: 'veh3',
@@ -21,6 +24,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 4,
 		name: 'veh4',
 		label: 'выявление командировки',
 		field: 'veh4',
@@ -28,6 +32,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 5,
 		name: 'veh5',
 		label: 'презентация лизинг',
 		field: 'veh5',
@@ -35,6 +40,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 6,
 		name: 'veh6',
 		label: 'выявление лизинг',
 		field: 'veh6',
@@ -42,6 +48,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 7,
 		name: 'veh7',
 		label: 'презентация мойка',
 		field: 'veh7',
@@ -49,6 +56,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 8,
 		name: 'veh8',
 		label: 'выявление мойка',
 		field: 'veh8',
@@ -56,6 +64,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 9,
 		name: 'veh9',
 		label: 'презентация платные дороги',
 		field: 'veh9',
@@ -63,6 +72,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 10,
 		name: 'veh10',
 		label: 'выявление платные дороги',
 		field: 'veh10',
@@ -70,6 +80,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 11,
 		name: 'veh11',
 		label: 'презентация ремонт',
 		field: 'veh11',
@@ -77,6 +88,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 12,
 		name: 'veh12',
 		label: 'выявление ремонт',
 		field: 'veh12',
@@ -84,6 +96,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 13,
 		name: 'veh13',
 		label: 'презентация сервис',
 		field: 'veh13',
@@ -91,6 +104,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 14,
 		name: 'veh14',
 		label: 'выявление сервис',
 		field: 'veh14',
@@ -98,6 +112,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 15,
 		name: 'veh15',
 		label: 'презентация такси',
 		field: 'veh15',
@@ -105,6 +120,7 @@ const vehi: Column[] = [
 		sortable: true,
 	},
 	{
+		id: 16,
 		name: 'veh16',
 		label: 'выявление такси',
 		field: 'veh16',
