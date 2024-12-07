@@ -23,7 +23,7 @@ q-page.rel(padding)
 				.compare(v-if='mystore.compare')
 					Compare
 
-		// OperStat1
+		Tmp
 		Graph1
 		VehaStat
 		OperStat
@@ -42,7 +42,7 @@ import CommonOptions from '@/components/common/CommonOptions.vue'
 import Graph1 from '@/components/Graph1.vue'
 import VehaStat from '@/components/VehaStat.vue'
 import OperStat from '@/components/OperStat.vue'
-import OperStat1 from '@/components/OperStat1.vue'
+import Tmp from '@/components/Tmp.vue'
 import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
 // import WindowConstructor from '@/components/WindowConstructor.vue'

@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import type { Ref } from 'vue'
 import { vehi, operators } from '@/stores/vehi_cols'
 
-const startColumns = [...vehi]
-
+const oper = ref(true)
 const doubleColumns = computed(() => {
-	return startColumns.flatMap((item) => {
+	return vehi.flatMap((item) => {
 		return [
 			{
 				label: item.label,
 				name: item.name,
 				field: item.field,
-				align: 'left',
+				align: item.align,
 				sortable: true,
 				compare: 1,
 			},
@@ -20,7 +18,7 @@ const doubleColumns = computed(() => {
 				label: item.label,
 				name: item.name + 'a',
 				field: item.field + 'a',
-				align: 'left',
+				align: item.align,
 				sortable: true,
 				compare: 2,
 			},
@@ -29,29 +27,7 @@ const doubleColumns = computed(() => {
 	})
 })
 
-const rows = ref([
-	{
-		id: 0,
-		name: 'Екатерина',
-		veh1: 5,
-		veh1b: 25,
-		veh2: 88,
-		veh2b: 60,
-		veh3: 5,
-		veh3b: 5,
-	},
-	{
-		id: 1,
-		name: 'laдлофы',
-		veh1: 15,
-		veh1b: 55,
-		veh2: 65,
-		veh2b: 35,
-		veh3: 85,
-		veh3b: 26,
-	}
-])
-
+const rows = ref(operators)
 const tuning = ref(false)
 const compare = ref(false)
 const teal = ref(false)
@@ -62,6 +38,12 @@ const options = [
 	{ label: 'Показать абсолютные значения', value: 'abs' },
 	{ label: 'Показать тенденцию', value: 'rel' },
 ]
+const pagination = ref({
+	sortBy: 'total' as keyof Row,
+	descending: true,
+	page: 1,
+	rowsPerPage: 0,
+})
 
 const calcBg = ((n: number) => {
 	if (orange.value) {
@@ -76,52 +58,89 @@ const calcBg = ((n: number) => {
 </script>
 
 <template lang='pug'>
-q-page(padding)
-	q-card-section.q-px-md.q-pt-md(style='width: 1400px;')
-		q-table.sticky(
-			:rows='rows'
-			:columns='doubleColumns'
-			row-key="id"
-			separator='cell'
-			binary-state-sort
-			dense
-			)
+.container
+	q-expansion-item(v-model="oper")
+		template(v-slot:header)
+			q-item-section(avatar).line
+				q-avatar(icon="mdi-headset" flat)
 
-			template(#top)
-				.top
-					.title Интегральный чек-лист
-					q-btn(flat icon-right="mdi-tune-variant" label="Настройки" @click="tuning = !tuning" size='sm') 
-				.tune(v-if='tuning')
-					.column
-						q-checkbox(v-model="orange" dense label="Выделить проблемы" color="orange")
-						q-checkbox(v-model="teal" dense label="Выделить успехи" color="teal")
+			q-item-section
+				.zag Прохождение чек-листа
+			q-item-section(side)
+				q-btn(round flat icon="mdi-cloud-download-outline")
 
-					q-option-group(
-						:options="options"
-						type="radio"
-						dense
-						v-model="group")
+		q-card-section.q-px-md.q-pt-md
+			q-table.sticky(
+				:rows='rows'
+				:columns='doubleColumns'
+				row-key="id"
+				separator='cell'
+				binary-state-sort
+				:pagination='pagination'
+				hide-pagination
+				dense
+				)
 
-			template(#header="props")
-				q-tr.main
-					q-th Операторы
-					q-th(v-for="(col, index) in startColumns" colspan='2')
-						span.rot {{ col.label }}
+				template(#top)
+					.top
+						.title Интегральный чек-лист
+						q-btn(flat icon-right="mdi-tune-variant" label="Настройки" @click="tuning = !tuning" size='sm') 
+					.tune(v-if='tuning')
+						.column
+							q-checkbox(v-model="orange" dense label="Выделить проблемы" color="orange")
+							q-checkbox(v-model="teal" dense label="Выделить успехи" color="teal")
 
-				q-tr.sma(:props="props")
-					q-th.blo
-					q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.compare }}
+						q-option-group(
+							:options="options"
+							type="radio"
+							dense
+							v-model="group")
 
-			template(v-slot:body="props")
-				q-tr(:props="props" @click="select(props.row)")
-					q-td {{ props.row.name }}
-					q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
-					q-td.cell(:style="calcBg(props.row.veh1b)") {{ props.row.veh1b }}
-					q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
-					q-td.cell(:style="calcBg(props.row.veh2b)") {{ props.row.veh2b }}
-					q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
-					q-td.cell(:style="calcBg(props.row.veh3b)") {{ props.row.veh3b }}
+				template(#header="props")
+					q-tr.main
+						q-th Операторы
+						q-th(v-for="(col, index) in vehi" colspan='2')
+							span.rot {{ col.label }}
 
+					q-tr.sma(:props="props")
+						q-th.blo
+						q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.compare }}
+
+				template(v-slot:body="props")
+					q-tr(:props="props" @click="")
+						q-td {{ props.row.name }}
+						q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
+						q-td.cell(:style="calcBg(props.row.veh1a)") {{ props.row.veh1a }}
+						q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
+						q-td.cell(:style="calcBg(props.row.veh2a)") {{ props.row.veh2a }}
+						q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
+						q-td.cell(:style="calcBg(props.row.veh3a)") {{ props.row.veh3a }}
+						q-td.cell(:style="calcBg(props.row.veh4)") {{ props.row.veh4 }}
+						q-td.cell(:style="calcBg(props.row.veh4a)") {{ props.row.veh4a }}
+						q-td.cell(:style="calcBg(props.row.veh5)") {{ props.row.veh5 }}
+						q-td.cell(:style="calcBg(props.row.veh5a)") {{ props.row.veh5a }}
+						q-td.cell(:style="calcBg(props.row.veh6)") {{ props.row.veh6 }}
+						q-td.cell(:style="calcBg(props.row.veh6a)") {{ props.row.veh6a }}
+						q-td.cell(:style="calcBg(props.row.veh7)") {{ props.row.veh7 }}
+						q-td.cell(:style="calcBg(props.row.veh7a)") {{ props.row.veh7a }}
+						q-td.cell(:style="calcBg(props.row.veh8)") {{ props.row.veh8 }}
+						q-td.cell(:style="calcBg(props.row.veh8a)") {{ props.row.veh8a }}
+						q-td.cell(:style="calcBg(props.row.veh9)") {{ props.row.veh9 }}
+						q-td.cell(:style="calcBg(props.row.veh9a)") {{ props.row.veh9a }}
+						q-td.cell(:style="calcBg(props.row.veh10)") {{ props.row.veh10 }}
+						q-td.cell(:style="calcBg(props.row.veh10a)") {{ props.row.veh10a }}
+						q-td.cell(:style="calcBg(props.row.veh11)") {{ props.row.veh11 }}
+						q-td.cell(:style="calcBg(props.row.veh11a)") {{ props.row.veh11a }}
+						q-td.cell(:style="calcBg(props.row.veh12)") {{ props.row.veh12 }}
+						q-td.cell(:style="calcBg(props.row.veh12a)") {{ props.row.veh12a }}
+						q-td.cell(:style="calcBg(props.row.veh13)") {{ props.row.veh13 }}
+						q-td.cell(:style="calcBg(props.row.veh13a)") {{ props.row.veh13a }}
+						q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
+						q-td.cell(:style="calcBg(props.row.veh14a)") {{ props.row.veh14a }}
+						q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
+						q-td.cell(:style="calcBg(props.row.veh15a)") {{ props.row.veh15a }}
+						q-td.cell(:style="calcBg(props.row.veh16)") {{ props.row.veh16 }}
+						q-td.cell(:style="calcBg(props.row.veh16a)") {{ props.row.veh16a }}
 </template>
 
 <style scoped lang="scss">
@@ -141,10 +160,6 @@ q-page(padding)
 	top: 0;
 	background-color: #f9f9eb;
 }
-
-// :deep(tr.other td) {
-// 	padding: 2px 5px;
-// }
 
 :deep(.q-table th, .q-table td) {
 	padding: 6px 15px;
