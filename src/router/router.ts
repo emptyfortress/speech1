@@ -41,11 +41,6 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Отчеты', requiresAuth: false },
 		},
 		{
-			path: '/compare',
-			component: () => import('@/components/OperStat1.vue'),
-			meta: { transition: 'slide-left', title: 'Сравнить', requiresAuth: false },
-		},
-		{
 			path: '/users',
 			component: () => import('@/components/Users.vue'),
 			meta: { transition: 'slide-left', title: 'Пользователи', requiresAuth: false },

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { vehi, operators } from '@/stores/vehi_cols'
+import { useStore } from '@/stores/store'
 
-const oper = ref(true)
+const store = useStore()
+
 const doubleColumns = computed(() => {
 	return vehi.flatMap((item) => {
 		return [
@@ -59,7 +61,7 @@ const calcBg = ((n: number) => {
 
 <template lang='pug'>
 .container
-	q-expansion-item(v-model="oper")
+	q-expansion-item(v-model="store.compare")
 		template(v-slot:header)
 			q-item-section(avatar).line
 				q-avatar(icon="mdi-headset" flat)
