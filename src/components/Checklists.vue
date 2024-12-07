@@ -18,12 +18,15 @@ q-page.rel(padding)
 				q-card-actions.q-px-none
 					q-btn(flat color="primary" label="Сбросить").q-mr-sm
 					q-space
-					q-btn(color="primary" flat label="Добавить к сравнению")
+					q-btn(color="primary" flat label="Добавить к сравнению" @click='compare')
 					q-btn(unelevated color="primary" icon="mdi-check-bold" label="Применить" @click="toggle")
 				br
+				.compare(v-if='mystore.compare')
+					Compare
+
 		Graph1
 		VehaStat
-		OperStat1
+		// OperStat1
 		OperStat
 		VehaRecord
 
@@ -45,6 +48,7 @@ import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
 // import WindowConstructor from '@/components/WindowConstructor.vue'
 import FabButton from '@/components/common/FabButton.vue'
+import Compare from '@/components/Compare.vue'
 
 const mystore = useStore()
 const mycheck = useCheck()
@@ -61,12 +65,16 @@ const toggle = () => {
 	}, 1700)
 }
 
-	const openDialog = () => {
+const openDialog = () => {
 	if (mycheck.activeCheck === undefined) {
 		mycheck.allCheck[0].selected = true
 	}
 	dialog1.value = !dialog1.value
 }
+
+const compare = (() => {
+	mystore.setCompare(true)
+})
 </script>
 
 <style scoped lang="scss"></style>

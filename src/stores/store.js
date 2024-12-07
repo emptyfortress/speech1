@@ -18,7 +18,8 @@ export const useStore = defineStore({
 		sett: false,
 		fcr: true,
 		req: true,
-		chec: false,
+		chec: true,
+		compare: false,
 		cat: true,
 		integral: false,
 		record: 'группа 1',
@@ -33,6 +34,9 @@ export const useStore = defineStore({
 	getters: {},
 
 	actions: {
+		setCompare(e) {
+			this.compare = e
+		},
 		setDraggingWord(e) {
 			this.draggingWord = e
 		},

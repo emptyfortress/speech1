@@ -114,17 +114,17 @@ const orange = ref(true)
 
 const group = ref('abs')
 const options = [
-	{label: 'Показать абсолютные значения', value: 'abs'},
-	{label: 'Показать тенденцию', value: 'rel'},
+	{ label: 'Показать абсолютные значения', value: 'abs' },
+	{ label: 'Показать тенденцию', value: 'rel' },
 ]
 
 const calcBg = ((n: number) => {
 	if (orange.value) {
-		let op = 1 - (n / 100)/ .25
+		let op = 1 - (n / 100) / .25
 		if (n < 40) return `background-color: rgba(255, 149, 0, ${op});`
 	}
 	if (teal.value) {
-		let op =   0.7 / (100 / n)
+		let op = 0.7 / (100 / n)
 		if (n > 50) return `background-color: rgba(0, 128, 128, ${op});`
 	}
 })
@@ -166,7 +166,7 @@ q-page(padding)
 
 				q-tr.sma(:props="props")
 					q-th.blo
-					q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.time}}
+					q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.time }}
 
 			template(v-slot:body="props")
 				q-tr(:props="props" @click="select(props.row)")
@@ -184,9 +184,11 @@ q-page(padding)
 .cell {
 	text-align: center;
 }
+
 .sticky {
 	height: 630px;
 }
+
 :deep(tr th) {
 	vertical-align: bottom;
 	text-align: center;
@@ -195,12 +197,14 @@ q-page(padding)
 	top: 0;
 	background-color: #f9f9eb;
 }
+
 // :deep(tr.main i) {
 // 	display: none;
 // }
 :deep(tr.other td) {
 	padding: 2px 5px;
 }
+
 :deep(.q-table th, .q-table td) {
 	padding: 6px 15px;
 }
@@ -241,14 +245,17 @@ q-page(padding)
 :deep(th.blo) {
 	z-index: 3;
 }
+
 :deep(.q-table__title) {
 	font-size: 1rem;
 }
+
 .top {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 }
+
 .tune {
 	padding: 1rem;
 	display: grid;
