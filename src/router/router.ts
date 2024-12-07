@@ -42,7 +42,7 @@ export const router = createRouter({
 		},
 		{
 			path: '/compare',
-			component: () => import('@/components/Compare.vue'),
+			component: () => import('@/components/OperStat1.vue'),
 			meta: { transition: 'slide-left', title: 'Сравнить', requiresAuth: false },
 		},
 		{

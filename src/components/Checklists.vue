@@ -20,13 +20,12 @@ q-page.rel(padding)
 					q-space
 					q-btn(color="primary" flat label="Добавить к сравнению" @click='compare')
 					q-btn(unelevated color="primary" icon="mdi-check-bold" label="Применить" @click="toggle")
-				br
 				.compare(v-if='mystore.compare')
 					Compare
 
+		// OperStat1
 		Graph1
 		VehaStat
-		// OperStat1
 		OperStat
 		VehaRecord
 
