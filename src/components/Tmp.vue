@@ -1,87 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
+import { vehi, operators } from '@/stores/vehi_cols'
 
-const selected: Ref<Row[]> = ref([])
-const vehi: Column[] = [
-	{
-		id: 1,
-		name: 'veh1',
-		label: 'презентация автострахование',
-		field: 'veh1',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 2,
-		name: 'veh2',
-		label: 'выявление автострахование',
-		field: 'veh2',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 3,
-		name: 'veh3',
-		label: 'презентация командировки',
-		field: 'veh3',
-		align: 'left',
-		sortable: true,
-	},
-]
-const vehi2: Column[] = [
-	{
-		id: 1,
-		name: 'veh1',
-		label: 't1',
-		time: 'fuck',
-		field: 'veh1',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 2,
-		name: 'veh1b',
-		label: 't2',
-		time: 'fuck',
-		field: 'veh1b',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 3,
-		name: 'veh2',
-		label: 't1',
-		time: 'fuck',
-		field: 'veh2',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 4,
-		name: 'veh2b',
-		label: 't2',
-		field: 'veh2b',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 5,
-		name: 'veh3',
-		label: 't1',
-		field: 'veh3',
-		align: 'left',
-		sortable: true,
-	},
-	{
-		id: 6,
-		name: 'veh3b',
-		label: 't2',
-		field: 'veh3b',
-		align: 'left',
-		sortable: true,
-	},
-]
+const startColumns = [...vehi]
+
+const doubleColumns = computed(() => {
+	return startColumns.flatMap((item) => {
+		return [
+			{
+				label: item.label,
+				name: item.name,
+				field: item.field,
+				align: 'left',
+				sortable: true,
+				compare: 1,
+			},
+			{
+				label: item.label,
+				name: item.name + 'a',
+				field: item.field + 'a',
+				align: 'left',
+				sortable: true,
+				compare: 2,
+			},
+		]
+
+	})
+})
 
 const rows = ref([
 	{
@@ -104,7 +50,6 @@ const rows = ref([
 		veh3: 85,
 		veh3b: 26,
 	}
-
 ])
 
 const tuning = ref(false)
@@ -132,11 +77,10 @@ const calcBg = ((n: number) => {
 
 <template lang='pug'>
 q-page(padding)
-
 	q-card-section.q-px-md.q-pt-md(style='width: 1400px;')
 		q-table.sticky(
 			:rows='rows'
-			:columns='vehi2'
+			:columns='doubleColumns'
 			row-key="id"
 			separator='cell'
 			binary-state-sort
@@ -161,12 +105,12 @@ q-page(padding)
 			template(#header="props")
 				q-tr.main
 					q-th Операторы
-					q-th(v-for="(col, index) in vehi" colspan='2')
+					q-th(v-for="(col, index) in startColumns" colspan='2')
 						span.rot {{ col.label }}
 
 				q-tr.sma(:props="props")
 					q-th.blo
-					q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.time }}
+					q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.compare }}
 
 			template(v-slot:body="props")
 				q-tr(:props="props" @click="select(props.row)")
@@ -198,22 +142,24 @@ q-page(padding)
 	background-color: #f9f9eb;
 }
 
-// :deep(tr.main i) {
-// 	display: none;
+// :deep(tr.other td) {
+// 	padding: 2px 5px;
 // }
-:deep(tr.other td) {
-	padding: 2px 5px;
-}
 
 :deep(.q-table th, .q-table td) {
 	padding: 6px 15px;
 }
 
-.q-table thead tr.sma {
-	height: 32px;
+:deep(.q-table thead tr.sma) {
 	position: sticky;
 	z-index: 2;
 	top: 138px;
+
+	th {
+		padding-left: 0;
+		padding-right: 0;
+		vertical-align: center;
+	}
 }
 
 :deep(th span.rot) {
