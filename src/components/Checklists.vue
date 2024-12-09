@@ -24,6 +24,7 @@ q-page.rel(padding)
 					Compare
 
 		Tmp
+		Tmp1
 		Graph1
 		VehaStat
 		OperStat
@@ -42,6 +43,7 @@ import Graph1 from '@/components/Graph1.vue'
 import VehaStat from '@/components/VehaStat.vue'
 import OperStat from '@/components/OperStat.vue'
 import Tmp from '@/components/Tmp.vue'
+import Tmp1 from '@/components/Tmp1.vue'
 import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
 import FabButton from '@/components/common/FabButton.vue'
