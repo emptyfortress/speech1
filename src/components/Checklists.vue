@@ -30,7 +30,6 @@ q-page.rel(padding)
 		VehaRecord
 
 		Constructor1(:dialog="dialog1" :maximized="maximizedToggle")
-		// WindowConstructor
 </template>
 
 <script setup lang="ts">
@@ -45,7 +44,6 @@ import OperStat from '@/components/OperStat.vue'
 import Tmp from '@/components/Tmp.vue'
 import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
-// import WindowConstructor from '@/components/WindowConstructor.vue'
 import FabButton from '@/components/common/FabButton.vue'
 import Compare from '@/components/Compare.vue'
 
