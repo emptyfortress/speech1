@@ -12,9 +12,12 @@ const perModel1: Ref<Range | String> = ref('Текущий месяц')
 
 
 const toggleCompare = (() => {
-	store.setCompare(false)
+	store.toggleCompare()
 })
 
+const toggleTable = (() => {
+	store.toggleTableCompare()
+})
 </script>
 
 <template lang="pug">
@@ -31,7 +34,7 @@ const toggleCompare = (() => {
 
 	.buttons
 		q-btn(flat color="primary" label="Отмена" @click="toggleCompare") 
-		q-btn(unelevated color="primary" label="Сравнить" @click="") 
+		q-btn(unelevated color="primary" label="Сравнить" @click="toggleTable") 
 </template>
 
 
@@ -58,17 +61,17 @@ const toggleCompare = (() => {
 	grid-template-columns: auto 1fr 1fr 200px;
 	column-gap: 2rem;
 	align-items: center;
+	margin-bottom: .5rem;
 }
 
 .compare {
-	background: $grey-2;
+	background: $grey-3;
 	font-size: .8rem;
-	// box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, .2);
+	border: 1px solid #d0d0c2;
 	position: relative;
 	padding: .5rem;
 	display: grid;
 	grid-template-columns: auto 1fr;
-	// justify-items: start;
 	align-items: center;
 	column-gap: .5rem;
 }

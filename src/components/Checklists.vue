@@ -18,13 +18,13 @@ q-page.rel(padding)
 				q-card-actions.q-px-none
 					q-btn(flat color="primary" label="Сбросить").q-mr-sm
 					q-space
-					q-btn(color="primary" flat label="Добавить к сравнению" @click='compare')
+					q-btn(color="primary" flat label="Сравнение" @click='compare')
 					q-btn(unelevated color="primary" icon="mdi-check-bold" label="Применить" @click="toggle")
 				.compare(v-if='mystore.compare')
 					Compare
 
 		Tmp
-		Tmp1
+		// Tmp1
 		Graph1
 		VehaStat
 		OperStat
@@ -43,7 +43,7 @@ import Graph1 from '@/components/Graph1.vue'
 import VehaStat from '@/components/VehaStat.vue'
 import OperStat from '@/components/OperStat.vue'
 import Tmp from '@/components/Tmp.vue'
-import Tmp1 from '@/components/Tmp1.vue'
+// import Tmp1 from '@/components/Tmp1.vue'
 import VehaRecord from '@/components/VehaRecord.vue'
 import Constructor1 from '@/components/Constructor1.vue'
 import FabButton from '@/components/common/FabButton.vue'
@@ -72,7 +72,7 @@ const openDialog = () => {
 }
 
 const compare = (() => {
-	mystore.setCompare(true)
+	mystore.toggleCompare()
 })
 </script>
 

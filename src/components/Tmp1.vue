@@ -45,61 +45,62 @@ q-expansion-item(v-model="check")
 			q-btn(round flat icon="mdi-cloud-download-outline")
 
 	q-card-section.q-px-md.q-pt-md
-		q-table.sticky(
-			:rows='rows'
-			:columns='vehi'
-			row-key="id"
-			separator='cell'
-			binary-state-sort
-			:pagination='pagination'
-			hide-pagination
-			dense
-			)
 
-			template(#top)
-				.top
-					.title Интегральный чек-лист
-					q-btn(flat icon-right="mdi-tune-variant" label="Настройки" @click="tuning = !tuning" size='sm') 
-				.tune(v-if='tuning')
-					.column
-						q-checkbox(v-model="orange" dense label="Выделить проблемы" color="orange")
-						q-checkbox(v-model="teal" dense label="Выделить успехи" color="teal")
-
-					q-option-group(
-						:options="options"
-						type="radio"
-						dense
-						v-model="group")
-
-			template(#header="props")
-				q-tr.main
-					q-th Операторы
-					q-th(v-for="col in vehi")
-						span.rot {{ col.label }}
-
-				q-tr.sma(:props="props")
-					q-th.blo
-					q-th(:props="props" v-for="col in props.cols" :key='col.name')
-
-			template(v-slot:body="props")
-				q-tr(:props="props")
-					q-td {{ props.row.name }}
-					q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
-					q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
-					q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
-					q-td.cell(:style="calcBg(props.row.veh4)") {{ props.row.veh4 }}
-					q-td.cell(:style="calcBg(props.row.veh5)") {{ props.row.veh5 }}
-					q-td.cell(:style="calcBg(props.row.veh6)") {{ props.row.veh6 }}
-					q-td.cell(:style="calcBg(props.row.veh7)") {{ props.row.veh7 }}
-					q-td.cell(:style="calcBg(props.row.veh8)") {{ props.row.veh8 }}
-					q-td.cell(:style="calcBg(props.row.veh9)") {{ props.row.veh9 }}
-					q-td.cell(:style="calcBg(props.row.veh10)") {{ props.row.veh10 }}
-					q-td.cell(:style="calcBg(props.row.veh11)") {{ props.row.veh11 }}
-					q-td.cell(:style="calcBg(props.row.veh12)") {{ props.row.veh12 }}
-					q-td.cell(:style="calcBg(props.row.veh13)") {{ props.row.veh13 }}
-					q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
-					q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
-					q-td.cell(:style="calcBg(props.row.veh16)") {{ props.row.veh16 }}
+		// q-table.sticky(
+		// 	:rows='rows'
+		// 	:columns='vehi'
+		// 	row-key="id"
+		// 	separator='cell'
+		// 	binary-state-sort
+		// 	:pagination='pagination'
+		// 	hide-pagination
+		// 	dense
+		// 	)
+		//
+		// 	template(#top)
+		// 		.top
+		// 			.title Интегральный чек-лист
+		// 			q-btn(flat icon-right="mdi-tune-variant" label="Настройки" @click="tuning = !tuning" size='sm') 
+		// 		.tune(v-if='tuning')
+		// 			.column
+		// 				q-checkbox(v-model="orange" dense label="Выделить проблемы" color="orange")
+		// 				q-checkbox(v-model="teal" dense label="Выделить успехи" color="teal")
+		//
+		// 			q-option-group(
+		// 				:options="options"
+		// 				type="radio"
+		// 				dense
+		// 				v-model="group")
+		//
+		// 	template(#header="props")
+		// 		q-tr.main
+		// 			q-th Операторы
+		// 			q-th(v-for="col in vehi")
+		// 				span.rot {{ col.label }}
+		//
+		// 		q-tr.sma(:props="props")
+		// 			q-th.blo
+		// 			q-th(:props="props" v-for="col in props.cols" :key='col.name')
+		//
+		// 	template(v-slot:body="props")
+		// 		q-tr(:props="props")
+		// 			q-td {{ props.row.name }}
+		// 			q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh4)") {{ props.row.veh4 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh5)") {{ props.row.veh5 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh6)") {{ props.row.veh6 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh7)") {{ props.row.veh7 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh8)") {{ props.row.veh8 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh9)") {{ props.row.veh9 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh10)") {{ props.row.veh10 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh11)") {{ props.row.veh11 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh12)") {{ props.row.veh12 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh13)") {{ props.row.veh13 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
+		// 			q-td.cell(:style="calcBg(props.row.veh16)") {{ props.row.veh16 }}
 </template>
 
 <style scoped lang="scss">

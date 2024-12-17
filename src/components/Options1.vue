@@ -48,6 +48,7 @@ const name = ref('')
 	font-size: 0.8rem;
 	font-weight: 600;
 }
+
 .save {
 	min-width: 300px;
 }

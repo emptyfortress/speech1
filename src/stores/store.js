@@ -20,6 +20,8 @@ export const useStore = defineStore({
 		req: true,
 		chec: true,
 		compare: false,
+		table: false,
+		tableCompare: false,
 		cat: true,
 		integral: false,
 		record: 'группа 1',
@@ -34,8 +36,11 @@ export const useStore = defineStore({
 	getters: {},
 
 	actions: {
-		setCompare(e) {
-			this.compare = e
+		toggleTableCompare() {
+			this.tableCompare = !this.tableCompare
+		},
+		toggleCompare() {
+			this.compare = !this.compare
 		},
 		setDraggingWord(e) {
 			this.draggingWord = e
