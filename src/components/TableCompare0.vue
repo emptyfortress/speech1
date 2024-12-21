@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { vehi, operators } from '@/stores/vehi_cols'
+import VehOperDialog from '@/components/VehOperDialog.vue'
 
 const rows = ref(operators)
 const tuning = ref(false)
@@ -30,17 +31,27 @@ const calcBg = ((n: number) => {
 	}
 })
 
+const dialog = ref(false)
+const selected = ref<any[]>([])
+
+const select = ((e: any) => {
+	console.log(e)
+	selected.value[0] = e
+	dialog.value = true
+})
 </script>
 
 <template lang="pug">
 q-table.sticky(
 	:rows='rows'
 	:columns='vehi'
-	row-key="id"
+	row-key="name"
 	separator='cell'
 	binary-state-sort
 	:pagination='pagination'
 	hide-pagination
+	selection='single'
+	v-model:selected='selected'
 	dense
 	)
 
@@ -63,7 +74,7 @@ q-table.sticky(
 			q-th(:props="props" v-for="col in props.cols" :key='col.name')
 
 	template(v-slot:body="props")
-		q-tr(:props="props")
+		q-tr(:props="props" @click='select(props.row)')
 			q-td {{ props.row.name }}
 			q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
 			q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
@@ -81,11 +92,18 @@ q-table.sticky(
 			q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
 			q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
 			q-td.cell(:style="calcBg(props.row.veh16)") {{ props.row.veh16 }}
+
+Teleport(to='body')
+	VehOperDialog(v-model="dialog" :oper='selected[0]?.name')
 </template>
 
 <style scoped lang="scss">
 .cell {
 	text-align: center;
+}
+
+.q-tr {
+	cursor: pointer;
 }
 
 .sticky {
