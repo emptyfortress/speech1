@@ -66,6 +66,7 @@ q-table.sticky(
 	template(#header="props")
 		q-tr.main
 			q-th Операторы
+			q-th Среднее
 			q-th(v-for="col in vehi")
 				span.rot {{ col.label }}
 
@@ -76,6 +77,7 @@ q-table.sticky(
 	template(v-slot:body="props")
 		q-tr(:props="props" @click='select(props.row)')
 			q-td {{ props.row.name }}
+			q-td.cell.text-bold(:style="calcBg(props.row.veh0)") 3.14
 			q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
 			q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
 			q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
@@ -92,6 +94,12 @@ q-table.sticky(
 			q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
 			q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
 			q-td.cell(:style="calcBg(props.row.veh16)") {{ props.row.veh16 }}
+	template(v-slot:bottom-row='props')
+		q-tr(props='props')
+			q-td.text-bold СРЕДНЕЕ
+			q-td.text-bold.text-center(v-for="n in 17") {{ n }}
+	template(v-slot:bottom)
+		.itogo Здесь итоговая информация по прохождению чек-листа.
 
 Teleport(to='body')
 	VehOperDialog(v-model="dialog" :oper='selected[0]?.name')
@@ -100,6 +108,14 @@ Teleport(to='body')
 <style scoped lang="scss">
 .cell {
 	text-align: center;
+}
+
+.itogo {
+	width: 100%;
+	text-align: center;
+	font-size: .9rem;
+	font-weight: 600;
+	padding: 6px 0;
 }
 
 .q-tr {
