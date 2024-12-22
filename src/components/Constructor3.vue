@@ -6,7 +6,7 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 			q-icon(name="mdi-lan-outline" size="26px")
 			span Темы
 		.content
-			q-splitter(v-model="split1" :limits="[20, 50]" :style="hei").spli
+			q-splitter.spli(v-model="split1" :limits="[20, 50]" :style="hei")
 				template(v-slot:before)
 					.tree
 						q-input(dense debounce="0" color="primary" autofocus v-model="filter" clearable)
@@ -14,14 +14,14 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 								q-icon(name="mdi-magnify")
 
 						q-scroll-area(:style="hei1")
-							q-tree(:nodes="cat.cat"
+							q-tree.cat(:nodes="cat.cat"
 								node-key="id"
 								no-results-label="Ничего нет"
 								selected-color="primary"
 								no-selection-unset
 								v-model:selected="selected"
 								v-model:expanded="expanded"
-								:filter="filter").cat
+								:filter="filter")
 								template(v-slot:default-header="prop")
 									.nod
 										WordHighlighter(:query="filter") {{ prop.node.label }}

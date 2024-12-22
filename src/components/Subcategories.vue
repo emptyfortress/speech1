@@ -6,8 +6,8 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 				q-breadcrumbs
 					q-breadcrumbs-el(v-for="bread in props.selectedItem.breads" :label="bread")
 					q-breadcrumbs-el(:label="props.selectedItem.label")
-			q-list().q-mt-md
-				q-item(clickable dense v-for="(item, index) in props.selectedItem.children" :key="item.id" @click="select(item.id)").nohov
+			q-list.q-mt-md
+				q-item.nohov(clickable dense v-for="(item, index) in props.selectedItem.children" :key="item.id" @click="select(item.id)")
 					q-item-section(avatar)
 						q-icon(name="mdi-menu-right" size="sm")
 					q-item-section
@@ -15,7 +15,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 							|{{ item.label }}
 						q-popup-edit(v-model="item.label" auto-save v-slot="scope" :ref="(el: any) => { editNode[index] = el }" )
 							q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
-					q-item-section(side).hove
+					q-item-section.hove(side)
 						q-btn(round flat dense icon="mdi-pencil" size="11px" @click.stop="editItem(index)")
 						q-btn(round flat dense icon="mdi-trash-can-outline" size="11px" @click.stop="killItem(item)")
 				q-separator.q-my-sm
@@ -26,11 +26,18 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 					q-item-section
 						q-item-label(v-if="!addMode" @click.stop="addMode = !addMode") Добавить
 						.inlineAdd(v-else)
-							q-input(autofocus v-model="newItem" dense ref="addInput" @keyup.enter="submit").smallinput
-							q-btn(round unelevated color="positive" icon="mdi-check" dense size="sm" @click.stop="addItem" :disable="newItem.length < 3")
+							q-input.smallinput(autofocus v-model="newItem" dense ref="addInput" @keyup.enter="submit")
+
+				q-item(clickable v-if="props.selectedItem.level < 3" @click.stop="addMode1 = !addMode1")
+					q-item-section(avatar)
+						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{ 'rot': addMode1 }" @click.stop="addMode1 = !addMode1")
+					q-item-section
+						q-item-label Добавить из файла
 
 
-			q-card(v-if="props.selectedItem.level === 3").sub
+				FileUploader(v-model="addMode1")
+
+			q-card.sub(v-if="props.selectedItem.level === 3")
 				component(:is="draggable" class="list-group" :list="props.selectedItem.childs" group="subcat" itemKey="id")
 					template(#header)
 						div
@@ -39,22 +46,22 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 							.empty(v-if="props.selectedItem.childs?.length === 0") Раздел не настроен.
 					template(#item="{ element, index }")
 						.list.item
-							component(:is="SvgIcon" name="vocabulary" v-if="element.voc").small.q-mr-sm
-							q-icon(name="mdi-toy-brick-search-outline" v-if="!element.score" size="18px").q-mr-sm
+							component.small.q-mr-sm(:is="SvgIcon" name="vocabulary" v-if="element.voc")
+							q-icon.q-mr-sm(name="mdi-toy-brick-search-outline" v-if="!element.score" size="18px")
 							|{{ element.label }}
-							q-icon(name="mdi-trash-can-outline" size="xs" @click="killVoc(index)").del
+							q-icon.del(name="mdi-trash-can-outline" size="xs" @click="killVoc(index)")
 
 	template(v-slot:after)
 		.right
 			q-tabs(v-model="tabs" inline-label indicator-color="primary" no-caps dense align="left")
 				q-tab(name="Voc")
-					component(:is="SvgIcon" name="vocabulary").vocicon
+					component.vocicon(:is="SvgIcon" name="vocabulary")
 					|Словари
 				q-tab(name="Rec")
 					q-icon(name="mdi-toy-brick-search-outline" size="20px")
 					span.q-mx-sm Запросы
 					q-badge(color="green" label="New!")
-			q-tab-panels(v-model="tabs" animated).cool
+			q-tab-panels.cool(v-model="tabs" animated)
 				q-tab-panel(name="Voc")
 					q-scroll-area(:style="hei1")
 						component(:is="KeywordList")
@@ -70,6 +77,7 @@ import { useCat } from '@/stores/category1'
 import SvgIcon from '@/components/SvgIcon.vue'
 import KeywordList from '@/components/KeywordList.vue'
 import LogicList1 from '@/components/LogicList1.vue'
+import FileUploader from '@/components/FileUploader.vue'
 import { useQuasar } from 'quasar'
 import { uid } from 'quasar'
 import type { Ref } from 'vue'
@@ -105,6 +113,7 @@ const select = (e: string) => {
 }
 
 const addMode = ref(false)
+const addMode1 = ref(false)
 const newItem = ref('')
 const addInput = ref()
 
@@ -150,6 +159,7 @@ const editNode: Ref<any[]> = ref([])
 const editItem = (e: number) => {
 	editNode.value[e].show()
 }
+
 </script>
 
 <style scoped lang="scss">

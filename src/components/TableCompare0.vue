@@ -99,7 +99,7 @@ q-table.sticky(
 			q-td.text-bold СРЕДНЕЕ
 			q-td.text-bold.text-center(v-for="n in 17") {{ n }}
 	template(v-slot:bottom)
-		.itogo Здесь итоговая информация по прохождению чек-листа.
+		.itogo Здесь может быть какая-то итоговая информация по прохождению чек-листа.
 
 Teleport(to='body')
 	VehOperDialog(v-model="dialog" :oper='selected[0]?.name')
@@ -113,7 +113,7 @@ Teleport(to='body')
 .itogo {
 	width: 100%;
 	text-align: center;
-	font-size: .9rem;
+	font-size: .8rem;
 	font-weight: 600;
 	padding: 6px 0;
 }
