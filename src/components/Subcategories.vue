@@ -32,7 +32,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 					q-item-section(avatar)
 						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{ 'rot': addMode1 }" @click.stop="addMode1 = !addMode1")
 					q-item-section
-						q-item-label Добавить из файла
+						q-item-label Добавить метаданные
 
 
 				FileUploader(v-model="addMode1")

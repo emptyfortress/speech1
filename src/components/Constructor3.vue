@@ -87,7 +87,7 @@ const hei1 = computed(() => {
 	return 'height: ' + (window.innerHeight - 240) + 'px;'
 })
 
-const expanded: Ref<string[]> = ref(['0', '1'])
+const expanded: Ref<string[]> = ref(['Все', '1'])
 
 const add = (e: Category) => {
 	if (e.level === 3) {

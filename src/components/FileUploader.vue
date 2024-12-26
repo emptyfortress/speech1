@@ -1,66 +1,84 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
+import type { QTableColumn } from 'quasar'
 import { useCat } from '@/stores/category1'
 
 const modelValue = defineModel<boolean>()
 
 const cat = useCat()
 
-const list = ref([
+const cols: QTableColumn[] = [
+	{
+		name: 'label',
+		field: 'label',
+		label: 'Название',
+		align: 'left',
+		sortable: true,
+	},
+	{
+		name: 'type',
+		field: 'type',
+		label: 'Тип поля',
+		align: 'left',
+		sortable: true,
+	},
+	{
+		name: 'vid',
+		field: 'vid',
+		label: 'Вид фильтра',
+		align: 'left',
+		sortable: true,
+	},
+]
+const rows = ref([
 	{
 		id: 0,
+		api: 'something',
 		label: 'Год издания',
-		caption: 'When the article was published',
-		active: false,
-		num: 12
+		type: 'Число',
+		vid: 'Выбор из списка',
 	},
 	{
 		id: 1,
+		api: 'something',
 		label: 'Титул',
-		caption: 'The name of the document',
-		active: false,
-		num: 12
+		type: 'Число',
+		vid: 'Выбор из списка',
 	},
 	{
 		id: 2,
+		api: 'something',
 		label: 'Автор',
-		caption: 'Who created or wrote the document',
-		active: false,
-		num: 12
+		type: 'Число',
+		vid: 'Выбор из списка',
 	},
 	{
 		id: 3,
+		api: 'something',
 		label: 'Нейтрино',
-		caption: 'The lens setting used for the shot',
-		active: false,
-		num: 6
+		type: 'Число',
+		vid: 'Выбор из списка',
 	},
 	{
 		id: 4,
+		api: 'something',
 		label: 'Кварки',
-		caption: 'Dimensions of the image in pixels',
-		active: false,
-		num: 62
+		type: 'Число',
+		vid: 'Выбор из списка',
 	},
 	{
 		id: 5,
+		api: 'something',
 		label: 'Ядерные реакции',
-		caption: 'Information about the camera used to take the picture',
-		active: false,
-		num: 8
+		type: 'Число',
+		vid: 'Выбор из списка',
 	},
 ])
 
-const dialog = ref(false)
-
-const finish = (() => {
-	dialog.value = !dialog.value
-})
-
 const $q = useQuasar()
+
 const load = (() => {
-	dialog.value = !dialog.value
 	modelValue.value = false
 	let item = {
 		id: 'meta',
@@ -79,38 +97,23 @@ const load = (() => {
 	})
 
 })
+const selected = ref([])
 </script>
 
 <template lang="pug">
-q-uploader(flat v-if='modelValue'
-	url="http://localhost:4444/upload"
-	label="Загрузить файл с метаданными (.json)"
-	color="amber"
-	text-color="black"
-	no-thumbnails
-	@finish='finish'
+q-table(flat
+	v-if='modelValue'
+	:columns="cols"
+	:rows="rows"
+	hide-pagination
+	selection='multiple'
+	v-model:selected='selected'
+	color='primary'
 	)
 
-q-dialog(v-model="dialog")
-	q-card
-		q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
-		q-card-section.row.items-center.q-pb-none
-			.text-h6 Метаданные
-		q-card-section
-			div Отметьте метаданные для загрузки в дерево категорий:
-		q-card-section
-			q-list(v-for="item in list" :key='item.id')
-				q-item(clickable tag="label" v-ripple)
-					q-item-section(side)
-						q-checkbox(v-model="item.active" dense)
-					q-item-section
-						q-item-label {{ item.label }}
-						q-item-label(caption) {{ item.caption }}
-					q-item-section(side) {{ item.num }}
-		q-card-actions.q-ma-md(align='right')
-			q-btn(flat color="primary" label="Отмена" @click="dialog = false") 
-			q-btn(unelevated color="primary" label="Применить" @click="load") 
-	
+	template(v-slot:bottom)
+		q-btn(unelevated size="sm" color="primary" label="Добавить отмеченные метаданные" @click="load") 
+
 </template>
 
 <style scoped lang="scss">
