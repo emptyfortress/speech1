@@ -1,6 +1,6 @@
 <template lang="pug">
 .myrow
-	.text-body1 Подкатегории: {{ cat.getTickedRows.length }}. Выбрано: {{ cat.selectedPodcategories.length}}
+	.text-body1 Подкатегории: {{ cat.getTickedRows.length }}. Выбрано: {{ cat.selectedPodcategories.length }}
 	div
 		label(@click="tabl = false") Граф
 		q-toggle(v-model="tabl" dense size="xs")
@@ -10,9 +10,9 @@ transition(name="fade")
 	component(:is="NotPodcat" v-if="levelCheck").full-width
 	.full-width(v-else)
 		transition(name="slide-bottom")
-			component(:is="CatTable" v-if="tabl" :rows="cat.getTickedRows" :level="getLevel").full-width
-			.full-width(v-else)
-				component(:is="PodcatChart")
+			component.full-width(:is="CatTable" v-if="tabl" :rows="cat.getTickedRows" :level="getLevel")
+			// .full-width(v-else)
+			component(v-else :is="PodcatChart")
 </template>
 
 <script setup lang="ts">
@@ -26,7 +26,7 @@ const props = defineProps({
 	label: String,
 })
 
-const tabl = ref(true)
+const tabl = ref(false)
 const cat = useCat()
 
 const getLevel = computed(() => {
@@ -51,6 +51,7 @@ const levelCheck = computed(() => {
 	align-items: center;
 	padding: 1rem;
 }
+
 label {
 	font-size: 0.8rem;
 	margin: 0 0.5rem;
