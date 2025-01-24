@@ -5,15 +5,13 @@
 		label(@click="tabl = false") Граф
 		q-toggle(v-model="tabl" dense size="xs")
 		label(@click="tabl = true") Таблица
-Venn
-// PodcatChart
-// transition(name="fade")
-// 	component(:is="NotPodcat" v-if="levelCheck").full-width
-// 	.full-width(v-else)
-// 		transition(name="slide-bottom")
-// 			component.full-width(:is="CatTable" v-if="tabl" :rows="cat.getTickedRows" :level="getLevel")
-// 			.full-width(v-else)
-// 			component(v-else :is="PodcatChart")
+transition(name="fade")
+	component(:is="NotPodcat" v-if="levelCheck").full-width
+	.full-width(v-else)
+		transition(name="slide-bottom")
+			component.full-width(:is="CatTable" v-if="tabl" :rows="cat.getTickedRows" :level="getLevel")
+			.full-width(v-else)
+			component(v-else :is="PodcatChart")
 </template>
 
 <script setup lang="ts">
@@ -21,14 +19,13 @@ import { ref, computed } from 'vue'
 import { useCat } from '@/stores/category1'
 import CatTable from '@/components/CatTable.vue'
 import PodcatChart from '@/components/PodcatChart.vue'
-import Venn from '@/components/Venn.vue'
 import NotPodcat from '@/components/NotPodcat.vue'
 
 const props = defineProps({
 	label: String,
 })
 
-const tabl = ref(false)
+const tabl = ref(true)
 const cat = useCat()
 
 const getLevel = computed(() => {

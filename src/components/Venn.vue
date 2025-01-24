@@ -9,35 +9,35 @@ Chart.register(VennDiagramController, ArcSlice, LinearScale);
 
 const vennCanvas = ref<HTMLCanvasElement | null>(null)
 
-onMounted(() => {
-	if (vennCanvas.value) {
-		new Chart(vennCanvas.value, {
-			type: VennDiagramController.id, // Specify the Venn chart type
-			data: {
-				datasets: [
-					{
-						label: 'Venn Dataset',
-						data: [
-							{ sets: ['A'], size: 20 },
-							{ sets: ['B'], size: 10 },
-							{ sets: ['A', 'B'], size: 5 },
-						],
-						backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-					},
-				],
-			},
-			options: {
-				responsive: true,
-				plugins: {
-					legend: {
-						display: true,
-						position: 'top',
-					},
-				},
-			},
-		});
-	}
-});
+// onMounted(() => {
+// 	if (vennCanvas.value) {
+// 		new Chart(vennCanvas.value, {
+// 			type: VennDiagramController.id, // Specify the Venn chart type
+// 			data: {
+// 				datasets: [
+// 					{
+// 						label: 'Venn Dataset',
+// 						data: [
+// 							{ sets: ['A'], size: 20 },
+// 							{ sets: ['B'], size: 10 },
+// 							{ sets: ['A', 'B'], size: 5 },
+// 						],
+// 						backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+// 					},
+// 				],
+// 			},
+// 			options: {
+// 				responsive: true,
+// 				plugins: {
+// 					legend: {
+// 						display: true,
+// 						position: 'top',
+// 					},
+// 				},
+// 			},
+// 		});
+// 	}
+// });
 
 </script>
 

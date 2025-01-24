@@ -37,31 +37,31 @@ onMounted(() => {
 			{ sets: ['A', 'B', 'C'], size: 3 }
 		];
 
-		new Chart(ctx, {
-			// type: VennDiagramController.id,
-			type: VennDiagramController.id,
-			data: {
-				datasets: [{
-					data: vennData,
-				}]
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				plugins: {
-					tooltip: {
-						callbacks: {
-							label(tooltipItem) {
-								return `${tooltipItem.label}: ${tooltipItem.raw.size}`;
-							}
-						}
-					}
-				}
-			}
-		});
+		// new Chart(ctx, {
+		// 	// type: VennDiagramController.id,
+		// 	type: VennDiagramController.id,
+		// 	data: {
+		// 		datasets: [{
+		// 			data: vennData,
+		// 		}]
+		// 	},
+		// 	options: {
+		// 		responsive: true,
+		// 		maintainAspectRatio: false,
+		// 		plugins: {
+		// 			tooltip: {
+		// 				callbacks: {
+		// 					label(tooltipItem) {
+		// 						return `${tooltipItem.label}: ${tooltipItem.raw.size}`;
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// });
 	}
 
-	renderChart()
+	// renderChart()
 
 });
 
