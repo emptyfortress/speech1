@@ -11,6 +11,8 @@
 - custom SvgIcon
 - pug, scss
 
+Добавлена строка для проверки билда.
+
 ![This is an image](/src/assets/img/image.png)
 
 ### Установка и использование
