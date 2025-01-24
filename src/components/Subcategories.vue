@@ -28,7 +28,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 						.inlineAdd(v-else)
 							q-input.smallinput(autofocus v-model="newItem" dense ref="addInput" @keyup.enter="submit")
 
-				q-item(clickable v-if="props.selectedItem.level < 3" @click.stop="addMode1 = !addMode1")
+				q-item(clickable v-if="props.selectedItem.id == 'Мета'" @click.stop="addMode1 = !addMode1")
 					q-item-section(avatar)
 						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{ 'rot': addMode1 }" @click.stop="addMode1 = !addMode1")
 					q-item-section

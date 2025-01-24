@@ -31,6 +31,15 @@ const cols: QTableColumn[] = [
 		sortable: true,
 	},
 ]
+
+interface Categ {
+	id: number
+	api: string
+	label: string
+	type: string
+	vid: string
+}
+
 const rows = ref([
 	{
 		id: 0,
@@ -79,25 +88,25 @@ const rows = ref([
 const $q = useQuasar()
 
 const load = (() => {
-	modelValue.value = false
 	let item = {
 		id: 'meta',
-		label: 'Метаданные из файла',
+		label: selected.value[0].label,
 		level: 1,
 		breads: [],
 		childs: [],
 		children: []
 	}
-	cat.addCategory(item, 'Все')
+	cat.addCategory(item, 'Мета')
+	selected.value = []
 	$q.notify({
 		icon: 'mdi-check-bold',
-		message: 'Добавлено',
+		message: 'Добавлены метаданные',
 		color: 'positive',
 		position: 'bottom',
 	})
 
 })
-const selected = ref([])
+const selected = ref<Categ[]>([])
 </script>
 
 <template lang="pug">
@@ -106,7 +115,7 @@ q-table(flat
 	:columns="cols"
 	:rows="rows"
 	hide-pagination
-	selection='multiple'
+	selection='single'
 	v-model:selected='selected'
 	color='primary'
 	)
