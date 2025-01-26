@@ -27,6 +27,9 @@ const voice = ref(false)
 const toggleVoice = (() => {
 	voice.value = !voice.value
 })
+const calcSize = computed(() => {
+	return voice.value ? 'lg' : 'sm'
+})
 </script>
 
 <template lang="pug">
@@ -36,7 +39,7 @@ q-card-section
 		.input(:class='{ done: result }')
 			q-input(v-model="query" type='textarea' outlined autogrow class="bg-white" :placeholder='place')
 				template(v-slot:append)
-					q-btn.mic(unelevated round size="sm" icon="mdi-microphone" @click="toggleVoice" :class="{ active: voice }") 
+					q-btn.mic(unelevated round :size="calcSize" icon="mdi-microphone" @click="toggleVoice" :class="{ active: voice }") 
 						.wave
 
 			.filt(v-if='result')
@@ -100,8 +103,6 @@ q-card-section
 
 	&.active {
 		background: red;
-		width: 64px;
-		height: 64px;
 
 		.wave {
 			animation: pulse 1s ease-out infinite;
