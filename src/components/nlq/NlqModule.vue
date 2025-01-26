@@ -22,20 +22,28 @@ const ask = () => {
 const label = computed(() => {
 	return result.value ? 'Искать с метаданными' : 'Искать'
 })
+
+const voice = ref(false)
+const toggleVoice = (() => {
+	voice.value = !voice.value
+})
 </script>
 
 <template lang="pug">
 q-card-section
 	q-linear-progress(indeterminate color="accent" v-if='loading')
 	div
-		.input(:class='{done: result}')
+		.input(:class='{ done: result }')
 			q-input(v-model="query" type='textarea' outlined autogrow class="bg-white" :placeholder='place')
+				template(v-slot:append)
+					q-btn.mic(unelevated round size="sm" icon="mdi-microphone" @click="toggleVoice" :class="{ active: voice }") 
+						.wave
+
 			.filt(v-if='result')
 				Options
 				CommonOptions
 
-		.search
-			.txt Вы всегда сможете дополнить и уточнить свой вопрос.
+		.search Вы всегда сможете дополнить и уточнить свой вопрос.
 			q-btn(unelevated color="primary" :label="label" @click="ask") 
 </template>
 
@@ -44,6 +52,7 @@ q-card-section
 
 .input {
 	position: relative;
+
 	.filt {
 		position: absolute;
 		bottom: 0;
@@ -59,12 +68,14 @@ q-card-section
 	padding-top: 0.5rem;
 	padding-bottom: 1.5rem;
 	font-size: 1rem;
-	min-height: 100px;
+	min-height: 150px;
 }
+
 :deep(.done .q-textarea .q-field__native) {
 	min-height: 220px;
 
 }
+
 .search {
 	margin-top: 0.5rem;
 	display: flex;
@@ -72,7 +83,58 @@ q-card-section
 	align-items: center;
 	font-size: 0.9rem;
 }
+
 .focus {
 	max-width: 600px;
+}
+
+.mic {
+	position: absolute;
+	bottom: .5rem;
+	left: .5rem;
+	background: #aaa;
+	color: white;
+	width: 24px;
+	height: 24px;
+	transition: .3s ease all;
+
+	&.active {
+		background: red;
+		width: 64px;
+		height: 64px;
+
+		.wave {
+			animation: pulse 1s ease-out infinite;
+		}
+	}
+
+	.wave {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 0;
+		z-index: 1;
+	}
+}
+
+
+/* Keyframes for the wave effect */
+@keyframes pulse {
+	0% {
+		width: 0;
+		height: 0;
+		opacity: 0.5;
+	}
+
+	100% {
+		width: 200px;
+		height: 200px;
+		opacity: 0;
+	}
 }
 </style>
