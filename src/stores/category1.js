@@ -12,7 +12,7 @@ export const useCat = defineStore({
 		cat: [
 			{
 				id: 'Все',
-				label: 'Все',
+				label: 'Дерево категорий',
 				header: 'root',
 				level: 0,
 				breads: [],
@@ -536,7 +536,7 @@ export const useCat = defineStore({
 					},
 					{
 						id: 'Мета',
-						label: 'Категории по метаданным',
+						label: 'Метаданные',
 						level: 1,
 						call: randomNumber(50, 350, 0),
 						ant: randomNumber(4, 10, 2),

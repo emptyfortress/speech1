@@ -1,6 +1,6 @@
 <template lang="pug">
 q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transition-show="slide-up" transition-hide="slide-down")
-	.cnt
+	.cnt(ref='el')
 		.tip Настройте дерево тем и категорий.
 		.zg
 			q-icon(name="mdi-lan-outline" size="26px")
@@ -23,7 +23,8 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 								v-model:expanded="expanded"
 								:filter="filter")
 								template(v-slot:default-header="prop")
-									.nod
+									.nod(:class='{ meta: prop.node.id == "Мета" }')
+										q-icon.q-mr-sm(v-if='prop.node.id == "Мета"' name="mdi-tag-outline" size="20px")
 										WordHighlighter(:query="filter") {{ prop.node.label }}
 										q-popup-edit(v-model="prop.node.label" auto-save v-slot="scope" v-if="editMode" :ref="(el: any) => { node[prop.node.id] = el }" @hide="editMode = false")
 											q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
@@ -36,7 +37,7 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 													q-item-section {{ item.label }}
 
 				template(v-slot:after)
-					component(:is="Subcategories" :selectedItem="selectedItem" @select="select")
+					component(:is="Subcategories" :selectedItem="selectedItem" @select="select" :height='height')
 </template>
 
 <script setup lang="ts">
@@ -48,6 +49,7 @@ import Subcategories from '@/components/Subcategories.vue'
 import { useQuasar } from 'quasar'
 import type { Ref } from 'vue'
 import WordHighlighter from 'vue-word-highlighter'
+import { useElementSize } from '@vueuse/core'
 
 const props = defineProps({
 	dialog: Boolean,
@@ -79,12 +81,15 @@ const select = (e: string) => {
 
 const filter = ref('')
 
+const el = ref()
+const { width, height } = useElementSize(el)
+
 const hei = computed(() => {
-	return 'height: ' + (window.innerHeight - 190) + 'px;'
+	return 'height: ' + (height.value - 190) + 'px;'
 })
 
 const hei1 = computed(() => {
-	return 'height: ' + (window.innerHeight - 240) + 'px;'
+	return 'height: ' + (height.value - 265) + 'px;'
 })
 
 const expanded: Ref<string[]> = ref(['Все', '1'])
@@ -212,5 +217,9 @@ const menu = [
 
 .q-tree__node * {
 	user-select: none;
+}
+
+.meta {
+	font-style: italic;
 }
 </style>

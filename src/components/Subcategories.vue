@@ -20,7 +20,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 						q-btn(round flat dense icon="mdi-trash-can-outline" size="11px" @click.stop="killItem(item)")
 				q-separator.q-my-sm
 
-				q-item(clickable v-if="props.selectedItem.level < 3" v-click-away="addModeOff")
+				q-item(clickable v-if="props.selectedItem.level < 3 && props.selectedItem.id !== 'Мета'" v-click-away="addModeOff")
 					q-item-section(avatar)
 						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{ 'rot': addMode }" @click.stop="addMode = !addMode")
 					q-item-section
@@ -32,7 +32,7 @@ q-splitter(v-model="split2" :limits="[30, 80]" :style="hei")
 					q-item-section(avatar)
 						q-icon(name="mdi-plus-circle" color="primary" size="sm" :class="{ 'rot': addMode1 }" @click.stop="addMode1 = !addMode1")
 					q-item-section
-						q-item-label Добавить метаданные
+						q-item-label Создать категорию на основе метаданных
 
 
 				FileUploader(v-model="addMode1")
@@ -84,6 +84,7 @@ import type { Ref } from 'vue'
 
 const props = defineProps<{
 	selectedItem: Category
+	height: number
 }>()
 
 const emit = defineEmits(['select'])
@@ -96,10 +97,10 @@ const tabs = ref('Voc')
 const cli = ref(true)
 
 const hei = computed(() => {
-	return 'height: ' + (window.innerHeight - 190) + 'px;'
+	return 'height: ' + (props.height - 190) + 'px;'
 })
 const hei1 = computed(() => {
-	return 'height: ' + (window.innerHeight - 265) + 'px;'
+	return 'height: ' + (props.height - 265) + 'px;'
 })
 const show = () => {
 	$q.notify({

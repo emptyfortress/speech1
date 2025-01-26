@@ -52,7 +52,8 @@ div
 				:filter="filter").cat
 				template(v-slot:default-header="prop")
 					.nod
-						component(:is="WordHighlighter" :query="filter") {{prop.node.label}}
+						q-icon.q-mx-xs(v-if='prop.node.id == "Мета"' name="mdi-tag-outline" size="20px")
+						component(:is="WordHighlighter" :query="filter") {{ prop.node.label }}
 </template>
 
 <style scoped lang="scss">
@@ -63,12 +64,15 @@ div
 	padding: 1rem;
 	padding-bottom: 0;
 }
+
 .q-card {
 	margin: 0.5rem;
 }
+
 .scroll {
 	height: 332px;
 }
+
 .nod {
 	font-size: 0.8rem;
 }

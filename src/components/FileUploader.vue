@@ -34,54 +34,49 @@ const cols: QTableColumn[] = [
 
 interface Categ {
 	id: number
-	api: string
 	label: string
 	type: string
 	vid: string
+	list: Categ[]
 }
 
 const rows = ref([
 	{
 		id: 0,
-		api: 'something',
 		label: 'Год издания',
 		type: 'Число',
 		vid: 'Выбор из списка',
+		list: [
+			{ id: 0, type: '', vid: '', label: '1975' },
+			{ id: 1, type: '', vid: '', label: '1977' },
+			{ id: 2, type: '', vid: '', label: '1992' },
+			{ id: 3, type: '', vid: '', label: '2003' },
+			{ id: 4, type: '', vid: '', label: '2014' }
+		]
 	},
 	{
 		id: 1,
-		api: 'something',
-		label: 'Титул',
-		type: 'Число',
+		label: 'Автор',
+		type: 'Строка',
 		vid: 'Выбор из списка',
+		list: [
+			{ id: 0, type: '', vid: '', label: 'Агата Кристи' },
+			{ id: 1, type: '', vid: '', label: 'Сомерсэт Моэм' },
+			{ id: 2, type: '', vid: '', label: 'Виктор Перевин' },
+		]
 	},
 	{
 		id: 2,
-		api: 'something',
-		label: 'Автор',
-		type: 'Число',
+		label: 'Титул',
+		type: 'Строка',
 		vid: 'Выбор из списка',
-	},
-	{
-		id: 3,
-		api: 'something',
-		label: 'Нейтрино',
-		type: 'Число',
-		vid: 'Выбор из списка',
-	},
-	{
-		id: 4,
-		api: 'something',
-		label: 'Кварки',
-		type: 'Число',
-		vid: 'Выбор из списка',
-	},
-	{
-		id: 5,
-		api: 'something',
-		label: 'Ядерные реакции',
-		type: 'Число',
-		vid: 'Выбор из списка',
+		list: [
+			{ id: 0, type: '', vid: '', label: 'Война и мир' },
+			{ id: 1, type: '', vid: '', label: '1984' },
+			{ id: 2, type: '', vid: '', label: 'Улисс' },
+			{ id: 3, type: '', vid: '', label: 'Преступление и наказание' },
+			{ id: 4, type: '', vid: '', label: 'Ложная слепота' }
+		]
 	},
 ])
 
@@ -89,12 +84,12 @@ const $q = useQuasar()
 
 const load = (() => {
 	let item = {
-		id: 'meta',
+		id: selected.value[0].label,
 		label: selected.value[0].label,
 		level: 1,
 		breads: [],
 		childs: [],
-		children: []
+		children: selected.value[0].list
 	}
 	cat.addCategory(item, 'Мета')
 	selected.value = []
@@ -104,24 +99,39 @@ const load = (() => {
 		color: 'positive',
 		position: 'bottom',
 	})
-
+	close()
 })
 const selected = ref<Categ[]>([])
+const close = (() => {
+	modelValue.value = false
+})
 </script>
 
 <template lang="pug">
-q-table(flat
-	v-if='modelValue'
-	:columns="cols"
-	:rows="rows"
-	hide-pagination
-	selection='single'
-	v-model:selected='selected'
-	color='primary'
-	)
+q-dialog(v-model="modelValue")
+	q-card
+		q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
+		q-card-section
+			.text-h6 Создать категорию
+			div Выберите метаданные для создания категории
 
-	template(v-slot:bottom)
-		q-btn(unelevated size="sm" color="primary" label="Добавить отмеченные метаданные" @click="load") 
+		q-card-section
+			q-table(flat
+				v-if='modelValue'
+				:columns="cols"
+				:rows="rows"
+				hide-bottom
+				selection='single'
+				v-model:selected='selected'
+				color='primary'
+				)
+
+		q-card-actions.q-mr-md.q-mb-md(align='right')
+			q-btn(flat color="primary" label="Отмена" @click="close") 
+			q-btn(une  color="primary" label="Создать" @click="load") 
+
+	// template(v-slot:bottom)
+	// 	q-btn(unelevated size="sm" color="primary" label="Добавить отмеченные метаданные" @click="load") 
 
 </template>
 
