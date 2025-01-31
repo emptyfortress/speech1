@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, } from 'vue'
 import Options from '@/components/Options.vue'
 // import Options1 from '@/components/Options1.vue'
 import CommonOptions from '@/components/common/CommonOptions.vue'
@@ -30,27 +30,6 @@ const toggleVoice = (() => {
 const calcSize = computed(() => {
 	return voice.value ? 'lg' : 'sm'
 })
-// random circle ***************************
-
-const mic1 = ref()
-function getRandomSize(min: number, max: number) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-const minSize = 24
-const maxSize = 35
-
-const setSize = (() => {
-	const size = getRandomSize(minSize, maxSize)
-	if (mic1.value) {
-		mic1.value.style.width = `${size}px`
-		mic1.value.style.height = `${size}px`
-		mic1.value.style.backgroundColor = 'red'
-	}
-})
-
-const toggle1 = (() => {
-	setInterval(setSize, 100)
-})
 
 </script>
 
@@ -63,8 +42,6 @@ q-card-section
 				template(v-slot:append)
 					q-btn.mic(unelevated round :size="calcSize" icon="mdi-microphone" @click="toggleVoice" :class="{ active: voice }") 
 						.wave
-					.mic1(ref='mic1' @click="toggle1" size="sm") 
-						q-icon(name="mdi-microphone" color="white" size="sm")
 
 			.filt(v-if='result')
 				Options
