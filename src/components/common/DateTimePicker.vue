@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<Props>(), {
 	filled: false,
 	bg: 'white',
 })
-const date = ref()
 
 const modelValue = defineModel<string | null | undefined>()
 </script>
