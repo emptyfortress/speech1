@@ -4,6 +4,7 @@ interface Props {
 	filled?: boolean
 	bg?: string
 	disable?: boolean
+	icon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,6 +27,8 @@ div
 		hide-bottom-space
 		dense
 		)
+		template(v-slot:append v-if="props.icon")
+			q-icon(:name="props.icon")
 </template>
 
 <style scoped lang="scss">
