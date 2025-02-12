@@ -66,7 +66,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 										q-item-label
 											WordHighlighter(:query="query") {{ element.label }}
 
-// WindowConstuctor
+VehConstructor
 </template>
 
 <script setup lang="ts">
@@ -75,6 +75,7 @@ import { ref, computed } from 'vue'
 import { useCheck } from '@/stores/check'
 import { useLogic } from '@/stores/logic'
 import WordHighlighter from 'vue-word-highlighter'
+import VehConstructor from '@/components/VehConstructor.vue'
 
 const splitterModel = ref(65)
 const hei = computed(() => {
