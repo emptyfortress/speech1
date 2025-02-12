@@ -6,11 +6,11 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				.row.items-center.justify-between
 					q-btn(flat round dense)
 						q-icon(name="mdi-backburger")
-					#zg(contenteditable @blur="update") {{mycheck.activeCheck.label}}
+					#zg(contenteditable @blur="update") {{ mycheck.activeCheck.label }}
 					.btngroup
 						q-btn(outline size="10px" color="primary" @click="mycheck.duble").q-mr-xs Дублировать
 						q-btn(round flat icon="mdi-plus" dense color="primary" @click="mycheck.addCheckList")
-				#comment(contenteditable @blur="updatecomment") {{mycheck.activeCheck.comment}}
+				#comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
 			component(:is="draggable" class="list-group" :list="list1" group="vehi" itemKey="id")
 				template(#item="{ element }")
 					.list-group-item
@@ -53,7 +53,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				q-expansion-item(v-model="firstItem" header-class="text-bold")
 					template(v-slot:header)
 						q-item-section Логические запросы
-						q-item-section(side) ({{mylogic.allLogic.length}})
+						q-item-section(side) ({{ mylogic.allLogic.length }})
 					q-list(dense).q-mb-lg
 						component(:is="draggable" v-model="alllogic"  itemKey="id"  :group="{ name: 'vehi', pull: 'clone', put: false }")
 							template(#item="{ element }")
@@ -66,6 +66,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 										q-item-label
 											WordHighlighter(:query="query") {{ element.label }}
 
+// WindowConstuctor
 </template>
 
 <script setup lang="ts">
@@ -145,14 +146,17 @@ const addNew = () => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
+
 .quick .q-field--dense .q-field__control,
 .q-field--dense .q-field__marginal {
 	height: 28px !important;
 }
+
 .query {
 	font-size: 1rem;
 	flex-grow: 1;
 }
+
 .list {
 	padding: 0.5rem;
 	margin-right: 0.5rem;
@@ -168,6 +172,7 @@ const addNew = () => {
 	padding: 1rem;
 	min-height: 200px;
 	padding-top: 0;
+
 	.place {
 		margin-top: 1rem;
 		color: #999;
@@ -177,6 +182,7 @@ const addNew = () => {
 		background: $bgLight;
 		text-align: center;
 		padding: 0.5rem;
+
 		&:hover {
 			border: 2px dotted #aaa;
 		}
@@ -189,40 +195,48 @@ const addNew = () => {
 	font-weight: 600;
 	padding: 0.5rem;
 	padding-bottom: 0;
+
 	&:hover {
 		background: $bgLight;
 	}
+
 	&:focus {
 		outline: none;
 		border-bottom: 1px dotted $primary;
 		background: $bgSelection;
 	}
 }
+
 #comment {
 	font-size: 0.9rem;
 	margin-top: 1rem;
 	padding: 0.5rem;
 	padding-bottom: 0;
+
 	/* text-align: center; */
 	&:hover {
 		background: $bgLight;
 	}
+
 	&:focus {
 		outline: none;
 		border-bottom: 1px dotted $primary;
 		background: $bgSelection;
 	}
 }
+
 .sortable-ghost {
 	background: $bgSelection;
 	border: 1px solid $primary;
 }
+
 .list-group {
 	min-height: 50px;
 	background-image: url(@/assets/img/vert.png);
 	background-repeat: repeat-y;
 	background-position-x: 48px;
 }
+
 .list-group-item {
 	width: 100%;
 	border: 2px solid #ccc;
@@ -236,10 +250,12 @@ const addNew = () => {
 	gap: 0.5rem;
 	align-items: center;
 }
+
 .input {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+
 	input {
 		width: 40px;
 		border: 1px solid #ccc;
