@@ -11,6 +11,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 						q-btn(outline size="10px" color="primary" @click="mycheck.duble").q-mr-xs Дублировать
 						q-btn(round flat icon="mdi-plus" dense color="primary" @click="mycheck.addCheckList")
 				#comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
+
 			component(:is="draggable" class="list-group" :list="list1" group="vehi" itemKey="id")
 				template(#item="{ element }")
 					.list-group-item
@@ -27,7 +28,13 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 									q-item(clickable v-close-popup @click="kill(element)").pink
 										q-item-section Удалить
 
-			.place(@click="addNew") Кликните, чтобы добавить веху.<br /> Или перетащите логический запрос в очередь вверху.
+			.q-gutter-x-sm.q-mt-lg
+				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="") 
+				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="") 
+				// .place(@click="addNew") Кликните, чтобы добавить веху.<br /> Или перетащите логический запрос в очередь вверху.
+				// .place(@click="addNew") Кликните, чтобы добавить веху.
+				// .place(@click="addNew") Кликните, чтобы добавить веху.
+
 			q-card-actions.q-mt-xl
 				q-btn(flat icon="mdi-trash-can-outline" label="Удалить чеклист" color="primary")
 					q-menu(anchor="bottom right" self="top right")
@@ -177,12 +184,13 @@ const addNew = () => {
 	.place {
 		margin-top: 1rem;
 		color: #999;
-		width: 100%;
+		// width: 100%;
 		border: 2px solid $bgLight;
 		border-radius: 6px;
 		background: $bgLight;
 		text-align: center;
 		padding: 0.5rem;
+		white-space: wrap;
 
 		&:hover {
 			border: 2px dotted #aaa;
@@ -262,5 +270,13 @@ const addNew = () => {
 		border: 1px solid #ccc;
 		text-align: center;
 	}
+}
+
+.adding {
+	// display: grid;
+	// grid-template-columns: repeat(2, 1fr);
+	// justify-items: start;
+	// align-items: stretch;
+	column-gap: .5rem;
 }
 </style>
