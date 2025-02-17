@@ -12,21 +12,30 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 						q-btn(round flat icon="mdi-plus" dense color="primary" @click="mycheck.addCheckList")
 				#comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
 
-			component(:is="draggable" class="list-group" :list="list1" group="vehi" itemKey="id")
-				template(#item="{ element }")
-					.list-group-item
-						.label
-							q-icon(name="mdi-toy-brick-search-outline").q-mr-sm
-							|{{ element.label }}
-						.input
-							.lab Вес:
-							input(value="15")
-						q-btn(flat round icon="mdi-pencil" size="12px" @click="edit(element)")
-						q-btn(flat round icon="mdi-trash-can-outline" size="12px")
-							q-menu(anchor="bottom right" self="top right")
-								q-list
-									q-item(clickable v-close-popup @click="kill(element)").pink
-										q-item-section Удалить
+			Draggable(class="mtl-tree" v-model="treeData" treeLine)
+				template(#default="{ node, stat }")
+					OpenIcon(
+						v-if="stat.children.length"
+						:open="stat.open"
+						class="mtl-mr"
+						@click.native="stat.open = !stat.open")
+					span(class="mtl-ml") {{ node.text }}
+
+			// component(:is="draggable" class="list-group" :list="list1" group="vehi" itemKey="id")
+			// 	template(#item="{ element }")
+			// 		.list-group-item
+			// 			.label
+			// 				q-icon(name="mdi-toy-brick-search-outline").q-mr-sm
+			// 				|{{ element.label }}
+			// 			.input
+			// 				.lab Вес:
+			// 				input(value="15")
+			// 			q-btn(flat round icon="mdi-pencil" size="12px" @click="edit(element)")
+			// 			q-btn(flat round icon="mdi-trash-can-outline" size="12px")
+			// 				q-menu(anchor="bottom right" self="top right")
+			// 					q-list
+			// 						q-item(clickable v-close-popup @click="kill(element)").pink
+			// 							q-item-section Удалить
 
 			.q-gutter-x-sm.q-mt-lg
 				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="") 
@@ -77,12 +86,16 @@ VehConstructor
 </template>
 
 <script setup lang="ts">
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 import { ref, computed } from 'vue'
 import { useCheck } from '@/stores/check'
 import { useLogic } from '@/stores/logic'
 import WordHighlighter from 'vue-word-highlighter'
 import VehConstructor from '@/components/VehConstructor.vue'
+
+import { Draggable, OpenIcon } from '@he-tree/vue'
+import '@he-tree/vue/style/default.css'
+import '@he-tree/vue/style/material-design.css'
 
 const splitterModel = ref(65)
 const hei = computed(() => {
@@ -93,6 +106,41 @@ const firstItem = ref(true)
 const mylogic = useLogic()
 const mycheck = useCheck()
 const query = ref('')
+
+const treeData = ref([
+	{
+		text: 'Projects',
+		children: [
+			{
+				text: 'Frontend',
+				children: [
+					{
+						text: 'Vue',
+						children: [
+							{
+								text: 'Nuxt',
+							},
+						],
+					},
+					{
+						text: 'React',
+						children: [
+							{
+								text: 'Next',
+							},
+						],
+					},
+					{
+						text: 'Angular',
+					},
+				],
+			},
+			{
+				text: 'Backend',
+			},
+		]
+	}
+])
 
 const clearFilter = () => {
 	query.value = ''
