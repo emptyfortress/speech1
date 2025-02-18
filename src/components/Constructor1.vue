@@ -12,7 +12,6 @@ q-dialog(v-model="props.dialog" persistent :maximized="props.maximized" transiti
 
 				template(v-slot:after)
 					component(:is="CheckCard"
-						:splitter="splitterModel"
 						@maximize="splitterModel = 0"
 						@reset="splitterModel = 25" )
 </template>
@@ -44,15 +43,17 @@ const split = (val: number) => {
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
 
-.q-dialog__inner--minimized > div {
+.q-dialog__inner--minimized>div {
 	max-width: initial;
 	height: calc(100vh - 40px);
 }
+
 .cnt {
 	background: moz-linear-gradient(top, #d8e3f1 0%, #f4e8f4 52.6%, #fdf5e5 100%);
 	background: webkit-linear-gradient(top, #d8e3f1 0%, #f4e8f4 52.6%, #fdf5e5 100%);
 	background: linear-gradient(180deg, #d8e3f1 0%, #f4e8f4 52.6%, #fdf5e5 100%);
 	background-attachment: fixed;
+
 	.content {
 		max-width: 1400px;
 		margin: 0 auto;
@@ -64,11 +65,13 @@ const split = (val: number) => {
 	font-size: 1.3rem;
 	text-align: center;
 	vertical-align: baseline;
+
 	.q-icon {
 		margin-right: 1rem;
 		transform: translateY(-5px);
 	}
 }
+
 .top {
 	background: #9db2c3;
 	padding: 2px 2rem;

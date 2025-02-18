@@ -10,39 +10,49 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 					.btngroup
 						q-btn(outline size="10px" color="primary" @click="mycheck.duble").q-mr-xs Дублировать
 						q-btn(round flat icon="mdi-plus" dense color="primary" @click="mycheck.addCheckList")
-				#comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
 
-			Draggable(class="mtl-tree" v-model="treeData" treeLine)
+				// #comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
+
+			Draggable(class="mtl-tree"
+				v-model="treeData"
+				treeLine
+				:eachDroppable='isDrop'
+				:eachDraggable='isDrag'
+				)
 				template(#default="{ node, stat }")
-					OpenIcon(
-						v-if="stat.children.length"
-						:open="stat.open"
-						class="mtl-mr"
-						@click.native="stat.open = !stat.open")
-					span(class="mtl-ml") {{ node.text }}
+					.list-group(v-if='node.root')
+						OpenIcon.icon(
+							v-if="stat.children.length"
+							:open="stat.open"
+							class="mtl-mr"
+							@click.native="stat.open = !stat.open")
+						span {{ mycheck.activeCheck.label }}
 
-			// component(:is="draggable" class="list-group" :list="list1" group="vehi" itemKey="id")
-			// 	template(#item="{ element }")
-			// 		.list-group-item
-			// 			.label
-			// 				q-icon(name="mdi-toy-brick-search-outline").q-mr-sm
-			// 				|{{ element.label }}
-			// 			.input
-			// 				.lab Вес:
-			// 				input(value="15")
-			// 			q-btn(flat round icon="mdi-pencil" size="12px" @click="edit(element)")
-			// 			q-btn(flat round icon="mdi-trash-can-outline" size="12px")
-			// 				q-menu(anchor="bottom right" self="top right")
-			// 					q-list
-			// 						q-item(clickable v-close-popup @click="kill(element)").pink
-			// 							q-item-section Удалить
+					.list-group(v-if='node.group && !node.root')
+						OpenIcon.icon(
+							v-if="stat.children.length"
+							:open="stat.open"
+							class="mtl-mr"
+							@click.native="stat.open = !stat.open")
+						// span {{ mycheck.activeCheck.label }}
+						span {{ node.text }}
+					.list-item(v-else)
+						.label
+							q-icon(name="mdi-toy-brick-search-outline").q-mr-sm
+							span(class="mtl-ml") {{ node.text }}
+						.input
+							.lab Вес:
+							input(value="15")
+						q-btn(flat round icon="mdi-pencil" size="12px" @click="edit(stat)")
+						q-btn(flat round icon="mdi-trash-can-outline" size="12px")
+							q-menu(anchor="bottom right" self="top right")
+								q-list
+									q-item(clickable v-close-popup @click="kill(stat)").pink
+										q-item-section Удалить
 
 			.q-gutter-x-sm.q-mt-lg
-				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="") 
+				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="addNew") 
 				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="") 
-				// .place(@click="addNew") Кликните, чтобы добавить веху.<br /> Или перетащите логический запрос в очередь вверху.
-				// .place(@click="addNew") Кликните, чтобы добавить веху.
-				// .place(@click="addNew") Кликните, чтобы добавить веху.
 
 			q-card-actions.q-mt-xl
 				q-btn(flat icon="mdi-trash-can-outline" label="Удалить чеклист" color="primary")
@@ -82,11 +92,11 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 										q-item-label
 											WordHighlighter(:query="query") {{ element.label }}
 
-VehConstructor
+	VehConstructor
 </template>
 
 <script setup lang="ts">
-// import draggable from 'vuedraggable'
+import draggable from 'vuedraggable'
 import { ref, computed } from 'vue'
 import { useCheck } from '@/stores/check'
 import { useLogic } from '@/stores/logic'
@@ -96,6 +106,7 @@ import VehConstructor from '@/components/VehConstructor.vue'
 import { Draggable, OpenIcon } from '@he-tree/vue'
 import '@he-tree/vue/style/default.css'
 import '@he-tree/vue/style/material-design.css'
+import { is } from 'quasar'
 
 const splitterModel = ref(65)
 const hei = computed(() => {
@@ -109,38 +120,36 @@ const query = ref('')
 
 const treeData = ref([
 	{
-		text: 'Projects',
+		text: 'Приветствие и прощание',
+		group: true,
+		drag: false,
+		drop: true,
+		root: true,
 		children: [
 			{
-				text: 'Frontend',
-				children: [
-					{
-						text: 'Vue',
-						children: [
-							{
-								text: 'Nuxt',
-							},
-						],
-					},
-					{
-						text: 'React',
-						children: [
-							{
-								text: 'Next',
-							},
-						],
-					},
-					{
-						text: 'Angular',
-					},
-				],
+				text: 'Приветствие',
+				group: false,
+				drag: true,
+				drop: false,
 			},
 			{
-				text: 'Backend',
+				text: 'Прощание',
+				group: false,
+				drag: true,
+				drop: false,
 			},
 		]
 	}
 ])
+
+const isDrop = (e: any) => {
+	if (e.data.drop) return true
+	else return false
+}
+const isDrag = (e: any) => {
+	if (e.data.drag) return true
+	else return false
+}
 
 const clearFilter = () => {
 	query.value = ''
@@ -158,16 +167,15 @@ const alllogic = computed({
 })
 
 const update = () => {
-	const zag = document.getElementById('zg')
-	const text = zag!.innerHTML
-	const index = mycheck.allCheck.findIndex((item) => item.selected)
-	mycheck.allCheck[index].label = text
-}
-const updatecomment = () => {
-	const comm = document.getElementById('comment')
-	const text = comm!.innerHTML
-	const index = mycheck.allCheck.findIndex((item) => item.selected)
-	mycheck.allCheck[index].comment = text
+	// const zag = document.getElementById('zg')
+	// const text = zag!.innerHTML
+	// const index = mycheck.allCheck.findIndex((item) => item.selected)
+	// mycheck.allCheck[index].label = text
+	//
+	// const comm = document.getElementById('comment')
+	// const text = comm!.innerHTML
+	// const index = mycheck.allCheck.findIndex((item) => item.selected)
+	// mycheck.allCheck[index].comment = text
 }
 
 const itemIndex = (e: Logic) => {
@@ -288,23 +296,21 @@ const addNew = () => {
 }
 
 .list-group {
-	min-height: 50px;
-	background-image: url(@/assets/img/vert.png);
-	background-repeat: repeat-y;
-	background-position-x: 48px;
+	font-size: 1.0rem;
+	font-weight: 600;
 }
 
-.list-group-item {
+.list-item {
 	width: 100%;
 	border: 2px solid #ccc;
 	border-radius: 0.5rem;
 	background: #f2f3ef;
-	padding: 0.5rem;
-	min-height: 50px;
-	margin-bottom: 0.5rem;
+	padding: 4px 0.5rem;
+	min-height: 42px;
+	margin-bottom: 0.25rem;
 	display: grid;
 	grid-template-columns: 1fr 90px auto auto;
-	gap: 0.5rem;
+	// gap: 0.5rem;
 	align-items: center;
 }
 
@@ -326,5 +332,14 @@ const addNew = () => {
 	// justify-items: start;
 	// align-items: stretch;
 	column-gap: .5rem;
+}
+
+.icon {
+	font-size: 1.4rem;
+	transform: translateY(4px);
+
+	&.open {
+		transform: rotate(90deg) translateY(4px);
+	}
 }
 </style>

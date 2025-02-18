@@ -94,8 +94,9 @@ q-table.sticky(
 			q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
 			q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
 			q-td.cell(:style="calcBg(props.row.veh16)") {{ props.row.veh16 }}
+
 	template(v-slot:bottom-row='props')
-		q-tr(props='props')
+		q-tr(:props='props')
 			q-td.text-bold СРЕДНЕЕ
 			q-td.text-bold.text-center(v-for="n in 17") {{ n }}
 	template(v-slot:bottom)
