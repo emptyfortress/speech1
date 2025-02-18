@@ -11,16 +11,18 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 						q-btn(outline size="10px" color="primary" @click="mycheck.duble").q-mr-xs Дублировать
 						q-btn(round flat icon="mdi-plus" dense color="primary" @click="mycheck.addCheckList")
 
-				// #comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
+				#comment(contenteditable @blur="updatecomment") {{ mycheck.activeCheck.comment }}
 
 			Draggable(class="mtl-tree"
+				ref='tree'
 				v-model="treeData"
 				treeLine
+				:root-droppable="false"
 				:eachDroppable='isDrop'
 				:eachDraggable='isDrag'
 				)
 				template(#default="{ node, stat }")
-					.list-group(v-if='node.root')
+					.list-group.root(v-if='node.root')
 						OpenIcon.icon(
 							v-if="stat.children.length"
 							:open="stat.open"
@@ -28,17 +30,19 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 							@click.native="stat.open = !stat.open")
 						span {{ mycheck.activeCheck.label }}
 
-					.list-group(v-if='node.group && !node.root')
-						OpenIcon.icon(
-							v-if="stat.children.length"
-							:open="stat.open"
-							class="mtl-mr"
-							@click.native="stat.open = !stat.open")
-						// span {{ mycheck.activeCheck.label }}
-						span {{ node.text }}
-					.list-item(v-else)
+					.list-group(v-if='node.group && !node.root' @click.stop="stat.open = !stat.open")
+						div
+							OpenIcon.icon(
+								v-if="stat.children.length"
+								:open="stat.open"
+								class="mtl-mr"
+								@click.stop="stat.open = !stat.open")
+							span {{ node.text }}
+						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense @click="action") 
+
+					.list-item(v-if='!node.group')
 						.label
-							q-icon(name="mdi-toy-brick-search-outline").q-mr-sm
+							q-icon(name="mdi-toy-brick-search-outline")
 							span(class="mtl-ml") {{ node.text }}
 						.input
 							.lab Вес:
@@ -52,7 +56,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 
 			.q-gutter-x-sm.q-mt-lg
 				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="addNew") 
-				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="") 
+				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="addGroup") 
 
 			q-card-actions.q-mt-xl
 				q-btn(flat icon="mdi-trash-can-outline" label="Удалить чеклист" color="primary")
@@ -106,7 +110,6 @@ import VehConstructor from '@/components/VehConstructor.vue'
 import { Draggable, OpenIcon } from '@he-tree/vue'
 import '@he-tree/vue/style/default.css'
 import '@he-tree/vue/style/material-design.css'
-import { is } from 'quasar'
 
 const splitterModel = ref(65)
 const hei = computed(() => {
@@ -117,6 +120,8 @@ const firstItem = ref(true)
 const mylogic = useLogic()
 const mycheck = useCheck()
 const query = ref('')
+
+const tree = ref()
 
 const treeData = ref([
 	{
@@ -141,6 +146,18 @@ const treeData = ref([
 		]
 	}
 ])
+
+const addGroup = (() => {
+	tree.value.add({
+		text: 'Группа',
+		group: true,
+		drag: true,
+		drop: true,
+		children: [],
+	},
+		tree.value.getStat(treeData.value[0])
+	)
+})
 
 const isDrop = (e: any) => {
 	if (e.data.drop) return true
@@ -167,29 +184,21 @@ const alllogic = computed({
 })
 
 const update = () => {
-	// const zag = document.getElementById('zg')
-	// const text = zag!.innerHTML
-	// const index = mycheck.allCheck.findIndex((item) => item.selected)
-	// mycheck.allCheck[index].label = text
-	//
-	// const comm = document.getElementById('comment')
-	// const text = comm!.innerHTML
-	// const index = mycheck.allCheck.findIndex((item) => item.selected)
-	// mycheck.allCheck[index].comment = text
+	const zag = document.getElementById('zg')
+	const text = zag!.innerHTML
+	const index = mycheck.allCheck.findIndex((item) => item.selected)
+	mycheck.allCheck[index].label = text
 }
 
-const itemIndex = (e: Logic) => {
-	return list1.value.findIndex((item) => item.id === e.id)
+const updatecomment = () => {
+	const comm = document.getElementById('comment')
+	const text = comm!.innerHTML
+	const index = mycheck.allCheck.findIndex((item) => item.selected)
+	mycheck.allCheck[index].comment = text
 }
 
-const list1 = computed(() => {
-	const id = mycheck.activeCheck.id
-	const temp = mycheck.allList.find((e) => e.id === id)
-	return temp!.list
-})
-const kill = (e: Logic) => {
-	let index = itemIndex(e)
-	list1.value.splice(index, 1)
+const kill = (e: any) => {
+	tree.value.remove(e)
 }
 const edit = (e: Logic) => {
 	mylogic.showInception()
@@ -236,22 +245,6 @@ const addNew = () => {
 	padding: 1rem;
 	min-height: 200px;
 	padding-top: 0;
-
-	.place {
-		margin-top: 1rem;
-		color: #999;
-		// width: 100%;
-		border: 2px solid $bgLight;
-		border-radius: 6px;
-		background: $bgLight;
-		text-align: center;
-		padding: 0.5rem;
-		white-space: wrap;
-
-		&:hover {
-			border: 2px dotted #aaa;
-		}
-	}
 }
 
 #zg {
@@ -278,7 +271,6 @@ const addNew = () => {
 	padding: 0.5rem;
 	padding-bottom: 0;
 
-	/* text-align: center; */
 	&:hover {
 		background: $bgLight;
 	}
@@ -290,14 +282,33 @@ const addNew = () => {
 	}
 }
 
-.sortable-ghost {
-	background: $bgSelection;
-	border: 1px solid $primary;
-}
-
 .list-group {
 	font-size: 1.0rem;
 	font-weight: 600;
+	width: 100%;
+	min-height: 34px;
+	line-height: 34px;
+	padding-right: .8rem;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+
+	.q-btn {
+		display: none;
+	}
+
+	&:hover {
+		background: #efefef;
+
+		.q-btn {
+			display: block;
+		}
+	}
+
+	&.root {
+		display: block;
+	}
+
 }
 
 .list-item {
@@ -310,8 +321,22 @@ const addNew = () => {
 	margin-bottom: 0.25rem;
 	display: grid;
 	grid-template-columns: 1fr 90px auto auto;
-	// gap: 0.5rem;
 	align-items: center;
+
+	&:hover {
+		border: 2px solid $primary;
+	}
+}
+
+:deep(.mtl-tree .tree-node:hover) {
+	background: transparent;
+}
+
+:deep(.drag-placeholder) {
+	background: hsl(200 35% 84% / 1);
+	min-height: 48px;
+	border: 2px solid #fff;
+	border-radius: 0.5rem;
 }
 
 .input {
@@ -326,13 +351,6 @@ const addNew = () => {
 	}
 }
 
-.adding {
-	// display: grid;
-	// grid-template-columns: repeat(2, 1fr);
-	// justify-items: start;
-	// align-items: stretch;
-	column-gap: .5rem;
-}
 
 .icon {
 	font-size: 1.4rem;
@@ -341,5 +359,10 @@ const addNew = () => {
 	&.open {
 		transform: rotate(90deg) translateY(4px);
 	}
+}
+
+.label .q-icon {
+	font-size: 1.3rem;
+	margin-right: .5rem;
 }
 </style>
