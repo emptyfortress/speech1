@@ -74,7 +74,7 @@ q-table.sticky(
 			q-th(v-for="col in vehi" :class="calcCol(col)")
 				span.rot {{ col.label }}
 
-		// q-tr.sma(:props="props")
+		q-tr.sma(:props="props")
 			q-th.blo
 			q-th(:props="props" v-for="col in props.cols" :key='col.name')
 

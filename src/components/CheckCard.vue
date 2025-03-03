@@ -55,7 +55,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 						q-checkbox(v-model="node.crusial" dense label="Критично")
 						.input
 							.lab Вес:
-							input(value="15")
+							input(value="15" :disabled='node.crusial')
 						q-btn(flat round icon="mdi-pencil" size="12px" @click="edit(stat)")
 						q-btn(flat round icon="mdi-trash-can-outline" size="12px")
 							q-menu(anchor="bottom right" self="top right")
