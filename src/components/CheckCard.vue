@@ -38,7 +38,11 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 								class="mtl-mr"
 								@click.stop="stat.open = !stat.open")
 							span {{ node.text }}
-						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense @click="action") 
+						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense) 
+							q-menu(anchor="bottom right" self="top right")
+								q-list
+									q-item(clickable v-close-popup @click="kill(stat)").pink
+										q-item-section Удалить
 
 					.list-item(v-if='!node.group')
 						.label
@@ -70,42 +74,18 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 
 	template(v-slot:after)
 		q-scroll-area.list
-			q-form.quick
-				q-card-section.q-pt-xs
-					q-input(dense
-						v-model="query"
-						clearable
-						@clear="clearFilter"
-						placeholder="фильтр"
-						).query
-						template(v-slot:prepend)
-							q-icon(name="mdi-magnify")
-				q-expansion-item(v-model="firstItem" header-class="text-bold")
-					template(v-slot:header)
-						q-item-section Логические запросы
-						q-item-section(side) ({{ mylogic.allLogic.length }})
-					q-list(dense).q-mb-lg
-						component(:is="draggable" v-model="alllogic"  itemKey="id"  :group="{ name: 'vehi', pull: 'clone', put: false }")
-							template(#item="{ element }")
-								q-item(tag="label" v-ripple dense)
-									q-item-section(side v-if="element.star")
-										q-icon(dense name="mdi-star" size="10px")
-									q-item-section(side v-else)
-										q-icon(dense name="" size="10px")
-									q-item-section
-										q-item-label
-											WordHighlighter(:query="query") {{ element.label }}
+			LogicRequestList
 
-	VehConstructor
+
+	VehConstructor(@add-veh="addItem")
 </template>
 
 <script setup lang="ts">
-import draggable from 'vuedraggable'
 import { ref, computed } from 'vue'
 import { useCheck } from '@/stores/check'
 import { useLogic } from '@/stores/logic'
-import WordHighlighter from 'vue-word-highlighter'
 import VehConstructor from '@/components/VehConstructor.vue'
+import LogicRequestList from '@/components/LogicRequestList.vue'
 
 import { Draggable, OpenIcon } from '@he-tree/vue'
 import '@he-tree/vue/style/default.css'
@@ -115,11 +95,9 @@ const splitterModel = ref(65)
 const hei = computed(() => {
 	return 'height: ' + (window.innerHeight - 205) + 'px;'
 })
-const firstItem = ref(true)
 
 const mylogic = useLogic()
 const mycheck = useCheck()
-const query = ref('')
 
 const tree = ref()
 
@@ -159,6 +137,11 @@ const addGroup = (() => {
 	)
 })
 
+const addItem = ((e: any) => {
+	tree.value.add(e, tree.value.getStat(treeData.value[0])
+	)
+})
+
 const isDrop = (e: any) => {
 	if (e.data.drop) return true
 	else return false
@@ -168,20 +151,7 @@ const isDrag = (e: any) => {
 	else return false
 }
 
-const clearFilter = () => {
-	query.value = ''
-}
 
-const alllogic = computed({
-	get: () => {
-		if (query.value) {
-			return mylogic.allLogic.filter((e) =>
-				e.label.toLowerCase().includes(query.value.toLowerCase())
-			)
-		} else return mylogic.allLogic
-	},
-	set: (val) => mylogic.updateLogicList(val),
-})
 
 const update = () => {
 	const zag = document.getElementById('zg')
@@ -219,16 +189,6 @@ const addNew = () => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
-
-.quick .q-field--dense .q-field__control,
-.q-field--dense .q-field__marginal {
-	height: 28px !important;
-}
-
-.query {
-	font-size: 1rem;
-	flex-grow: 1;
-}
 
 .list {
 	padding: 0.5rem;
