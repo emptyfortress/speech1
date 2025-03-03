@@ -212,6 +212,7 @@ const externalDataHandler = (() => {
 		group: false,
 		drop: false,
 		drag: true,
+		crusial: false,
 	})
 })
 const crusial = ref(true)
