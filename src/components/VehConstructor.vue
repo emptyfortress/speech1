@@ -25,14 +25,22 @@ const updatecomment = () => {
 
 const $q = useQuasar()
 
+const emit = defineEmits(['addVeh'])
 const save = () => {
 	logic.inception = false
-	const tmp = {} as Logic
-	tmp.label = logic.currentLogic.label
-	tmp.comment = logic.currentLogic.comment
-	tmp.star = false
-	tmp.selected = false
-	check.addNewCheckList(tmp)
+	const tmp = {
+		text: logic.currentLogic.label,
+		group: false,
+		drag: true,
+		drop: false,
+	}
+	emit('addVeh', tmp)
+	// tmp.label = logic.currentLogic.label
+	// tmp.comment = logic.currentLogic.comment
+	// tmp.star = false
+	// tmp.selected = false
+	// check.addNewCheckList(tmp)
+
 	$q.notify({
 		icon: undefined,
 		message: 'Сохранено',
