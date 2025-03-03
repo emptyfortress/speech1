@@ -106,6 +106,7 @@ const mycheck = useCheck()
 const tree = ref()
 
 const treeData = ref([
+
 	{
 		text: 'Приветствие и прощание',
 		group: true,
@@ -114,16 +115,24 @@ const treeData = ref([
 		root: true,
 		children: [
 			{
-				text: 'Приветствие',
-				group: false,
+				text: 'Общая вежливость',
+				group: true,
 				drag: true,
-				drop: false,
-			},
-			{
-				text: 'Прощание',
-				group: false,
-				drag: true,
-				drop: false,
+				drop: true,
+				children: [
+					{
+						text: 'Приветствие',
+						group: false,
+						drag: true,
+						drop: false,
+					},
+					{
+						text: 'Прощание',
+						group: false,
+						drag: true,
+						drop: false,
+					},
+				]
 			},
 		]
 	}
@@ -147,8 +156,8 @@ const addItem = ((e: any) => {
 })
 
 const isDrop = (e: any) => {
-	if (e.data.root) return true
-	if (e.data.group && !dragContext.dragNode?.data.group) return true
+	if (e.data.root && dragContext.dragNode?.data.group) return true
+	if (e.data.group && !e.data.root && !dragContext.dragNode?.data.group) return true
 	else return false
 }
 const isDrag = (e: any) => {
