@@ -195,7 +195,6 @@ const onExternalDragOver = (() => {
 	return true
 })
 const externalDataHandler = (() => {
-	console.log(dragContext.targetInfo.parent.data)
 	return ({
 		text: mylogic.draggedLogic?.label,
 		group: false,
