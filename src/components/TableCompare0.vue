@@ -35,9 +35,13 @@ const dialog = ref(false)
 const selected = ref<any[]>([])
 
 const select = ((e: any) => {
-	console.log(e)
 	selected.value[0] = e
 	dialog.value = true
+})
+
+const calcCol = ((col: any) => {
+	if (col.name.includes('group')) return 'group'
+	return ''
 })
 </script>
 
@@ -67,10 +71,10 @@ q-table.sticky(
 		q-tr.main
 			q-th Операторы
 			q-th Среднее
-			q-th(v-for="col in vehi")
+			q-th(v-for="col in vehi" :class="calcCol(col)")
 				span.rot {{ col.label }}
 
-		q-tr.sma(:props="props")
+		// q-tr.sma(:props="props")
 			q-th.blo
 			q-th(:props="props" v-for="col in props.cols" :key='col.name')
 
@@ -78,18 +82,22 @@ q-table.sticky(
 		q-tr(:props="props" @click='select(props.row)')
 			q-td {{ props.row.name }}
 			q-td.cell.text-bold(:style="calcBg(props.row.veh0)") 3.14
+			q-td.cell(:style="calcBg(props.row.group1)") {{ props.row.group1 }}
 			q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
 			q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
 			q-td.cell(:style="calcBg(props.row.veh3)") {{ props.row.veh3 }}
 			q-td.cell(:style="calcBg(props.row.veh4)") {{ props.row.veh4 }}
+			q-td.cell(:style="calcBg(props.row.group2)") {{ props.row.group2 }}
 			q-td.cell(:style="calcBg(props.row.veh5)") {{ props.row.veh5 }}
 			q-td.cell(:style="calcBg(props.row.veh6)") {{ props.row.veh6 }}
 			q-td.cell(:style="calcBg(props.row.veh7)") {{ props.row.veh7 }}
+			q-td.cell(:style="calcBg(props.row.group3)") {{ props.row.group3 }}
 			q-td.cell(:style="calcBg(props.row.veh8)") {{ props.row.veh8 }}
 			q-td.cell(:style="calcBg(props.row.veh9)") {{ props.row.veh9 }}
 			q-td.cell(:style="calcBg(props.row.veh10)") {{ props.row.veh10 }}
 			q-td.cell(:style="calcBg(props.row.veh11)") {{ props.row.veh11 }}
 			q-td.cell(:style="calcBg(props.row.veh12)") {{ props.row.veh12 }}
+			q-td.cell(:style="calcBg(props.row.group4)") {{ props.row.group4 }}
 			q-td.cell(:style="calcBg(props.row.veh13)") {{ props.row.veh13 }}
 			q-td.cell(:style="calcBg(props.row.veh14)") {{ props.row.veh14 }}
 			q-td.cell(:style="calcBg(props.row.veh15)") {{ props.row.veh15 }}
@@ -199,5 +207,9 @@ Teleport(to='body')
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 5rem;
 	font-size: .8rem;
+}
+
+:deep(tr th.group) {
+	background: #d4d4b4;
 }
 </style>

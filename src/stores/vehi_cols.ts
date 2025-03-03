@@ -2,6 +2,13 @@ import type { QTableColumn } from 'quasar'
 
 const vehi: QTableColumn[] = [
 	{
+		name: 'group1',
+		label: 'Группа вежливость',
+		field: 'group1',
+		align: 'left',
+		sortable: true,
+	},
+	{
 		name: 'veh1',
 		label: 'презентация автострахование',
 		field: 'veh1',
@@ -30,6 +37,13 @@ const vehi: QTableColumn[] = [
 		sortable: true,
 	},
 	{
+		name: 'group2',
+		label: 'Группа грубость',
+		field: 'group2',
+		align: 'left',
+		sortable: true,
+	},
+	{
 		name: 'veh5',
 		label: 'презентация лизинг',
 		field: 'veh5',
@@ -47,6 +61,13 @@ const vehi: QTableColumn[] = [
 		name: 'veh7',
 		label: 'презентация мойка',
 		field: 'veh7',
+		align: 'left',
+		sortable: true,
+	},
+	{
+		name: 'group3',
+		label: 'Группа для примера',
+		field: 'group3',
 		align: 'left',
 		sortable: true,
 	},
@@ -82,6 +103,13 @@ const vehi: QTableColumn[] = [
 		name: 'veh12',
 		label: 'выявление ремонт',
 		field: 'veh12',
+		align: 'left',
+		sortable: true,
+	},
+	{
+		name: 'group4',
+		label: 'Группа последняя',
+		field: 'group4',
 		align: 'left',
 		sortable: true,
 	},
@@ -150,7 +178,11 @@ const operators = [
 		veh15: 12,
 		veh15a: 59,
 		veh16: 57,
-		veh16a: 8
+		veh16a: 8,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 1,
@@ -186,7 +218,11 @@ const operators = [
 		veh15: 6,
 		veh15a: 80,
 		veh16: 82,
-		veh16a: 11
+		veh16a: 11,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 2,
@@ -222,7 +258,11 @@ const operators = [
 		veh15: 20,
 		veh15a: 96,
 		veh16: 79,
-		veh16a: 32
+		veh16a: 32,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 3,
@@ -258,7 +298,11 @@ const operators = [
 		veh15: 78,
 		veh15a: 36,
 		veh16: 17,
-		veh16a: 76
+		veh16a: 76,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 4,
@@ -294,7 +338,11 @@ const operators = [
 		veh15: 19,
 		veh15a: 100,
 		veh16: 70,
-		veh16a: 16
+		veh16a: 16,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 5,
@@ -330,7 +378,11 @@ const operators = [
 		veh15: 15,
 		veh15a: 53,
 		veh16: 60,
-		veh16a: 36
+		veh16a: 36,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 6,
@@ -366,7 +418,11 @@ const operators = [
 		veh15: 47,
 		veh15a: 61,
 		veh16: 3,
-		veh16a: 65
+		veh16a: 65,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 7,
@@ -402,7 +458,11 @@ const operators = [
 		veh15: 42,
 		veh15a: 8,
 		veh16: 82,
-		veh16a: 28
+		veh16a: 28,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 8,
@@ -438,7 +498,11 @@ const operators = [
 		veh15: 6,
 		veh15a: 8,
 		veh16: 91,
-		veh16a: 84
+		veh16a: 84,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 9,
@@ -474,7 +538,11 @@ const operators = [
 		veh15: 74,
 		veh15a: 70,
 		veh16: 32,
-		veh16a: 96
+		veh16a: 96,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 10,
@@ -510,7 +578,11 @@ const operators = [
 		veh15: 85,
 		veh15a: 37,
 		veh16: 55,
-		veh16a: 91
+		veh16a: 91,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 11,
@@ -546,7 +618,11 @@ const operators = [
 		veh15: 89,
 		veh15a: 28,
 		veh16: 13,
-		veh16a: 8
+		veh16a: 8,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 12,
@@ -582,7 +658,11 @@ const operators = [
 		veh15: 8,
 		veh15a: 35,
 		veh16: 77,
-		veh16a: 75
+		veh16a: 75,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 13,
@@ -618,7 +698,11 @@ const operators = [
 		veh15: 56,
 		veh15a: 9,
 		veh16: 15,
-		veh16a: 37
+		veh16a: 37,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 14,
@@ -654,7 +738,7 @@ const operators = [
 		veh15: 34,
 		veh15a: 39,
 		veh16: 14,
-		veh16a: 60
+		veh16a: 60,
 	},
 	{
 		id: 15,
@@ -690,7 +774,11 @@ const operators = [
 		veh15: 99,
 		veh15a: 10,
 		veh16: 27,
-		veh16a: 16
+		veh16a: 16,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 16,
@@ -726,7 +814,11 @@ const operators = [
 		veh15: 46,
 		veh15a: 87,
 		veh16: 42,
-		veh16a: 86
+		veh16a: 86,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 17,
@@ -762,7 +854,11 @@ const operators = [
 		veh15: 37,
 		veh15a: 51,
 		veh16: 24,
-		veh16a: 83
+		veh16a: 83,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 18,
@@ -798,7 +894,11 @@ const operators = [
 		veh15: 93,
 		veh15a: 32,
 		veh16: 30,
-		veh16a: 45
+		veh16a: 45,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 19,
@@ -834,7 +934,11 @@ const operators = [
 		veh15: 81,
 		veh15a: 30,
 		veh16: 47,
-		veh16a: 74
+		veh16a: 74,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 	{
 		id: 20,
@@ -870,7 +974,11 @@ const operators = [
 		veh15: 23,
 		veh15a: 69,
 		veh16: 51,
-		veh16a: 94
+		veh16a: 94,
+		group1: 12,
+		group2: 73,
+		group3: 59,
+		group4: 44,
 	},
 ]
 

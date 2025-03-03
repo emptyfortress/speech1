@@ -52,6 +52,11 @@ const calcBg = ((n: number) => {
 		if (n > 50) return `background-color: rgba(0, 128, 128, ${op});`
 	}
 })
+
+const calcCol = ((col: any) => {
+	if (col.name.includes('group')) return 'group'
+	return ''
+})
 </script>
 
 <template lang="pug">
@@ -86,16 +91,18 @@ q-table.sticky(
 	template(#header="props")
 		q-tr.main
 			q-th Операторы
-			q-th(v-for="(col, index) in vehi" colspan='2')
+			q-th(v-for="(col, index) in vehi" colspan='2' :class="calcCol(col)")
 				span.rot {{ col.label }}
 
 		q-tr.sma(:props="props")
 			q-th.blo
-			q-th(:props="props" v-for="col in props.cols" :key='col.name') {{ col.compare }}
+			q-th(:props="props" v-for="col in props.cols" :key='col.name' :class="calcCol(col)") {{ col.compare }}
 
 	template(v-slot:body="props")
 		q-tr(:props="props" @click="")
 			q-td {{ props.row.name }}
+			q-td.cell(:style="calcBg(props.row.group1)") &#8486;
+			q-td.cell(:style="calcBg(props.row.group1)") &#8486;
 			q-td.cell(:style="calcBg(props.row.veh1)") {{ props.row.veh1 }}
 			q-td.cell(:style="calcBg(props.row.veh1a)") {{ props.row.veh1a }}
 			q-td.cell(:style="calcBg(props.row.veh2)") {{ props.row.veh2 }}
@@ -104,12 +111,16 @@ q-table.sticky(
 			q-td.cell(:style="calcBg(props.row.veh3a)") {{ props.row.veh3a }}
 			q-td.cell(:style="calcBg(props.row.veh4)") {{ props.row.veh4 }}
 			q-td.cell(:style="calcBg(props.row.veh4a)") {{ props.row.veh4a }}
+			q-td.cell(:style="calcBg(props.row.group2)") &#8486;
+			q-td.cell(:style="calcBg(props.row.group2)") &#8486;
 			q-td.cell(:style="calcBg(props.row.veh5)") {{ props.row.veh5 }}
 			q-td.cell(:style="calcBg(props.row.veh5a)") {{ props.row.veh5a }}
 			q-td.cell(:style="calcBg(props.row.veh6)") {{ props.row.veh6 }}
 			q-td.cell(:style="calcBg(props.row.veh6a)") {{ props.row.veh6a }}
 			q-td.cell(:style="calcBg(props.row.veh7)") {{ props.row.veh7 }}
 			q-td.cell(:style="calcBg(props.row.veh7a)") {{ props.row.veh7a }}
+			q-td.cell(:style="calcBg(props.row.group3)") &#8486;
+			q-td.cell(:style="calcBg(props.row.group3)") &#8486;
 			q-td.cell(:style="calcBg(props.row.veh8)") {{ props.row.veh8 }}
 			q-td.cell(:style="calcBg(props.row.veh8a)") {{ props.row.veh8a }}
 			q-td.cell(:style="calcBg(props.row.veh9)") {{ props.row.veh9 }}
@@ -119,6 +130,8 @@ q-table.sticky(
 			q-td.cell(:style="calcBg(props.row.veh11)") {{ props.row.veh11 }}
 			q-td.cell(:style="calcBg(props.row.veh11a)") {{ props.row.veh11a }}
 			q-td.cell(:style="calcBg(props.row.veh12)") {{ props.row.veh12 }}
+			q-td.cell(:style="calcBg(props.row.group4)") &#8486;
+			q-td.cell(:style="calcBg(props.row.group4)") &#8486;
 			q-td.cell(:style="calcBg(props.row.veh12a)") {{ props.row.veh12a }}
 			q-td.cell(:style="calcBg(props.row.veh13)") {{ props.row.veh13 }}
 			q-td.cell(:style="calcBg(props.row.veh13a)") {{ props.row.veh13a }}
@@ -211,5 +224,9 @@ q-table.sticky(
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 5rem;
 	font-size: .8rem;
+}
+
+:deep(tr th.group) {
+	background: #d4d4b4;
 }
 </style>

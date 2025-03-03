@@ -310,7 +310,7 @@ const crusial = ref(true)
 	min-height: 42px;
 	margin-bottom: 0.25rem;
 	display: grid;
-	grid-template-columns: 1fr 130px 90px auto auto;
+	grid-template-columns: 1fr 120px 90px auto auto;
 	align-items: center;
 
 	&:hover {
