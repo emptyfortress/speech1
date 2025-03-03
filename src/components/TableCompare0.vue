@@ -76,7 +76,8 @@ q-table.sticky(
 
 		q-tr.sma(:props="props")
 			q-th.blo
-			q-th(:props="props" v-for="col in props.cols" :key='col.name')
+			q-th.blo
+			q-th(:props="props" v-for="col in props.cols" :key='col.name' :class="calcCol(col)")
 
 	template(v-slot:body="props")
 		q-tr(:props="props" @click='select(props.row)')
