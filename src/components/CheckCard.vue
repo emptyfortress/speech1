@@ -52,6 +52,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 						.label
 							q-icon(name="mdi-toy-brick-search-outline")
 							span(class="mtl-ml") {{ node.text }}
+						q-checkbox(v-model="node.crusial" dense label="Критично")
 						.input
 							.lab Вес:
 							input(value="15")
@@ -125,12 +126,14 @@ const treeData = ref([
 						group: false,
 						drag: true,
 						drop: false,
+						crusial: false,
 					},
 					{
 						text: 'Прощание',
 						group: false,
 						drag: true,
 						drop: false,
+						crusial: false,
 					},
 				]
 			},
@@ -211,6 +214,7 @@ const externalDataHandler = (() => {
 		drag: true,
 	})
 })
+const crusial = ref(true)
 </script>
 
 <style scoped lang="scss">
@@ -306,7 +310,7 @@ const externalDataHandler = (() => {
 	min-height: 42px;
 	margin-bottom: 0.25rem;
 	display: grid;
-	grid-template-columns: 1fr 90px auto auto;
+	grid-template-columns: 1fr 130px 90px auto auto;
 	align-items: center;
 
 	&:hover {
@@ -319,10 +323,7 @@ const externalDataHandler = (() => {
 }
 
 :deep(.drag-placeholder) {
-	// background: hsl(200 35% 84% / 1);
 	min-height: 48px;
-	// border-width: 2px;
-	// border: 2px solid #fff;
 	border-radius: 0.5rem;
 	margin-bottom: .25rem;
 }
