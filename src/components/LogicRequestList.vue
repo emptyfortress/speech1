@@ -24,8 +24,8 @@ const alllogic = computed({
 	set: (val) => mylogic.updateLogicList(val),
 })
 
-const start = (() => {
-	console.log(111)
+const start = ((evt: any) => {
+	mylogic.setDraggedLogic(evt.oldIndex)
 })
 </script>
 

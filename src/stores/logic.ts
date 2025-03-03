@@ -155,12 +155,16 @@ export const useLogic = defineStore({
 			{ id: 14, list: [{ id: 0, condition: 'and', mod1: '' }] },
 			{ id: 15, list: [{ id: 0, condition: 'and', mod1: '' }] },
 		],
+		draggedLogic: null as null | Logic,
 	}),
 	getters: {
 		activeLogic: (state) => state.allLogic.filter((item) => item.selected)[0],
 	},
 
 	actions: {
+		setDraggedLogic(e: number) {
+			this.draggedLogic = this.allLogic[e]
+		},
 		showInception() {
 			this.inception = true
 		},

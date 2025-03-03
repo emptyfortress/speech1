@@ -20,6 +20,8 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				:root-droppable="false"
 				:eachDroppable='isDrop'
 				:eachDraggable='isDrag'
+				:onExternalDragOver='onExternalDragOver'
+				:externalDataHandler='externalDataHandler'
 				)
 				template(#default="{ node, stat }")
 					.list-group.root(v-if='node.root')
@@ -37,8 +39,10 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 								:open="stat.open"
 								class="mtl-mr"
 								@click.stop="stat.open = !stat.open")
-							span {{ node.text }}
-						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense) 
+							span(@click.stop) {{ node.text }}
+								q-popup-edit(v-model="node.text" auto-save v-slot="scope")
+									q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
+						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense @click.stop) 
 							q-menu(anchor="bottom right" self="top right")
 								q-list
 									q-item(clickable v-close-popup @click="kill(stat)").pink
@@ -87,7 +91,7 @@ import { useLogic } from '@/stores/logic'
 import VehConstructor from '@/components/VehConstructor.vue'
 import LogicRequestList from '@/components/LogicRequestList.vue'
 
-import { Draggable, OpenIcon } from '@he-tree/vue'
+import { Draggable, OpenIcon, dragContext } from '@he-tree/vue'
 import '@he-tree/vue/style/default.css'
 import '@he-tree/vue/style/material-design.css'
 
@@ -143,7 +147,8 @@ const addItem = ((e: any) => {
 })
 
 const isDrop = (e: any) => {
-	if (e.data.drop) return true
+	if (e.data.root) return true
+	if (e.data.group && !dragContext.dragNode?.data.group) return true
 	else return false
 }
 const isDrag = (e: any) => {
@@ -185,6 +190,19 @@ const addNew = () => {
 		star: false,
 	}
 }
+
+const onExternalDragOver = (() => {
+	return true
+})
+const externalDataHandler = (() => {
+	console.log(dragContext.targetInfo.parent.data)
+	return ({
+		text: mylogic.draggedLogic?.label,
+		group: false,
+		drop: false,
+		drag: true,
+	})
+})
 </script>
 
 <style scoped lang="scss">
@@ -293,10 +311,12 @@ const addNew = () => {
 }
 
 :deep(.drag-placeholder) {
-	background: hsl(200 35% 84% / 1);
+	// background: hsl(200 35% 84% / 1);
 	min-height: 48px;
-	border: 2px solid #fff;
+	// border-width: 2px;
+	// border: 2px solid #fff;
 	border-radius: 0.5rem;
+	margin-bottom: .25rem;
 }
 
 .input {
