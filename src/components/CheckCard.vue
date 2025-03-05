@@ -17,7 +17,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 				ref='tree'
 				v-model="treeData"
 				treeLine
-				:root-droppable="false"
+				:root-droppable="rootDrop"
 				:eachDroppable='isDrop'
 				:eachDraggable='isDrag'
 				:onExternalDragOver='onExternalDragOver'
@@ -109,36 +109,27 @@ const tree = ref()
 const treeData = ref([
 
 	{
-		text: 'Приветствие и прощание',
+		text: 'Общая вежливость',
 		group: true,
-		drag: false,
+		drag: true,
 		drop: true,
-		root: true,
 		children: [
 			{
-				text: 'Общая вежливость',
-				group: true,
+				text: 'Приветствие',
+				group: false,
 				drag: true,
-				drop: true,
-				children: [
-					{
-						text: 'Приветствие',
-						group: false,
-						drag: true,
-						drop: false,
-						crusial: false,
-					},
-					{
-						text: 'Прощание',
-						group: false,
-						drag: true,
-						drop: false,
-						crusial: false,
-					},
-				]
+				drop: false,
+				crusial: false,
+			},
+			{
+				text: 'Прощание',
+				group: false,
+				drag: true,
+				drop: false,
+				crusial: false,
 			},
 		]
-	}
+	},
 ])
 
 const addGroup = (() => {
@@ -148,14 +139,18 @@ const addGroup = (() => {
 		drag: true,
 		drop: true,
 		children: [],
-	},
-		tree.value.getStat(treeData.value[0])
+	}, null
 	)
 })
 
 const addItem = ((e: any) => {
-	tree.value.add(e, tree.value.getStat(treeData.value[0])
+	tree.value.add(e, tree.value.getStat(treeData.value.at(-1))
 	)
+})
+
+const rootDrop = (() => {
+	if (dragContext.dragNode?.data.group) return true
+	else return false
 })
 
 const isDrop = (e: any) => {
