@@ -108,18 +108,22 @@ q-page(padding)
 	gap: 2rem;
 	align-items: center;
 }
+
 tr {
 	.q-btn {
 		visibility: hidden;
 	}
+
 	&:hover {
 		.q-btn {
 			visibility: visible;
 		}
 	}
 }
+
 :deep(.q-btn .q-icon) {
 	color: #999;
+
 	&:hover {
 		color: #333;
 	}
