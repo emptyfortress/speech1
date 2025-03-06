@@ -32,16 +32,14 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 							@click.native="stat.open = !stat.open")
 						span {{ mycheck.activeCheck.label }}
 
-					.list-group(v-if='node.group && !node.root' @click.stop="stat.open = !stat.open")
+					.list-group(v-if='node.group && !node.root')
 						div
 							OpenIcon.icon(
 								v-if="stat.children.length"
 								:open="stat.open"
 								class="mtl-mr"
 								@click.stop="stat.open = !stat.open")
-							span(@click.stop) {{ node.text }}
-								q-popup-edit(v-model="node.text" auto-save v-slot="scope")
-									q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
+							span {{ node.text }}
 						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense @click.stop) 
 							q-menu(anchor="bottom right" self="top right")
 								q-list
@@ -65,7 +63,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 
 			.q-gutter-x-sm.q-mt-lg
 				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="addNew") 
-				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="addGroup") 
+				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="createGroupDialog = true") 
 
 			q-card-actions.q-mt-xl
 				q-btn(flat icon="mdi-trash-can-outline" label="Удалить чеклист" color="primary")
@@ -83,6 +81,16 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 
 
 	VehConstructor(@add-veh="addItem")
+
+	q-dialog(v-model="createGroupDialog")
+		q-card(style="min-width: 300px")
+			q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
+			q-card-section
+				.text-h6 Новая группа
+				q-input.q-mt-md(filled v-model="groupName" label='Название группы' autofocus)
+			q-card-actions.q-mr-md.q-mb-md(align='right')
+				q-btn(flat color="primary" label="Отмена" v-close-popup) 
+				q-btn(unelevated color="primary" label="Создать" @click="addGroup") 
 </template>
 
 <script setup lang="ts">
@@ -134,13 +142,14 @@ const treeData = ref([
 
 const addGroup = (() => {
 	tree.value.add({
-		text: 'Группа',
+		text: groupName.value,
 		group: true,
 		drag: true,
 		drop: true,
 		children: [],
 	}, null
 	)
+	createGroupDialog.value = false
 })
 
 const addItem = ((e: any) => {
@@ -210,7 +219,9 @@ const externalDataHandler = (() => {
 		crusial: false,
 	})
 })
-const crusial = ref(true)
+// const crusial = ref(true)
+const createGroupDialog = ref(false)
+const groupName = ref('')
 </script>
 
 <style scoped lang="scss">
