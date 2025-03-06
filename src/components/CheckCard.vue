@@ -85,12 +85,14 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 	q-dialog(v-model="createGroupDialog")
 		q-card(style="min-width: 300px")
 			q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
-			q-card-section
-				.text-h6 Новая группа
-				q-input.q-mt-md(filled v-model="groupName" label='Название группы' autofocus)
-			q-card-actions.q-mr-md.q-mb-md(align='right')
-				q-btn(flat color="primary" label="Отмена" v-close-popup) 
-				q-btn(unelevated color="primary" label="Создать" @click="addGroup") 
+
+			q-form.one(ref="myform" no-error-focus @submit="addGroup")
+				q-card-section
+					.text-h6 Новая группа
+					q-input.q-mt-md(filled v-model="groupName" label='Название группы' autofocus lazy-rules :rules="req")
+				q-card-actions.q-mr-md.q-mb-md(align='right')
+					q-btn(flat color="primary" label="Отмена" v-close-popup) 
+					q-btn(unelevated color="primary" label="Создать" type='submit') 
 </template>
 
 <script setup lang="ts">
@@ -150,6 +152,7 @@ const addGroup = (() => {
 	}, null
 	)
 	createGroupDialog.value = false
+	groupName.value = ''
 })
 
 const addItem = ((e: any) => {
@@ -219,9 +222,13 @@ const externalDataHandler = (() => {
 		crusial: false,
 	})
 })
-// const crusial = ref(true)
+
 const createGroupDialog = ref(false)
 const groupName = ref('')
+
+const req = computed(() => {
+	return [(val: string) => (val && val.length > 0) || 'Это обязательное поле']
+})
 </script>
 
 <style scoped lang="scss">
