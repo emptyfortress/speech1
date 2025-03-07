@@ -5,7 +5,7 @@ component(:is="VueApexCharts" height="320px" type="bar" :options="options" :seri
 <script setup lang="ts">
 import VueApexCharts from 'vue3-apexcharts'
 
-const series = [{ data: [98, 80, 91, 79, 82, 60, 96] }]
+const series = [{ data: [98, 80, 91,] }]
 
 const options = {
 	chart: {
@@ -23,18 +23,13 @@ const options = {
 	},
 	xaxis: {
 		categories: [
-			'Приветствие',
-			'Назвать себя',
-			'Локализация проблемы',
-			'Просьба обождать',
-			'Благодарность за ожидание',
-			'Новые услуги',
-			'Прощание',
+			'Группа Приветcтвие',
+			'Группа Проблемы',
+			'Группа Прощание',
 		],
 	},
 }
 </script>
 
 <style scoped lang="scss">
-//@import '@/assets/css/colors.scss';
-</style>
+//@import '@/assets/css/colors.scss';</style>

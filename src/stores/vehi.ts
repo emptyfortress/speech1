@@ -1,5 +1,5 @@
 const cols: Column[] = [
-	{ name: 'num', label: '', field: 'num', align: 'right', sortable: false },
+	// { name: 'num', label: '', field: 'num', align: 'right', sortable: false },
 	{ name: 'veha', label: 'Название', field: 'veha', align: 'left', sortable: true },
 	{
 		name: 'total',
@@ -18,13 +18,29 @@ const cols: Column[] = [
 ]
 
 const rows = [
-	{ id: 0, num: 1, veha: 'Приветствие', total: 345, percent: 98 },
-	{ id: 1, num: 2, veha: 'Назвать себя', total: 280, percent: 80 },
-	{ id: 2, num: 3, veha: 'Локализация проблемы', total: 179, percent: 91 },
-	{ id: 3, num: 4, veha: 'Просьба обождать', total: 345, percent: 79 },
-	{ id: 4, num: 5, veha: 'Благодарность за ожидание', total: 200, percent: 82 },
-	{ id: 5, num: 6, veha: 'Новые услуги', total: 120, percent: 60 },
-	{ id: 4, num: 7, veha: 'Прощание', total: 300, percent: 96 },
+	{
+		id: 0, veha: 'Группа Приветствие', total: 345, percent: 98,
+		children: [
+			{ id: 1, num: 1, veha: 'Поздороваться', total: 280, percent: 80 },
+			{ id: 2, num: 2, veha: 'Назвать себя', total: 276, percent: 30 },
+			{ id: 3, num: 3, veha: 'Предложить помощь', total: 230, percent: 60 },
+		]
+	},
+	{
+		id: 4, veha: 'Группа Проблемы', total: 158, percent: 66,
+		children: [
+			{ id: 5, num: 1, veha: 'Локализация проблемы', total: 80, percent: 80 },
+			{ id: 6, num: 2, veha: 'Предложение решения', total: 76, percent: 35 },
+			{ id: 7, num: 3, veha: 'Благодарность за ожидание', total: 20, percent: 69 },
+		]
+	},
+	{
+		id: 8, veha: 'Группа Прощание', total: 258, percent: 96,
+		children: [
+			{ id: 9, num: 1, veha: 'Новые услуги', total: 180, percent: 66 },
+			{ id: 10, num: 2, veha: 'Прощание', total: 85, percent: 49 },
+		]
+	},
 ]
 
 const catrows = [

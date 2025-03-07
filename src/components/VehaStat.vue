@@ -3,7 +3,6 @@ q-expansion-item(v-model="veha")
 	template(v-slot:header)
 		q-item-section(avatar).line
 			q-avatar(icon="mdi-map-marker-check-outline" flat)
-				a
 		q-item-section
 			.zag Статистика по вехам
 		q-item-section(side)
@@ -15,20 +14,35 @@ q-expansion-item(v-model="veha")
 				:rows="rows"
 				row-key="id"
 				binary-state-sort
+				selection="single"
 				v-model:selected="selected"
 				:selected-rows-label="getSelectedString"
 				rows-per-page-label="Записей на странице"
 				).fixh.table
+
+				template(v-slot:header="props")
+					q-tr(:props="props")
+						q-th(auto-width)
+						q-th(v-for="col in props.cols", :key="col.name", :props="props") {{ col.label }}
+
 				template(v-slot:body="props")
-					q-tr(:props="props" @click="select(props.row)")
-						q-td(key="num" auto-width).text-right {{props.row.num}}
-						q-td(key="veha") {{props.row.veha}}
-						q-td(key="total").text-right {{props.row.total}}
-						q-td(key="percent").text-right {{props.row.percent}}%
+					q-tr(:props="props" @click='select(props.row)')
+						q-td(auto-width)
+							q-btn(color="primary" round flat dense @click.stop="props.expand = !props.expand" :icon="props.expand ? 'mdi-chevron-down' : 'mdi-chevron-right'")
+
+						q-td(key='veha') {{ props.row.veha }}
+						q-td.text-right(key='total') {{ props.row.total }}
+						q-td.text-right(key='percent') {{ props.row.percent }}
+
+					q-tr(v-show="props.expand" :props="props" v-for="el in props.row.children" :key='el.id' @click='select(el)' :class='calcSelectedRow(el)')
+						q-td.text-right {{ el.num }}
+						q-td {{ el.veha }}
+						q-td.text-right {{ el.total }}
+						q-td.text-right {{ el.percent }}
+
 			q-card
 				component(:is="VehCharts" v-if="selected.length === 0")
 				component(:is="VehCharts1" v-else :veha="selected")
-				//- component(:is="Test")
 </template>
 
 <script setup lang="ts">
@@ -37,7 +51,6 @@ import type { Ref } from 'vue'
 import { cols, rows } from '@/stores/vehi'
 import VehCharts from '@/components/common/VehCharts.vue'
 import VehCharts1 from '@/components/common/VehCharts1.vue'
-import Test from '@/components/common/Test.vue'
 
 interface Row {
 	id: number
@@ -47,7 +60,7 @@ interface Row {
 	percent: number
 }
 
-const veha = ref(false)
+const veha = ref(true)
 const selected: Ref<Row[]> = ref([])
 
 const select = (e: Row) => {
@@ -60,6 +73,14 @@ const select = (e: Row) => {
 		selected.value.push(e)
 	}
 }
+
+const calcSelectedRow = ((el: any) => {
+	if (selected.value.length) {
+		return el.id == selected.value[0].id ? 'selected' : ''
+	}
+	return ''
+})
+
 const getSelectedString = (e: number) => {
 	return 'Выбранa веха'
 }
@@ -67,14 +88,17 @@ const getSelectedString = (e: number) => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/myvariables.scss';
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 1rem;
 }
+
 .fixh {
 	min-height: 340px;
 }
+
 .q-tr {
 	cursor: pointer;
 }
