@@ -158,7 +158,6 @@ const editGroup = ((e: string) => {
 	groupname.value = e
 })
 const updateGroup = ((node: any) => {
-	// console.log(e)
 	node.text = groupname.value
 })
 

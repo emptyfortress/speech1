@@ -25,53 +25,69 @@ q-dialog(v-model="modelValue")
 		.horiz
 			VehOperChart2
 			q-list.q-mt-md(dense)
-				q-item
+				q-item.red
 					q-item-section(side) 1
-					q-item-section презентация автострахование
+					q-item-section Группа вежливость
+
 				q-item
 					q-item-section(side) 2
-					q-item-section выявление автострахование
+					q-item-section презентация автострахование
 				q-item
 					q-item-section(side) 3
-					q-item-section презентация командировки
+					q-item-section выявление автострахование
 				q-item
 					q-item-section(side) 4
-					q-item-section выявление командировки
+					q-item-section презентация командировки
 				q-item
 					q-item-section(side) 5
-					q-item-section презентация лизинг
-				q-item
+					q-item-section выявление командировки
+
+				q-item.red
 					q-item-section(side) 6
-					q-item-section выявление лизинг
+					q-item-section Группа грубость
 				q-item
 					q-item-section(side) 7
-					q-item-section презентация мойка
+					q-item-section презентация лизинг
 				q-item
 					q-item-section(side) 8
-					q-item-section выявление мойка
+					q-item-section выявление лизинг
 				q-item
 					q-item-section(side) 9
-					q-item-section презентация платные дороги
-				q-item
+					q-item-section презентация мойка
+
+				q-item.red
 					q-item-section(side) 10
-					q-item-section выявление платные дороги
+					q-item-section Группа для примера
 				q-item
 					q-item-section(side) 11
-					q-item-section презентация ремонт
+					q-item-section выявление мойка
 				q-item
 					q-item-section(side) 12
-					q-item-section выявление ремонт
+					q-item-section презентация платные дороги
 				q-item
 					q-item-section(side) 13
-					q-item-section презентация сервис
+					q-item-section выявление платные дороги
 				q-item
 					q-item-section(side) 14
-					q-item-section выявление сервис
+					q-item-section презентация ремонт
 				q-item
 					q-item-section(side) 15
+					q-item-section выявление ремонт
+
+				q-item.red
+					q-item-section(side) 16
+					q-item-section Группа последняя
+				q-item
+					q-item-section(side) 17
+					q-item-section презентация сервис
+				q-item
+					q-item-section(side) 18
+					q-item-section выявление сервис
+				q-item
+					q-item-section(side) 19
 					q-item-section презентация такси
 				q-item
-					q-item-section(side) 16
+					q-item-section(side) 20
 					q-item-section выявление такси
 </template>
 
@@ -79,16 +95,24 @@ q-dialog(v-model="modelValue")
 .q-card {
 	padding: 1rem;
 }
+
+
 .horiz {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	column-gap: 1rem;
 }
+
 .q-list {
 	font-size: .7rem;
 }
-.q-list--dense > .q-item {
+
+.q-list--dense>.q-item {
 	min-height: 20px;
 	padding: 0 16px;
+}
+
+.red {
+	color: red;
 }
 </style>
