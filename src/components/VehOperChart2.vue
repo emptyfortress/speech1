@@ -37,7 +37,7 @@ const options = {
 	legend: {
 		show: true,
 		markers: {
-			fillColors: ['#0661A8', '#006FFB',],
+			fillColors: ['#0661A8', '#008FFB',],
 		},
 		itemMargin: {
 			horizontal: 10,
