@@ -40,6 +40,8 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 								class="mtl-mr"
 								@click.stop="stat.open = !stat.open")
 							span {{ node.text }}
+						q-btn(flat round icon="mdi-pencil" dense @click.stop="editGroup(node.text)" size='12px') 
+							GroupDialog(v-model:dialog="createGroupDialog" v-model:groupname="groupname" @create='addGroup' @update="updateGroup(node)" :edit='editGroupFlag' )
 						q-btn(flat round icon="mdi-trash-can-outline" size='12px' dense @click.stop) 
 							q-menu(anchor="bottom right" self="top right")
 								q-list
@@ -63,7 +65,7 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 
 			.q-gutter-x-sm.q-mt-lg
 				q-btn(outline color="primary" size='sm' icon="mdi-plus" label="Добавить веху" @click="addNew") 
-				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="createGroupDialog = true") 
+				q-btn(outline color="primary" size='sm' icon='mdi-playlist-plus' label="Добавить группу" @click="newGroup") 
 
 			q-card-actions.q-mt-xl
 				q-btn(flat icon="mdi-trash-can-outline" label="Удалить чеклист" color="primary")
@@ -79,20 +81,8 @@ q-splitter(v-model="splitterModel" :limits="[0, 100]" :style="hei")
 		q-scroll-area.list
 			LogicRequestList
 
-
 	VehConstructor(@add-veh="addItem")
 
-	q-dialog(v-model="createGroupDialog")
-		q-card(style="min-width: 300px")
-			q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
-
-			q-form.one(ref="myform" no-error-focus @submit="addGroup")
-				q-card-section
-					.text-h6 Новая группа
-					q-input.q-mt-md(filled v-model="groupName" label='Название группы' autofocus lazy-rules :rules="req")
-				q-card-actions.q-mr-md.q-mb-md(align='right')
-					q-btn(flat color="primary" label="Отмена" v-close-popup) 
-					q-btn(unelevated color="primary" label="Создать" type='submit') 
 </template>
 
 <script setup lang="ts">
@@ -101,6 +91,7 @@ import { useCheck } from '@/stores/check'
 import { useLogic } from '@/stores/logic'
 import VehConstructor from '@/components/VehConstructor.vue'
 import LogicRequestList from '@/components/LogicRequestList.vue'
+import GroupDialog from '@/components/GroupDialog.vue'
 
 import { Draggable, OpenIcon, dragContext } from '@he-tree/vue'
 import '@he-tree/vue/style/default.css'
@@ -142,9 +133,11 @@ const treeData = ref([
 	},
 ])
 
-const addGroup = (() => {
+const editGroupFlag = ref(false)
+const groupname = ref('')
+const addGroup = ((e: string) => {
 	tree.value.add({
-		text: groupName.value,
+		text: e,
 		group: true,
 		drag: true,
 		drop: true,
@@ -153,6 +146,20 @@ const addGroup = (() => {
 	)
 	createGroupDialog.value = false
 	groupName.value = ''
+})
+
+const newGroup = (() => {
+	editGroupFlag.value = false
+	createGroupDialog.value = true
+})
+const editGroup = ((e: string) => {
+	editGroupFlag.value = true
+	createGroupDialog.value = true
+	groupname.value = e
+})
+const updateGroup = ((node: any) => {
+	// console.log(e)
+	node.text = groupname.value
 })
 
 const addItem = ((e: any) => {
@@ -226,9 +233,6 @@ const externalDataHandler = (() => {
 const createGroupDialog = ref(false)
 const groupName = ref('')
 
-const req = computed(() => {
-	return [(val: string) => (val && val.length > 0) || 'Это обязательное поле']
-})
 </script>
 
 <style scoped lang="scss">
@@ -294,7 +298,7 @@ const req = computed(() => {
 	line-height: 34px;
 	padding-right: .8rem;
 	display: grid;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: 1fr auto auto;
 	align-items: center;
 
 	.q-btn {
