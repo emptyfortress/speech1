@@ -25,7 +25,7 @@ q-dialog(v-model="modelValue")
 		.horiz
 			VehOperChart2
 			q-list.q-mt-md(dense)
-				q-item.red
+				q-item.group
 					q-item-section(side) 1
 					q-item-section Группа вежливость
 
@@ -42,7 +42,7 @@ q-dialog(v-model="modelValue")
 					q-item-section(side) 5
 					q-item-section выявление командировки
 
-				q-item.red
+				q-item.group
 					q-item-section(side) 6
 					q-item-section Группа грубость
 				q-item
@@ -55,7 +55,7 @@ q-dialog(v-model="modelValue")
 					q-item-section(side) 9
 					q-item-section презентация мойка
 
-				q-item.red
+				q-item.group
 					q-item-section(side) 10
 					q-item-section Группа для примера
 				q-item
@@ -74,7 +74,7 @@ q-dialog(v-model="modelValue")
 					q-item-section(side) 15
 					q-item-section выявление ремонт
 
-				q-item.red
+				q-item.group
 					q-item-section(side) 16
 					q-item-section Группа последняя
 				q-item
@@ -112,7 +112,9 @@ q-dialog(v-model="modelValue")
 	padding: 0 16px;
 }
 
-.red {
-	color: red;
+.group {
+	font-weight: 600;
+	color: #0661A8;
+	font-size: .75rem;
 }
 </style>

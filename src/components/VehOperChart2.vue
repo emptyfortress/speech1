@@ -12,7 +12,7 @@ const data = randomArray(20, 10, 98)
 const highlightedIndexes = [0, 5, 9, 15]
 
 const colors = data.map((_, index) =>
-	highlightedIndexes.includes(index) ? '#FF0000' : '#008FFB'
+	highlightedIndexes.includes(index) ? '#0661A8' : '#008FFB'
 )
 
 const series = ref([
@@ -37,7 +37,7 @@ const options = {
 	legend: {
 		show: true,
 		markers: {
-			fillColors: ['#FF0000', '#008FFB',],
+			fillColors: ['#0661A8', '#006FFB',],
 		},
 		itemMargin: {
 			horizontal: 10,
