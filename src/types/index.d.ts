@@ -25,10 +25,10 @@ type Anketa = {
 	mark?: Number
 }
 type Checklist = {
-	id: Number
-	date: String
-	client: String
-	list: String
+	id: number
+	date: string
+	client: string
+	list: string
 	mark: number
 }
 type Operator = {
