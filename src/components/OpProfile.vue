@@ -57,6 +57,10 @@ q-page(padding)
 						q-td(:props="props")
 							GistForTable
 
+					template(v-slot:body-cell-action="props")
+						q-td(:props="props")
+							q-icon(name="mdi-chevron-right" size='sm') 
+
 			q-tab-panel(name="records")
 				OperRecordTable(:oper="oper" :private="true")
 
@@ -121,6 +125,7 @@ const cols: QTableColumn[] = [
 	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
 	{ name: 'graph', label: 'Выполнение чеклиста', field: 'graph', align: 'left', sortable: false },
 	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
+	{ name: 'action', label: '', field: 'action', sortable: true, align: 'right' },
 ]
 const pagination = {
 	rowsPerPage: 7,

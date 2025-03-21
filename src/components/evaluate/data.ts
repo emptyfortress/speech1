@@ -10,6 +10,7 @@ const columns: QTableColumn[] = [
 	{ name: 'supervisor', label: 'Супервизор', field: 'supervisor', sortable: true, align: 'left' },
 	{ name: 'anketa', label: 'Анкета', field: 'anketa', sortable: true, align: 'left' },
 	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
+	{ name: 'action', label: '', field: 'action', sortable: false, align: 'right' },
 ]
 
 const rows = [

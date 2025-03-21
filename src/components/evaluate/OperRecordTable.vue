@@ -76,6 +76,9 @@ div
 					.q-mr-md(v-if="props.row.mark")
 						.mrk {{ props.row.mark }}
 					q-btn(v-if="showEval(props.row.mark)" flat color="primary" label="Оценить" @click.stop="evaluate" size="sm" )
+				q-td.text-right(key="action")
+					q-icon(name="mdi-chevron-right" size='sm') 
+
 				.myplayer(v-if="selected === props.row.id")
 					q-linear-progress(:value=".6" color="positive")
 					q-btn(flat round size="sm" @click.stop="setStar(props.row)")
