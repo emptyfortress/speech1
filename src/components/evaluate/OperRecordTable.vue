@@ -73,7 +73,8 @@ div
 				q-td(key="supervisor") {{ props.row.supervisor }}
 				q-td(key="anketa") {{ props.row.anketa }}
 				q-td.text-right(key="mark")
-					.q-mr-md(v-if="props.row.mark") {{ props.row.mark }}
+					.q-mr-md(v-if="props.row.mark")
+						.mrk {{ props.row.mark }}
 					q-btn(v-if="showEval(props.row.mark)" flat color="primary" label="Оценить" @click.stop="evaluate" size="sm" )
 				.myplayer(v-if="selected === props.row.id")
 					q-linear-progress(:value=".6" color="positive")
@@ -92,7 +93,7 @@ div
 						q-slider.slide(color="primary" v-model="sound")
 						q-icon(name="mdi-volume-high" size="sm")
 					Teleport(to="#speech")
-						.recdate(v-if="selected !== null") {{props.row.date}}
+						.recdate(v-if="selected !== null") {{ props.row.date }}
 </template>
 
 <style scoped lang="scss">
@@ -136,7 +137,14 @@ div
 		width: 150px;
 	}
 }
+
 .recdate {
 	font-weight: 600;
+}
+
+.mrk {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-right: 0.25rem;
 }
 </style>

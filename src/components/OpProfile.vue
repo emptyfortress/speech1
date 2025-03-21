@@ -32,6 +32,9 @@ q-page(padding)
 					row-key="id"
 					flat
 				)
+					template(v-slot:body-cell-mark="props")
+						q-td.text-right
+							.mrk {{ props.row.mark }}
 					template(v-slot:body-cell-action="props")
 						q-td(:props="props")
 							q-icon(name="mdi-chevron-right" size='sm') 
@@ -91,7 +94,7 @@ const cols1: QTableColumn[] = [
 	{ name: 'client', label: 'Клиент', field: 'client', sortable: true, align: 'left' },
 	{ name: 'category', label: 'Категория', field: 'category', sortable: true, align: 'left' },
 	{ name: 'list', label: 'Чеклист', field: 'list', sortable: true, align: 'left' },
-	{ name: 'mark', label: 'Средняя оценка', field: 'mark', sortable: true, align: 'right' },
+	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
 	{ name: 'action', label: '', field: 'action', sortable: true, align: 'right' },
 ]
 
@@ -234,5 +237,11 @@ const series2 = [{ name: 'АНТ', data: [60, 57, 65, 67, 72, 42, 68] }]
 :deep(.q-tab-panel) {
 	padding-left: 0;
 	padding-right: 0;
+}
+
+.mrk {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-right: 0.5rem;
 }
 </style>
