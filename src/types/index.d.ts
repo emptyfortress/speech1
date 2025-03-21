@@ -24,6 +24,13 @@ type Anketa = {
 	supervisor?: String
 	mark?: Number
 }
+type Checklist = {
+	id: Number
+	date: String
+	client: String
+	list: String
+	mark: number
+}
 type Operator = {
 	id: number
 	name: string
