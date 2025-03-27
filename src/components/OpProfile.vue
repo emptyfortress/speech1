@@ -24,6 +24,9 @@ q-page(padding)
 
 		q-tab-panels(v-model="tab" animated)
 			q-tab-panel(name="checklists")
+
+				CommonOptionsOper(first='Клиент', second='Категория', third='Чеклист')
+
 				q-table.table(
 					:columns="cols1"
 					:rows='checks'
@@ -35,11 +38,21 @@ q-page(padding)
 					template(v-slot:body-cell-mark="props")
 						q-td.text-right
 							.mrk {{ props.row.mark }}
+
 					template(v-slot:body-cell-action="props")
 						q-td(:props="props")
 							q-icon(name="mdi-chevron-right" size='sm') 
 
+					template(v-slot:body-cell-status="props")
+						q-td
+							q-badge(color="purple-3") У оператора
+
+					template(v-slot:body-cell-graph="props")
+						q-td(:props="props")
+							GistForTable
+
 			q-tab-panel(name="marks")
+				CommonOptionsOper(first='Анкета', second='Супервизор', third='Статус')
 				q-table.table(:columns="cols"
 					:rows="marks"
 					@row-click="toggleDialog"
@@ -78,6 +91,8 @@ import type { QTableColumn } from 'quasar'
 import OperRecordTable from './evaluate/OperRecordTable.vue'
 import { chartOptionsSpark, chartOptionsSpark1, chartOptionsSpark2 } from '@/stores/charts1'
 import GistForTable from '@/components/graph/GistForTable.vue'
+import CommonOptionsOper from '@/components/common/CommonOptionsOper.vue'
+import type { Ref } from 'vue'
 
 const tab = ref('checklists')
 
@@ -98,6 +113,8 @@ const cols1: QTableColumn[] = [
 	{ name: 'client', label: 'Клиент', field: 'client', sortable: true, align: 'left' },
 	{ name: 'category', label: 'Категория', field: 'category', sortable: true, align: 'left' },
 	{ name: 'list', label: 'Чеклист', field: 'list', sortable: true, align: 'left' },
+	{ name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'left' },
+	{ name: 'graph', label: 'Выполнение чеклиста', field: 'graph', align: 'left', sortable: false },
 	{ name: 'mark', label: 'Оценка', field: 'mark', sortable: true, align: 'right' },
 	{ name: 'action', label: '', field: 'action', sortable: true, align: 'right' },
 ]
@@ -158,6 +175,9 @@ const toggleDialog1 = (evt: Event, row: Checklist) => {
 const series = [{ name: 'Оценки', data: [60, 43, 65, 55, 77, 62, 67] }]
 const series1 = [{ name: 'Вызовы', data: [55, 57, 65, 70, 77, 80, 67] }]
 const series2 = [{ name: 'АНТ', data: [60, 57, 65, 67, 72, 42, 68] }]
+
+const perModel: Ref<Range | String> = ref('Последние 30 дней')
+const period = ['Последние 30 дней', 'Прошлый месяц', 'Текущий месяц', 'Сегодня']
 </script>
 
 <style scoped lang="scss">
@@ -248,5 +268,16 @@ const series2 = [{ name: 'АНТ', data: [60, 57, 65, 67, 72, 42, 68] }]
 	font-size: 1rem;
 	font-weight: 600;
 	margin-right: 0.5rem;
+}
+.filtergrid {
+	margin-bottom: 1rem;
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: flex-start;
+	gap: 1rem;
+
+	&.timeon {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	}
 }
 </style>

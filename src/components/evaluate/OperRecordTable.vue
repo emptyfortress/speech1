@@ -4,6 +4,7 @@ import { columns, rows } from '@/components/evaluate/data'
 import type { Ref } from 'vue'
 import { useStore } from '@/stores/store'
 import { useRouter } from 'vue-router'
+import CommonOptionsOper from '@/components/common/CommonOptionsOper.vue'
 
 const props = defineProps<{
 	oper: Operator
@@ -54,6 +55,7 @@ const showEval = (mark: any) => {
 
 <template lang="pug">
 div
+	CommonOptionsOper(first='Анкета', second='Супервизор', third='Статус')
 	q-table.table(:columns="calcColumn"
 		:rows="recRows"
 		:pagination="pagination"
