@@ -15,11 +15,16 @@ const list = reactive([
 ])
 
 const checks = ref([
-	{ id: 0, label: 'Презентация автострахование', mark: 33 },
-	{ id: 1, label: 'Выявление автострахование', mark: 29 },
-	{ id: 2, label: 'Презентация командировки', mark: 59 },
-	{ id: 3, label: 'Выявление командировки', mark: 68 },
+	{ id: 0, changed: false, label: 'Презентация автострахование', mark: 33 },
+	{ id: 1, changed: false, label: 'Выявление автострахование', mark: 29 },
+	{ id: 2, changed: false, label: 'Презентация командировки', mark: 59 },
+	{ id: 3, changed: false, label: 'Выявление командировки', mark: 68 },
 ])
+
+const reset = ((item: any) => {
+	item.mark = 34
+	item.changed = false
+})
 </script>
 
 <template lang="pug">
@@ -37,7 +42,10 @@ q-list()
 				label {{ item.label }}
 				.val {{ item.mark }}
 					q-popup-edit(v-model="item.mark" auto-save v-slot="scope")
-						q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set")
+						q-input(v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" type='number' @update:model-value="item.changed = true")
+				q-btn(v-if='item.changed' flat round @click="reset(item)" dense size='sm')
+					q-icon.flip(name="mdi-refresh")
+				div(v-else)
 		br
 
 	q-separator(space)
@@ -56,11 +64,10 @@ q-list()
 .grid {
 	display: grid;
 	width: 400px;
-	grid-template-columns: auto auto;
+	grid-template-columns: auto 28px 28px;
 	justify-items: start;
 	align-items: center;
-	column-gap: 1rem;
-	row-gap: 0.5rem;
+	gap: .5rem;
 	font-size: 0.9rem;
 	margin-bottom: 2rem;
 	margin-left: 5rem;
@@ -91,5 +98,8 @@ q-list()
 	color: $primary;
 	border-bottom: 1px dotted $primary;
 
+}
+.flip {
+	transform: scaleX(-1);
 }
 </style>

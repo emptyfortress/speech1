@@ -144,5 +144,6 @@ q-dialog(v-model="modelValue")
 .dark {
 	margin-top: 1px;
 	background: $blue-grey-9;
+	padding: 0 1rem;
 }
 </style>
