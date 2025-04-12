@@ -155,7 +155,6 @@ const addWord = (e: any) => {
 		options.value.sort(compare)
 	}
 }
-// const syn = ref(false)
 </script>
 
 <style scoped lang="scss">

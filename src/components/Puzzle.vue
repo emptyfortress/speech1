@@ -134,11 +134,6 @@ const addCond = () => {
 		}
 	}
 }
-.kill {
-	width: 900px;
-	margin: 0 auto;
-	margin-top: 2rem;
-}
 
 :deep(.drag-placeholder) {
 	height: 58px;

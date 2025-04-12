@@ -116,12 +116,10 @@ const gptRequest = ref()
 
 #comment {
 	font-size: 0.9rem;
-	// margin-top: 1rem;
 	padding: 0.5rem;
 	padding-bottom: 0;
 	margin-bottom: 1.5rem;
 
-	/* text-align: center; */
 	&:hover {
 		background: $bgLight;
 	}
