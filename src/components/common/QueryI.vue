@@ -1,9 +1,9 @@
 <template lang="pug">
 .node
-	.not(@click="not = !not" :class="{active : not}")
-		q-checkbox(label="Not" v-model="not" dense size="xs" color="negative")
+	.not(@click="notcheck = !notcheck" :class="{active : notcheck}")
+		q-checkbox(label="Not" v-model="notcheck" dense size="xs" color="negative")
 	.myrow
-		q-select(label="Контекстное правило" dense v-model="rule1" :options="ruleOptions")
+		q-select(label="Контекстное правило" dense v-model="context" :options="ruleOptions")
 		div
 			q-select(dense
 				v-model="keys1"
@@ -30,21 +30,20 @@
 						q-item-section Слово не найдено. Чтобы добавить, нажмите "Ввод".
 		q-checkbox.syn(v-model='syn' label='Cинонимы' dense size='sm')
 		q-select(label="Канал" dense v-model="channel" :options="channelOptions")
-		q-btn.reload(round flat dense @click="clear")
-			q-icon(name="mdi-reload" size="sm")
+		q-btn.reload(round flat dense @click="clear" size='sm' icon='mdi-reload')
 
-		.start(v-if="rule1 === 'Начало'")
+		.start(v-if="context === 'Начало'")
 			.full
 				|Расстояние от начала записи, сек
 				q-slider(v-model="fromStart" :min="0" :max="60" :step="1"  label color="primary")
 			q-input(:model-value="fromStart" dense outlined bg-color="white" style="width: 50px")
-		.start(v-if="rule1 === 'Завершение'")
+		.start(v-if="context === 'Завершение'")
 			.full
 				|Расстояние от конца записи, сек
 				q-slider(v-model="fromStart" :min="0" :max="60" :step="1"  label color="primary")
 			q-input(:model-value="fromStart" dense outlined bg-color="white" style="width: 50px")
 
-		template(v-if="rule1 === 'Около'")
+		template(v-if="context === 'Около'")
 			div
 			div
 				q-select(dense
@@ -96,21 +95,24 @@ interface Keyword {
 	voc?: boolean
 }
 
-const keys1 = ref([])
-const keys2 = ref([])
-const not = ref(false)
-const rule1 = ref('')
+const notcheck = defineModel('notcheck')
+const context = defineModel('context')
+const keys1 = defineModel('keys1')
+const keys2 = defineModel('keys2')
+const syn = defineModel('syn')
+const channel = defineModel('channel')
+
 const stringOptions = words
 const options = ref(stringOptions)
-const channel = ref('')
 const fromStart = ref(10)
 const clear = () => {
-	rule1.value = ''
+	context.value = ''
 	keys1.value = []
 	keys2.value = []
-	not.value = false
+	notcheck.value = false
 	channel.value = ''
 	fromStart.value = 10
+	syn.value = false
 }
 
 const filterFn = (val: string, update: Function) => {
@@ -153,7 +155,7 @@ const addWord = (e: any) => {
 		options.value.sort(compare)
 	}
 }
-const syn = ref(false)
+// const syn = ref(false)
 </script>
 
 <style scoped lang="scss">
@@ -163,10 +165,10 @@ const syn = ref(false)
 	background: $bgMain;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-	padding: 1rem;
+	padding: 0.5rem;
 	width: 100%;
 	position: relative;
-	min-height: 50px;
+	min-height: 58px;
 	padding-left: 100px;
 	&:hover {
 		border: 1px solid $primary;
@@ -188,10 +190,10 @@ const syn = ref(false)
 }
 .myrow {
 	display: grid;
-	grid-template-columns: 170px 1fr 100px 130px auto;
-	align-items: flex-start;
+	grid-template-columns: 170px 1fr 100px 130px 38px;
+	align-items: top;
 	column-gap: 1rem;
-	row-gap: 1rem;
+	row-gap: 0.5rem;
 }
 .start {
 	grid-column: 2/4;

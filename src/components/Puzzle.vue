@@ -14,6 +14,8 @@
 		treeLine
 		v-model="treeData"
 		:indent="40"
+		:eachDroppable="isDrop"
+		:eachDraggable="isDrag"
 		:root-droppable="false"
 		class='mtl-tree'
 		)
@@ -21,8 +23,7 @@
 		template(#default="{ node, stat }")
 			.node
 				TreeItem(:stat='stat')
-				q-btn.close(dense flat round icon="mdi-close" size='sm' @click='remove(stat)') 
-
+				q-btn.close(v-if='!node.root' dense flat round color="negative" icon="mdi-close" size='sm' @click='remove(stat)') 
 
 </template>
 
@@ -43,14 +44,50 @@ const treeData = ref([
 		text: 'И',
 		and: true,
 		root: true,
+		not: false,
 		children: [
 			{
 				id: uid(),
-				text: 'laksjdlak',
+				text: 'one',
+				not: false,
+				context: '',
+				syn: false,
+				keys1: [],
+				keys2: [],
+				channel: 'Все',
+			},
+			{
+				id: uid(),
+				text: 'two',
+				not: true,
+				context: '',
+				syn: false,
+				keys1: [],
+				keys2: [],
+				channel: 'Все',
+			},
+			{
+				id: uid(),
+				text: 'three',
+				not: false,
+				context: '',
+				syn: false,
+				keys1: [],
+				keys2: [],
+				channel: 'Все',
 			},
 		],
 	},
 ])
+
+const isDrop = (e: any) => {
+	if (e.data.type == 10) return true
+	else return false
+}
+const isDrag = (e: any) => {
+	if (e.data.root) return false
+	return true
+}
 
 const remove = (e: any) => {
 	tree.value.remove(e)
@@ -80,11 +117,30 @@ const remove = (e: any) => {
 	// height: 46px;
 	justify-content: space-between;
 	align-items: center;
-	padding-right: 0.5rem;
+	margin-bottom: 1px;
+	.close {
+		margin-left: 0.25rem;
+		margin-right: 0.25rem;
+		visibility: hidden;
+	}
+	&:hover {
+		.close {
+			visibility: visible;
+		}
+	}
 }
 .kill {
 	width: 900px;
 	margin: 0 auto;
 	margin-top: 2rem;
+}
+
+:deep(.drag-placeholder) {
+	height: 58px;
+	border-radius: 0.25rem;
+}
+
+:deep(.tree-hline) {
+	width: 30px;
 }
 </style>

@@ -21,7 +21,15 @@ const toggle = (e: Stat) => {
 			.q-ml-md Оператор
 			.text-weight-bold.q-ml-sm {{props.stat.data.and ? 'И' : 'ИЛИ'}}
 
-	QueryI(v-else)
+	QueryI(
+		v-else,
+		v-model:notcheck='props.stat.data.not',
+		v-model:context='props.stat.data.context',
+		v-model:keys1='props.stat.data.keys1',
+		v-model:keys2='props.stat.data.keys2',
+		v-model:syn='props.stat.data.syn',
+		v-model:channel='props.stat.data.channel',
+	)
 </template>
 
 <style scoped lang="scss">
@@ -29,6 +37,7 @@ const toggle = (e: Stat) => {
 	display: flex;
 	justify-content: start;
 	align-items: center;
+	margin-bottom: 2px;
 }
 .trig {
 	font-size: 1.3rem;
