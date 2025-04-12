@@ -21,6 +21,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
 		{
+			path: '/tree',
+			component: () => import('@/components/Puzzle.vue'),
+			meta: { transition: 'slide-left', title: 'Семантический поиск', requiresAuth: false },
+		},
+		{
 			path: '/semantic',
 			component: () => import('@/components/Semantic.vue'),
 			meta: { transition: 'slide-left', title: 'Семантический поиск', requiresAuth: false },

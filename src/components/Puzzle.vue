@@ -1,85 +1,68 @@
 <template lang="pug">
-q-tree(:nodes="treeData" node-key="id" v-model:expanded="expanded" default-expand-all)
-	template(v-slot:default-header="prop")
-		template(v-if="prop.node.typ !== 2")
-			.row.items-center.cursor-pointer
-				.icon(:class="{or : prop.node.typ === 1}" @click.stop="next(prop.node)")
-				.q-ml-md {{prop.node.label}}
-				.text-weight-bold.q-ml-sm {{prop.node.typ === 1 ? 'ИЛИ' : 'И'}}
-		template(v-else)
-			component(:is="QueryI")
-		component(:is="TreeMenu" :node="prop.node" @addOp="addOperator(prop.node)" @addCond="addCondition(prop.node)" @kill="del(prop.node)" @cut="cut(prop.node)" @paste="paste(prop.node)")
+.kill
+	// .empty()
+	// 	q-icon(name="mdi-face-man" color="grey" size='lg')
+	// 	div Запрос не настроен.
+	//
+	// .q-gutter-x-xs.q-mt-md
+	// 	q-btn(outline color="primary" icon='mdi-gate-and' label="Добавить оператор" @click="" size='sm') 
+	// 	q-btn(outline color="primary" icon='mdi-crosshairs-question' label="Добавить условие" @click="" size='sm') 
+	// 	q-btn(outline color="negative" icon='mdi-backspace-outline' label="Очистить все" @click="" size='sm') 
+
+
+	Draggable(ref="tree"
+		treeLine
+		v-model="treeData"
+		:indent="40"
+		:root-droppable="false"
+		class='mtl-tree'
+		)
+
+		template(#default="{ node, stat }")
+			.node
+				TreeItem(:stat='stat')
+				q-btn.close(dense flat round icon="mdi-close" size='sm' @click='remove(stat)') 
+
+
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { uid } from 'quasar'
-import QueryI from '@/components/common/QueryI.vue'
-import TreeMenu from '@/components/TreeMenu.vue'
-import { deleteNodeFromTree, insertNodeIntoTree } from '@/utils/utils'
-import type { Ref } from 'vue'
+import { Draggable } from '@he-tree/vue'
+import TreeItem from '@/components/TreeItem.vue'
+import '@he-tree/vue/style/default.css'
+import '@he-tree/vue/style/material-design.css'
 
-const treeData = reactive([
+const tree = ref()
+
+const treeData = ref([
 	{
-		id: '0',
-		label: 'Оператор',
-		typ: 0,
-		children: [{ id: '2', typ: 2, label: 'Условие', children: [] }],
+		id: 'root',
+		type: 10,
+		text: 'И',
+		and: true,
+		root: true,
+		children: [
+			{
+				id: uid(),
+				text: 'laksjdlak',
+			},
+		],
 	},
 ])
 
-const selected = ref(treeData[0].id)
-const expanded: Ref<string[]> = ref(['0'])
-
-const addOperator = (e: Request) => {
-	let node = {
-		id: uid(),
-		label: 'Оператор',
-		typ: 0,
-		children: [],
-	}
-	insertNodeIntoTree(treeData[0], e.id, node)
-	selected.value = node.id
-	expanded.value.push(e.id)
-}
-
-const addCondition = (e: Request) => {
-	let node = {
-		id: uid(),
-		label: 'Условие',
-		typ: 2,
-		children: [],
-	}
-	insertNodeIntoTree(treeData[0], e.id, node)
-	selected.value = node.id
-	expanded.value.push(e.id)
-}
-
-const del = (e: Request) => {
-	deleteNodeFromTree(treeData[0], e.id)
-}
-
-let copy: any = null
-
-const cut = (e: Request) => {
-	copy = e
-	deleteNodeFromTree(treeData[0], e.id)
-}
-const paste = (e: Request) => {
-	if (copy != null) {
-		insertNodeIntoTree(treeData[0], e.id, copy)
-	}
-}
-
-const next = (e: Request) => {
-	if (e.typ === 1) {
-		e.typ = 0
-	} else e.typ = e.typ + 1
+const remove = (e: any) => {
+	tree.value.remove(e)
 }
 </script>
 
 <style scoped lang="scss">
-//@import '@/assets/css/colors.scss';
+.empty {
+	width: 345px;
+	text-align: center;
+	color: $grey;
+}
 .icon {
 	width: 49px;
 	height: 36px;
@@ -90,5 +73,18 @@ const next = (e: Request) => {
 	&.or {
 		background-position: bottom left;
 	}
+}
+.node {
+	display: flex;
+	width: 100%;
+	// height: 46px;
+	justify-content: space-between;
+	align-items: center;
+	padding-right: 0.5rem;
+}
+.kill {
+	width: 900px;
+	margin: 0 auto;
+	margin-top: 2rem;
 }
 </style>
