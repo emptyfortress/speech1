@@ -193,6 +193,7 @@ const addWord = (e: any) => {
 	grid-template-columns: 170px 1fr 100px 130px 38px;
 	align-items: top;
 	column-gap: 1rem;
+	width: 100%;
 	row-gap: 0.5rem;
 }
 .start {

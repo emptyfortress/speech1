@@ -13,7 +13,7 @@ div
 		template(#default="{ node, stat }")
 			.node
 				TreeItem(:stat='stat')
-				q-btn.close(v-if='!node.root' dense flat round color="negative" icon="mdi-close" size='sm' @click='remove(stat)') 
+				q-btn.closing(v-if='!node.root' dense unelevated round color="negative" icon="mdi-close" size='sm' @click='remove(stat)') 
 
 	.empty(v-if='!treeData[0].children.length')
 		q-icon(name="mdi-alert-outline" color="grey" size='md')
@@ -43,38 +43,7 @@ const treeData = ref([
 		and: true,
 		root: true,
 		not: false,
-		children: [
-			{
-				id: uid(),
-				text: 'one',
-				not: false,
-				context: '',
-				syn: false,
-				keys1: [],
-				keys2: [],
-				channel: 'Все',
-			},
-			{
-				id: 'two',
-				text: 'two',
-				not: true,
-				context: '',
-				syn: false,
-				keys1: [],
-				keys2: [],
-				channel: 'Все',
-			},
-			{
-				id: uid(),
-				text: 'three',
-				not: false,
-				context: '',
-				syn: false,
-				keys1: [],
-				keys2: [],
-				channel: 'Все',
-			},
-		],
+		children: [],
 	},
 ])
 
@@ -154,13 +123,13 @@ const addCond = () => {
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1px;
-	.close {
+	.closing {
 		margin-left: 0.25rem;
 		margin-right: 0.25rem;
 		visibility: hidden;
 	}
 	&:hover {
-		.close {
+		.closing {
 			visibility: visible;
 		}
 	}
