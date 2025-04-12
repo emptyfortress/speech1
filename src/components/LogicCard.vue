@@ -135,10 +135,11 @@ const gptRequest = ref()
 
 :deep(.q-badge) {
 	transform: translateY(-7px);
-	font-size: .8rem;
+	font-size: 0.8rem;
 }
 
 .experiment {
-	font-size: .8rem;
+	font-size: 0.8rem;
+	margin-top: 2rem;
 }
 </style>

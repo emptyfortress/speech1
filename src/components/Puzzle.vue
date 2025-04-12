@@ -1,15 +1,5 @@
 <template lang="pug">
-.kill
-	// .empty()
-	// 	q-icon(name="mdi-face-man" color="grey" size='lg')
-	// 	div Запрос не настроен.
-	//
-	// .q-gutter-x-xs.q-mt-md
-	// 	q-btn(outline color="primary" icon='mdi-gate-and' label="Добавить оператор" @click="" size='sm') 
-	// 	q-btn(outline color="primary" icon='mdi-crosshairs-question' label="Добавить условие" @click="" size='sm') 
-	// 	q-btn(outline color="negative" icon='mdi-backspace-outline' label="Очистить все" @click="" size='sm') 
-
-
+div
 	Draggable(ref="tree"
 		treeLine
 		v-model="treeData"
@@ -25,6 +15,14 @@
 				TreeItem(:stat='stat')
 				q-btn.close(v-if='!node.root' dense flat round color="negative" icon="mdi-close" size='sm' @click='remove(stat)') 
 
+	.empty(v-if='!treeData[0].children.length')
+		q-icon(name="mdi-alert-outline" color="grey" size='md')
+		div Запрос не настроен.
+
+	.q-gutter-x-xs.q-mt-md
+		q-btn(outline color="primary" icon='mdi-gate-and' label="Добавить оператор" @click="addOper" size='sm') 
+		q-btn(outline color="primary" icon='mdi-crosshairs-question' label="Добавить условие" @click="addCond" size='sm') 
+		q-btn(outline color="negative" icon='mdi-backspace-outline' label="Очистить все" @click="clearAll" size='sm') 
 </template>
 
 <script setup lang="ts">
@@ -57,7 +55,7 @@ const treeData = ref([
 				channel: 'Все',
 			},
 			{
-				id: uid(),
+				id: 'two',
 				text: 'two',
 				not: true,
 				context: '',
@@ -92,13 +90,51 @@ const isDrag = (e: any) => {
 const remove = (e: any) => {
 	tree.value.remove(e)
 }
+
+const clearAll = () => {
+	let root = tree.value.getStat(treeData.value[0])
+	let array: any[] = []
+	root.children.forEach((item: any) => {
+		array.push(item)
+	})
+	tree.value.removeMulti(array)
+}
+
+const addOper = () => {
+	let item = {
+		id: uid(),
+		text: '',
+		type: 10,
+		and: true,
+		children: [],
+	}
+	tree.value.add(item, tree.value.rootChildren[0], tree.value.rootChildren[0].children.length)
+}
+const addCond = () => {
+	let item = {
+		id: uid(),
+		text: '',
+		not: false,
+		context: '',
+		syn: false,
+		keys1: [],
+		keys2: [],
+		channel: 'Все',
+	}
+	tree.value.add(item, tree.value.rootChildren[0], tree.value.rootChildren[0].children.length)
+}
 </script>
 
 <style scoped lang="scss">
 .empty {
+	display: flex;
+	align-items: center;
 	width: 345px;
 	text-align: center;
 	color: $grey;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	gap: 1rem;
 }
 .icon {
 	width: 49px;
