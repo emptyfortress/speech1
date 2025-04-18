@@ -34,6 +34,14 @@ const logout = () => {
 	router.push('/')
 }
 const timeAgo = useTimeAgo(Date.now())
+
+const timezone = ref('(UTC+7) Новосибирск')
+const timeOptions = [
+	'(UTC+7) Новосибирск',
+	'(UTC+1) Лондон',
+	'(UTC-4) Вашингтон',
+	'(UTC+3) Санкт-Петербург',
+]
 </script>
 
 <template lang="pug">
@@ -48,6 +56,9 @@ template(v-if="isLogged")
 					span.hd Речевая платформа Speech Drive
 				q-space
 				template(v-if="!isOper")
+					q-select.timezone(v-model="timezone" :options='timeOptions' dense)
+						template(v-slot:prepend)
+							q-icon(name="mdi-map-marker" color="grey-7")
 					.refreshInfo
 						.time Обновлено: {{ timeAgo }}
 						q-card
@@ -144,26 +155,25 @@ template(v-else)
 	margin-right: 1rem;
 
 	.time {
-		font-size: .8rem;
+		font-size: 0.8rem;
 		color: #666;
 	}
 
 	.grid {
 		display: grid;
 		grid-template-columns: auto 1fr;
-		row-gap: .2rem;
-		column-gap: .5rem;
-		margin-top: .5rem;
+		row-gap: 0.2rem;
+		column-gap: 0.5rem;
+		margin-top: 0.5rem;
 	}
-
 
 	.q-card {
 		position: absolute;
 		top: 2rem;
 		left: 50%;
-		padding: .5rem 1rem;
+		padding: 0.5rem 1rem;
 		transform: translateX(-50%);
-		font-size: .8rem;
+		font-size: 0.8rem;
 		white-space: nowrap;
 
 		display: none;
@@ -174,5 +184,12 @@ template(v-else)
 			display: block;
 		}
 	}
+}
+.timezone {
+	margin-right: 1rem;
+}
+:deep(.q-field__native) {
+	font-size: 0.8rem;
+	color: #666;
 }
 </style>
