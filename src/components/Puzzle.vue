@@ -22,7 +22,11 @@ div
 	.q-gutter-x-xs.q-mt-md
 		q-btn(outline color="primary" icon='mdi-gate-and' label="Добавить оператор" @click="addOper" size='sm') 
 		q-btn(outline color="primary" icon='mdi-crosshairs-question' label="Добавить условие" @click="addCond" size='sm') 
-		q-btn(outline color="negative" icon='mdi-backspace-outline' label="Очистить все" @click="clearAll" size='sm') 
+		q-btn(outline color="negative" icon='mdi-backspace-outline' label="Очистить все" size='sm' :disable='treeData[0].children.length == 0') 
+			q-menu
+				q-list
+					q-item(clickable @click="clearAll" v-close-popup).pink
+						q-item-section Удалить все
 </template>
 
 <script setup lang="ts">
