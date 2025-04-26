@@ -4,6 +4,7 @@ import { useStore } from '@/stores/store'
 import type { QTableProps } from 'quasar'
 import type { Ref } from 'vue'
 import FilterSelect from '@/components/common/FilterSelect.vue'
+import Player from '@/components/Player.vue'
 
 interface Props {
 	rows: Row[]
@@ -17,7 +18,6 @@ const mystore = useStore()
 const table = ref()
 const filter = ref('')
 const shownRows = ref([10, 20, 50])
-const sound = ref(50)
 const togg = () => {
 	table.value.toggleFullscreen()
 	table.value.setPagination({
@@ -149,7 +149,6 @@ const resetFilter = () => {
 </script>
 
 <template lang="pug">
-// p {{ myFilter }}
 q-table.table(ref="table"
 	:rows="filteredRecords"
 	:columns="columns"
@@ -197,12 +196,6 @@ q-table.table(ref="table"
 				q-btn(flat round size="sm" @click.stop="setStar(props.row)")
 					q-icon(v-if="props.row.star === true" name="mdi-star" color="orange")
 					q-icon(v-else name="mdi-star-outline" color="grey" )
-					// q-menu
-					// 	q-list
-					// 		q-item.pink(clickable @click="setStar(props.row)" v-close-popup)
-					// 			q-item-section Удалить
-					// 			q-item-section(side)
-					// 				q-icon(name="mdi-star")
 
 			q-td.small(key="comment" :props="props")
 				q-btn.comment(flat round size="sm" @click.stop="showComment(props.row)")
@@ -216,33 +209,8 @@ q-table.table(ref="table"
 			q-td(key="categ") {{ props.row.categ }}
 			q-td(key="record" v-html="props.row.record")
 			q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
-			.myplayer(v-if="selected === props.row.id")
-				q-linear-progress(:value=".6" color="positive")
-				q-btn(flat round size="sm" @click.stop="setStar(props.row)")
-					q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
-					q-icon(v-else name="mdi-star-outline" color="grey" )
-					// q-menu
-					// 	q-list
-					// 		q-item.pink(clickable @click="setStar(props.row)" v-close-popup)
-					// 			q-item-section Удалить
-					// 			q-item-section(side)
-					// 				q-icon(name="mdi-star")
-				q-btn(flat round size="sm" @click.stop="showComment(props.row)")
-					q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
-					q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
-					q-tooltip.bg-primary(v-if="props.row.comment" anchor="top middle" self="bottom middle" max-width="150px" :offset="[7, 7]") {{ props.row.comment }}
-				div(v-if="!mystore.wide") {{ props.row.date }}
-				div(v-if="!mystore.wide") {{ props.row.operator }}
-				.player
-					q-btn(round flat icon="mdi-rewind" @click.stop)
-					q-btn(round flat icon="mdi-pause" @click.stop)
-					q-btn(round flat icon="mdi-fast-forward" @click.stop)
-				.time 02:31
-				.row.items-center
-					q-icon(name="mdi-volume-medium" size="sm")
-					q-slider.slide(color="primary" v-model="sound")
-					q-icon(name="mdi-volume-high" size="sm")
 
+			Player(v-if="selected === props.row.id" :row='props.row')
 
 q-dialog(v-model="dialog")
 	q-card(style="width: 500px;")
@@ -284,47 +252,6 @@ Teleport(to="#speech")
 
 td.ellipsis {
 	max-width: 400px;
-}
-
-.myplayer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: $blue-grey-9;
-	color: #6d8e9e;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding-left: 1rem;
-	gap: 1rem;
-	font-size: 0.9rem;
-
-	.q-linear-progress {
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-
-	.player {
-		color: white;
-		display: flex;
-		justify-items: flex-start;
-		align-items: center;
-		height: 100%;
-	}
-
-	.time {
-		font-size: 2rem;
-		font-weight: lighter;
-		letter-spacing: 1px;
-		color: white;
-	}
-
-	.slide {
-		width: 150px;
-	}
 }
 
 .q-table td.small {
