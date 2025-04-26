@@ -26,6 +26,7 @@
 		"tslib": "^2.4.0",
 		"v-onboarding": "^2.5.1",
 		"vue": "^3.4.38",
+		"vue-audio-visual": "^3.0.11",
 		"vue-content-loader": "^2.0.1",
 		"vue-create-ripple": "^0.3.1",
 		"vue-draggable-resizable": "^3.0.0",
