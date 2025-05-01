@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import { useAVWaveform } from 'vue-audio-visual'
 import { useElementBounding } from '@vueuse/core'
@@ -45,22 +45,19 @@ const play = () => {
 	isPlaying.value = !isPlaying.value
 }
 
-const isWave = ref(true)
+const isWave = ref(false)
+
 const showWave = () => {
 	isWave.value = !isWave.value
 }
 
-const placeWave = computed(() => {
-	return `top: ${top.value - 101}px; left: ${left.value}px;`
-})
-const waveWidth = computed(() => {
-	return width.value
-})
-
 const src = '/assets/g.mp3'
 const player = ref<HTMLAudioElement | null>(null)
-const canvas = ref(null)
-useAVWaveform(player, canvas, { src: src, canvWidth: 500, canvHeight: 100 })
+const canvasRef = ref(null)
+
+const myWidth = ref()
+
+useAVWaveform(player, canvasRef, { src: src, canvHeight: 100 })
 </script>
 
 <template lang="pug">
@@ -91,7 +88,7 @@ useAVWaveform(player, canvas, { src: src, canvWidth: 500, canvHeight: 100 })
 
 	audio(ref='player' :src='src')
 	Teleport(to="body")
-		canvas(v-show='isWave' ref='canvas' :style='placeWave')
+		canvas(v-if='isWave' ref='canvasRef')
 </template>
 
 <style scoped lang="scss">
@@ -137,12 +134,6 @@ useAVWaveform(player, canvas, { src: src, canvWidth: 500, canvHeight: 100 })
 }
 canvas {
 	position: absolute;
-	// bottom: 54px;
-	// left: 0;
-	// right: 0;
-	// width: 100%;
-	// height: 200px;
 	background: hsla(200deg, 17.91%, 26.27%, 0.8);
-	// z-index: 100;
 }
 </style>
