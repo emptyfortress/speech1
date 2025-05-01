@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 import { useStore } from '@/stores/store'
-import { useAVWaveform } from 'vue-audio-visual'
 import { useElementBounding } from '@vueuse/core'
 
 const mystore = useStore()
@@ -25,39 +24,71 @@ const props = withDefaults(defineProps<Props>(), {
 	}),
 })
 
-const row = ref()
-const { x, y, top, right, bottom, left, width, height } = useElementBounding(row)
+const row = ref(null)
+const canvasRef = ref<HTMLCanvasElement | null>(null)
+const player = ref<HTMLAudioElement | null>(null)
+const isWave = ref(false)
+const isPlaying = ref(false)
+const sound = ref(50)
+
+const { top, left, width } = useElementBounding(row)
+
+// 🎯 Стили canvas — реактивный объект
+const canvasStyle = computed(() => ({
+	position: 'absolute',
+	top: `${top.value - 101}px`,
+	left: `${left.value}px`,
+	width: `${width.value}px`,
+	height: `100px`,
+	zIndex: 999,
+	pointerEvents: 'none',
+}))
+
+const src = '/assets/g.mp3'
+
+const play = () => {
+	isPlaying.value = !isPlaying.value
+	isPlaying.value ? player.value?.play() : player.value?.pause()
+}
+
+const emit = defineEmits(['showComment'])
 
 const setStar = (e: Row) => {
 	e.star = !e.star
 }
 
-const emit = defineEmits(['showComment'])
+const showComment = () => emit('showComment')
 
-const showComment = () => {
-	emit('showComment')
-}
-const sound = ref(50)
-
-const isPlaying = ref(false)
-const play = () => {
-	isPlaying.value == true ? player.value?.pause() : player.value?.play()
-	isPlaying.value = !isPlaying.value
-}
-
-const isWave = ref(false)
-
-const showWave = () => {
+// 🔥 Главная функция — показать waveform
+const showWave = async () => {
 	isWave.value = !isWave.value
+
+	if (isWave.value) {
+		await nextTick()
+
+		const canvas = canvasRef.value
+		if (!canvas) return
+
+		const dpr = window.devicePixelRatio || 1
+		const canvasW = width.value
+		const canvasH = 100
+
+		// Установка физических размеров canvas
+		canvas.width = canvasW * dpr
+		canvas.height = canvasH * dpr
+		const ctx = canvas.getContext('2d')
+		ctx?.scale(dpr, dpr)
+
+		// ✅ Загружаем useAVWaveform динамически
+		const { useAVWaveform } = await import('vue-audio-visual')
+
+		useAVWaveform(player, canvasRef, {
+			src,
+			canvHeight: canvasH,
+			// canvWidth: canvasW — не нужно, ты уже установил руками
+		})
+	}
 }
-
-const src = '/assets/g.mp3'
-const player = ref<HTMLAudioElement | null>(null)
-const canvasRef = ref(null)
-
-const myWidth = ref()
-
-useAVWaveform(player, canvasRef, { src: src, canvHeight: 100 })
 </script>
 
 <template lang="pug">
@@ -88,7 +119,7 @@ useAVWaveform(player, canvasRef, { src: src, canvHeight: 100 })
 
 	audio(ref='player' :src='src')
 	Teleport(to="body")
-		canvas(v-if='isWave' ref='canvasRef')
+		canvas(v-if="isWave" ref="canvasRef" :style="canvasStyle")
 </template>
 
 <style scoped lang="scss">
