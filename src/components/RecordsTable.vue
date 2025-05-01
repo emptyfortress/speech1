@@ -210,7 +210,7 @@ q-table.table(ref="table"
 			q-td(key="record" v-html="props.row.record")
 			q-btn.dd(flat round color="primary" icon="mdi-download" size="sm" @click.stop="$q.notify({ message: 'Запись скачана', icon: 'mdi-check' })")
 
-			Player(v-if="selected === props.row.id" :row='props.row')
+			Player(v-if="selected === props.row.id" :row='props.row' @showComment='showComment(props.row)')
 
 q-dialog(v-model="dialog")
 	q-card(style="width: 500px;")

@@ -11,7 +11,7 @@ export const useStore = defineStore({
 		vocDrawer: false,
 		notificationDrawer: false,
 		speechDrawer: false,
-		mini: false,
+		mini: true,
 		keys: [],
 		chips: [],
 		nat: true,
@@ -31,7 +31,7 @@ export const useStore = defineStore({
 		help: false,
 		keywordFilter: '',
 		currentVoc: { name: '', keys: [] },
-		draggingWord: ''
+		draggingWord: '',
 	}),
 	getters: {},
 

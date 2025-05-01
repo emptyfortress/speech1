@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
 import { useAVWaveform } from 'vue-audio-visual'
+import { useElementBounding } from '@vueuse/core'
 
 const mystore = useStore()
 
@@ -24,46 +25,73 @@ const props = withDefaults(defineProps<Props>(), {
 	}),
 })
 
+const row = ref()
+const { x, y, top, right, bottom, left, width, height } = useElementBounding(row)
+
 const setStar = (e: Row) => {
 	e.star = !e.star
 }
-// const showComment = (e: Row) => {
-// 	item.value = e
-// 	currentComment.value = e.comment
-// 	dialog.value = true
-// }
+
+const emit = defineEmits(['showComment'])
+
+const showComment = () => {
+	emit('showComment')
+}
 const sound = ref(50)
 
-const src = 'http://localhost:5173/assets/g.mp3'
-const player = ref(null)
+const isPlaying = ref(false)
+const play = () => {
+	isPlaying.value == true ? player.value?.pause() : player.value?.play()
+	isPlaying.value = !isPlaying.value
+}
+
+const isWave = ref(true)
+const showWave = () => {
+	isWave.value = !isWave.value
+}
+
+const placeWave = computed(() => {
+	return `top: ${top.value - 101}px; left: ${left.value}px;`
+})
+const waveWidth = computed(() => {
+	return width.value
+})
+
+const src = '/assets/g.mp3'
+const player = ref<HTMLAudioElement | null>(null)
 const canvas = ref(null)
-useAVWaveform(player, canvas, { src: src })
+useAVWaveform(player, canvas, { src: src, canvWidth: 500, canvHeight: 100 })
 </script>
 
 <template lang="pug">
-.myplayer()
-	audio(ref='player' controls :src='src')
-	canvas(ref='canvas')
+.myplayer(ref='row')
+	q-linear-progress(:value=".6" color="positive")
+	q-btn(flat round size="sm" @click.stop="setStar(props.row)")
+		q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
+		q-icon(v-else name="mdi-star-outline" color="grey" )
+	q-btn(flat round size="sm" @click.stop="showComment")
+		q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
+		q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
+		q-tooltip.bg-primary(v-if="props.row.comment" anchor="top middle" self="bottom middle" max-width="150px" :offset="[7, 7]") {{ props.row.comment }}
+	div(v-if="!mystore.wide") {{ props.row.date }}
+	div(v-if="!mystore.wide") {{ props.row.operator }}
+	.player
+		q-btn(round flat icon="mdi-rewind" @click.stop)
+		q-btn(round flat @click.stop='play')
+			q-icon(v-if='isPlaying' name="mdi-pause")
+			q-icon(v-else name="mdi-play")
+		q-btn(round flat icon="mdi-fast-forward" @click.stop)
+	.time 02:31
+	.row.items-center
+		q-icon(name="mdi-volume-medium" size="sm")
+		q-slider.slide(color="primary" v-model="sound")
+		q-icon(name="mdi-volume-high" size="sm")
+	q-btn.q-ml-md(flat round dense color="primary" @click.stop="showWave") 
+		q-icon(name="mdi-waveform" color="primary" size='32px')
 
-	// q-linear-progress(:value=".6" color="positive")
-	// q-btn(flat round size="sm" @click.stop="setStar(props.row)")
-	// 	q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
-	// 	q-icon(v-else name="mdi-star-outline" color="grey" )
-	// // q-btn(flat round size="sm" @click.stop="showComment(props.row)")
-	// // 	q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
-	// // 	q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
-	// // 	q-tooltip.bg-primary(v-if="props.row.comment" anchor="top middle" self="bottom middle" max-width="150px" :offset="[7, 7]") {{ props.row.comment }}
-	// div(v-if="!mystore.wide") {{ props.row.date }}
-	// div(v-if="!mystore.wide") {{ props.row.operator }}
-	// .player
-	// 	q-btn(round flat icon="mdi-rewind" @click.stop)
-	// 	q-btn(round flat icon="mdi-pause" @click.stop)
-	// 	q-btn(round flat icon="mdi-fast-forward" @click.stop)
-	// .time 02:31
-	// .row.items-center
-	// 	q-icon(name="mdi-volume-medium" size="sm")
-	// 	q-slider.slide(color="primary" v-model="sound")
-	// 	q-icon(name="mdi-volume-high" size="sm")
+	audio(ref='player' :src='src')
+	Teleport(to="body")
+		canvas(v-show='isWave' ref='canvas' :style='placeWave')
 </template>
 
 <style scoped lang="scss">
@@ -106,5 +134,15 @@ useAVWaveform(player, canvas, { src: src })
 	.slide {
 		width: 150px;
 	}
+}
+canvas {
+	position: absolute;
+	// bottom: 54px;
+	// left: 0;
+	// right: 0;
+	// width: 100%;
+	// height: 200px;
+	background: hsla(200deg, 17.91%, 26.27%, 0.8);
+	// z-index: 100;
 }
 </style>
