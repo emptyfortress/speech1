@@ -2,6 +2,7 @@
 import { ref, watch, nextTick, computed } from 'vue'
 import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 
 const mystore = useStore()
 
@@ -32,16 +33,20 @@ const isPlaying = ref(false)
 const sound = ref(50)
 
 const { top, left, width } = useElementBounding(row)
+const { width: winsize } = useWindowSize()
+
+const canvaWidth = computed(() => {
+	return winsize.value - left.value - 395
+})
 
 // 🎯 Стили canvas — реактивный объект
 const canvasStyle = computed(() => ({
 	position: 'absolute',
 	top: `${top.value - 101}px`,
 	left: `${left.value}px`,
-	width: `${width.value}px`,
+	width: `${canvaWidth.value}px`,
 	height: `100px`,
 	zIndex: 999,
-	pointerEvents: 'none',
 }))
 
 const src = '/assets/g.mp3'
@@ -70,14 +75,14 @@ const showWave = async () => {
 		if (!canvas) return
 
 		const dpr = window.devicePixelRatio || 1
-		const canvasW = width.value
+		const canvasW = canvaWidth.value
 		const canvasH = 100
 
 		// Установка физических размеров canvas
 		canvas.width = canvasW * dpr
 		canvas.height = canvasH * dpr
 		const ctx = canvas.getContext('2d')
-		ctx?.scale(dpr, dpr)
+		// ctx?.scale(dpr, dpr)
 
 		// ✅ Загружаем useAVWaveform динамически
 		const { useAVWaveform } = await import('vue-audio-visual')
@@ -85,7 +90,8 @@ const showWave = async () => {
 		useAVWaveform(player, canvasRef, {
 			src,
 			canvHeight: canvasH,
-			// canvWidth: canvasW — не нужно, ты уже установил руками
+			canvWidth: canvasW,
+			playtimeFontColor: '#ffff00',
 		})
 	}
 }
@@ -94,6 +100,8 @@ const showWave = async () => {
 <template lang="pug">
 .myplayer(ref='row')
 	q-linear-progress(:value=".6" color="positive")
+	div {{ winsize }}
+
 	q-btn(flat round size="sm" @click.stop="setStar(props.row)")
 		q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
 		q-icon(v-else name="mdi-star-outline" color="grey" )
