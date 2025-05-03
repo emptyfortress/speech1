@@ -4,6 +4,7 @@ import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
 import { useWindowSize } from '@vueuse/core'
 import Milestone from '@/components/Milestone.vue'
+import type { CSSProperties } from 'vue'
 
 const mystore = useStore()
 
@@ -52,7 +53,7 @@ const mileleft = computed(() => {
 })
 
 // 🎯 Стили canvas — реактивный объект
-const canvasStyle = computed(() => ({
+const canvasStyle = computed<CSSProperties>(() => ({
 	position: 'absolute',
 	top: `${top.value - 101}px`,
 	left: `${left.value}px`,
