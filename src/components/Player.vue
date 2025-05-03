@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
+import { ref, onUnmounted, nextTick, computed } from 'vue'
+import WaveSurfer from 'wavesurfer.js'
 import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
 import { useWindowSize } from '@vueuse/core'
-import Milestone from '@/components/Milestone.vue'
 import type { CSSProperties } from 'vue'
 
 const mystore = useStore()
@@ -28,45 +28,26 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const row = ref(null)
-const canvasRef = ref<HTMLCanvasElement | null>(null)
 const player = ref<HTMLAudioElement | null>(null)
-const isWave = ref(false)
 const isPlaying = ref(false)
 const sound = ref(50)
 
-const { top, left, width } = useElementBounding(row)
-const { width: winsize } = useWindowSize()
+const src = '/assets/g3.wav'
 
-const canvaWidth = computed(() => {
-	return winsize.value - left.value - 395
-})
-
-// milestone styles
-const miletop = computed(() => {
-	return `${top.value + 55}px`
-})
-const milewidth = computed(() => {
-	return `${canvaWidth.value}px`
-})
-const mileleft = computed(() => {
-	return `${left.value}px`
-})
-
-// 🎯 Стили canvas — реактивный объект
-const canvasStyle = computed<CSSProperties>(() => ({
-	position: 'absolute',
-	top: `${top.value - 101}px`,
-	left: `${left.value}px`,
-	width: `${canvaWidth.value}px`,
-	height: `100px`,
-	zIndex: 999,
-}))
-
-const src = '/assets/g.mp3'
+// 👇 ref для waveform-контейнера
+const waveContainer = ref<HTMLDivElement | null>(null)
+let wavesurfer: WaveSurfer | null = null
 
 const play = () => {
-	isPlaying.value = !isPlaying.value
-	isPlaying.value ? player.value?.play() : player.value?.pause()
+	if (!wavesurfer) return
+
+	if (wavesurfer.isPlaying()) {
+		wavesurfer.pause()
+		isPlaying.value = false
+	} else {
+		wavesurfer.play()
+		isPlaying.value = true
+	}
 }
 
 const emit = defineEmits(['showComment'])
@@ -77,37 +58,58 @@ const setStar = (e: Row) => {
 
 const showComment = () => emit('showComment')
 
-// 🔥 Главная функция — показать waveform
+const isWave = ref(false)
+
+// 👇 Метод для отображения waveform
 const showWave = async () => {
 	isWave.value = !isWave.value
+	await nextTick() // гарантируем наличие DOM
 
-	if (isWave.value) {
-		await nextTick()
-
-		const canvas = canvasRef.value
-		if (!canvas) return
-
-		const dpr = window.devicePixelRatio || 1
-		const canvasW = canvaWidth.value
-		const canvasH = 100
-
-		// Установка физических размеров canvas
-		canvas.width = canvasW * dpr
-		canvas.height = canvasH * dpr
-		const ctx = canvas.getContext('2d')
-		// ctx?.scale(dpr, dpr)
-
-		// ✅ Загружаем useAVWaveform динамически
-		const { useAVWaveform } = await import('vue-audio-visual')
-
-		useAVWaveform(player, canvasRef, {
-			src,
-			canvHeight: canvasH,
-			canvWidth: canvasW,
-			playtimeFontColor: '#ffff00',
-		})
+	if (wavesurfer) {
+		wavesurfer.destroy()
+		wavesurfer = null
 	}
+
+	wavesurfer = WaveSurfer.create({
+		container: waveContainer.value!,
+		waveColor: '#00ff00',
+		progressColor: '#00796B',
+		height: 40,
+		barWidth: 2,
+		responsive: true,
+		normalize: true,
+		splitChannels: true,
+		cursorWidth: 2,
+	})
+
+	wavesurfer.load(src)
+
+	wavesurfer.on('ready', () => {
+		console.log('Waveform готов 🚀')
+	})
 }
+
+onUnmounted(() => {
+	if (wavesurfer) {
+		wavesurfer.destroy()
+	}
+})
+
+const { top, left, width } = useElementBounding(row)
+const { width: winsize } = useWindowSize()
+
+const canvaWidth = computed(() => {
+	return winsize.value - left.value - 400
+})
+//
+// 🎯 Стили canvas — реактивный объект
+const canvasStyle = computed<CSSProperties>(() => ({
+	position: 'absolute',
+	top: `${top.value - 81}px`,
+	left: `${left.value}px`,
+	width: `${canvaWidth.value}px`,
+	height: `80px`,
+}))
 </script>
 
 <template lang="pug">
@@ -136,16 +138,9 @@ const showWave = async () => {
 	q-btn.q-ml-md(flat round dense color="primary" @click.stop="showWave") 
 		q-icon(name="mdi-waveform" color="primary" size='32px')
 
-	audio(ref='player' :src='src')
+	// 👇 Контейнер для waveform
 	Teleport(to="body")
-		canvas(v-if="isWave" ref="canvasRef" :style="canvasStyle")
-
-		Milestone(
-			v-model='isWave'
-			:width='milewidth',
-			:left='mileleft',
-			:top='miletop'
-		)
+		.waveform(v-if="isWave" ref="waveContainer" :style="canvasStyle")
 	
 </template>
 
@@ -190,8 +185,9 @@ const showWave = async () => {
 		width: 150px;
 	}
 }
-canvas {
+.waveform {
 	position: absolute;
-	background: hsla(200deg, 17.91%, 26.27%, 0.85);
+	background: hsl(200deg, 17.91%, 26.27%);
+	z-index: 10;
 }
 </style>
