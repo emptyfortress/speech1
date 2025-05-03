@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, computed } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
 import { useWindowSize } from '@vueuse/core'
+import Milestone from '@/components/Milestone.vue'
 
 const mystore = useStore()
 
@@ -37,6 +38,17 @@ const { width: winsize } = useWindowSize()
 
 const canvaWidth = computed(() => {
 	return winsize.value - left.value - 395
+})
+
+// milestone styles
+const miletop = computed(() => {
+	return `${top.value + 55}px`
+})
+const milewidth = computed(() => {
+	return `${canvaWidth.value}px`
+})
+const mileleft = computed(() => {
+	return `${left.value}px`
 })
 
 // 🎯 Стили canvas — реактивный объект
@@ -126,6 +138,14 @@ const showWave = async () => {
 	audio(ref='player' :src='src')
 	Teleport(to="body")
 		canvas(v-if="isWave" ref="canvasRef" :style="canvasStyle")
+
+		Milestone(
+			v-model='isWave'
+			:width='milewidth',
+			:left='mileleft',
+			:top='miletop'
+		)
+	
 </template>
 
 <style scoped lang="scss">
@@ -171,6 +191,6 @@ const showWave = async () => {
 }
 canvas {
 	position: absolute;
-	background: hsla(200deg, 17.91%, 26.27%, 0.8);
+	background: hsla(200deg, 17.91%, 26.27%, 0.85);
 }
 </style>
