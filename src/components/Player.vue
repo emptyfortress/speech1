@@ -100,8 +100,6 @@ const showWave = async () => {
 <template lang="pug">
 .myplayer(ref='row')
 	q-linear-progress(:value=".6" color="positive")
-	div {{ winsize }}
-
 	q-btn(flat round size="sm" @click.stop="setStar(props.row)")
 		q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
 		q-icon(v-else name="mdi-star-outline" color="grey" )
