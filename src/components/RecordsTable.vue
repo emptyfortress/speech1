@@ -113,12 +113,6 @@ const client = ref([])
 const group = ref([])
 const categ = ref([])
 
-// const myFilter = computed(() => {
-// 	let tempOper = oper.value.map(e => ({ type: 'operator', name: e }))
-// 	let tempClient = client.value.map(e => ({ type: 'client', name: e }))
-// 	return [...tempOper, ...tempClient]
-// })
-
 const operOptions = computed(() => {
 	const temp = records.map((item) => item.operator)
 	return [...new Set(temp)]
