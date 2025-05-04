@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"target": "es2022",
 		"useDefineForClassFields": true,
-		"module": "es2022",
-		"moduleResolution": "Node",
+		"module": "nodenext",
+		"moduleResolution": "node16",
 		"strict": true,
 		"jsx": "preserve",
 		"sourceMap": true,
@@ -12,36 +12,24 @@
 		"esModuleInterop": true,
 		"allowJs": true,
 		"outDir": "dist",
-		"lib": [
-			"es2022",
-			"DOM"
-		],
+		"lib": ["es2022", "DOM"],
 		"skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": [ // / to begin with.
+			"@/*": [
+				// / to begin with.
 				"src/*"
 			]
-		},
+		}
 	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.d.ts",
-		"src/**/*.tsx",
-		"src/**/*.vue"
-	],
-	"exclude": [
-		"node_modules",
-		"dist/**/*.d.ts"
-	],
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"exclude": ["node_modules", "dist/**/*.d.ts"],
 	"references": [
 		{
 			"path": "./tsconfig.node.json"
 		}
 	],
 	"vueCompilerOptions": {
-		"plugins": [
-			"@vue/language-plugin-pug"
-		]
+		"plugins": ["@vue/language-plugin-pug"]
 	}
 }
