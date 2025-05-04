@@ -5,6 +5,7 @@ import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
 import { useWindowSize } from '@vueuse/core'
 import type { CSSProperties } from 'vue'
+import RegionsPlugin from 'wavesurfer.js/plugins/regions'
 
 const mystore = useStore()
 
@@ -28,27 +29,105 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const row = ref(null)
-const player = ref<HTMLAudioElement | null>(null)
 const isPlaying = ref(false)
 const sound = ref(50)
+const currentTime = ref(0)
+const duration = ref(0)
 
 const src = '/assets/g3.wav'
 
-// 👇 ref для waveform-контейнера
 const waveContainer = ref<HTMLDivElement | null>(null)
 let wavesurfer: WaveSurfer | null = null
+const regions = RegionsPlugin.create()
 
-const play = () => {
-	if (!wavesurfer) return
+const isWave = ref(false)
+const isWaveReady = ref(false)
+let playPending = false
 
-	if (wavesurfer.isPlaying()) {
-		wavesurfer.pause()
-		isPlaying.value = false
-	} else {
-		wavesurfer.play()
+const createWaveSurfer = async () => {
+	await nextTick() // ждем DOM
+
+	if (wavesurfer) return
+	if (!waveContainer.value) return
+
+	wavesurfer = WaveSurfer.create({
+		container: waveContainer.value,
+		waveColor: '#00ff00',
+		progressColor: '#00796B',
+		height: 40,
+		barWidth: 2,
+		responsive: true,
+		normalize: true,
+		splitChannels: true,
+		cursorWidth: 2,
+		plugins: [regions],
+	})
+
+	wavesurfer.load(src)
+
+	wavesurfer.on('ready', () => {
+		isWaveReady.value = true
+		duration.value = wavesurfer?.getDuration() ?? 0
+
+		if (playPending) {
+			wavesurfer?.play()
+			playPending = false
+		}
+	})
+
+	wavesurfer.on('decode', () => {
+		regions.addRegion({
+			start: 18,
+			end: 120,
+			content: 'Resize me',
+			color: 'rgba(255, 87, 34, 0.3)',
+			drag: true,
+			resize: true,
+		})
+	})
+
+	wavesurfer.on('play', () => {
 		isPlaying.value = true
+	})
+	wavesurfer.on('pause', () => {
+		isPlaying.value = false
+	})
+	wavesurfer.on('finish', () => {
+		isPlaying.value = false
+	})
+
+	wavesurfer.on('audioprocess', () => {
+		currentTime.value = wavesurfer?.getCurrentTime() ?? 0
+	})
+}
+
+const play = async () => {
+	if (!wavesurfer) {
+		await createWaveSurfer()
+	}
+	if (isWaveReady.value) {
+		wavesurfer!.isPlaying() ? wavesurfer!.pause() : wavesurfer!.play()
+	} else {
+		playPending = true
 	}
 }
+
+const showWave = async () => {
+	isWave.value = !isWave.value
+
+	if (isWave.value && !wavesurfer) {
+		await createWaveSurfer()
+	}
+}
+
+onUnmounted(() => {
+	if (wavesurfer) {
+		wavesurfer.destroy()
+		wavesurfer = null
+		isWaveReady.value = false
+		playPending = false
+	}
+})
 
 const emit = defineEmits(['showComment'])
 
@@ -58,50 +137,13 @@ const setStar = (e: Row) => {
 
 const showComment = () => emit('showComment')
 
-const isWave = ref(false)
-
-// 👇 Метод для отображения waveform
-const showWave = async () => {
-	isWave.value = !isWave.value
-	await nextTick() // гарантируем наличие DOM
-
-	if (wavesurfer) {
-		wavesurfer.destroy()
-		wavesurfer = null
-	}
-
-	wavesurfer = WaveSurfer.create({
-		container: waveContainer.value!,
-		waveColor: '#00ff00',
-		progressColor: '#00796B',
-		height: 40,
-		barWidth: 2,
-		responsive: true,
-		normalize: true,
-		splitChannels: true,
-		cursorWidth: 2,
-	})
-
-	wavesurfer.load(src)
-
-	wavesurfer.on('ready', () => {
-		console.log('Waveform готов 🚀')
-	})
-}
-
-onUnmounted(() => {
-	if (wavesurfer) {
-		wavesurfer.destroy()
-	}
-})
-
-const { top, left, width } = useElementBounding(row)
+const { top, left } = useElementBounding(row)
 const { width: winsize } = useWindowSize()
 
 const canvaWidth = computed(() => {
 	return winsize.value - left.value - 400
 })
-//
+
 // 🎯 Стили canvas — реактивный объект
 const canvasStyle = computed<CSSProperties>(() => ({
 	position: 'absolute',
@@ -110,6 +152,14 @@ const canvasStyle = computed<CSSProperties>(() => ({
 	width: `${canvaWidth.value}px`,
 	height: `80px`,
 }))
+
+function formatTime(t: number): string {
+	const min = Math.floor(t / 60)
+	const sec = Math.floor(t % 60)
+		.toString()
+		.padStart(2, '0')
+	return `${min}:${sec}`
+}
 </script>
 
 <template lang="pug">
@@ -130,7 +180,9 @@ const canvasStyle = computed<CSSProperties>(() => ({
 			q-icon(v-if='isPlaying' name="mdi-pause")
 			q-icon(v-else name="mdi-play")
 		q-btn(round flat icon="mdi-fast-forward" @click.stop)
-	.time 02:31
+	.time
+		|{{ formatTime(currentTime) }} 
+		span / {{ formatTime(duration) }}
 	.row.items-center
 		q-icon(name="mdi-volume-medium" size="sm")
 		q-slider.slide(color="primary" v-model="sound")
@@ -138,9 +190,8 @@ const canvasStyle = computed<CSSProperties>(() => ({
 	q-btn.q-ml-md(flat round dense color="primary" @click.stop="showWave") 
 		q-icon(name="mdi-waveform" color="primary" size='32px')
 
-	// 👇 Контейнер для waveform
 	Teleport(to="body")
-		.waveform(v-if="isWave" ref="waveContainer" :style="canvasStyle")
+		.waveform(:class="{ hidden: !isWave }" ref="waveContainer" :style="canvasStyle")
 	
 </template>
 
@@ -176,9 +227,11 @@ const canvasStyle = computed<CSSProperties>(() => ({
 
 	.time {
 		font-size: 2rem;
-		font-weight: lighter;
 		letter-spacing: 1px;
 		color: white;
+		span {
+			font-size: 0.9rem;
+		}
 	}
 
 	.slide {
@@ -189,5 +242,8 @@ const canvasStyle = computed<CSSProperties>(() => ({
 	position: absolute;
 	background: hsl(200deg, 17.91%, 26.27%);
 	z-index: 10;
+	&.hidden {
+		display: none;
+	}
 }
 </style>
