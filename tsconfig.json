@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"target": "es2022",
 		"useDefineForClassFields": true,
-		"module": "nodenext",
-		"moduleResolution": "node16",
+		"module": "es2022",
+		"moduleResolution": "Node",
 		"strict": true,
 		"jsx": "preserve",
 		"sourceMap": true,
