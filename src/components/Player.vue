@@ -81,8 +81,14 @@ const createWaveSurfer = async () => {
 			end: 120,
 			content: 'Resize me',
 			color: 'rgba(255, 87, 34, 0.3)',
-			drag: true,
-			resize: true,
+			drag: false,
+			resize: false,
+		})
+		regions.addRegion({
+			start: 300,
+			content: 'Marker',
+			color: '#ff0000',
+			drag: false,
 		})
 	})
 
@@ -147,10 +153,10 @@ const canvaWidth = computed(() => {
 // 🎯 Стили canvas — реактивный объект
 const canvasStyle = computed<CSSProperties>(() => ({
 	position: 'absolute',
-	top: `${top.value - 81}px`,
+	top: `${top.value - 121}px`,
 	left: `${left.value}px`,
 	width: `${canvaWidth.value}px`,
-	height: `80px`,
+	height: `120px`,
 }))
 
 function formatTime(t: number): string {
@@ -245,5 +251,14 @@ function formatTime(t: number): string {
 	&.hidden {
 		display: none;
 	}
+}
+.waveform ::part(wrapper) {
+	height: 120px;
+}
+.waveform ::part(region-content) {
+	position: absolute;
+	top: 90px;
+	color: white;
+	font-size: 0.7rem;
 }
 </style>
