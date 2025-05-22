@@ -5,6 +5,7 @@ import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
 import { useWindowSize } from '@vueuse/core'
 import type { CSSProperties } from 'vue'
+// @ts-ignore
 import RegionsPlugin from 'wavesurfer.js/plugins/regions'
 
 const mystore = useStore()
@@ -56,9 +57,9 @@ const createWaveSurfer = async () => {
 		progressColor: '#00796B',
 		height: 40,
 		barWidth: 2,
-		responsive: true,
+		// responsive: true,
 		normalize: true,
-		splitChannels: true,
+		splitChannels: [{ overlay: true }],
 		cursorWidth: 2,
 		plugins: [regions],
 	})
@@ -76,20 +77,53 @@ const createWaveSurfer = async () => {
 	})
 
 	wavesurfer.on('decode', () => {
+		// regions.addRegion({
+		// 	start: 18,
+		// 	end: 120,
+		// 	content: 'Resize me',
+		// 	color: 'rgba(255, 87, 34, 0.3)',
+		// 	drag: false,
+		// 	resize: false,
+		// })
+		// regions.addRegion({
+		// 	start: 540,
+		// 	content: 'Marker',
+		// 	color: '#ff0000',
+		// 	drag: fals
+		// })
+		regions.addRegion({ start: 60, content: 'Пожалуйста', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 69, content: 'Спасибо', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 10, content: 'Здравствуйте ', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 40, content: 'Волнение', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 100, content: 'Раздражение', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 300, content: 'Повышенный тон', color: '#ff0000', drag: false })
 		regions.addRegion({
-			start: 18,
-			end: 120,
-			content: 'Resize me',
-			color: 'rgba(255, 87, 34, 0.3)',
-			drag: false,
-			resize: false,
-		})
-		regions.addRegion({
-			start: 300,
-			content: 'Marker',
+			start: 500,
+			content: 'Повышенная громкость',
 			color: '#ff0000',
 			drag: false,
 		})
+		regions.addRegion({
+			start: 400,
+			content: 'Решение вопроса абонента',
+			color: '#ff0000',
+			drag: false,
+		})
+		regions.addRegion({ start: 20, content: 'Приветствие', color: '#ff0000', drag: false })
+		regions.addRegion({
+			start: 190,
+			content: 'Критичная ошибка оператора',
+			color: '#ff0000',
+			drag: false,
+		})
+		regions.addRegion({
+			start: 540,
+			content: 'Подведение итогов разговора',
+			color: '#ff0000',
+			drag: false,
+		})
+		regions.addRegion({ start: 200, content: 'Заказ', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 220, content: 'Жалоба', color: '#ff0000', drag: false })
 	})
 
 	wavesurfer.on('play', () => {
@@ -153,10 +187,10 @@ const canvaWidth = computed(() => {
 // 🎯 Стили canvas — реактивный объект
 const canvasStyle = computed<CSSProperties>(() => ({
 	position: 'absolute',
-	top: `${top.value - 121}px`,
+	top: `${top.value - 141}px`,
 	left: `${left.value}px`,
 	width: `${canvaWidth.value}px`,
-	height: `120px`,
+	height: `140px`,
 }))
 
 function formatTime(t: number): string {
@@ -253,12 +287,13 @@ function formatTime(t: number): string {
 	}
 }
 .waveform ::part(wrapper) {
-	height: 120px;
+	height: 140px;
 }
 .waveform ::part(region-content) {
 	position: absolute;
-	top: 90px;
+	top: 80px;
 	color: white;
-	font-size: 0.7rem;
+	font-size: 0.6rem;
+	line-height: 1;
 }
 </style>
