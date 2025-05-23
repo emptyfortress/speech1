@@ -8,73 +8,80 @@ const props = defineProps({
 const modelValue = defineModel<boolean>()
 
 const words = [
-	{ id: 0, time: '0:10:26', label: 'Привет' },
-	{ id: 1, time: '0:19:56', label: 'Каг дела' },
-	{ id: 2, time: '0:39:56', label: 'Потом' },
-	{ id: 3, time: '0:57:34', label: 'Пока' },
-]
-const veha = [
-	{ id: 0, time: '0:12:26', label: 'Веха 1' },
-	{ id: 1, time: '0:17:56', label: 'Веха 1' },
+	{ id: 1, number: 0, time: 60, label: 'Пожалуйста' },
+	{ id: 2, number: 1, time: 69, label: 'Спасибо' },
+	{ id: 3, number: 2, time: 10, label: 'Здравствуйте' },
 ]
 const emo = [
-	{ id: 0, time: '0:22:26', label: 'Гнев' },
-	{ id: 1, time: '0:20:53', label: 'Ярость' },
+	{ id: 4, time: 40, label: 'Волнение' },
+	{ id: 5, time: 100, label: 'Раздражение' },
+	{ id: 6, time: 300, label: 'Повышенный тон' },
+	{ id: 7, time: 500, label: 'Повышенная громкость' },
 ]
-const sys = [{ id: 0, time: '0:14:26', label: 'Удержание звонка' }]
+const check = [
+	{ id: 8, time: 400, label: 'Решение вопроса абонента' },
+	{ id: 9, time: 20, label: 'Приветствие' },
+	{ id: 10, time: 190, label: 'Критичная ошибка оператора' },
+	{ id: 11, time: 540, label: 'Подведение итогов разговора' },
+]
+
+const sys = [
+	{ id: 12, time: 200, label: 'Заказ' },
+	{ id: 13, time: 220, label: 'Жалоба' },
+]
+
+const emit = defineEmits(['action'])
+const action = (id: number) => {
+	emit('action', id)
+}
 </script>
 
 <template lang="pug">
 .milestone(v-if='modelValue')
-	div
-		.hd Слова и фразы
-		q-list(dark)
-			q-item(clickable v-for="item in words")
-				q-item-section(side)
-					.time.t1 {{ item.time }}
+	.text-yellow
+		.hd.yellow Слова и фразы
+		q-list
+			q-item(clickable v-for="item in words" :key='item.id' @click='action(item.time)')
+				q-item-section(side) {{ item.id }}
 				q-item-section
-					q-label {{ item.label }}
-	div
-		.hd Вехи
-		q-list(dark)
-			q-item(clickable v-for="item in veha")
-				q-item-section(side)
-					.time.t2 {{ item.time }}
-				q-item-section
-					q-label {{ item.label }}
-	div
+					q-item-label {{ item.label }}
+	.text-primary
 		.hd Эмоции
-		q-list(dark)
-			q-item(clickable v-for="item in emo")
-				q-item-section(side)
-					.time.t3 {{ item.time }}
+		q-list()
+			q-item(clickable v-for="item in emo" :key='item.id'  @click='action(item.time)')
+				q-item-section(side) {{ item.id }}
 				q-item-section
-					q-label {{ item.label }}
-	div
-		.hd Системные
-		q-list(dark)
-			q-item(clickable v-for="item in sys")
-				q-item-section(side)
-					.time.t4 {{ item.time }}
+					q-item-label {{ item.label }}
+	.text-red
+		.hd Чек-лист
+		q-list
+			q-item(clickable v-for="item in check" :key='item.id'  @click='action(item.time)')
+				q-item-section(side) {{ item.id }}
 				q-item-section
-					q-label {{ item.label }}
+					q-item-label {{ item.label }}
+	.text-purple-11
+		.hd Категории
+		q-list
+			q-item(clickable v-for="item in sys" :key='item.id'  @click='action(item.time)')
+				q-item-section(side) {{ item.id }}
+				q-item-section
+					q-item-label {{ item.label }}
 </template>
 
 <style scoped lang="scss">
 .milestone {
 	position: absolute;
 	width: v-bind(width);
-	height: 200px;
+	// height: 200px;
 	top: v-bind(top);
 	left: v-bind(left);
-	background: hsla(200deg, 17.91%, 26.27%, 0.85);
+	background: hsla(200deg, 17.91%, 26.27%, 1);
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	column-gap: 1.5rem;
-	padding: 0.5rem 1rem;
+	padding: 1rem 0.5rem;
 	.hd {
 		font-size: 0.8rem;
-		color: white;
 		margin-left: 1rem;
 		font-weight: 600;
 		margin-bottom: 0.5rem;
@@ -87,19 +94,8 @@ const sys = [{ id: 0, time: '0:14:26', label: 'Удержание звонка' 
 			min-height: 16px;
 		}
 	}
-	.time {
-		&.t1 {
-			color: yellow;
-		}
-		&.t2 {
-			color: #0992ff;
-		}
-		&.t3 {
-			color: #ff09d2;
-		}
-		&.t4 {
-			color: white;
-		}
-	}
+}
+.q-item__section--side {
+	color: inherit;
 }
 </style>

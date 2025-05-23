@@ -5,6 +5,7 @@ import { useStore } from '@/stores/store'
 import { useElementBounding } from '@vueuse/core'
 import { useWindowSize } from '@vueuse/core'
 import type { CSSProperties } from 'vue'
+import Milestone from '@/components/Milestone.vue'
 // @ts-ignore
 import RegionsPlugin from 'wavesurfer.js/plugins/regions'
 
@@ -77,53 +78,39 @@ const createWaveSurfer = async () => {
 	})
 
 	wavesurfer.on('decode', () => {
-		// regions.addRegion({
-		// 	start: 18,
-		// 	end: 120,
-		// 	content: 'Resize me',
-		// 	color: 'rgba(255, 87, 34, 0.3)',
-		// 	drag: false,
-		// 	resize: false,
-		// })
-		// regions.addRegion({
-		// 	start: 540,
-		// 	content: 'Marker',
-		// 	color: '#ff0000',
-		// 	drag: fals
-		// })
-		regions.addRegion({ start: 60, content: 'Пожалуйста', color: '#ff0000', drag: false })
-		regions.addRegion({ start: 69, content: 'Спасибо', color: '#ff0000', drag: false })
-		regions.addRegion({ start: 10, content: 'Здравствуйте ', color: '#ff0000', drag: false })
-		regions.addRegion({ start: 40, content: 'Волнение', color: '#ff0000', drag: false })
-		regions.addRegion({ start: 100, content: 'Раздражение', color: '#ff0000', drag: false })
-		regions.addRegion({ start: 300, content: 'Повышенный тон', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 60, content: '1', color: '#ffff00', drag: false })
+		regions.addRegion({ start: 69, content: '2', color: '#ffff00', drag: false })
+		regions.addRegion({ start: 10, content: '3 ', color: '#ffff00', drag: false })
+		regions.addRegion({ start: 40, content: '4', color: '#2196f3', drag: false })
+		regions.addRegion({ start: 100, content: '5', color: '#2196f3', drag: false })
+		regions.addRegion({ start: 300, content: '6', color: '#2196f3', drag: false })
 		regions.addRegion({
 			start: 500,
-			content: 'Повышенная громкость',
-			color: '#ff0000',
+			content: '7',
+			color: '#2196f3',
 			drag: false,
 		})
 		regions.addRegion({
 			start: 400,
-			content: 'Решение вопроса абонента',
+			content: '8',
 			color: '#ff0000',
 			drag: false,
 		})
-		regions.addRegion({ start: 20, content: 'Приветствие', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 20, content: '9', color: '#ff0000', drag: false })
 		regions.addRegion({
 			start: 190,
-			content: 'Критичная ошибка оператора',
+			content: '10',
 			color: '#ff0000',
 			drag: false,
 		})
 		regions.addRegion({
 			start: 540,
-			content: 'Подведение итогов разговора',
+			content: '11',
 			color: '#ff0000',
 			drag: false,
 		})
-		regions.addRegion({ start: 200, content: 'Заказ', color: '#ff0000', drag: false })
-		regions.addRegion({ start: 220, content: 'Жалоба', color: '#ff0000', drag: false })
+		regions.addRegion({ start: 200, content: '12', color: '#ff00ff', drag: false })
+		regions.addRegion({ start: 220, content: '13', color: '#ff00ff', drag: false })
 	})
 
 	wavesurfer.on('play', () => {
@@ -150,6 +137,10 @@ const play = async () => {
 	} else {
 		playPending = true
 	}
+}
+
+const playOnTime = (sec: number) => {
+	wavesurfer!.play(sec)
 }
 
 const showWave = async () => {
@@ -187,10 +178,10 @@ const canvaWidth = computed(() => {
 // 🎯 Стили canvas — реактивный объект
 const canvasStyle = computed<CSSProperties>(() => ({
 	position: 'absolute',
-	top: `${top.value - 141}px`,
+	top: `${top.value - 111}px`,
 	left: `${left.value}px`,
 	width: `${canvaWidth.value}px`,
-	height: `140px`,
+	height: `110px`,
 }))
 
 function formatTime(t: number): string {
@@ -199,6 +190,21 @@ function formatTime(t: number): string {
 		.toString()
 		.padStart(2, '0')
 	return `${min}:${sec}`
+}
+
+// milestone styles
+const miletop = computed(() => {
+	return `${top.value + 55}px`
+})
+const milewidth = computed(() => {
+	return `${canvaWidth.value}px`
+})
+const mileleft = computed(() => {
+	return `${left.value}px`
+})
+
+const action = (n: number) => {
+	playOnTime(n)
 }
 </script>
 
@@ -232,6 +238,14 @@ function formatTime(t: number): string {
 
 	Teleport(to="body")
 		.waveform(:class="{ hidden: !isWave }" ref="waveContainer" :style="canvasStyle")
+
+		Milestone(
+			v-model='isWave'
+			:width='milewidth',
+			:left='mileleft',
+			:top='miletop'
+			@action='action'
+		)
 	
 </template>
 
@@ -287,13 +301,12 @@ function formatTime(t: number): string {
 	}
 }
 .waveform ::part(wrapper) {
-	height: 140px;
+	height: 110px;
 }
 .waveform ::part(region-content) {
 	position: absolute;
-	top: 80px;
+	top: 90px;
 	color: white;
-	font-size: 0.6rem;
-	line-height: 1;
+	font-size: 0.8rem;
 }
 </style>
