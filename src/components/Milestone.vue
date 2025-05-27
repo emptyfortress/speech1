@@ -99,7 +99,7 @@ const groupedItems = computed(() => {
     label Показать:
     q-checkbox(v-model="word" label="Слова" dense dark)
     q-checkbox(v-model="emotion" label="Эмоции" dense dark)
-    q-checkbox(v-model="veh" label="Вехи" dense dark)
+    q-checkbox(v-model="veh" label="Чек-лист" dense dark)
     q-checkbox(v-model="cat" label="Категории" dense dark)
     q-space
     q-checkbox(v-model="oper" label="Клиент" dense dark)
