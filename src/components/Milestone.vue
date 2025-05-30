@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 type ItemType = 'word' | 'emotion' | 'check' | 'category'
 
@@ -11,7 +11,7 @@ const props = defineProps({
 
 const modelValue = defineModel<boolean>()
 
-const emit = defineEmits(['action'])
+const emit = defineEmits(['action', 'change-visible-types'])
 const action = (time: number) => {
 	emit('action', time)
 }
@@ -91,19 +91,32 @@ const groupedItems = computed(() => {
 
 	return Object.values(result)
 })
+
+const emitFilteredTypes = () => {
+	const types: string[] = []
+	if (word.value) types.push('word')
+	if (emotion.value) types.push('emotion')
+	if (veh.value) types.push('check')
+	if (cat.value) types.push('category')
+	emit('change-visible-types', types)
+}
+
+onMounted(() => {
+	emitFilteredTypes()
+})
 </script>
 
 <template lang="pug">
 .milestone(v-if="modelValue")
   .filters
     label Показать:
-    q-checkbox(v-model="word" label="Слова" dense dark)
-    q-checkbox(v-model="emotion" label="Эмоции" dense dark)
-    q-checkbox(v-model="veh" label="Чек-лист" dense dark)
-    q-checkbox(v-model="cat" label="Категории" dense dark)
+    q-checkbox(v-model="word" label="Слова" dense dark @update:model-value="emitFilteredTypes")
+    q-checkbox(v-model="emotion" label="Эмоции" dense dark @update:model-value="emitFilteredTypes")
+    q-checkbox(v-model="veh" label="Чек-лист" dense dark @update:model-value="emitFilteredTypes")
+    q-checkbox(v-model="cat" label="Категории" dense dark @update:model-value="emitFilteredTypes")
     q-space
-    q-checkbox(v-model="oper" label="Клиент" dense dark)
-    q-checkbox(v-model="client" label="Оператор" dense dark)
+    q-checkbox(v-model="oper" label="Клиент" dense dark @update:model-value="emitFilteredTypes")
+    q-checkbox(v-model="client" label="Оператор" dense dark @update:model-value="emitFilteredTypes")
 
   .columns
     .column-block(

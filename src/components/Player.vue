@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref, onUnmounted, nextTick, computed } from 'vue'
+import { ref, onUnmounted, nextTick, computed, watch } from 'vue'
 import WaveSurfer from 'wavesurfer.js'
 import { useStore } from '@/stores/store'
-import { useElementBounding } from '@vueuse/core'
-import { useWindowSize } from '@vueuse/core'
-import type { CSSProperties } from 'vue'
+import { useElementBounding, useWindowSize } from '@vueuse/core'
 import Milestone from '@/components/Milestone.vue'
 // @ts-ignore
 import RegionsPlugin from 'wavesurfer.js/plugins/regions'
@@ -35,22 +33,20 @@ const isPlaying = ref(false)
 const sound = ref(50)
 const currentTime = ref(0)
 const duration = ref(0)
-
 const src = '/assets/g3.wav'
 
 const waveContainer = ref<HTMLDivElement | null>(null)
 let wavesurfer: WaveSurfer | null = null
-const regions = RegionsPlugin.create()
+const regions = RegionsPlugin.create() // 👈 используем regions напрямую
 
 const isWave = ref(false)
 const isWaveReady = ref(false)
 let playPending = false
 
 const createWaveSurfer = async () => {
-	await nextTick() // ждем DOM
+	await nextTick()
 
-	if (wavesurfer) return
-	if (!waveContainer.value) return
+	if (wavesurfer || !waveContainer.value) return
 
 	wavesurfer = WaveSurfer.create({
 		container: waveContainer.value,
@@ -58,7 +54,6 @@ const createWaveSurfer = async () => {
 		progressColor: '#00796B',
 		height: 40,
 		barWidth: 2,
-		// responsive: true,
 		normalize: true,
 		splitChannels: [{ overlay: true }],
 		cursorWidth: 2,
@@ -70,7 +65,6 @@ const createWaveSurfer = async () => {
 	wavesurfer.on('ready', () => {
 		isWaveReady.value = true
 		duration.value = wavesurfer?.getDuration() ?? 0
-
 		if (playPending) {
 			wavesurfer?.play()
 			playPending = false
@@ -78,50 +72,103 @@ const createWaveSurfer = async () => {
 	})
 
 	wavesurfer.on('decode', () => {
-		regions.addRegion({ start: 60, content: '1', color: '#ffff00', drag: false })
-		regions.addRegion({ start: 69, content: '2', color: '#ffff00', drag: false })
-		regions.addRegion({ start: 10, content: '3 ', color: '#ffff00', drag: false })
-		regions.addRegion({ start: 40, content: '4', color: '#2196f3', drag: false })
-		regions.addRegion({ start: 100, content: '5', color: '#2196f3', drag: false })
-		regions.addRegion({ start: 300, content: '6', color: '#2196f3', drag: false })
+		// Первоначальные регионы
 		regions.addRegion({
+			data: { type: 'word' },
+			start: 60,
+			content: '1',
+			color: '#ffff00',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'word' },
+			start: 69,
+			content: '2',
+			color: '#ffff00',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'word' },
+			start: 10,
+			content: '3',
+			color: '#ffff00',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'emotion' },
+			start: 40,
+			content: '4',
+			color: '#2196f3',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'emotion' },
+			start: 100,
+			content: '5',
+			color: '#2196f3',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'emotion' },
+			start: 300,
+			content: '6',
+			color: '#2196f3',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'emotion' },
 			start: 500,
 			content: '7',
 			color: '#2196f3',
 			drag: false,
 		})
 		regions.addRegion({
+			data: { type: 'check' },
 			start: 400,
 			content: '8',
 			color: '#ff0000',
 			drag: false,
 		})
-		regions.addRegion({ start: 20, content: '9', color: '#ff0000', drag: false })
 		regions.addRegion({
+			data: { type: 'check' },
+			start: 20,
+			content: '9',
+			color: '#ff0000',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'check' },
 			start: 190,
 			content: '10',
 			color: '#ff0000',
 			drag: false,
 		})
 		regions.addRegion({
+			data: { type: 'check' },
 			start: 540,
 			content: '11',
 			color: '#ff0000',
 			drag: false,
 		})
-		regions.addRegion({ start: 200, content: '12', color: '#ff00ff', drag: false })
-		regions.addRegion({ start: 220, content: '13', color: '#ff00ff', drag: false })
+		regions.addRegion({
+			data: { type: 'category' },
+			start: 200,
+			content: '12',
+			color: '#ff00ff',
+			drag: false,
+		})
+		regions.addRegion({
+			data: { type: 'category' },
+			start: 220,
+			content: '13',
+			color: '#ff00ff',
+			drag: false,
+		})
 	})
 
-	wavesurfer.on('play', () => {
-		isPlaying.value = true
-	})
-	wavesurfer.on('pause', () => {
-		isPlaying.value = false
-	})
-	wavesurfer.on('finish', () => {
-		isPlaying.value = false
-	})
+	wavesurfer.on('play', () => (isPlaying.value = true))
+	wavesurfer.on('pause', () => (isPlaying.value = false))
+	wavesurfer.on('finish', () => (isPlaying.value = false))
 
 	wavesurfer.on('audioprocess', () => {
 		currentTime.value = wavesurfer?.getCurrentTime() ?? 0
@@ -129,26 +176,21 @@ const createWaveSurfer = async () => {
 }
 
 const play = async () => {
-	if (!wavesurfer) {
-		await createWaveSurfer()
-	}
-	if (isWaveReady.value) {
-		wavesurfer!.isPlaying() ? wavesurfer!.pause() : wavesurfer!.play()
-	} else {
-		playPending = true
-	}
+	if (!wavesurfer) await createWaveSurfer()
+	isWaveReady.value
+		? wavesurfer!.isPlaying()
+			? wavesurfer!.pause()
+			: wavesurfer!.play()
+		: (playPending = true)
 }
 
 const playOnTime = (sec: number) => {
-	wavesurfer!.play(sec)
+	wavesurfer?.play(sec)
 }
 
 const showWave = async () => {
 	isWave.value = !isWave.value
-
-	if (isWave.value && !wavesurfer) {
-		await createWaveSurfer()
-	}
+	if (isWave.value && !wavesurfer) await createWaveSurfer()
 }
 
 onUnmounted(() => {
@@ -162,21 +204,14 @@ onUnmounted(() => {
 
 const emit = defineEmits(['showComment'])
 
-const setStar = (e: Row) => {
-	e.star = !e.star
-}
-
+const setStar = (e: Row) => (e.star = !e.star)
 const showComment = () => emit('showComment')
 
 const { top, left } = useElementBounding(row)
 const { width: winsize } = useWindowSize()
 
-const canvaWidth = computed(() => {
-	return winsize.value - left.value - 400
-})
-
-// 🎯 Стили canvas — реактивный объект
-const canvasStyle = computed<CSSProperties>(() => ({
+const canvaWidth = computed(() => winsize.value - left.value - 400)
+const canvasStyle: any = computed(() => ({
 	position: 'absolute',
 	top: `${top.value - 111}px`,
 	left: `${left.value}px`,
@@ -184,7 +219,7 @@ const canvasStyle = computed<CSSProperties>(() => ({
 	height: `110px`,
 }))
 
-function formatTime(t: number): string {
+const formatTime = (t: number): string => {
 	const min = Math.floor(t / 60)
 	const sec = Math.floor(t % 60)
 		.toString()
@@ -192,19 +227,34 @@ function formatTime(t: number): string {
 	return `${min}:${sec}`
 }
 
-// milestone styles
-const miletop = computed(() => {
-	return `${top.value + 55}px`
-})
-const milewidth = computed(() => {
-	return `${canvaWidth.value}px`
-})
-const mileleft = computed(() => {
-	return `${left.value}px`
-})
+// 🎯 Milestone стиль
+const miletop = computed(() => `${top.value + 55}px`)
+const milewidth = computed(() => `${canvaWidth.value}px`)
+const mileleft = computed(() => `${left.value}px`)
+const action = (n: number) => playOnTime(n)
 
-const action = (n: number) => {
-	playOnTime(n)
+const visibleTypes = ref<string[]>(['word', 'emotion', 'check', 'category']) // по умолчанию
+
+const updateVisibleTypes = (types: string[]) => {
+	applyTypeFilter(types)
+}
+
+const typeColorMap: Record<string, string> = {
+	word: '#ffff00',
+	emotion: '#2196f3',
+	check: '#ff0000',
+	category: '#ff00ff',
+}
+
+const applyTypeFilter = (types: string[]) => {
+	const allowedColors = types.map((t) => typeColorMap[t])
+
+	regions.getRegions().forEach((region: any) => {
+		const show = allowedColors.includes(region.color)
+		if (region.element) {
+			region.element.style.display = show ? 'block' : 'none'
+		}
+	})
 }
 </script>
 
@@ -213,10 +263,10 @@ const action = (n: number) => {
 	q-linear-progress(:value=".6" color="positive")
 	q-btn(flat round size="sm" @click.stop="setStar(props.row)")
 		q-icon(v-if="props.row.star === true" name="mdi-star" color="primary")
-		q-icon(v-else name="mdi-star-outline" color="grey" )
+		q-icon(v-else name="mdi-star-outline" color="grey")
 	q-btn(flat round size="sm" @click.stop="showComment")
 		q-icon(v-if="props.row.comment" name="mdi-comment-text-outline" color="primary")
-		q-icon(v-else name="mdi-comment-plus-outline" color="grey" )
+		q-icon(v-else name="mdi-comment-plus-outline" color="grey")
 		q-tooltip.bg-primary(v-if="props.row.comment" anchor="top middle" self="bottom middle" max-width="150px" :offset="[7, 7]") {{ props.row.comment }}
 	div(v-if="!mystore.wide") {{ props.row.date }}
 	div(v-if="!mystore.wide") {{ props.row.operator }}
@@ -245,8 +295,8 @@ const action = (n: number) => {
 			:left='mileleft',
 			:top='miletop'
 			@action='action'
+			@change-visible-types="updateVisibleTypes"
 		)
-	
 </template>
 
 <style scoped lang="scss">
