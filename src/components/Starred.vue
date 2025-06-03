@@ -5,7 +5,6 @@ import { records as myrecords } from '@/stores/operators'
 import RecordsTable from '@/components/RecordsTable.vue'
 
 const mystore = useStore()
-
 const records = reactive(myrecords)
 
 const starRecords = computed(() => {
