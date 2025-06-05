@@ -33,10 +33,12 @@ const save = () => {
 	}
 }
 
-// ➕ FAB + Modal logic
+// ➕ FAB + Dialog + Validation
 const isAddDialogOpen = ref(false)
 const newEvent = ref('')
 const newHint = ref('')
+
+const addForm = ref()
 
 const openAddDialog = () => {
 	newEvent.value = ''
@@ -45,20 +47,23 @@ const openAddDialog = () => {
 }
 
 const saveNewItem = () => {
-	if (!newEvent.value.trim()) {
-		$q.notify({ color: 'red', message: 'Введите название события' })
-		return
-	}
-	const newId = list.value.length ? Math.max(...list.value.map((i) => i.id)) + 1 : 0
-	list.value.push({
-		id: newId,
-		selected: false,
-		event: newEvent.value,
-		hint: newHint.value,
+	addForm.value.validate().then((valid: boolean) => {
+		if (!valid) return
+
+		const newId = list.value.length ? Math.max(...list.value.map((i) => i.id)) + 1 : 0
+		list.value.push({
+			id: newId,
+			selected: false,
+			event: newEvent.value,
+			hint: newHint.value,
+		})
+		isAddDialogOpen.value = false
+		$q.notify({ color: 'teal', message: 'Новое событие добавлено', position: 'bottom' })
 	})
-	isAddDialogOpen.value = false
-	$q.notify({ color: 'teal', message: 'Новое событие добавлено', position: 'bottom' })
 }
+
+// Validation rules
+const requiredRule = (val: string) => !!val?.trim() || 'Поле обязательно'
 </script>
 
 <template lang="pug">
@@ -97,12 +102,7 @@ q-page(padding)
 					@click='save'
 				)
 
-
-		q-btn.fab1(round
-			color="primary"
-			icon="add"
-			@click="openAddDialog"
-		)
+		q-btn.fab1(round color="primary" icon="add" @click="openAddDialog")
 
 	q-dialog(v-model="isAddDialogOpen")
 		q-card(style="min-width: 300px;")
@@ -110,8 +110,20 @@ q-page(padding)
 			q-card-section
 				.text-h6 Добавить событие
 			q-card-section
-				q-input(v-model="newEvent" label="Событие" filled)
-				q-input(v-model="newHint" label="Подсказка" type="textarea" class="q-mt-md" filled)
+				q-form(ref="addForm")
+					q-input(
+						v-model="newEvent"
+						label="Событие"
+						filled
+						:rules="[requiredRule]"
+					)
+					q-input(
+						v-model="newHint"
+						label="Подсказка"
+						type="textarea"
+						class="q-mt-md"
+						filled
+					)
 			q-card-actions(align="right")
 				q-btn(flat label="Отмена" color="grey" @click="isAddDialogOpen = false")
 				q-btn(flat label="Сохранить" color="primary" @click="saveNewItem")
