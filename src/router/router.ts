@@ -26,6 +26,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },
 		},
 		{
+			path: '/sufler1',
+			component: () => import('@/components/Sufler1.vue'),
+			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },
+		},
+		{
 			path: '/semantic',
 			component: () => import('@/components/Semantic.vue'),
 			meta: { transition: 'slide-left', title: 'Семантический поиск', requiresAuth: false },

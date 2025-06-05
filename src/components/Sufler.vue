@@ -20,6 +20,7 @@ q-page.rel(padding)
 			q-chip(clickable v-model:selected='client') Клиент
 			q-space
 			Timer
+			q-btn.q-ml-lg(flat round icon="mdi-cog-outline" @click="$router.push('sufler1')") 
 
 		.grid
 		EventSlider
