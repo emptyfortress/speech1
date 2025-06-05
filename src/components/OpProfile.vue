@@ -20,6 +20,7 @@ q-page(padding)
 			q-tab(name="checklists" label="Мои чеклисты")
 			q-tab(name="marks" label="Мои оценки")
 			q-tab(name="records" label="Мои записи")
+			q-tab(name="recom" label="Мои рекомендации")
 		q-separator
 
 		q-tab-panels(v-model="tab" animated)
@@ -77,6 +78,9 @@ q-page(padding)
 			q-tab-panel(name="records")
 				OperRecordTable(:oper="oper" :private="true")
 
+			q-tab-panel(name="recom")
+				OperRecomendation
+
 	DialogOperatorMarks(v-model="dialog" :anketa="currAnketa")
 	DialogOperatorChecklistMarks(v-model="dialog1" :list="currChecklist")
 </template>
@@ -93,8 +97,9 @@ import { chartOptionsSpark, chartOptionsSpark1, chartOptionsSpark2 } from '@/sto
 import GistForTable from '@/components/graph/GistForTable.vue'
 import CommonOptionsOper from '@/components/common/CommonOptionsOper.vue'
 import type { Ref } from 'vue'
+import OperRecomendation from '@/components/OperRecomendation.vue'
 
-const tab = ref('checklists')
+const tab = ref('recom')
 
 const oper = {
 	id: 0,
