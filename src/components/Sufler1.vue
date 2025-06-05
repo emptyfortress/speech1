@@ -6,10 +6,10 @@ import { useQuasar } from 'quasar'
 const $q = useQuasar()
 
 const list = ref([
-	{ id: 0, selected: false, event: 'Не хочу', hint: 'Подсказка для не хочу' },
-	{ id: 1, selected: false, event: 'Нет времени', hint: 'Подсказка для нет времени' },
-	{ id: 2, selected: false, event: 'Не нужно', hint: 'Подсказка для не нужно' },
-	{ id: 3, selected: false, event: 'Потом', hint: 'Подсказка для потом' },
+	{ id: 0, event: 'Не хочу', hint: 'Подсказка для не хочу' },
+	{ id: 1, event: 'Нет времени', hint: 'Подсказка для нет времени' },
+	{ id: 2, event: 'Не нужно', hint: 'Подсказка для не нужно' },
+	{ id: 3, event: 'Потом', hint: 'Подсказка для потом' },
 ])
 
 const selection = ref(list.value[0])
@@ -25,7 +25,6 @@ const save = () => {
 	if (index !== -1) {
 		list.value[index].hint = editedHint.value
 		$q.notify({
-			icon: undefined,
 			message: 'Сохранено',
 			color: 'teal',
 			position: 'bottom',
@@ -33,11 +32,24 @@ const save = () => {
 	}
 }
 
+// Удаление выбранного элемента
+const deleteSelected = () => {
+	const idToDelete = selection.value?.id
+	const index = list.value.findIndex((item) => item.id === idToDelete)
+	if (index !== -1) {
+		list.value.splice(index, 1)
+		if (list.value.length > 0) {
+			selection.value = list.value[0]
+			editedHint.value = list.value[0].hint
+		}
+		$q.notify({ message: 'Удалено', color: 'red', position: 'bottom' })
+	}
+}
+
 // ➕ FAB + Dialog + Validation
 const isAddDialogOpen = ref(false)
 const newEvent = ref('')
 const newHint = ref('')
-
 const addForm = ref()
 
 const openAddDialog = () => {
@@ -53,7 +65,6 @@ const saveNewItem = () => {
 		const newId = list.value.length ? Math.max(...list.value.map((i) => i.id)) + 1 : 0
 		list.value.push({
 			id: newId,
-			selected: false,
 			event: newEvent.value,
 			hint: newHint.value,
 		})
@@ -72,20 +83,31 @@ q-page(padding)
 		.zag
 			IcOutlineSupportAgent.icon
 			| Суфлер - настройка
+
 		.grid
-			div
+			.scroll-list
 				.hd События
 				q-list
 					q-item(
-						clickable,
-						v-for="item in list",
-						:key='item.id',
-						@click="select(item)",
-						:class="{ selected : item.id == selection.id }"
+						clickable
+						v-for="item in list"
+						:key='item.id'
+						@click="select(item)"
+						:class="{ selected : item.id === selection?.id }"
 					)
 						q-item-section(side)
 							q-icon(name="mdi-flag-outline")
 						q-item-section {{ item.event }}
+						q-item-section(side v-if="item.id === selection?.id")
+							q-btn(
+								flat
+								round
+								dense
+								icon="mdi-trash-can-outline"
+								@click.stop="deleteSelected"
+								size="sm"	
+								color="negative"
+							)
 
 			div
 				.text-bold Подсказка
@@ -100,22 +122,26 @@ q-page(padding)
 					color="primary"
 					label="Сохранить"
 					@click='save'
+					:disable="!selection"
 				)
 
+		// 🔘 FAB
 		q-btn.fab1(round color="primary" icon="add" @click="openAddDialog")
 
+	// 🪟 Dialog
 	q-dialog(v-model="isAddDialogOpen")
 		q-card(style="min-width: 300px;")
 			q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
 			q-card-section
 				.text-h6 Добавить событие
 			q-card-section
-				q-form(ref="addForm")
+				q-form(ref="addForm" @keyup.enter="saveNewItem")
 					q-input(
 						v-model="newEvent"
 						label="Событие"
 						filled
 						:rules="[requiredRule]"
+						autofocus
 					)
 					q-input(
 						v-model="newHint"
@@ -157,5 +183,10 @@ q-page(padding)
 }
 .fab1 {
 	margin-top: 1rem;
+}
+.scroll-list {
+	max-height: calc(100vh - 170px); // подогнать под твой заголовок и отступы
+	overflow-y: auto;
+	padding-right: 8px; // чтобы скролл не перекрывал контент
 }
 </style>
