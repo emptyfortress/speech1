@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import IcOutlineSupportAgent from '@/components/icons/IcOutlineSupportAgent.vue'
 import { useQuasar } from 'quasar'
 
+const $q = useQuasar()
+
 const list = ref([
 	{ id: 0, selected: false, event: 'Не хочу', hint: 'Подсказка для не хочу' },
 	{ id: 1, selected: false, event: 'Нет времени', hint: 'Подсказка для нет времени' },
@@ -18,7 +20,6 @@ const select = (item: any) => {
 	editedHint.value = item.hint
 }
 
-const $q = useQuasar()
 const save = () => {
 	const index = list.value.findIndex((i) => i.id === selection.value.id)
 	if (index !== -1) {
@@ -31,14 +32,41 @@ const save = () => {
 		})
 	}
 }
+
+// ➕ FAB + Modal logic
+const isAddDialogOpen = ref(false)
+const newEvent = ref('')
+const newHint = ref('')
+
+const openAddDialog = () => {
+	newEvent.value = ''
+	newHint.value = ''
+	isAddDialogOpen.value = true
+}
+
+const saveNewItem = () => {
+	if (!newEvent.value.trim()) {
+		$q.notify({ color: 'red', message: 'Введите название события' })
+		return
+	}
+	const newId = list.value.length ? Math.max(...list.value.map((i) => i.id)) + 1 : 0
+	list.value.push({
+		id: newId,
+		selected: false,
+		event: newEvent.value,
+		hint: newHint.value,
+	})
+	isAddDialogOpen.value = false
+	$q.notify({ color: 'teal', message: 'Новое событие добавлено', position: 'bottom' })
+}
 </script>
 
 <template lang="pug">
-q-page.rel(padding)
-	.container
+q-page(padding)
+	.container.rel
 		.zag
 			IcOutlineSupportAgent.icon
-			|Суфлер - настройка
+			| Суфлер - настройка
 		.grid
 			div
 				.hd События
@@ -56,8 +84,37 @@ q-page.rel(padding)
 
 			div
 				.text-bold Подсказка
-				q-input.q-mt-sm.q-mb-md(outlined v-model="editedHint" type='textarea' bg-color="white")
-				q-btn(unelevated color="primary" label="Сохранить" @click='save') 
+				q-input.q-mt-sm.q-mb-md(
+					outlined
+					v-model="editedHint"
+					type='textarea'
+					bg-color="white"
+				)
+				q-btn(
+					unelevated
+					color="primary"
+					label="Сохранить"
+					@click='save'
+				)
+
+
+		q-btn.fab1(round
+			color="primary"
+			icon="add"
+			@click="openAddDialog"
+		)
+
+	q-dialog(v-model="isAddDialogOpen")
+		q-card(style="min-width: 300px;")
+			q-btn.close(icon="mdi-close" color="negative" round dense v-close-popup)
+			q-card-section
+				.text-h6 Добавить событие
+			q-card-section
+				q-input(v-model="newEvent" label="Событие" filled)
+				q-input(v-model="newHint" label="Подсказка" type="textarea" class="q-mt-md" filled)
+			q-card-actions(align="right")
+				q-btn(flat label="Отмена" color="grey" @click="isAddDialogOpen = false")
+				q-btn(flat label="Сохранить" color="primary" @click="saveNewItem")
 </template>
 
 <style scoped lang="scss">
@@ -85,5 +142,8 @@ q-page.rel(padding)
 }
 .selected {
 	background: #b1ddfc;
+}
+.fab1 {
+	margin-top: 1rem;
 }
 </style>
