@@ -24,14 +24,6 @@ q-page(padding)
 			q-card-section.q-px-md
 				component(:is="RecordsTable" :rows="starRecords")
 
-		q-expansion-item(v-model="mystore.req")
-			template(v-slot:header)
-				q-item-section.line(avatar)
-					q-avatar(icon="mdi-star-outline" flat)
-				q-item-section
-					.zag Избранные записи
-			q-card-section.q-px-md
-				component(:is="RecordsTable" :rows="starRecords")
 
 </template>
 
