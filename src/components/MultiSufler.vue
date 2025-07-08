@@ -150,13 +150,17 @@ onBeforeUnmount(() => {
 })
 
 const clients = computed(() => Array.from(new Set(dialogs.value.map((d) => d.client))))
+const selectedOperator = ref<string | null>(null)
+
+const operators = computed(() => Array.from(new Set(dialogs.value.map((d) => d.operator))))
 
 const filteredDialogs = computed(() => {
-	return selectedClient.value
-		? dialogs.value.filter((d) => d.client === selectedClient.value)
-		: dialogs.value
+	return dialogs.value.filter((d) => {
+		const matchClient = !selectedClient.value || d.client === selectedClient.value
+		const matchOperator = !selectedOperator.value || d.operator === selectedOperator.value
+		return matchClient && matchOperator
+	})
 })
-
 function openDialog(dialog: DialogItem) {
 	selectedDialog.value = dialog
 	isDialogOpen.value = true
@@ -186,6 +190,15 @@ q-page(padding)
 				dense
 				outlined
 				style="width: 300px"
+			)
+			q-select(
+				v-model="selectedOperator"
+				:options="operators"
+				label="Фильтр по оператору"
+				clearable
+				dense
+				outlined
+				style="width: 300px; margin-left: 1rem"
 			)
 
 		.grid-scroll
