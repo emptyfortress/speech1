@@ -200,7 +200,7 @@ onMounted(() => {
 	width: 15px;
 	text-align: right;
 }
-:deep(.q-checkbox__bg) {
-	border-color: $negative;
-}
+// :deep(.q-checkbox__bg) {
+// 	border-color: $negative;
+// }
 </style>
