@@ -26,6 +26,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },
 		},
 		{
+			path: '/multisufler',
+			component: () => import('@/components/MultiSufler.vue'),
+			meta: { transition: 'slide-left', title: 'MultiSufler', requiresAuth: false },
+		},
+		{
 			path: '/sufler1',
 			component: () => import('@/components/Sufler1.vue'),
 			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },
