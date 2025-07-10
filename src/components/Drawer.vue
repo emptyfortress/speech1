@@ -86,6 +86,12 @@ const pages = [
 		icon: 'mdi-playlist-check',
 		url: '/anketa',
 	},
+	{
+		id: 9,
+		title: 'Мониторинг',
+		icon: 'mdi-ear-hearing',
+		url: '/multisufler',
+	},
 ]
 </script>
 
