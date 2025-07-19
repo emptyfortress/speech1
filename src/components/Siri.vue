@@ -1,19 +1,35 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import SiriWave from 'siriwave'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+// import SiriWave from 'siriwave'
 
-onMounted(() => {
-	var siriWave = new SiriWave({
-		container: document.getElementById('siri-container'),
-		width: 250,
-		height: 80,
-		style: 'ios9',
-	})
-})
+// const containerRef = ref<HTMLElement | null>(null)
+// let wave: SiriWave
+
+// onMounted(() => {
+// 	if (containerRef.value) {
+// 		wave = new SiriWave({
+// 			container: containerRef.value,
+// 			width: 250,
+// 			height: 180,
+// 			color: 'black',
+// 			// style: 'ios9',
+// 			// autostart: true,
+// 		})
+// 	}
+// })
+
+// onBeforeUnmount(() => {
+// 	wave?.stop()
+// })
 </script>
 
-<template lang="pug">
-#siri-container
+<template>
+	<div ref="containerRef" />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+div {
+	width: 250px;
+	height: 180px;
+}
+</style>

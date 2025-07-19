@@ -89,7 +89,7 @@ const pages = [
 	{
 		id: 9,
 		title: 'Мониторинг',
-		icon: 'mdi-ear-hearing',
+		icon: 'mdi-incognito',
 		url: '/multisufler',
 	},
 ]

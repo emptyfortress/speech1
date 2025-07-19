@@ -233,6 +233,10 @@ const milewidth = computed(() => `${canvaWidth.value}px`)
 const mileleft = computed(() => `${left.value}px`)
 const action = (n: number) => playOnTime(n)
 
+const stop = () => {
+	wavesurfer!.pause()
+}
+
 const visibleTypes = ref<string[]>(['word', 'emotion', 'check', 'category']) // по умолчанию
 
 const updateVisibleTypes = (types: string[]) => {
@@ -295,6 +299,7 @@ const applyTypeFilter = (types: string[]) => {
 			:left='mileleft',
 			:top='miletop'
 			@action='action'
+			@stop="stop"
 			@change-visible-types="updateVisibleTypes"
 		)
 </template>

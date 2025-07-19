@@ -150,7 +150,7 @@ const filteredDialogs = computed(() => {
 q-page(padding)
 	.container
 		.zag
-			q-icon.q-mr-sm(name="mdi-ear-hearing" size='25px')
+			q-icon.q-mr-sm(name="mdi-incognito" size='25px')
 			| Мониторинг
 			q-space
 			q-select(
@@ -189,7 +189,7 @@ q-page(padding)
 	margin-top: 1rem;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-	grid-auto-rows: 200px;
+	grid-auto-rows: 150px;
 	gap: 1rem;
 }
 .text-overflow {
