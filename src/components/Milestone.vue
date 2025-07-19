@@ -26,12 +26,17 @@ const modelValue = defineModel<boolean>()
 
 // === Эмиты ===
 const emit = defineEmits<{
+	(e: 'stop'): void
 	(e: 'action', time: number): void
 	(e: 'change-visible-types', types: ItemType[]): void
 }>()
 
 const action = (time: number) => {
 	emit('action', time)
+}
+
+const stop = () => {
+	emit('stop')
 }
 
 // === Фильтры ===
@@ -53,10 +58,31 @@ const allItems = ref<Item[]>([
 	{ id: 6, type: 'emotion', client: false, time: 300, label: 'Повышенный тон' },
 	{ id: 7, type: 'emotion', client: true, time: 500, label: 'Повышенная громкость' },
 
-	{ id: 8, type: 'check', client: false, veha: false, time: 400, label: 'Решение вопроса абонента' },
+	{
+		id: 8,
+		type: 'check',
+		client: false,
+		veha: false,
+		time: 400,
+		label: 'Решение вопроса абонента',
+	},
 	{ id: 9, type: 'check', client: false, veha: false, time: 20, label: 'Приветствие' },
-	{ id: 10, type: 'check', client: false, veha: false, time: 190, label: 'Критичная ошибка оператора' },
-	{ id: 11, type: 'check', client: false, veha: false, time: 540, label: 'Подведение итогов разговора' },
+	{
+		id: 10,
+		type: 'check',
+		client: false,
+		veha: false,
+		time: 190,
+		label: 'Критичная ошибка оператора',
+	},
+	{
+		id: 11,
+		type: 'check',
+		client: false,
+		veha: false,
+		time: 540,
+		label: 'Подведение итогов разговора',
+	},
 
 	{ id: 12, type: 'category', client: false, time: 200, label: 'Заказ' },
 	{ id: 13, type: 'category', client: true, time: 220, label: 'Жалоба' },
@@ -79,9 +105,7 @@ const filteredItems = computed(() => {
 			(veh.value && item.type === 'check') ||
 			(cat.value && item.type === 'category')
 
-		const clientMatch =
-			(oper.value && item.client) ||
-			(client.value && !item.client)
+		const clientMatch = (oper.value && item.client) || (client.value && !item.client)
 
 		return typeMatch && clientMatch
 	})
@@ -116,6 +140,30 @@ const emitFilteredTypes = () => {
 onMounted(() => {
 	emitFilteredTypes()
 })
+
+const additionalVeh = ref([
+	{
+		id: 0,
+		type: 'check',
+		client: false,
+		veha: false,
+		label: 'Локализация проблемы',
+	},
+	{
+		id: 1,
+		type: 'check',
+		client: false,
+		veha: false,
+		label: 'Предложение решения',
+	},
+	{
+		id: 2,
+		type: 'check',
+		client: false,
+		veha: false,
+		label: 'Благодарность за ожидание',
+	},
+])
 </script>
 
 <template lang="pug">
@@ -150,6 +198,22 @@ onMounted(() => {
 						q-checkbox(v-model="item.veha" dense size='sm' color="negative" dark)
 					q-item-section
 						q-item-label {{ item.label }}
+
+				q-separator(dark spaced v-if='group.color == "red"' color="red")
+				q-item(
+					v-if='group.color == "red"',
+					v-for="item in additionalVeh",
+					:key="item.id",
+					tag='label',
+					@click="stop"
+				)
+					q-item-section(side)
+						.num &nbsp;
+					q-item-section(side)
+						q-checkbox(v-model="item.veha" dense size='sm' color="negative" dark)
+					q-item-section
+						q-item-label {{ item.label }}
+
 </template>
 
 <style scoped lang="scss">
