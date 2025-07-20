@@ -112,8 +112,8 @@ const dia = ref(true)
 		AudioBars
 		.time {{ formatTime(currentTime - dialog.startTime) }}
 
-// SuflerDialog(v-model="isDialogOpen" :selected-dialog="selectedDialog" :current-time="currentTime")
-SuflerDialog(v-model="dia" persistent :selected-dialog="defaultDialog" :current-time="currentTime1")
+SuflerDialog(v-model="isDialogOpen" :selected-dialog="selectedDialog" :current-time="currentTime")
+// SuflerDialog(v-model="dia" persistent :selected-dialog="defaultDialog" :current-time="currentTime1")
 
 </template>
 

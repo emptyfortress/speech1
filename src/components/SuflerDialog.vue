@@ -46,7 +46,7 @@ const events = ref<EventItem[]>([
 </script>
 
 <template lang="pug">
-q-dialog(v-model="modelValue" persistent)
+q-dialog(v-model="modelValue")
 	q-card(style="min-width: 900px; max-width: 90vw")
 		q-btn(round color="negative" icon="mdi-close" @click="close").close
 		q-card-section
