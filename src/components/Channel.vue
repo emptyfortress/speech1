@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import AudioBars from '@/components/AudioBars.vue'
+import SuflerDialog from '@/components/SuflerDialog.vue'
 
 type DialogItem = {
 	id: number
@@ -9,15 +10,16 @@ type DialogItem = {
 	operator: string
 	client: string
 	startTime: number
+	in: boolean
 }
 
 const props = defineProps<{
 	channels: DialogItem[]
 }>()
 
-const selectedDialog = ref<DialogItem | null>(null)
+const selectedDialog = ref<DialogItem>(props.channels[0])
 const isDialogOpen = ref(false)
-const selectedClient = ref<string | null>(null)
+// const selectedClient = ref<string | null>(null)
 const currentTime = ref(Date.now())
 
 let interval: number
@@ -76,6 +78,18 @@ onMounted(() => {
 onBeforeUnmount(() => {
 	clearInterval(eventInterval)
 })
+
+const defaultDialog: DialogItem = {
+	id: 1,
+	title: 'Тестовый звонок',
+	content: 'Пробный вызов',
+	operator: 'Иванов И.И.',
+	client: 'Петров П.П.',
+	startTime: Date.now() - 15 * 60 * 1000, // 15 минут назад
+	in: true,
+}
+const currentTime1 = ref(5555)
+const dia = ref(true)
 </script>
 
 <template lang="pug">
@@ -85,7 +99,9 @@ onBeforeUnmount(() => {
 	@click="openDialog(dialog)"
 )
 	.row
-		q-icon.q-mr-sm(name="mdi-headset" size='18px')
+		q-icon.q-mr-sm(v-if='dialog.in' name="mdi-phone-incoming" size='22px')
+		q-icon.q-mr-sm(v-else name="mdi-phone-outgoing" size='22px')
+
 		.text-bold {{ dialog.operator }}
 
 	.event
@@ -96,24 +112,9 @@ onBeforeUnmount(() => {
 		AudioBars
 		.time {{ formatTime(currentTime - dialog.startTime) }}
 
-q-dialog(v-model="isDialogOpen" persistent)
-	q-card(style="min-width: 600px; max-width: 90vw")
-		q-card-section
-			.text-h6 {{ selectedDialog?.title }}
-		q-card-section
-			p
-				strong Оператор:
-				|  {{ selectedDialog?.operator }}
-			p
-				strong Клиент:
-				|  {{ selectedDialog?.client }}
-			p
-				strong Таймер:
-				|  {{ selectedDialog ? formatTime(currentTime - selectedDialog.startTime) : '' }}
-			q-separator(class="q-my-md")
-			p {{ selectedDialog?.content }}
-		q-card-actions(align="right")
-			q-btn(flat label="Закрыть" color="primary" @click="isDialogOpen = false")
+// SuflerDialog(v-model="isDialogOpen" :selected-dialog="selectedDialog" :current-time="currentTime")
+SuflerDialog(v-model="dia" persistent :selected-dialog="defaultDialog" :current-time="currentTime1")
+
 </template>
 
 <style scoped lang="scss">

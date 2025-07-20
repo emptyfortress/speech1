@@ -9,6 +9,7 @@ type DialogItem = {
 	operator: string
 	client: string
 	startTime: number
+	in: boolean
 }
 
 const dialogs = ref<DialogItem[]>([
@@ -19,6 +20,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 1',
 		client: 'Клиент A',
 		startTime: Date.now() - 10000,
+		in: true,
 	},
 	{
 		id: 2,
@@ -27,6 +29,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 2',
 		client: 'Клиент B',
 		startTime: Date.now() - 25000,
+		in: true,
 	},
 	{
 		id: 3,
@@ -35,6 +38,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 3',
 		client: 'Клиент C',
 		startTime: Date.now() - 40000,
+		in: true,
 	},
 	{
 		id: 4,
@@ -43,6 +47,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 4',
 		client: 'Клиент D',
 		startTime: Date.now() - 15000,
+		in: true,
 	},
 	{
 		id: 5,
@@ -51,6 +56,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 5',
 		client: 'Клиент E',
 		startTime: Date.now() - 30000,
+		in: true,
 	},
 	{
 		id: 6,
@@ -59,6 +65,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 6',
 		client: 'Клиент F',
 		startTime: Date.now() - 5000,
+		in: true,
 	},
 	{
 		id: 7,
@@ -67,6 +74,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 7',
 		client: 'Клиент G',
 		startTime: Date.now() - 18000,
+		in: true,
 	},
 	{
 		id: 8,
@@ -75,6 +83,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 8',
 		client: 'Клиент H',
 		startTime: Date.now() - 35000,
+		in: false,
 	},
 	{
 		id: 9,
@@ -83,6 +92,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 9',
 		client: 'Клиент I',
 		startTime: Date.now() - 8000,
+		in: true,
 	},
 	{
 		id: 10,
@@ -91,6 +101,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 10',
 		client: 'Клиент J',
 		startTime: Date.now() - 60000,
+		in: false,
 	},
 	{
 		id: 11,
@@ -99,6 +110,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 11',
 		client: 'Клиент K',
 		startTime: Date.now() - 45000,
+		in: true,
 	},
 	{
 		id: 12,
@@ -107,6 +119,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 12',
 		client: 'Клиент L',
 		startTime: Date.now() - 22000,
+		in: false,
 	},
 	{
 		id: 13,
@@ -115,6 +128,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 13',
 		client: 'Клиент M',
 		startTime: Date.now() - 37000,
+		in: true,
 	},
 	{
 		id: 14,
@@ -123,6 +137,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 14',
 		client: 'Клиент N',
 		startTime: Date.now() - 14000,
+		in: true,
 	},
 	{
 		id: 15,
@@ -131,6 +146,7 @@ const dialogs = ref<DialogItem[]>([
 		operator: 'Оператор 15',
 		client: 'Клиент O',
 		startTime: Date.now() - 27000,
+		in: false,
 	},
 ])
 
