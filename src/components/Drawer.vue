@@ -92,6 +92,12 @@ const pages = [
 		icon: 'mdi-incognito',
 		url: '/multisufler',
 	},
+	{
+		id: 10,
+		title: 'Моя команда',
+		icon: 'mdi-account-group',
+		url: '/supervisor',
+	},
 ]
 </script>
 

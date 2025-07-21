@@ -21,6 +21,11 @@ export const router = createRouter({
 			meta: { transition: 'slide-left', title: 'Speech Drive', requiresAuth: false },
 		},
 		{
+			path: '/supervisor',
+			component: () => import('@/components/Supervisor.vue'),
+			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },
+		},
+		{
 			path: '/sufler',
 			component: () => import('@/components/Sufler.vue'),
 			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },

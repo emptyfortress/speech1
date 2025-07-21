@@ -1,3 +1,12 @@
+interface Trainer {
+	id: number
+	lastName: string
+	operatorCount: number
+	evaluationCount: number
+	averageScore: number
+	photoUrl?: string
+}
+
 interface Widget {
 	x: number
 	y: number
