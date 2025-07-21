@@ -20,12 +20,12 @@ export default defineConfig({
 				// },
 			},
 			script: {
-				defineModel: true
-			}
+				defineModel: true,
+			},
 		}),
 		VueDevTools(),
 		quasar({
-			sassVariables: 'src/quasar-variables.scss',
+			sassVariables: fileURLToPath(new URL('./src/quasar-variables.scss', import.meta.url)),
 		}),
 		createSvgIconsPlugin({
 			// Specify the icon folder to be cached
@@ -45,11 +45,10 @@ export default defineConfig({
 			 */
 			customDomId: '__svg__icons__dom__',
 		}),
-
 	],
 	resolve: {
 		alias: {
-			'@': fileURLToPath(new URL('./src', import.meta.url))
-		}
-	}
+			'@': fileURLToPath(new URL('./src', import.meta.url)),
+		},
+	},
 })

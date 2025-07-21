@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import TrainerTable from '@/components/TrainerTable.vue'
+import TrainerDetails from '@/components/TrainerDetails.vue'
 
 const top = ref(true)
 
@@ -63,8 +64,10 @@ const trainers = [
 	},
 ]
 
-const onSelectTrainer = (trainer: Trainer) => {
-	console.log('Selected:', trainer)
+const selected = ref<Trainer | null>(null)
+
+const onSelectTrainer = (trainer: Trainer | null) => {
+	selected.value = trainer
 }
 </script>
 
@@ -80,7 +83,8 @@ q-page(padding)
 			q-card-section.q-px-md
 				.grid
 					TrainerTable(:trainers="trainers" @select="onSelectTrainer")
-					div alksdj
+					q-card
+						TrainerDetails(v-if='selected')
 </template>
 
 <style scoped lang="scss">

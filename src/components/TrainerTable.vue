@@ -50,21 +50,24 @@ const columns: QTableProps['columns'] = ref([
 	},
 ])
 
-const selected = ref<Trainer>()
+const selected = ref<number | null>(null)
 
 function handleRowClick(_: Event, row: Trainer, index: number) {
-	console.log(row)
-	console.log(index)
-	emit('select', row)
-	selected.value = row
+	if (selected.value === row.id) {
+		selected.value = null
+		emit('select', null)
+	} else {
+		selected.value = row.id
+		emit('select', row)
+	}
 }
 
 function getAvatarSrc(fileName: string): string {
 	return new URL(`../assets/img/avatars/${fileName}`, import.meta.url).href
 }
 
-const getRowClass = () => {
-	console.log(111)
+const getRowClass = (row: Trainer) => {
+	return row.id == selected.value ? 'selected' : ''
 }
 
 const pagination = {
@@ -78,12 +81,14 @@ q-table.table.thinhd(
   :columns="columns"
   row-key="id"
   flat
-	:pagination="pagination"
-	:selected="selected"
+	selection='single'
+	:v-model:selected="selected"
   @row-click="handleRowClick"
-  :row-class="getRowClass"
-	hide-bottom
+	:table-row-class-fn='getRowClass'
 )
+
+	template(v-slot:header-selection="props")
+	template(v-slot:body-selection="props")
 
 	template(v-slot:body-cell-avatar="props")
 		q-td(:props="props")
@@ -95,3 +100,9 @@ q-table.table.thinhd(
 				)
 
 </template>
+
+<style scoped lang="scss">
+:deep(.q-table--col-auto-width) {
+	display: none;
+}
+</style>
