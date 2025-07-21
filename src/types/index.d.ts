@@ -4,7 +4,7 @@ interface Trainer {
 	operatorCount: number
 	evaluationCount: number
 	averageScore: number
-	photoUrl?: string
+	photoUrl: string
 }
 
 interface Widget {

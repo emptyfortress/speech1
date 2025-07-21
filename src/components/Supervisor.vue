@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import TrainerTable from '@/components/TrainerTable.vue'
 import TrainerDetails from '@/components/TrainerDetails.vue'
-
-const top = ref(true)
+import TrainersSummary from '@/components/TrainersSummary.vue'
+import ChipCalendar1 from '@/components/ChipCalendar1.vue'
 
 const trainers = [
 	{
@@ -64,33 +64,68 @@ const trainers = [
 	},
 ]
 
-const selected = ref<Trainer | null>(null)
+// const selected = ref<Trainer | null>(null)
+const selected = ref(trainers[0])
 
-const onSelectTrainer = (trainer: Trainer | null) => {
+// const onSelectTrainer = (trainer: Trainer | null) => {
+const onSelectTrainer = (trainer: Trainer) => {
 	selected.value = trainer
 }
 </script>
 
 <template lang="pug">
 q-page(padding)
+
 	.container
-		q-expansion-item(v-model="top")
-			template(v-slot:header)
-				q-item-section.line(avatar)
-					q-avatar(icon="mdi-account-group" flat)
-				q-item-section
-					.zag Моя команда
-			q-card-section.q-px-md
-				.grid
-					TrainerTable(:trainers="trainers" @select="onSelectTrainer")
-					q-card
-						TrainerDetails(v-if='selected')
+
+		.row.items-center
+			q-item-section.line(avatar)
+				q-avatar(icon="mdi-account-group" flat)
+			q-item-section
+				.zag Моя команда
+			q-space
+			component.right(:is="ChipCalendar1" label="Текущий месяц")
+
+
+		.grid
+			TrainerTable(:trainers="trainers" @select="onSelectTrainer")
+			q-card
+				transition(name="fade-slide" mode="out-in")
+					component(
+						:is="selected ? TrainerDetails : TrainersSummary"
+						:selected="selected"
+						:key="selected?.id || 'summary'"
+					)
+
 </template>
 
 <style scoped lang="scss">
+.q-card {
+	min-height: 340px;
+	padding: 1rem;
+}
 .grid {
+	margin-top: 1rem;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	column-gap: 1rem;
+}
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+	opacity: 0;
+	transform: translateY(10px);
+}
+
+.fade-slide-leave-from,
+.fade-slide-enter-to {
+	opacity: 1;
+	transform: translateY(0);
 }
 </style>
