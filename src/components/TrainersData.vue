@@ -22,9 +22,6 @@ const sortedData = computed(() => {
 	})
 })
 
-// Вытаскиваем фамилии тренеров
-const categories = computed(() => props.trainers.map((t) => t.lastName))
-
 function getChartOptions(title: string, categories: string[]) {
 	return {
 		chart: {

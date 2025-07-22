@@ -82,15 +82,15 @@ template(v-if="isLogged")
 							img(src="@/assets/img/user1.svg")
 						q-menu(transition-show="jump-down" transition-hide="jump-up")
 							q-list
-								q-item(clickable v-close-popup @click="$router.push('/profile')")
+								q-item(clickable v-close-popup @click="router.push('/profile')")
 									q-item-section(avatar)
 										q-icon(name="mdi-card-account-details-outline")
 									q-item-section Профиль
-								q-item(clickable v-close-popup @click="$router.push('/users')")
+								q-item(clickable v-close-popup @click="router.push('/users')")
 									q-item-section(avatar)
 										q-icon(name="mdi-account-search")
 									q-item-section Пользователи
-								q-item(clickable v-close-popup @click="$router.push('/about')")
+								q-item(clickable v-close-popup @click="router.push('/about')")
 									q-item-section(avatar)
 										q-icon(name="mdi-information-outline")
 									q-item-section О программе

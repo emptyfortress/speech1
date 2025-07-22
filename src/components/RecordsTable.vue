@@ -5,15 +5,16 @@ import type { QTableProps } from 'quasar'
 import type { Ref } from 'vue'
 import FilterSelect from '@/components/common/FilterSelect.vue'
 import Player from '@/components/Player.vue'
+import { useQuasar } from 'quasar'
 
 interface Props {
 	rows: Row[]
 }
-
 const props = withDefaults(defineProps<Props>(), {
 	rows: () => [],
 })
 
+const $q = useQuasar()
 const mystore = useStore()
 const table = ref()
 const filter = ref('')

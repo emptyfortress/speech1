@@ -1,8 +1,13 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+const router = useRouter()
+</script>
+
 <template lang="pug">
 .flexcenter
 	.text-center
 		.zg Not Found!
-		q-btn(color="primary" label="На главную" size="lg" @click="$router.push('/')")
+		q-btn(color="primary" label="На главную" size="lg" @click="router.push('/')")
 </template>
 
 <script setup lang="ts"></script>

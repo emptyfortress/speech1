@@ -3,9 +3,16 @@ import { ref } from 'vue'
 import IcOutlineSupportAgent from '@/components/icons/IcOutlineSupportAgent.vue'
 import Timer from '@/components/Timer.vue'
 import EventSlider from '@/components/EventSlider.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const oper = ref(true)
 const client = ref(true)
+
+const nav = () => {
+	router.push('sufler1')
+}
 </script>
 
 <template lang="pug">
@@ -20,7 +27,7 @@ q-page.rel(padding)
 			q-chip(clickable v-model:selected='client') Клиент
 			q-space
 			Timer
-			q-btn.q-ml-lg(flat round icon="mdi-cog-outline" @click="$router.push('sufler1')") 
+			q-btn.q-ml-lg(flat round icon="mdi-cog-outline" @click="nav") 
 
 		.grid
 		EventSlider

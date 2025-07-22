@@ -60,6 +60,7 @@ import { ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 import { records } from '@/stores/operators'
 import { useStore } from '@/stores/store'
+import { useQuasar } from 'quasar'
 
 const rec = ref(false)
 const vehModel = ref('Приветствие')
@@ -75,6 +76,7 @@ interface Row {
 	context: string
 }
 
+const $q = useQuasar()
 const vehOptions = [
 	'Приветствие',
 	'Назвать себя',

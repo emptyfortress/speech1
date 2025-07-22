@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
+import { useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import type { Ref } from 'vue'
 
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 	rows: () => [],
 })
 
+const $q = useQuasar()
 const shownRows = ref([10, 20, 50])
 
 const records = reactive(props.rows)
@@ -63,7 +65,6 @@ const deleteComment = () => {
 	item.value.comment = ''
 	dialog.value = false
 }
-
 </script>
 
 <template lang="pug">
@@ -150,7 +151,6 @@ td.ellipsis {
 .range {
 	width: clamp(150px, 50%, 600px);
 }
-
 
 .label {
 	font-size: 0.8rem;

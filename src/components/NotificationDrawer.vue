@@ -1,7 +1,7 @@
 <template lang="pug">
 q-drawer(v-model="mystore.notificationDrawer" overlay side="right" :width="300" ).rd.noti
 	.text-h6.row.justify-between.items-center
-		span(@click="$router.push('/notifications')").cursor-pointer.text-primary Уведомления
+		span(@click="router.push('/notifications')").cursor-pointer.text-primary Уведомления
 
 		q-btn(round flat icon="mdi-dots-horizontal")
 			q-menu(transition-show="jump-down" transition-hide="jump-up")
@@ -10,11 +10,11 @@ q-drawer(v-model="mystore.notificationDrawer" overlay side="right" :width="300" 
 						q-item-section(avatar)
 							q-icon(name="mdi-check-all")
 						q-item-section Прочитать все
-					q-item(clickable v-close-popup @click="$router.push('/notifications')")
+					q-item(clickable v-close-popup @click="router.push('/notifications')")
 						q-item-section(avatar)
 							q-icon(name="mdi-bell-outline")
 						q-item-section Открыть уведомления
-					q-item(clickable v-close-popup @click="$router.push('/profile#tab3')")
+					q-item(clickable v-close-popup @click="router.push('/profile#tab3')")
 						q-item-section(avatar)
 							q-icon(name="mdi-cog-outline")
 						q-item-section Настройки уведомлений

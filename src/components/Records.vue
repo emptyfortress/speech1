@@ -79,6 +79,7 @@ import { records as myrecords } from '@/stores/operators'
 import { useStore } from '@/stores/store'
 import { useCat } from '@/stores/category1'
 import type { QTableProps } from 'quasar'
+import { useQuasar } from 'quasar'
 
 interface Row {
 	id: number
@@ -90,7 +91,7 @@ interface Row {
 	client: string
 	expand: boolean
 }
-
+const $q = useQuasar()
 const records = reactive(myrecords)
 const cat = useCat()
 const table = ref()
