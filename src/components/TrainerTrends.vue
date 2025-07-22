@@ -1,56 +1,71 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
-import { randomNumber, randomArray } from '@/utils/utils'
+import { randomArray } from '@/utils/utils'
 
-const chartOptionsMarks = {
-	chart: {
-		type: 'area',
-		sparkline: {
-			enabled: true,
+const props = defineProps<{ trainer: Trainer }>()
+
+const chartConfigs = ref([
+	{ subtitle: 'Оценки', getValue: (t: Trainer) => t.evaluationCount },
+	{ subtitle: 'Аппеляции', getValue: (t: Trainer) => t.appelation },
+	{ subtitle: 'Исправления', getValue: (t: Trainer) => t.correction },
+	{ subtitle: 'Средний балл', getValue: (t: Trainer) => t.averageScore },
+])
+
+const trends = computed(() =>
+	chartConfigs.value.map((conf) => ({
+		subtitle: conf.subtitle,
+		title: conf.getValue(props.trainer).toString(),
+		data: randomArray(7, 10, 50), // Или заменить на реальные значения, если будут
+	}))
+)
+
+function getChartOptions(config: { title: string; subtitle: string }) {
+	return {
+		chart: {
+			type: 'area',
+			sparkline: {
+				enabled: true,
+			},
 		},
-		animations: {
-			enabled: false,
+		stroke: {
+			curve: 'smooth',
 		},
-	},
-	stroke: {
-		curve: 'smooth',
-	},
-	fill: {
-		opacity: 0.3,
-	},
-	xaxis: {
-		crosshairs: {
-			width: 1,
+		fill: {
+			opacity: 0.3,
 		},
-	},
-	yaxis: {
-		min: 0,
-	},
-	title: {
-		text: randomNumber(5, 25, 0),
-		offsetX: 0,
-		style: {
-			fontSize: '24px',
+		xaxis: {
+			crosshairs: {
+				width: 1,
+			},
 		},
-	},
-	subtitle: {
-		text: 'Оценки',
-		offsetX: 0,
-		style: {
-			fontSize: '14px',
+		title: {
+			text: config.title,
+			offsetX: 0,
+			style: {
+				fontSize: '24px',
+			},
 		},
-	},
+		subtitle: {
+			text: config.subtitle,
+			offsetX: 0,
+			style: {
+				fontSize: '14px',
+			},
+		},
+	}
 }
-const series1 = [{ name: 'Вызовы', data: randomArray(7, 20, 55) }]
 </script>
 
 <template lang="pug">
 .trend
-	q-card
-		VueApexCharts(type="area" height="130px" :options="chartOptionsMarks" :series="series1")
-	q-card
-	q-card
-	q-card
+	q-card(v-for="(chart, index) in trends" :key="index")
+		VueApexCharts(
+			type="area"
+			height="130px"
+			:options="getChartOptions(chart)"
+			:series="[{ name: chart.subtitle, data: chart.data }]"
+		)
 </template>
 
 <style scoped lang="scss">

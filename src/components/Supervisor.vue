@@ -4,6 +4,7 @@ import TrainerTable from '@/components/TrainerTable.vue'
 import TrainerDetails from '@/components/TrainerDetails.vue'
 import TrainersSummary from '@/components/TrainersSummary.vue'
 import TrainerTrends from '@/components/TrainerTrends.vue'
+import TrainerData from '@/components/TrainerData.vue'
 import ChipCalendar1 from '@/components/ChipCalendar1.vue'
 
 const trainers = [
@@ -108,11 +109,13 @@ q-page(padding)
 						:key="selected?.id || 'summary'"
 					)
 
-		// transition(name="fade-slide" mode="out-in")
-		// 	template(v-if='selected')
-		// 		TrainerTrends
-		// 	template(v-else)
-		// 		div laдло
+		transition(name="fade-slide" mode="out-in")
+			template(v-if='selected')
+				div
+					TrainerTrends(:trainer="selected")
+					TrainerData(:trainer='selected')
+			template(v-else)
+				div laдло
 
 </template>
 

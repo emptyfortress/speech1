@@ -10,7 +10,7 @@ const emit = defineEmits<{
 	(e: 'select', trainer: Trainer | null): void
 }>()
 
-const columns = ref<QTableColumn[]>([
+const columns: QTableColumn[] = [
 	{
 		name: 'avatar',
 		label: '',
@@ -62,7 +62,7 @@ const columns = ref<QTableColumn[]>([
 		format: (val: number) => val.toFixed(2),
 		sortable: true,
 	},
-])
+]
 
 const selected = ref<number | null>(null)
 

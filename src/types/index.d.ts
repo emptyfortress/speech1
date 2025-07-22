@@ -5,6 +5,8 @@ interface Trainer {
 	evaluationCount: number
 	averageScore: number
 	photoUrl: string
+	appelation: number
+	correction: number
 }
 
 interface Widget {
