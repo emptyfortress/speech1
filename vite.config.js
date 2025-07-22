@@ -17,7 +17,7 @@ export default defineConfig({
 				},
 			},
 		},
-		chunkSizeWarningLimit: 1000, // Увеличьте лимит, если нужно
+		chunkSizeWarningLimit: 1500, // Увеличьте лимит, если нужно
 	},
 	plugins: [
 		vue({
