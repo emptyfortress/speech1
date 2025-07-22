@@ -5,6 +5,7 @@ import TrainerDetails from '@/components/TrainerDetails.vue'
 import TrainersSummary from '@/components/TrainersSummary.vue'
 import TrainerTrends from '@/components/TrainerTrends.vue'
 import TrainerData from '@/components/TrainerData.vue'
+import TrainersData from '@/components/TrainersData.vue'
 import ChipCalendar1 from '@/components/ChipCalendar1.vue'
 
 const trainers = [
@@ -12,7 +13,7 @@ const trainers = [
 		id: 1,
 		lastName: 'Иванов И.И.',
 		operatorCount: 5,
-		evaluationCount: 42,
+		evaluationCount: 41,
 		averageScore: 4.6,
 		photoUrl: '1.jpeg',
 		correction: 4,
@@ -106,6 +107,7 @@ q-page(padding)
 					component(
 						:is="selected ? TrainerDetails : TrainersSummary"
 						:selected="selected"
+						:trainers="trainers"
 						:key="selected?.id || 'summary'"
 					)
 
@@ -115,7 +117,7 @@ q-page(padding)
 					TrainerTrends(:trainer="selected")
 					TrainerData(:trainer='selected')
 			template(v-else)
-				div laдло
+				TrainersData(:trainers="trainers")
 
 </template>
 
