@@ -23,7 +23,7 @@ export const router = createRouter({
 		{
 			path: '/supervisor',
 			component: () => import('@/components/Supervisor.vue'),
-			meta: { transition: 'slide-left', title: 'Online sufler', requiresAuth: false },
+			meta: { transition: 'slide-left', title: 'Моя команда', requiresAuth: false },
 		},
 		{
 			path: '/sufler',
@@ -33,7 +33,7 @@ export const router = createRouter({
 		{
 			path: '/multisufler',
 			component: () => import('@/components/MultiSufler.vue'),
-			meta: { transition: 'slide-left', title: 'MultiSufler', requiresAuth: false },
+			meta: { transition: 'slide-left', title: 'Мониторинг', requiresAuth: false },
 		},
 		{
 			path: '/sufler1',

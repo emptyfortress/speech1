@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
-import type { QTableProps } from 'quasar'
+import type { QTableColumn } from 'quasar'
 
 const props = defineProps<{
 	trainers: Trainer[]
 }>()
 
 const emit = defineEmits<{
-	(e: 'select', trainer: Trainer): void
+	(e: 'select', trainer: Trainer | null): void
 }>()
 
-const columns: QTableProps['columns'] = ref([
+const columns = ref<QTableColumn[]>([
 	{
 		name: 'avatar',
 		label: '',
@@ -30,14 +30,28 @@ const columns: QTableProps['columns'] = ref([
 		name: 'operatorCount',
 		label: 'Операторы',
 		field: 'operatorCount',
-		align: 'center',
+		align: 'right',
 		sortable: true,
 	},
 	{
 		name: 'evaluationCount',
 		label: 'Оценки',
 		field: 'evaluationCount',
-		align: 'center',
+		align: 'right',
+		sortable: true,
+	},
+	{
+		name: 'appelation',
+		label: 'Аппеляции',
+		field: 'appelation',
+		align: 'right',
+		sortable: true,
+	},
+	{
+		name: 'correction',
+		label: 'Исправления',
+		field: 'correction',
+		align: 'right',
 		sortable: true,
 	},
 	{
@@ -45,7 +59,7 @@ const columns: QTableProps['columns'] = ref([
 		label: 'Средний балл',
 		field: 'averageScore',
 		align: 'center',
-		format: (val) => val.toFixed(2),
+		format: (val: number) => val.toFixed(2),
 		sortable: true,
 	},
 ])
