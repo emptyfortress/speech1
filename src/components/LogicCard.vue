@@ -34,16 +34,10 @@
 							q-item(clickable @click="mystore.deleteLogic" v-close-popup).pink
 								q-item-section Удалить
 				div
-					q-btn(flat icon="mdi-share-variant" label="Поделиться" color="primary" @click="dialog = !dialog")
+					q-btn(flat icon="mdi-share-variant" label="Поделиться" color="primary" @click="close")
+					q-btn(flat color="primary" icon="mdi-cancel" label="Отмена" @click="close")
 					q-btn(unelevated color="primary" icon="mdi-content-save-outline" label="Сохранить" @click="save")
-	br
-	br
-	br
-	br
 
-	q-dialog(v-model="dialog")
-		q-card
-			q-card-section lkaj
 </template>
 
 <script setup lang="ts">
@@ -52,20 +46,25 @@ import { useQuasar } from 'quasar'
 import { useLogic } from '@/stores/logic'
 // import Board from '@/components/Board.vue'
 import Puzzle from '@/components/Puzzle.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const mystore = useLogic()
 
 const props = defineProps({
 	splitter: Number,
 })
-const emit = defineEmits(['maximize', 'reset'])
+const emit = defineEmits(['maximize', 'reset', 'close', 'save'])
 
 const switchSidebar = () => {
 	if (props.splitter !== 0) {
 		emit('maximize')
 	} else emit('reset')
 }
-const dialog = ref(false)
+const close = () => {
+	emit('close')
+}
 const update = () => {
 	const zag = document.getElementById('zg')
 	const text = zag!.innerHTML
@@ -81,6 +80,9 @@ const updatecomment = () => {
 
 const $q = useQuasar()
 const save = () => {
+	if (route.fullPath.includes('profile')) {
+		emit('save', mystore.activeLogic.label)
+	}
 	$q.notify({
 		icon: undefined,
 		message: 'Запрос сохранен',

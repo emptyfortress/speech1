@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { QTableProps } from 'quasar'
-import { useStore } from '@/stores/store'
+// import { useStore } from '@/stores/store'
 import { words } from '@/stores/list'
 import SvgIcon from '@/components/SvgIcon.vue'
+import Constructor from '@/components/Constructor.vue'
 
-const mystore = useStore()
+// const mystore = useStore()
 const stringOptions = words
 const options = ref(stringOptions)
 
@@ -48,17 +49,35 @@ const changeWord = (e: any, a: string, b: boolean) => {
 	menu.value = false
 }
 
-const addWord = (a: string, b: boolean) => {
+const addWord = (a: string, b: boolean, c: boolean) => {
 	const item = {
 		id: rows.value.length + 1,
 		keys: a,
 		voc: b,
 		canal: 'Все',
+		logic: c,
 	}
 	rows.value.push(item)
 	menu1.value = false
 	menu.value = false
 	newKey.value = ''
+}
+
+const dialog = ref(false)
+
+const maximizedToggle = ref(true)
+
+const close = () => {
+	dialog.value = false
+}
+const save = (e: string) => {
+	dialog.value = false
+	addWord(e, false, true)
+}
+const checkMenu = (a: boolean) => {
+	if (a == true) {
+		menu.value = false
+	} else menu.value = true
 }
 </script>
 
@@ -69,8 +88,10 @@ q-table(:columns="cols" :rows="rows" flat row-key="id")
 	template(v-slot:body="props")
 		q-tr(:props="props")
 			q-td(key="keys" :props="props" )
-				div(@click="menu = true")
+				.row.items-center(@click="checkMenu(props.row.logic)")
 					component(:is="SvgIcon" name="vocabulary" v-if="props.row.voc").lib
+					q-item-section(side v-if='props.row.logic')
+						q-icon(name="mdi-toy-brick-search-outline")
 					|{{ props.row.keys }}
 
 				q-menu(anchor="top left" self="top left" v-if="menu" )
@@ -106,7 +127,7 @@ q-table(:columns="cols" :rows="rows" flat row-key="id")
 	template(v-slot:bottom-row)
 		q-tr
 			q-td
-				q-btn(flat icon="mdi-plus-circle-outline" size="sm" label="Добавить" color="primary" @click="menu1 = true") 
+				q-btn(flat icon="mdi-plus-circle-outline" size="sm" label="Добавить ключевое слово" color="primary" @click="menu1 = true") 
 				q-menu(anchor="top left" self="top left" v-if="menu1" )
 					q-select(outlined v-model="newKey"
 						clearable
@@ -116,18 +137,21 @@ q-table(:columns="cols" :rows="rows" flat row-key="id")
 						:options="options"
 						@filter="filterFn"
 						behavior="menu").men
+						template(v-slot:option="scope")
+							q-item(clickable v-bind="scope.itemProps" @click="addWord(scope.opt.label, scope.opt.voc, false)")
+								q-item-section(side v-if="scope.opt.voc")
+									component(:is="SvgIcon" name="vocabulary").lib
+								q-item-section
+									q-item-label {{scope.opt.label}}
+						template(v-slot:no-option)
+							q-item(clickable)
+								q-item-section.text-grey No results
+				q-btn(flat icon="mdi-plus-circle-outline" size="sm" label="Добавить логический запрос" color="primary" @click="dialog = !dialog") 
 
-							template(v-slot:option="scope")
-								q-item(clickable v-bind="scope.itemProps" @click="addWord(scope.opt.label, scope.opt.voc)")
-									q-item-section(side v-if="scope.opt.voc")
-										component(:is="SvgIcon" name="vocabulary").lib
-									q-item-section
-										q-item-label {{scope.opt.label}}
-							template(v-slot:no-option)
-								q-item(clickable)
-									q-item-section.text-grey No results
 			q-td
 			q-td
+
+Constructor(:dialog='dialog' :maximized="maximizedToggle" @close='close' @save='save')
 </template>
 
 <style scoped lang="scss">

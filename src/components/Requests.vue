@@ -26,7 +26,7 @@ q-page.rel(padding)
 		component(:is="Operatorstat")
 		component(:is="Records")
 
-		component(:is="Constructor" :dialog="dialog" :maximized="maximizedToggle")
+		component(:is="Constructor" :dialog="dialog" :maximized="maximizedToggle" @close='close')
 
 </template>
 
@@ -47,6 +47,9 @@ const mystore = useStore()
 const chips = mylogic.allLogic.filter((e) => e.star)
 const dialog = ref(false)
 const maximizedToggle = ref(true)
+const close = () => {
+	dialog.value = false
+}
 
 const toggle = () => {
 	mystore.loading = true

@@ -88,7 +88,7 @@ q-page(padding)
 import { ref, reactive, onMounted } from 'vue'
 import NotificSetup from '@/components/NotificSetup.vue'
 
-const tab = ref('setup')
+const tab = ref('notific')
 const mail = ref('admin@admin.ru')
 const old = ref('')
 const inf = ref(true)
