@@ -167,7 +167,15 @@ interface Row {
 	expand: boolean
 	star?: boolean
 	comment: string
+	tags?: string[]
 }
+
+interface Tag {
+	id: number
+	label: string
+	selected: boolean
+}
+
 type AggregatList = {
 	title: string
 	value: boolean | null

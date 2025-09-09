@@ -6,6 +6,7 @@ import type { Ref } from 'vue'
 import FilterSelect from '@/components/common/FilterSelect.vue'
 import Player from '@/components/Player.vue'
 import { useQuasar } from 'quasar'
+import { useTagsStore } from '@/stores/tags'
 
 interface Props {
 	rows: Row[]
@@ -13,6 +14,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
 	rows: () => [],
 })
+
+const tagsStore = useTagsStore()
 
 const $q = useQuasar()
 const mystore = useStore()
@@ -28,19 +31,56 @@ const togg = () => {
 
 const records = reactive(props.rows)
 
-const filteredRecords = computed(() => {
-	if (oper.value.length === 0) {
-		return records
+const toggleTag = (tag: Tag) => {
+	if (tag.id === 0) {
+		// выбрали "Все"
+		tagsStore.tags.forEach((t) => (t.selected = t.id === 0))
 	} else {
-		let results: Row[] = []
-		let sub: Row[] = []
-		oper.value.forEach((item) => {
-			sub = records.filter((e) => e.operator === item)
-			results.push(...sub)
-		})
+		// выбрали любой другой
+		tag.selected = !tag.selected
+		// снимаем "Все"
+		const allTag = tagsStore.tags.find((t) => t.id === 0)
+		if (allTag) allTag.selected = false
+		// если вдруг сняли все теги → возвращаем "Все"
+		const anySelected = tagsStore.tags.some((t) => t.id !== 0 && t.selected)
+		if (!anySelected && allTag) allTag.selected = true
+	}
+}
 
+const filteredRecords = computed(() => {
+	let results = [...records]
+
+	// фильтрация по операторам
+	if (oper.value.length > 0) {
+		results = results.filter((r) => oper.value.includes(r.operator))
+	}
+
+	// фильтрация по клиенту
+	if (client.value.length > 0) {
+		results = results.filter((r) => client.value.includes(r.client))
+	}
+
+	// фильтрация по группе
+	if (group.value.length > 0) {
+		results = results.filter((r) => group.value.includes(r.group))
+	}
+
+	// фильтрация по категории
+	if (categ.value.length > 0) {
+		results = results.filter((r) => categ.value.includes(r.categ))
+	}
+
+	// фильтрация по выбранным тегам
+	const activeTags = tagsStore.tags.filter((t) => t.selected).map((t) => t.label)
+	if (activeTags.includes('Все')) {
 		return results
 	}
+
+	if (activeTags.length > 0) {
+		results = results.filter((r) => activeTags.every((tag) => r.tags?.includes(tag)))
+	}
+
+	return results
 })
 
 const columns: QTableProps['columns'] = [
@@ -109,10 +149,11 @@ const toggleFilter = () => {
 		showFilter.value = false
 	} else showFilter.value = true
 }
-const oper = ref([])
-const client = ref([])
-const group = ref([])
-const categ = ref([])
+
+const oper = ref<string[]>([])
+const client = ref<string[]>([])
+const group = ref<string[]>([])
+const categ = ref<string[]>([])
 
 const operOptions = computed(() => {
 	const temp = records.map((item) => item.operator)
@@ -144,13 +185,24 @@ const resetFilter = () => {
 </script>
 
 <template lang="pug">
-q-table.table(ref="table"
-	:rows="filteredRecords"
-	:columns="columns"
-	rows-per-page-label="Записей на странице"
-	:filter="filter"
-	:loading="mystore.loading"
-	:rows-per-page-options='shownRows')
+
+.q-mb-md
+	q-chip(
+		v-for="tag in tagsStore.tags"
+		:key="tag.id"
+		:selected="tag.selected"
+    @update:selected="() => toggleTag(tag)"
+		) {{ tag.label }}
+
+
+q-table.table(
+  ref="table"
+  :rows="filteredRecords"
+  :columns="columns"
+  rows-per-page-label="Записей на странице"
+  :filter="filter"
+  :loading="mystore.loading"
+  :rows-per-page-options='shownRows')
 
 	template(v-slot:loading)
 		q-inner-loading(showing color="primary" size="100px")
@@ -285,5 +337,13 @@ td.ellipsis {
 
 .recdate {
 	font-weight: 600;
+}
+// .q-chip {
+// 	background: hsl(75, 14%, 86%);
+// 	color: #000;
+// }
+.q-chip--selected {
+	background: $primary;
+	color: #fff;
 }
 </style>

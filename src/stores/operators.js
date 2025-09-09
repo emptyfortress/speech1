@@ -434,6 +434,7 @@ const records = [
 		expand: false,
 		star: true,
 		comment: 'Нормально, Григорий? Отлично, Константин. Это комментарий.',
+		tags: ['тэг 2'],
 	},
 	{
 		id: 1,
@@ -447,6 +448,7 @@ const records = [
 		expand: false,
 		star: true,
 		comment: '',
+		tags: ['тэг 1', 'тэг 2'],
 	},
 	{
 		id: 2,
@@ -460,6 +462,7 @@ const records = [
 		expand: false,
 		star: true,
 		comment: '',
+		tags: ['тэг 1'],
 	},
 	{
 		id: 3,
@@ -473,6 +476,7 @@ const records = [
 		expand: false,
 		star: true,
 		comment: '',
+		tags: ['тэг 2'],
 	},
 	{
 		id: 4,
@@ -484,7 +488,7 @@ const records = [
 		operator: 'Ева',
 		client: 'Арсений',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
 	},
 	{
@@ -497,8 +501,9 @@ const records = [
 		operator: 'Дарья',
 		client: 'Степан',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 3'],
 	},
 	{
 		id: 6,
@@ -510,8 +515,9 @@ const records = [
 		operator: 'Кира',
 		client: 'Владислав',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 3'],
 	},
 	{
 		id: 7,
@@ -523,8 +529,9 @@ const records = [
 		operator: 'Елизавета',
 		client: 'Никита',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 2'],
 	},
 	{
 		id: 8,
@@ -536,8 +543,9 @@ const records = [
 		operator: 'Ульяна',
 		client: 'Глеб',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 3'],
 	},
 	{
 		id: 9,
@@ -549,7 +557,7 @@ const records = [
 		operator: 'Татьяна',
 		client: 'Марк',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
 	},
 	{
@@ -562,8 +570,9 @@ const records = [
 		operator: 'Юлия',
 		client: 'Давид',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 2'],
 	},
 	{
 		id: 11,
@@ -575,8 +584,9 @@ const records = [
 		operator: 'Софья',
 		client: 'Ярослав',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 3'],
 	},
 	{
 		id: 12,
@@ -590,6 +600,7 @@ const records = [
 		expand: false,
 		star: false,
 		comment: '',
+		tags: ['тэг 3'],
 	},
 	{
 		id: 13,
@@ -600,8 +611,9 @@ const records = [
 		operator: 'Злата',
 		client: 'Матвей',
 		expand: false,
-		star: false,
+		star: true,
 		comment: '',
+		tags: ['тэг 3'],
 	},
 	{
 		id: 14,

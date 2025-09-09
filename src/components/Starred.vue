@@ -21,7 +21,7 @@ q-page(padding)
 					q-avatar(icon="mdi-star-outline" flat)
 				q-item-section
 					.zag Избранные записи
-			q-card-section.q-px-md
+			.q-px-md
 				component(:is="RecordsTable" :rows="starRecords")
 
 
