@@ -168,6 +168,7 @@ interface Row {
 	star?: boolean
 	comment: string
 	tags?: string[]
+	menu?: boolean
 }
 
 interface Tag {

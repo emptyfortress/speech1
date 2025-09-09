@@ -182,6 +182,39 @@ const resetFilter = () => {
 	group.value = []
 	categ.value = []
 }
+
+// tags logic
+const newTag = ref('')
+
+const addToFavorites = (row: Row) => {
+	row.star = true
+	if (!row.tags) row.tags = []
+	row.menu = false
+}
+
+const removeFromFavorites = (row: Row) => {
+	row.star = false
+	row.tags = []
+	row.menu = false
+}
+
+const toggleTagForRow = (row: Row, tag: Tag) => {
+	if (!row.tags) row.tags = []
+	if (row.tags.includes(tag.label)) {
+		row.tags = row.tags.filter((t) => t !== tag.label)
+	} else {
+		row.tags.push(tag.label)
+		row.star = true
+	}
+}
+
+const addNewTag = (row: Row) => {
+	if (!newTag.value.trim()) return
+	const tag: Tag = { id: Date.now(), label: newTag.value, selected: false }
+	tagsStore.tags.push(tag)
+	toggleTagForRow(row, tag)
+	newTag.value = ''
+}
 </script>
 
 <template lang="pug">
@@ -239,10 +272,41 @@ q-table.table(
 
 	template(v-slot:body="props")
 		q-tr.rel(:props="props" @click="select(props.row)")
+
 			q-td.small(key="star" :props="props")
-				q-btn(flat round size="sm" @click.stop="setStar(props.row)")
-					q-icon(v-if="props.row.star === true" name="mdi-star" color="orange")
-					q-icon(v-else name="mdi-star-outline" color="grey" )
+				q-btn(flat round size="sm" @click.stop="props.row.menu = true")
+					q-icon(v-if="props.row.star" name="mdi-star" color="orange")
+					q-icon(v-else name="mdi-star-outline" color="grey")
+
+				q-menu(v-model="props.row.menu")
+					q-list(style="min-width: 240px")
+
+						q-item
+							.allchips
+								q-chip(
+									v-for="tag in tagsStore.tags.filter(t => t.id !== 0)"
+									:key="tag.id"
+									:color="props.row.tags?.includes(tag.label) ? 'primary' : 'grey-5'"
+									text-color="white"
+									clickable
+									@click="toggleTagForRow(props.row, tag)"
+								) {{ tag.label }}
+						q-separator
+
+						q-item
+							q-item-section
+								q-input(
+									dense filled
+									v-model="newTag"
+									placeholder="Новый тэг"
+									@keyup.enter="addNewTag(props.row)"
+								)
+
+						q-separator
+						q-item(clickable @click="props.row.star ? removeFromFavorites(props.row) : addToFavorites(props.row)")
+							q-item-section(avatar)
+								q-icon(:name="props.row.star ? 'mdi-star-off' : 'mdi-star-plus'")
+							q-item-section {{ props.row.star ? 'Удалить из избранного' : 'Добавить в избранное' }}
 
 			q-td.small(key="comment" :props="props")
 				q-btn.comment(flat round size="sm" @click.stop="showComment(props.row)")
@@ -338,12 +402,11 @@ td.ellipsis {
 .recdate {
 	font-weight: 600;
 }
-// .q-chip {
-// 	background: hsl(75, 14%, 86%);
-// 	color: #000;
-// }
 .q-chip--selected {
 	background: $primary;
 	color: #fff;
+}
+.allchips {
+	display: flex;
 }
 </style>
